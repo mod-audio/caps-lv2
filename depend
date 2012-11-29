@@ -1,0 +1,84 @@
+Amp.o: src/Amp.cc src/basics.h src/ladspa.h src/Amp.h src/dsp/util.h \
+ src/dsp/OnePole.h src/dsp/BiQuad.h src/dsp/TwelveAX7.h src/dsp/r12ax7.h \
+ src/dsp/Roessler.h src/dsp/FIR.h src/dsp/util.h src/dsp/sinc.h \
+ src/dsp/Sine.h src/dsp/windows.h src/dsp/RBJ.h src/dsp/BiQuad.h \
+ src/dsp/Eq.h src/dsp/ToneStack.h src/dsp/windows.h src/dsp/TDFII.h \
+ src/dsp/LatFilt.h src/dsp/tonestack/tables.h src/Descriptor.h
+Cabinet.o: src/Cabinet.cc src/basics.h src/ladspa.h src/Cabinet.h \
+ src/dsp/util.h src/Descriptor.h src/Cabinet-Models32.h
+Chorus.o: src/Chorus.cc src/basics.h src/ladspa.h src/Chorus.h \
+ src/dsp/Sine.h src/dsp/Roessler.h src/dsp/Lorenz.h src/dsp/Delay.h \
+ src/dsp/util.h src/dsp/FPTruncateMode.h src/dsp/OnePole.h \
+ src/dsp/BiQuad.h src/dsp/RBJ.h src/dsp/BiQuad.h src/Descriptor.h
+Click.o: src/Click.cc src/basics.h src/ladspa.h src/waves/click.h \
+ src/waves/money.h src/Click.h src/dsp/OnePole.h src/dsp/util.h \
+ src/Descriptor.h
+Clip.o: src/Clip.cc src/basics.h src/ladspa.h src/Clip.h src/dsp/util.h \
+ src/dsp/FIR.h src/dsp/util.h src/dsp/sinc.h src/dsp/Sine.h \
+ src/dsp/windows.h src/Descriptor.h
+Compress.o: src/Compress.cc src/basics.h src/ladspa.h src/Compress.h \
+ src/dsp/RMS.h src/dsp/util.h src/Descriptor.h
+Eq.o: src/Eq.cc src/basics.h src/ladspa.h src/Eq.h src/dsp/util.h \
+ src/dsp/Eq.h src/dsp/BiQuad.h src/dsp/RBJ.h src/dsp/BiQuad.h \
+ src/Descriptor.h
+HRTF.o: src/HRTF.cc src/basics.h src/ladspa.h src/HRTF.h src/dsp/util.h \
+ src/Descriptor.h src/elev0.h
+interface.o: src/interface.cc src/basics.h src/ladspa.h src/Cabinet.h \
+ src/dsp/util.h src/Chorus.h src/dsp/Sine.h src/dsp/Roessler.h \
+ src/dsp/Lorenz.h src/dsp/Delay.h src/dsp/util.h src/dsp/FPTruncateMode.h \
+ src/dsp/OnePole.h src/dsp/BiQuad.h src/dsp/RBJ.h src/dsp/BiQuad.h \
+ src/Phaser.h src/Sin.h src/Lorenz.h src/Roessler.h src/Reverb.h \
+ src/Compress.h src/dsp/RMS.h src/Click.h src/Eq.h src/dsp/Eq.h \
+ src/Clip.h src/dsp/FIR.h src/dsp/sinc.h src/dsp/Sine.h src/dsp/windows.h \
+ src/White.h src/dsp/White.h src/SweepVF.h src/dsp/SVF.h src/VCO.h \
+ src/dsp/VCO.h src/Amp.h src/dsp/TwelveAX7.h src/dsp/r12ax7.h \
+ src/dsp/ToneStack.h src/dsp/windows.h src/dsp/TDFII.h src/dsp/LatFilt.h \
+ src/dsp/tonestack/tables.h src/HRTF.h src/Pan.h src/Scape.h \
+ src/ToneStack.h src/Descriptor.h
+Lorenz.o: src/Lorenz.cc src/basics.h src/ladspa.h src/Lorenz.h \
+ src/dsp/Lorenz.h src/Descriptor.h
+Pan.o: src/Pan.cc src/basics.h src/ladspa.h src/Pan.h src/dsp/Delay.h \
+ src/dsp/util.h src/dsp/FPTruncateMode.h src/dsp/OnePole.h \
+ src/Descriptor.h
+Phaser.o: src/Phaser.cc src/basics.h src/ladspa.h src/Phaser.h \
+ src/dsp/Sine.h src/dsp/Lorenz.h src/dsp/Delay.h src/dsp/util.h \
+ src/dsp/FPTruncateMode.h src/Descriptor.h
+Preamp.o: src/Preamp.cc src/basics.h src/ladspa.h src/Amp.h \
+ src/dsp/util.h src/dsp/OnePole.h src/dsp/BiQuad.h src/dsp/TwelveAX7.h \
+ src/dsp/r12ax7.h src/dsp/Roessler.h src/dsp/FIR.h src/dsp/util.h \
+ src/dsp/sinc.h src/dsp/Sine.h src/dsp/windows.h src/dsp/RBJ.h \
+ src/dsp/BiQuad.h src/dsp/Eq.h src/dsp/ToneStack.h src/dsp/windows.h \
+ src/dsp/TDFII.h src/dsp/LatFilt.h src/dsp/tonestack/tables.h \
+ src/Descriptor.h
+Reverb.o: src/Reverb.cc src/basics.h src/ladspa.h src/Reverb.h \
+ src/dsp/Delay.h src/dsp/util.h src/dsp/FPTruncateMode.h \
+ src/dsp/OnePole.h src/dsp/Sine.h src/dsp/util.h src/Descriptor.h
+Roessler.o: src/Roessler.cc src/basics.h src/ladspa.h src/Roessler.h \
+ src/dsp/Roessler.h src/Descriptor.h
+Scape.o: src/Scape.cc src/basics.h src/ladspa.h src/Scape.h \
+ src/dsp/Sine.h src/dsp/Roessler.h src/dsp/Lorenz.h src/dsp/Delay.h \
+ src/dsp/util.h src/dsp/FPTruncateMode.h src/dsp/OnePole.h \
+ src/dsp/BiQuad.h src/dsp/RBJ.h src/dsp/BiQuad.h src/dsp/SVF.h \
+ src/Descriptor.h
+Sin.o: src/Sin.cc src/basics.h src/ladspa.h src/Sin.h src/dsp/Sine.h \
+ src/Descriptor.h
+SweepVF.o: src/SweepVF.cc src/basics.h src/ladspa.h src/SweepVF.h \
+ src/dsp/SVF.h src/dsp/Lorenz.h src/dsp/Roessler.h src/dsp/RMS.h \
+ src/dsp/BiQuad.h src/dsp/OnePole.h src/Descriptor.h src/dsp/RBJ.h \
+ src/dsp/BiQuad.h
+ToneControls.o: src/ToneControls.cc src/basics.h src/ladspa.h src/Amp.h \
+ src/dsp/util.h src/dsp/OnePole.h src/dsp/BiQuad.h src/dsp/TwelveAX7.h \
+ src/dsp/r12ax7.h src/dsp/Roessler.h src/dsp/FIR.h src/dsp/util.h \
+ src/dsp/sinc.h src/dsp/Sine.h src/dsp/windows.h src/dsp/RBJ.h \
+ src/dsp/BiQuad.h src/dsp/Eq.h src/dsp/ToneStack.h src/dsp/windows.h \
+ src/dsp/TDFII.h src/dsp/LatFilt.h src/dsp/tonestack/tables.h
+ToneStack.o: src/ToneStack.cc src/basics.h src/ladspa.h src/ToneStack.h \
+ src/dsp/util.h src/dsp/windows.h src/dsp/ToneStack.h src/dsp/util.h \
+ src/dsp/windows.h src/dsp/TDFII.h src/dsp/LatFilt.h \
+ src/dsp/tonestack/tables.h src/Descriptor.h src/dsp/tonestack/ks_tab.h \
+ src/dsp/tonestack/vs_tab.h
+VCO.o: src/VCO.cc src/basics.h src/ladspa.h src/VCO.h src/dsp/util.h \
+ src/dsp/VCO.h src/dsp/FIR.h src/dsp/util.h src/dsp/sinc.h src/dsp/Sine.h \
+ src/dsp/windows.h src/Descriptor.h
+White.o: src/White.cc src/basics.h src/ladspa.h src/White.h \
+ src/dsp/White.h src/Descriptor.h

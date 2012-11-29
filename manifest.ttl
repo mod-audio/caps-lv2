@@ -1,0 +1,42 @@
+@prefix lv2: <http://lv2plug.in/ns/lv2core#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+<http://portalmod.com/plugins/caps/AmpIII> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/AmpIV> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/AmpV> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/AmpVTS> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/AutoWah> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/CabinetI> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/CabinetII> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/CEO> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/ChorusI> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/ChorusII> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/Click> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/Clip> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/Compress> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/Dirac> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/Eq2x2> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/Eq> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/HRTF> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/JVRev> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/Lorenz> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/Narrower> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/Pan> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/PhaserI> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/PhaserII> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/Plate2x2> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/Plate> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/PreampIII> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/PreampIV> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/Roessler> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/Scape> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/Sin> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/StereoChorusI> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/StereoChorusII> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/SweepVFI> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/SweepVFII> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/ToneStack> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/ToneStackLT> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/VCOd> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/VCOs> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.
+<http://portalmod.com/plugins/caps/White> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <caps.ttl>.

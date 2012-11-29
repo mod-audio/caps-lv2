@@ -1,0 +1,137 @@
+@prefix lv2:  <http://lv2plug.in/ns/lv2core#>.
+@prefix doap: <http://usefulinc.com/ns/doap#>.
+@prefix epp: <http://lv2plug.in/ns/ext/port-props/#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix mod:   <http://portalmod.com/ns/extensions/effect#> .
+
+<http://portalmod.com/plugins/caps/ToneStack> a lv2:Plugin, lv2:SimulatorPlugin;
+    doap:name  "C* ToneStack - Tone stack emulation";
+    mod:label "C* ToneStack";
+    doap:developer [
+        foaf:name "Tim Goetze";
+        foaf:homepage <http://quitte.de/dsp/caps.html>;
+        foaf:mbox <mailto:tim@quitte.de>;
+        ];
+    doap:maintainer [
+        foaf:name "MOD Team";
+        foaf:homepage <http://portalmod.com>;
+        foaf:mbox <mailto:devel@portalmod.com>;
+        ];
+    doap:license <http://usefulinc.com/doap/licenses/gpl>;
+    lv2:optionalFeature lv2:hardRtCapable;
+    lv2:minorVersion 0;
+    lv2:microVersion 1;
+    lv2:port
+    [
+        a lv2:AudioPort, lv2:InputPort;
+        lv2:index 0;
+        lv2:symbol "in";
+        lv2:name "in";
+    ],
+    [
+        a lv2:ControlPort, lv2:InputPort;
+        lv2:index 1;
+        lv2:symbol "model";
+        lv2:name "model";
+        lv2:default 0.0;
+        lv2:minimum 0;
+        lv2:maximum 5;
+        lv2:scalePoint [rdfs:label "'59 Bassman"; rdf:value 0];
+        lv2:scalePoint [rdfs:label "'69 Twin Reverb"; rdf:value 1];
+        lv2:scalePoint [rdfs:label "'64 Princeton"; rdf:value 2];
+        lv2:scalePoint [rdfs:label "'59/'81 JCM 800"; rdf:value 3];
+        lv2:scalePoint [rdfs:label "'78 Club &amp; Country"; rdf:value 4];
+        lv2:scalePoint [rdfs:label "'59/'86 AC-30 of sorts"; rdf:value 5];
+    ],
+    [
+        a lv2:ControlPort, lv2:InputPort;
+        lv2:index 2;
+        lv2:symbol "bass";
+        lv2:name "bass";
+        lv2:default 0.5;
+        lv2:minimum 0;
+        lv2:maximum 1;
+    ],
+    [
+        a lv2:ControlPort, lv2:InputPort;
+        lv2:index 3;
+        lv2:symbol "mid";
+        lv2:name "mid";
+        lv2:default 0.5;
+        lv2:minimum 0;
+        lv2:maximum 1;
+    ],
+    [
+        a lv2:ControlPort, lv2:InputPort;
+        lv2:index 4;
+        lv2:symbol "treble";
+        lv2:name "treble";
+        lv2:default 0.5;
+        lv2:minimum 0;
+        lv2:maximum 1;
+    ],
+    [
+        a lv2:AudioPort, lv2:OutputPort;
+        lv2:index 5;
+        lv2:symbol "out";
+        lv2:name "out";
+    ].
+<http://portalmod.com/plugins/caps/ToneStackLT> a lv2:Plugin, lv2:SimulatorPlugin;
+    doap:name  "C* ToneStackLT - Tone stack emulation, lattice filter 44.1";
+    mod:label "C* ToneStackLT";
+    doap:developer [
+        foaf:name "Tim Goetze";
+        foaf:homepage <http://quitte.de/dsp/caps.html>;
+        foaf:mbox <mailto:tim@quitte.de>;
+        ];
+    doap:maintainer [
+        foaf:name "MOD Team";
+        foaf:homepage <http://portalmod.com>;
+        foaf:mbox <mailto:devel@portalmod.com>;
+        ];
+    doap:license <http://usefulinc.com/doap/licenses/gpl>;
+    lv2:optionalFeature lv2:hardRtCapable;
+    lv2:minorVersion 0;
+    lv2:microVersion 1;
+    lv2:port
+    [
+        a lv2:AudioPort, lv2:InputPort;
+        lv2:index 0;
+        lv2:symbol "in";
+        lv2:name "in";
+    ],
+    [
+        a lv2:ControlPort, lv2:InputPort;
+        lv2:index 1;
+        lv2:symbol "bass";
+        lv2:name "bass";
+        lv2:default 0.5;
+        lv2:minimum 0;
+        lv2:maximum 1;
+    ],
+    [
+        a lv2:ControlPort, lv2:InputPort;
+        lv2:index 2;
+        lv2:symbol "mid";
+        lv2:name "mid";
+        lv2:default 0.5;
+        lv2:minimum 0;
+        lv2:maximum 1;
+    ],
+    [
+        a lv2:ControlPort, lv2:InputPort;
+        lv2:index 3;
+        lv2:symbol "treble";
+        lv2:name "treble";
+        lv2:default 0.5;
+        lv2:minimum 0;
+        lv2:maximum 1;
+    ],
+    [
+        a lv2:AudioPort, lv2:OutputPort;
+        lv2:index 4;
+        lv2:symbol "out";
+        lv2:name "out";
+    ].
