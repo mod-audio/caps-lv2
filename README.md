@@ -7,6 +7,7 @@ compile and install
 ===================
 
 make
+
 make INSTALL_PATH=~/.lv2/ install
 
 (or any other dir, defaults to /usr/local/lib/lv2/)
@@ -14,9 +15,7 @@ make INSTALL_PATH=~/.lv2/ install
 caps
 ====
 
-For all questions about CAPS, please be referred to the HTML 
-documentation of this software package in the file 'caps.html',
-also available from
+For all questions about CAPS, please be referred to the HTML documentation of this software package in the file 'caps.html', also available from:
  
 http://quitte.de/dsp/caps.html
 
