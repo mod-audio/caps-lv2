@@ -59,9 +59,17 @@ template <class T>
 class Descriptor
 : public LV2_Descriptor
 {
-	public:
+
+    public:
 		Descriptor (const char *uri) {
             URI = uri;
+            instantiate = _instantiate;
+            connect_port = _connect_port;
+            activate = _activate;
+            run = _run;
+            deactivate = 0;
+            cleanup = _cleanup;
+            setup();
         }
 
 		/* in plugin's .cc file because it needs port_info implementation */
@@ -72,15 +80,21 @@ class Descriptor
         const char *Name; 
         const char *Copyright; 
 
-        void autogen() {return; };
+        unsigned long PortCount; 
+
+        void autogen() { 
+            return; 
+        };
 
 		static LV2_Handle _instantiate (
                 const LV2_Descriptor *descriptor, double sample_rate, const char *bundle_path, const LV2_Feature *const *features)
 			{ 
+                printf("instantiated! \n");
 				T * plugin = new T();
-				int n = (int) (sizeof (T::port_info) / sizeof (PortInfo)); 
-				plugin->ports = new sample_t * [n];
+                int n;
+                for (n = 0; plugin->port_info[n].name; n++);
 
+                plugin->ports = new sample_t * [n];
 				plugin->fs = sample_rate;
 				plugin->normal = NOISE_FLOOR;
 				plugin->init();
@@ -90,7 +104,7 @@ class Descriptor
 		
 		static void _connect_port (LV2_Handle h, uint32_t i, void * p)
 			{ 
-				((T *) h)->ports[i] = p;
+				((T *) h)->ports[i] = (sample_t*)p;
 			}
 
 		static void _activate (LV2_Handle h)
@@ -109,7 +123,7 @@ class Descriptor
 				 */
 			}
 
-		static void _run (LV2_Handle h, ulong n)
+		static void _run (LV2_Handle h, uint32_t n)
 			{
 				T * plugin = (T *) h;
 

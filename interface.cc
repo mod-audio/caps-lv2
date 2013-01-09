@@ -70,14 +70,12 @@ ladspa_descriptor (unsigned long i)
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor *lv2_descriptor(uint32_t i)
 {
-    printf("test...\n");
 	return i < N ? descriptors[i] : 0;
 }
 
 __attribute__ ((constructor)) 
 void caps_so_init()
 {
-    printf("generating descs\n");
 	LV2_Descriptor ** d = descriptors;
 	memset (d, 0, sizeof (descriptors));
 
@@ -128,7 +126,6 @@ void caps_so_init()
 	*d++ = new Descriptor<Dirac>(CAPS_URI "dirac");
 	
 	assert (d - descriptors <= N);
-    printf("generated descs\n");
 }
 
 __attribute__ ((destructor)) 
