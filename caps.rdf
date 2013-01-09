@@ -1,447 +1,615 @@
-<?xml version='1.0' encoding='ISO-8859-1'?>
-<!-- 
+<?xml version='1.0' encoding='utf-8'?><!-- 
 
 	caps.rdf
 
-	Metadata for the CAPS Audio Plugin Suite
+		Metadata for the CAPS Audio Plugin Suite
+		Automatically generated based on work done by 
 
-	Automatically generated based on work done by 
-		Paul Winkler,
-		Pete Leigh and 
-		Tim Goetze.
+			Paul Winkler, Pete Leigh, and Tim Goetze.  
 
-	Welcome to the Dept. of Redundancy Dept. Dept. Dept.
+		Welcome to the Dept. of Redundancy Dept.
 
- -->
-<!DOCTYPE rdf:RDF 
-	[
+-->
+<!DOCTYPE rdf:RDF [
 		<!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
 		<!ENTITY rdfs 'http://www.w3.org/2000/01/rdf-schema#'>
 		<!ENTITY dc 'http://purl.org/dc/elements/1.1/'>
-		<!ENTITY ladspa 'http://ladspa.org/ontology#'>
-	]
->
+		<!ENTITY caps 'http://quitte.de/dsp/caps.html#'>
+		<!ENTITY ladspa 'http://ladspa.org/ontology#'> ]>
 <rdf:RDF 
 	xmlns:rdf="&rdf;"
 	xmlns:rdfs="&rdfs;"
 	xmlns:dc="&dc;"
-	xmlns:ladspa="&ladspa;"
-> 
+	xmlns:caps="&caps;"
+	xmlns:ladspa="&ladspa;"> 
 
-	<!-- CabinetI -->
-	<ladspa:SimulatorPlugin 
-			rdf:about='http://ladspa.org/ontology#1766'> 
-    <ladspa:hasPort>
-      <ladspa:InputControlPort 
-					rdf:about="&ladspa;1766.1" 
-					ladspa:hasLabel="model">
-        <ladspa:hasScale>
-          <ladspa:Scale> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
-								rdf:value="0" 
-								ladspa:hasLabel="none" />
-						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
-								rdf:value="1" 
-								ladspa:hasLabel="Unmatched off-axis" />
-						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
-								rdf:value="2" 
-								ladspa:hasLabel="Unmatched on-axis" />
-						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
-								rdf:value="3" 
-								ladspa:hasLabel="Supertramp" />
-						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
-								rdf:value="4" 
-								ladspa:hasLabel="Little Wing 68" />
-						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
-								rdf:value="5" 
-								ladspa:hasLabel="Martial" />
-						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
-								rdf:value="6" 
-								ladspa:hasLabel="Mesa" />
-						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
-								rdf:value="7" 
-								ladspa:hasLabel="Pro Jr" />
-						</ladspa:hasPoint> 
-					</ladspa:Scale>
-        </ladspa:hasScale>
-      </ladspa:InputControlPort>
-    </ladspa:hasPort> 
-	</ladspa:SimulatorPlugin> 
-
-	<!-- ChorusI -->
-	<ladspa:ChorusPlugin 
-			rdf:about='http://ladspa.org/ontology#1767'> 
-	</ladspa:ChorusPlugin> 
-
-	<!-- StereoChorusI -->
-	<ladspa:ChorusPlugin 
-			rdf:about='http://ladspa.org/ontology#1768'> 
-	</ladspa:ChorusPlugin> 
-
-	<!-- Click -->
-	<ladspa:TimePlugin 
-			rdf:about='http://ladspa.org/ontology#1769'> 
-	</ladspa:TimePlugin> 
-
-	<!-- CEO -->
-	<ladspa:OscillatorPlugin 
-			rdf:about='http://ladspa.org/ontology#1770'> 
-	</ladspa:OscillatorPlugin> 
-
-	<!-- Clip -->
-	<ladspa:DistortionPlugin 
-			rdf:about='http://ladspa.org/ontology#1771'> 
-	</ladspa:DistortionPlugin> 
+	<!-- NoiseGate -->
+	<ladspa:FilterPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#NoiseGate'> 
+	</ladspa:FilterPlugin> 
 
 	<!-- Compress -->
 	<ladspa:CompressorPlugin 
-			rdf:about='http://ladspa.org/ontology#1772'> 
+			rdf:about='http://quitte.de/dsp/caps.html#Compress'> 
+		<ladspa:hasPort>
+			<ladspa:InputControlPort rdf:about="&ladspa;1772.0" 
+					ladspa:hasLabel="mode">
+				<ladspa:hasScale><ladspa:Scale> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="0" 
+								ladspa:hasLabel="linear" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="1" 
+								ladspa:hasLabel="saturating 2x" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="2" 
+								ladspa:hasLabel="saturating 4x" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="3" 
+								ladspa:hasLabel="saturating 4x128" />
+						</ladspa:hasPoint> 
+					</ladspa:Scale></ladspa:hasScale>
+			</ladspa:InputControlPort>
+		</ladspa:hasPort> 
 	</ladspa:CompressorPlugin> 
 
-	<!-- Eq -->
-	<ladspa:EQPlugin 
-			rdf:about='http://ladspa.org/ontology#1773'> 
-	</ladspa:EQPlugin> 
-
-	<!-- Lorenz -->
-	<ladspa:GeneratorPlugin 
-			rdf:about='http://ladspa.org/ontology#1774'> 
-	</ladspa:GeneratorPlugin> 
-
-	<!-- PhaserI -->
-	<ladspa:PhaserPlugin 
-			rdf:about='http://ladspa.org/ontology#1775'> 
-	</ladspa:PhaserPlugin> 
-
-	<!-- PreampIII -->
-	<ladspa:SimulatorPlugin 
-			rdf:about='http://ladspa.org/ontology#1776'> 
-	</ladspa:SimulatorPlugin> 
-
-	<!-- PreampIV -->
-	<ladspa:SimulatorPlugin 
-			rdf:about='http://ladspa.org/ontology#1777'> 
-	</ladspa:SimulatorPlugin> 
-
-	<!-- JVRev -->
-	<ladspa:ReverbPlugin 
-			rdf:about='http://ladspa.org/ontology#1778'> 
-	</ladspa:ReverbPlugin> 
-
-	<!-- Plate -->
-	<ladspa:ReverbPlugin 
-			rdf:about='http://ladspa.org/ontology#1779'> 
-	</ladspa:ReverbPlugin> 
-
-	<!-- Roessler -->
-	<ladspa:GeneratorPlugin 
-			rdf:about='http://ladspa.org/ontology#1780'> 
-	</ladspa:GeneratorPlugin> 
-
-	<!-- Sin -->
-	<ladspa:OscillatorPlugin 
-			rdf:about='http://ladspa.org/ontology#1781'> 
-	</ladspa:OscillatorPlugin> 
-
-	<!-- SweepVFI -->
-	<ladspa:FilterPlugin 
-			rdf:about='http://ladspa.org/ontology#1782'> 
-    <ladspa:hasPort>
-      <ladspa:InputControlPort 
-					rdf:about="&ladspa;1782.3" 
-					ladspa:hasLabel="model">
-        <ladspa:hasScale>
-          <ladspa:Scale> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
+	<!-- Compress2x2 -->
+	<ladspa:CompressorPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#Compress2x2'> 
+		<ladspa:hasPort>
+			<ladspa:InputControlPort rdf:about="&ladspa;2598.0" 
+					ladspa:hasLabel="mode">
+				<ladspa:hasScale><ladspa:Scale> 
+						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="0" 
-								ladspa:hasLabel="low pass" />
+								ladspa:hasLabel="linear" />
 						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
+						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="1" 
-								ladspa:hasLabel="band pass" />
+								ladspa:hasLabel="saturating 2x" />
 						</ladspa:hasPoint> 
-					</ladspa:Scale>
-        </ladspa:hasScale>
-      </ladspa:InputControlPort>
-    </ladspa:hasPort> 
-	</ladspa:FilterPlugin> 
-
-	<!-- VCOs -->
-	<ladspa:OscillatorPlugin 
-			rdf:about='http://ladspa.org/ontology#1783'> 
-	</ladspa:OscillatorPlugin> 
-
-	<!-- VCOd -->
-	<ladspa:OscillatorPlugin 
-			rdf:about='http://ladspa.org/ontology#1784'> 
-	</ladspa:OscillatorPlugin> 
-
-	<!-- White -->
-	<ladspa:GeneratorPlugin 
-			rdf:about='http://ladspa.org/ontology#1785'> 
-	</ladspa:GeneratorPlugin> 
-
-	<!-- AmpIII -->
-	<ladspa:SimulatorPlugin 
-			rdf:about='http://ladspa.org/ontology#1786'> 
-	</ladspa:SimulatorPlugin> 
-
-	<!-- HRTF -->
-	<ladspa:SimulatorPlugin 
-			rdf:about='http://ladspa.org/ontology#1787'> 
-	</ladspa:SimulatorPlugin> 
-
-	<!-- Pan -->
-	<ladspa:DelayPlugin 
-			rdf:about='http://ladspa.org/ontology#1788'> 
-	</ladspa:DelayPlugin> 
-
-	<!-- AmpIV -->
-	<ladspa:SimulatorPlugin 
-			rdf:about='http://ladspa.org/ontology#1794'> 
-	</ladspa:SimulatorPlugin> 
-
-	<!-- Plate2x2 -->
-	<ladspa:ReverbPlugin 
-			rdf:about='http://ladspa.org/ontology#1795'> 
-	</ladspa:ReverbPlugin> 
-
-	<!-- CabinetII -->
-	<ladspa:SimulatorPlugin 
-			rdf:about='http://ladspa.org/ontology#2581'> 
-    <ladspa:hasPort>
-      <ladspa:InputControlPort 
-					rdf:about="&ladspa;2581.1" 
-					ladspa:hasLabel="model">
-        <ladspa:hasScale>
-          <ladspa:Scale> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
-								rdf:value="0" 
-								ladspa:hasLabel="none" />
-						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
-								rdf:value="1" 
-								ladspa:hasLabel="Unmatched off-axis" />
-						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
+						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="2" 
-								ladspa:hasLabel="Unmatched on-axis" />
+								ladspa:hasLabel="saturating 4x" />
 						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
+						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="3" 
-								ladspa:hasLabel="Supertramp" />
+								ladspa:hasLabel="saturating 4x128" />
 						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
-								rdf:value="4" 
-								ladspa:hasLabel="Little Wing 68" />
-						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
-								rdf:value="5" 
-								ladspa:hasLabel="Martial" />
-						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
-								rdf:value="6" 
-								ladspa:hasLabel="Mesa" />
-						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
-								rdf:value="7" 
-								ladspa:hasLabel="Pro Jr" />
-						</ladspa:hasPoint> 
-					</ladspa:Scale>
-        </ladspa:hasScale>
-      </ladspa:InputControlPort>
-    </ladspa:hasPort> 
-	</ladspa:SimulatorPlugin> 
-
-	<!-- SweepVFII -->
-	<ladspa:FilterPlugin 
-			rdf:about='http://ladspa.org/ontology#2582'> 
-    <ladspa:hasPort>
-      <ladspa:InputControlPort 
-					rdf:about="&ladspa;2582.3" 
-					ladspa:hasLabel="model">
-        <ladspa:hasScale>
-          <ladspa:Scale> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
-								rdf:value="0" 
-								ladspa:hasLabel="low pass" />
-						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
-								rdf:value="1" 
-								ladspa:hasLabel="band pass" />
-						</ladspa:hasPoint> 
-					</ladspa:Scale>
-        </ladspa:hasScale>
-      </ladspa:InputControlPort>
-    </ladspa:hasPort> 
-	</ladspa:FilterPlugin> 
-
-	<!-- ChorusII -->
-	<ladspa:ChorusPlugin 
-			rdf:about='http://ladspa.org/ontology#2583'> 
-	</ladspa:ChorusPlugin> 
-
-	<!-- StereoChorusII -->
-	<ladspa:ChorusPlugin 
-			rdf:about='http://ladspa.org/ontology#2584'> 
-	</ladspa:ChorusPlugin> 
-
-	<!-- Dirac -->
-	<ladspa:GeneratorPlugin 
-			rdf:about='http://ladspa.org/ontology#2585'> 
-	</ladspa:GeneratorPlugin> 
-
-	<!-- PhaserII -->
-	<ladspa:PhaserPlugin 
-			rdf:about='http://ladspa.org/ontology#2586'> 
-	</ladspa:PhaserPlugin> 
-
-	<!-- AmpV -->
-	<ladspa:SimulatorPlugin 
-			rdf:about='http://ladspa.org/ontology#2587'> 
-	</ladspa:SimulatorPlugin> 
-
-	<!-- Scape -->
-	<ladspa:DelayPlugin 
-			rdf:about='http://ladspa.org/ontology#2588'> 
-	</ladspa:DelayPlugin> 
+					</ladspa:Scale></ladspa:hasScale>
+			</ladspa:InputControlPort>
+		</ladspa:hasPort> 
+	</ladspa:CompressorPlugin> 
 
 	<!-- ToneStack -->
 	<ladspa:SimulatorPlugin 
-			rdf:about='http://ladspa.org/ontology#2589'> 
-    <ladspa:hasPort>
-      <ladspa:InputControlPort 
-					rdf:about="&ladspa;2589.1" 
+			rdf:about='http://quitte.de/dsp/caps.html#ToneStack'> 
+		<ladspa:hasPort>
+			<ladspa:InputControlPort rdf:about="&ladspa;2589.1" 
 					ladspa:hasLabel="model">
-        <ladspa:hasScale>
-          <ladspa:Scale> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
+				<ladspa:hasScale><ladspa:Scale> 
+						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="0" 
-								ladspa:hasLabel="'59 Bassman" />
+								ladspa:hasLabel="basswoman" />
 						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
+						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="1" 
-								ladspa:hasLabel="'69 Twin Reverb" />
+								ladspa:hasLabel="wookie" />
 						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
+						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="2" 
-								ladspa:hasLabel="'64 Princeton" />
+								ladspa:hasLabel="DC 30" />
 						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
+						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="3" 
-								ladspa:hasLabel="'59/'81 JCM 800" />
+								ladspa:hasLabel="twin" />
 						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
+						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="4" 
-								ladspa:hasLabel="'78 Club &amp; Country" />
+								ladspa:hasLabel="stanford" />
 						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
+						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="5" 
-								ladspa:hasLabel="'59/'86 AC-30 of sorts" />
+								ladspa:hasLabel="juice 800" />
 						</ladspa:hasPoint> 
-					</ladspa:Scale>
-        </ladspa:hasScale>
-      </ladspa:InputControlPort>
-    </ladspa:hasPort> 
-	</ladspa:SimulatorPlugin> 
-
-	<!-- ToneStackLT -->
-	<ladspa:SimulatorPlugin 
-			rdf:about='http://ladspa.org/ontology#2590'> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="6" 
+								ladspa:hasLabel="HK 20" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="7" 
+								ladspa:hasLabel="porky" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="8" 
+								ladspa:hasLabel="nihon ace" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="9" 
+								ladspa:hasLabel="5F6-A LT" />
+						</ladspa:hasPoint> 
+					</ladspa:Scale></ladspa:hasScale>
+			</ladspa:InputControlPort>
+		</ladspa:hasPort> 
 	</ladspa:SimulatorPlugin> 
 
 	<!-- AmpVTS -->
 	<ladspa:SimulatorPlugin 
-			rdf:about='http://ladspa.org/ontology#2592'> 
-    <ladspa:hasPort>
-      <ladspa:InputControlPort 
-					rdf:about="&ladspa;2592.1" 
-					ladspa:hasLabel="model">
-        <ladspa:hasScale>
-          <ladspa:Scale> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
+			rdf:about='http://quitte.de/dsp/caps.html#AmpVTS'> 
+		<ladspa:hasPort>
+			<ladspa:InputControlPort rdf:about="&ladspa;2592.0" 
+					ladspa:hasLabel="ratio">
+				<ladspa:hasScale><ladspa:Scale> 
+						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="0" 
-								ladspa:hasLabel="'59 Bassman" />
+								ladspa:hasLabel="2x" />
 						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
+						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="1" 
-								ladspa:hasLabel="'69 Twin Reverb" />
+								ladspa:hasLabel="4x" />
 						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
+						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="2" 
-								ladspa:hasLabel="'64 Princeton" />
+								ladspa:hasLabel="8x" />
 						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
+					</ladspa:Scale></ladspa:hasScale>
+			</ladspa:InputControlPort>
+		</ladspa:hasPort> 
+		<ladspa:hasPort>
+			<ladspa:InputControlPort rdf:about="&ladspa;2592.1" 
+					ladspa:hasLabel="model">
+				<ladspa:hasScale><ladspa:Scale> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="0" 
+								ladspa:hasLabel="basswoman" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="1" 
+								ladspa:hasLabel="wookie" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="2" 
+								ladspa:hasLabel="DC 30" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="3" 
-								ladspa:hasLabel="'59/'81 JCM 800" />
+								ladspa:hasLabel="twin" />
 						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
+						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="4" 
-								ladspa:hasLabel="'78 Club &amp; Country" />
+								ladspa:hasLabel="stanford" />
 						</ladspa:hasPoint> 
-            <ladspa:hasPoint>
-              <ladspa:Point 
+						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="5" 
-								ladspa:hasLabel="'59/'86 AC-30 of sorts" />
+								ladspa:hasLabel="juice 800" />
 						</ladspa:hasPoint> 
-					</ladspa:Scale>
-        </ladspa:hasScale>
-      </ladspa:InputControlPort>
-    </ladspa:hasPort> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="6" 
+								ladspa:hasLabel="HK 20" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="7" 
+								ladspa:hasLabel="porky" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="8" 
+								ladspa:hasLabel="nihon ace" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="9" 
+								ladspa:hasLabel="5F6-A LT" />
+						</ladspa:hasPoint> 
+					</ladspa:Scale></ladspa:hasScale>
+			</ladspa:InputControlPort>
+		</ladspa:hasPort> 
 	</ladspa:SimulatorPlugin> 
 
-	<!-- AutoWah -->
+	<!-- CabinetII -->
+	<ladspa:SimulatorPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#CabinetII'> 
+		<ladspa:hasPort>
+			<ladspa:InputControlPort rdf:about="&ladspa;2581.1" 
+					ladspa:hasLabel="model">
+				<ladspa:hasScale><ladspa:Scale> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="1" 
+								ladspa:hasLabel="unmatched A" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="2" 
+								ladspa:hasLabel="unmatched B" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="3" 
+								ladspa:hasLabel="supertramp" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="4" 
+								ladspa:hasLabel="little wing 68" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="5" 
+								ladspa:hasLabel="martial" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="6" 
+								ladspa:hasLabel="mega wookie" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="7" 
+								ladspa:hasLabel="pro sr" />
+						</ladspa:hasPoint> 
+					</ladspa:Scale></ladspa:hasScale>
+			</ladspa:InputControlPort>
+		</ladspa:hasPort> 
+	</ladspa:SimulatorPlugin> 
+
+	<!-- CabinetIV -->
+	<ladspa:SimulatorPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#CabinetIV'> 
+		<ladspa:hasPort>
+			<ladspa:InputControlPort rdf:about="&ladspa;2606.1" 
+					ladspa:hasLabel="model">
+				<ladspa:hasScale><ladspa:Scale> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="0" 
+								ladspa:hasLabel="mega wookie 800" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="1" 
+								ladspa:hasLabel="mega wookie 812" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="2" 
+								ladspa:hasLabel="mega wookie 828" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="3" 
+								ladspa:hasLabel="mega wookie 868" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="4" 
+								ladspa:hasLabel="mega wookie 908" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="5" 
+								ladspa:hasLabel="mega wookie 912" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="6" 
+								ladspa:hasLabel="mega wookie 936" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="7" 
+								ladspa:hasLabel="mega wookie 968" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="8" 
+								ladspa:hasLabel="mega wookie 992" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="9" 
+								ladspa:hasLabel="unmatched" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="10" 
+								ladspa:hasLabel="twin A" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="11" 
+								ladspa:hasLabel="twin B" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="12" 
+								ladspa:hasLabel="twin C" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="13" 
+								ladspa:hasLabel="blue A" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="14" 
+								ladspa:hasLabel="blue B" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="15" 
+								ladspa:hasLabel="tweedie A" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="16" 
+								ladspa:hasLabel="tweedie B" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="17" 
+								ladspa:hasLabel="mini wookie A" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="18" 
+								ladspa:hasLabel="mini wookie B" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="19" 
+								ladspa:hasLabel="rosie A" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="20" 
+								ladspa:hasLabel="rosie B" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="21" 
+								ladspa:hasLabel="indigo" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="22" 
+								ladspa:hasLabel="angel" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="23" 
+								ladspa:hasLabel="sixty-one" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="24" 
+								ladspa:hasLabel="sixty-two" />
+						</ladspa:hasPoint> 
+					</ladspa:Scale></ladspa:hasScale>
+			</ladspa:InputControlPort>
+		</ladspa:hasPort> 
+	</ladspa:SimulatorPlugin> 
+
+	<!-- JVRev -->
+	<ladspa:ReverbPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#JVRev'> 
+	</ladspa:ReverbPlugin> 
+
+	<!-- Plate -->
+	<ladspa:ReverbPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#Plate'> 
+	</ladspa:ReverbPlugin> 
+
+	<!-- Plate2x2 -->
+	<ladspa:ReverbPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#Plate2x2'> 
+	</ladspa:ReverbPlugin> 
+
+	<!-- Saturate -->
+	<ladspa:DistortionPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#Saturate'> 
+		<ladspa:hasPort>
+			<ladspa:InputControlPort rdf:about="&ladspa;1771.2" 
+					ladspa:hasLabel="mode">
+				<ladspa:hasScale><ladspa:Scale> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="0" 
+								ladspa:hasLabel="bypass" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="1" 
+								ladspa:hasLabel="atan" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="2" 
+								ladspa:hasLabel="atan15" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="3" 
+								ladspa:hasLabel="clip" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="4" 
+								ladspa:hasLabel="one5" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="5" 
+								ladspa:hasLabel="one53" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="6" 
+								ladspa:hasLabel="clip3" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="7" 
+								ladspa:hasLabel="clip9" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="8" 
+								ladspa:hasLabel="sin1" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="9" 
+								ladspa:hasLabel="pow7" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="10" 
+								ladspa:hasLabel="tanh" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="11" 
+								ladspa:hasLabel="rectify" />
+						</ladspa:hasPoint> 
+					</ladspa:Scale></ladspa:hasScale>
+			</ladspa:InputControlPort>
+		</ladspa:hasPort> 
+	</ladspa:DistortionPlugin> 
+
+	<!-- ChorusII -->
+	<ladspa:ChorusPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#ChorusII'> 
+	</ladspa:ChorusPlugin> 
+
+	<!-- StereoChorusII -->
+	<ladspa:ChorusPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#StereoChorusII'> 
+	</ladspa:ChorusPlugin> 
+
+	<!-- StereoChorusII2x2 -->
+	<ladspa:ChorusPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#StereoChorusII2x2'> 
+	</ladspa:ChorusPlugin> 
+
+	<!-- PhaserII -->
+	<ladspa:PhaserPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#PhaserII'> 
+	</ladspa:PhaserPlugin> 
+
+	<!-- StereoPhaserII -->
+	<ladspa:PhaserPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#StereoPhaserII'> 
+	</ladspa:PhaserPlugin> 
+
+	<!-- StereoPhaserII2x2 -->
+	<ladspa:PhaserPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#StereoPhaserII2x2'> 
+	</ladspa:PhaserPlugin> 
+
+	<!-- AutoFilter -->
 	<ladspa:FilterPlugin 
-			rdf:about='http://ladspa.org/ontology#2593'> 
+			rdf:about='http://quitte.de/dsp/caps.html#AutoFilter'> 
+		<ladspa:hasPort>
+			<ladspa:InputControlPort rdf:about="&ladspa;2593.0" 
+					ladspa:hasLabel="mode">
+				<ladspa:hasScale><ladspa:Scale> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="0" 
+								ladspa:hasLabel="low pass" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="1" 
+								ladspa:hasLabel="band pass" />
+						</ladspa:hasPoint> 
+					</ladspa:Scale></ladspa:hasScale>
+			</ladspa:InputControlPort>
+		</ladspa:hasPort> 
+		<ladspa:hasPort>
+			<ladspa:InputControlPort rdf:about="&ladspa;2593.1" 
+					ladspa:hasLabel="filter">
+				<ladspa:hasScale><ladspa:Scale> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="0" 
+								ladspa:hasLabel="breathy" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="1" 
+								ladspa:hasLabel="fat" />
+						</ladspa:hasPoint> 
+					</ladspa:Scale></ladspa:hasScale>
+			</ladspa:InputControlPort>
+		</ladspa:hasPort> 
 	</ladspa:FilterPlugin> 
 
-	<!-- Eq2x2 -->
-	<ladspa:EQPlugin 
-			rdf:about='http://ladspa.org/ontology#2594'> 
-	</ladspa:EQPlugin> 
+	<!-- Scape -->
+	<ladspa:DelayPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#Scape'> 
+		<ladspa:hasPort>
+			<ladspa:InputControlPort rdf:about="&ladspa;2588.2" 
+					ladspa:hasLabel="divider">
+				<ladspa:hasScale><ladspa:Scale> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="2" 
+								ladspa:hasLabel="eighths" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="3" 
+								ladspa:hasLabel="triplets" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="4" 
+								ladspa:hasLabel="sixteenths" />
+						</ladspa:hasPoint> 
+					</ladspa:Scale></ladspa:hasScale>
+			</ladspa:InputControlPort>
+		</ladspa:hasPort> 
+	</ladspa:DelayPlugin> 
+
+	<!-- Pan -->
+	<ladspa:DelayPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#Pan'> 
+	</ladspa:DelayPlugin> 
 
 	<!-- Narrower -->
 	<ladspa:FilterPlugin 
-			rdf:about='http://ladspa.org/ontology#2595'> 
+			rdf:about='http://quitte.de/dsp/caps.html#Narrower'> 
+		<ladspa:hasPort>
+			<ladspa:InputControlPort rdf:about="&ladspa;2595.2" 
+					ladspa:hasLabel="mode">
+				<ladspa:hasScale><ladspa:Scale> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="0" 
+								ladspa:hasLabel="crossfeed mixing" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="1" 
+								ladspa:hasLabel="mid/side processing" />
+						</ladspa:hasPoint> 
+					</ladspa:Scale></ladspa:hasScale>
+			</ladspa:InputControlPort>
+		</ladspa:hasPort> 
 	</ladspa:FilterPlugin> 
 
-	<!-- Goodbye, Dept. of Redundancy Dept. Dept. Dept. -->
+	<!-- Eq -->
+	<ladspa:EQPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#Eq'> 
+	</ladspa:EQPlugin> 
+
+	<!-- Eq2x2 -->
+	<ladspa:EQPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#Eq2x2'> 
+	</ladspa:EQPlugin> 
+
+	<!-- Sin -->
+	<ladspa:OscillatorPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#Sin'> 
+	</ladspa:OscillatorPlugin> 
+
+	<!-- White -->
+	<ladspa:GeneratorPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#White'> 
+	</ladspa:GeneratorPlugin> 
+
+	<!-- Lorenz -->
+	<ladspa:GeneratorPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#Lorenz'> 
+	</ladspa:GeneratorPlugin> 
+
+	<!-- Roessler -->
+	<ladspa:GeneratorPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#Roessler'> 
+	</ladspa:GeneratorPlugin> 
+
+	<!-- Click -->
+	<ladspa:TimePlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#Click'> 
+		<ladspa:hasPort>
+			<ladspa:InputControlPort rdf:about="&ladspa;1769.0" 
+					ladspa:hasLabel="model">
+				<ladspa:hasScale><ladspa:Scale> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="0" 
+								ladspa:hasLabel="box" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="1" 
+								ladspa:hasLabel="stick" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="2" 
+								ladspa:hasLabel="beep" />
+						</ladspa:hasPoint> 
+					</ladspa:Scale></ladspa:hasScale>
+			</ladspa:InputControlPort>
+		</ladspa:hasPort> 
+	</ladspa:TimePlugin> 
+
+	<!-- CEO -->
+	<ladspa:OscillatorPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#CEO'> 
+	</ladspa:OscillatorPlugin> 
+
+	<!-- Dirac -->
+	<ladspa:GeneratorPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#Dirac'> 
+	</ladspa:GeneratorPlugin> 
+	<!-- Goodbye, Dept. of Redundancy Dept. -->
 </rdf:RDF>

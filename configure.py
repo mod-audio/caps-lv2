@@ -10,7 +10,7 @@ def we_have_sse():
 def we_have_ssse3():
 	try: return 'ssse3' in open ('/proc/cpuinfo').read().split()
 	except: return 0
-
+	
 def we_think_so_different_dude():
 	try: return 'Darwin' == os.popen ('uname -s').read().strip()
 	except: return 0

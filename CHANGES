@@ -1,10 +1,126 @@
+0.9.4
+	* beep wave for Click
+	* selectable oversampling ratio for Compress in saturating mode
+	* fixed Compress to apply gain before saturation
+	* replaced sample_func_t with the more apt yield_func_t
+	* minor cosmetics
+	* caps-doc is a separate package
+	* selectable wave for Click, parfiltmodel added
+	* further smoothened ChorusII modulation
+	* selectable oversampling ratio for Amp
+	* moved some compress setup calls from Amp's run() to activate()
+	* rdf target prerequisite for dist
+	* Eq Q fixed, flat response at 0 gain
+
+0.9.3
+	* Smoother modulation for ChorusII
+	* AmpVTS filters retuned
+	* correction for ToneStack gain in AmpVTS
+	* ToneStack models reordered, 'wookie', 'porky', 'HK 20', 'nihon ace' models added
+	* Amp 'bias' now a filtered function of output power, control removed
+	* division operation in 1st-order hipass setup replaced by multiplication
+	* Saturate gain = 0 dB in 'bypass' mode
+	* Saturate 'rectify' mode
+	* AmpVTS, Plate control mapping adjusted
+
+0.9.2
+	* included dsp/polynomials.cc in the tarball
+
+0.9.1
+	* Lorenz/Roessler rate linked to fs
+	* AutoFilter replaces SweepVFI
+	* CabinetIV
+	* fixed erroneous float promotion of upsampler z padding parameter
+	* lots of parameter tuning
+	* many cleanuppies here and there
+	* SweepVFI/AutoFilter saturating SVFII ladder (instead of oversampled SVFI)
+	* UniqueIDs moved into interface.cc 
+	* SweepVFI modulation comes as range + x/z now
+	* GPL v3
+	* more Phaser notches
+	* LR filters for Spice
+	* Saturate inverse gain for approximately constant loudness
+	* Scape extensively reworked
+	* further refinements to Chorus and Phaser units for smoother modulation 
+	* SweepVFII removed
+	* LADSPA_PORT_GROUP
+	* Compress* input gain removed
+	* ToneStackLT rolled into ToneStack and eliminated
+	* fixed w miscalculation in DSP::Sine::set_f with fs given
+	* AmpPlus/AmpVTS total rewrite
+	* TubeCompress merged into Compress, for great template goodness
+	* *Chorus* modulation rate decoupled from samplerate
+	* tanh approximation, available in the Saturate plugin
+	* *Chorus* units reworked for smoother modulation and sound
+	* StereoChorusII2x2 plugin
+	* JVRev bandwidth filter/control added
+	* VCO* removed
+	* HRTF removed
+	* ChorusI, StereoChorusI, PhaserI removed
+	* CabinetI removed
+	* No more AmpStub silliness
+	* All Amp and Preamp plugins removed, save for AmpVTS
+	* Incite rechristened Spice
+	* JVRev blend range normalised to [0..1]
+	* Plate input value ranges adjusted to uniform [0..1]
+	* Phaser* spread value range upper bound adjusted to 1 from pi multiples
+
+0.9.0
+	* White bleached (was slightly pinkish before)
+	* up+down oversampling functionality rolled into one class
+	* Incite plugin
+	* total redesign of the Clip plugin, renamed to Saturate 
+	* NoiseGate plugin
+	* RBJ prototypes changed to accept biquad instead of coeff. arrays
+	* various default value changes
+	* all FIRs changed to use templated kernel size, appreciable
+		speedup for all oversampled plugins
+	* reduced the number of arithmetic operations in the tonestack 
+		coefficient update function, speedup for ToneStack and AmpVTS
+	* TubeCompress2x2 plugin
+	* TubeCompress plugin
+	* no more borrowed kernels!
+	* CabinetII gain adjusted for Mesa and Pro Jr models (much lower now and
+		more in line with the other models)
+	* Amp final drive gain reduced slightly to prevent foldover distortion
+	* SweepVF fractal rate control mapping adjusted
+	* Pan completely redesigned with Orban-like stereo image synthesis
+	* Narrower mode switch and mid/side operation added
+	* Plate parameter ranges modified for a brighter and less reverberant
+		default sound
+	* VCOd sync option had to be dropped due to compiler incompatibility
+	* Lorenz, Roessler fitted with a dc-blocking filter
+	* all int sample loop variables changed to unsigned, slightest speedup
+	* Compress2x2 plugin
+	* Compress plugin replaced with a completely new design
+	* Phaser feedback port ranges sanitised
+	* StereoPhaser plugins
+	* PhaserII gain reduced by 6dB 
+	* "latency" outputs of all plugins removed
+	* Descriptor array handling changed to disable individual plugins with
+		relative ease
+	* fixed instances of g++ -O3 and above compiled code segfaulting, 
+		performance gained everywhere
+	* documentation reworked extensively
+	* CEO wave is resampled at runtime from fs = 8kHz source
+	* CEO mantra changed (now an flite recording)
+	* Click changed to use modal synthesis to generate the click wavetable,
+		for improved sound and independency of sample rate
+	* Plate changed to do delay summation using doubles
+	* 1st and 2nd order filters changed to use templated types for coefficient
+		and state storage
+	* 1st order input hipass added to AmpVTS plugin
+	* filter 'mode' port added to AutoWah, and renamed to AutoFilter
+	* fixed improper 'model' labels meant to be 'mode' in the rdf generator 
+
 0.4.5
 	* Narrower plugin added
 	* fixed 'configure.py' to work with python3
 	* fixed Sin, Roessler and Lorenz gain smoothing on activation
 
 0.4.4
-	
+	* had a good time
+
 0.4.3
 	* basics.h cleanup / comments
 	* minor Makefile cleanup
