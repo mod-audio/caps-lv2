@@ -98,7 +98,7 @@ template <yield_func_t yield, class Over>
 void
 AmpVTS::subcycle (uint frames, Over & over)
 {
-	int m = getport(0);
+	int m = getport(1);
 	if (m != model)
 		tonestack.setmodel (model = m);
 	tonestack.updatecoefs (getport(5),getport(6),getport(7));
