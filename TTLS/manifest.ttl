@@ -26,11 +26,9 @@
 <http://portalmod.com/plugins/caps/saturate> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <saturate.ttl>.
 <http://portalmod.com/plugins/caps/scape> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <scape.ttl>.
 <http://portalmod.com/plugins/caps/sin> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <sin.ttl>.
-<http://portalmod.com/plugins/caps/spice> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <spice.ttl>.
 <http://portalmod.com/plugins/caps/stereochorusii> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <stereochorusii.ttl>.
 <http://portalmod.com/plugins/caps/stereochorusii2x2> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <stereochorusii2x2.ttl>.
 <http://portalmod.com/plugins/caps/stereophaserii> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <stereophaserii.ttl>.
 <http://portalmod.com/plugins/caps/stereophaserii2x2> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <stereophaserii2x2.ttl>.
 <http://portalmod.com/plugins/caps/tonestack> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <tonestack.ttl>.
 <http://portalmod.com/plugins/caps/white> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <white.ttl>.
-<http://portalmod.com/plugins/caps/ampvts> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <ampvts.ttl>.
