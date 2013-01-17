@@ -6,6 +6,7 @@
 <http://portalmod.com/plugins/caps/cabinetii> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <cabinetii.ttl>.
 <http://portalmod.com/plugins/caps/cabinetiv> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <cabinetiv.ttl>.
 <http://portalmod.com/plugins/caps/ceo> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <ceo.ttl>.
+<http://portalmod.com/plugins/caps/chorusi> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <chorusi.ttl>.
 <http://portalmod.com/plugins/caps/chorusii> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <chorusii.ttl>.
 <http://portalmod.com/plugins/caps/click> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <click.ttl>.
 <http://portalmod.com/plugins/caps/compress> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <compress.ttl>.
