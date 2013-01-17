@@ -13,7 +13,7 @@ STRIP = strip
 CFLAGS = $(OPTS) $(_CFLAGS)
 LDFLAGS = $(_LDFLAGS) $(CFLAGS)
 
-VERSION = 0.9.4
+VERSION = 0.9.7
 PLUG = caps
 
 SOURCES = $(wildcard *.cc) $(wildcard dsp/*.cc)
@@ -30,8 +30,9 @@ RDFDEST = $(PREFIX)/share/ladspa/rdf
 all: depend $(PLUG).so tags
 
 run: all
+	python -i bin/rack.py White AutoFilter cream.Audio.Meter Pan
 	#python -i bin/rack.py White AutoFilter Pan
-	@~/cream/gdb-python html/graph.py Compress,spectrum.png
+	#@~/cream/gdb-python html/graph.py Compress,spectrum.png
 
 rdf: $(PLUG).rdf
 $(PLUG).rdf: all tools/make-rdf.py
@@ -54,8 +55,7 @@ install: all
 	@$(STRIP) $(PLUG).so > /dev/null
 	install -d $(DEST)
 	install -m 644 $(PLUG).so $(DEST)
-	install -d $(RDFDEST)
-	install -m 644 $(PLUG).rdf $(RDFDEST)
+	install -m 644 TTLS/* $(DEST)
 
 fake-install: all
 	-rm $(DEST)/$(PLUG).so

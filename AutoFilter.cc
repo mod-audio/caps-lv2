@@ -47,14 +47,14 @@ AutoFilter::init()
 	lorenz.init();
 
 	/* for envelope RMS calculation */
-	hp.set_f (250/fs);
+	hp.set_f (250*over_fs);
 	DSP::RBJ::LP (.001, .5, smoothenv);
 }
 
 void 
 AutoFilter::activate()
 { 
-	f=getport(2)/fs, Q=getport(3);
+	f=getport(4)*over_fs, Q=getport(5);
 
 	svf1.reset();
 	svf1.set_f_Q (f,Q);
@@ -64,48 +64,53 @@ AutoFilter::activate()
 	rms.reset();
 	hp.reset();
 	smoothenv.reset();
+
+	oversampler.two.reset();
+	oversampler.four.reset();
+	oversampler.eight.reset();
 }
 
-template <yield_func_t F>
+template <yield_func_t F, class SVF, class Over>
 void
-AutoFilter::cycle (uint frames)
+AutoFilter::subsubcycle (uint frames, SVF & svf, Over & over)
 {
 	div_t qr = div (frames, blocksize);
 	int blocks = qr.quot;
 	if (qr.rem) ++blocks;
-	double over_blocks = 1./blocks;
+	float over_blocks = 1./blocks;
 
-	svf1.set_out ((int) getport(0));
-	svf2.set_out ((int) getport(0));
+	svf.set_out ((int) getport(1));
+	float over_ratio = 1./over.Ratio;
 
-	int svf = 1 + (int) getport(1);
+	float g = svf.gainfactor() * db2lin(getport(3));
 
 	/* f,Q sweep */
-	double df = (getport(2)/fs - f) * over_blocks;
-	double dQ = (getport(3) - Q) * over_blocks;
+	float df = (getport(4)*over_fs - f) * over_blocks;
+	float dQ = (getport(5) - Q) * over_blocks;
 
-	float range = getport(4);
-	float env = getport(5);
+	float range = getport(6);
+	float env = getport(7);
 
-	lorenz.set_rate (2.268e-05*fs * .6*sq (getport(6)));
-	float x = getport(7), z = 1-x;
+	lorenz.set_rate (3e-05*fs * .6*sq(getport(8)));
+	float x = getport(9), z = 1-x;
 
-
-	sample_t * s = ports[8];
-	sample_t * d = ports[9];
+	sample_t * s = ports[10];
+	sample_t * d = ports[11];
 
 	while (frames)
 	{
 		lorenz.step();
 
-		double fmod = x*lorenz.get_x() + z*lorenz.get_z();
-		double fenv = smoothenv.process (rms.get()+normal);
+		float fmod = 2.5*(x*lorenz.get_x() + z*lorenz.get_z());
+		float fenv = smoothenv.process (rms.get()+normal);
 		fenv = 64*fenv*fenv;
 
 		#if 0 
 		static int _turn = 0;
+		static float ffm = 0;
+		ffm = max(fabs(fmod),ffm);
 		if (_turn++ % 100 == 0)
-			fprintf (stderr, "%.4f %.4f\n", fmod, env);
+			fprintf (stderr, "%.4f %.4f %.4f\n", fmod, env, ffm);
 		#endif
 		fmod = fmod*(1-env) + fenv*env;
 		fmod *= range;
@@ -120,20 +125,23 @@ AutoFilter::cycle (uint frames)
 			rms.store (x*x);
 		}
 
-		/* filter it */
-		if (svf == 1)
+		svf.set_f_Q (fmod*over_ratio, Q);
+		for (uint i = 0; i < n; ++i)
 		{
-			svf1.set_f_Q (fmod, Q);
-			double g = 1.8;
-			for (uint i = 0; i < n; ++i)
-				F (d, i, svf1.process<DSP::Polynomial::tanh>(s[i]+normal,g), adding_gain);
-		}
-		else if (svf == 2)
-		{
-			svf2.set_f_Q (fmod, Q);
-			double g = .84*(1-Q) + .21;
-			for (uint i = 0; i < n; ++i)
-				F (d, i, svf2.process<DSP::Polynomial::tanh>(s[i]+normal,g), adding_gain);
+			sample_t x = s[i] + normal;
+
+			x = over.upsample (x);
+			x = svf.process_clip(x,g);
+			x = over.downsample (x);
+
+			F (d,i,.5*x,adding_gain);
+
+			for (int o=1; o < over.Ratio; ++o)
+			{
+				x = over.uppad (o);
+				x = svf.process_clip(x,g);
+				over.downstore (x);
+			}
 		}
 
 		s += n;
@@ -147,22 +155,58 @@ AutoFilter::cycle (uint frames)
 
 /* //////////////////////////////////////////////////////////////////////// */
 
+template <yield_func_t F, class SVF>
+void
+AutoFilter::subcycle (uint frames, SVF & svf)
+{
+	int r = getport(0);
+	if (r == 3)
+		subsubcycle<F,SVF,DSP::Oversampler<8,64> > (frames, svf, oversampler.eight);
+	else if (r == 2)
+		subsubcycle<F,SVF,DSP::Oversampler<4,64> > (frames, svf, oversampler.four);
+	else if (r == 1)
+		subsubcycle<F,SVF,DSP::Oversampler<2,32> > (frames, svf, oversampler.two);
+	else
+		subsubcycle<F,SVF,DSP::NoOversampler> (frames, svf, oversampler.one);
+}
+
+template <yield_func_t F>
+void
+AutoFilter::cycle (uint frames)
+{
+	if (getport(2) == 4)
+		subcycle<F,SVF5> (frames, svf5);
+	else if (getport(2) == 3)
+		subcycle<F,SVF4> (frames, svf4);
+	else if (getport(2) == 2)
+		subcycle<F,SVF3> (frames, svf3);
+	else if (getport(2) == 1)
+		subcycle<F,SVF2> (frames, svf2);
+	else
+		subcycle<F,SVF1> (frames, svf1);
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+
 PortInfo
 AutoFilter::port_info [] =
 {
-	{ "mode", CTRL_IN, {DEFAULT_1 | INTEGER, 0, 1},
+	{	"over", CTRL_IN, {DEFAULT_1 | INTEGER, 0, 3}, 
+		"{0:'none',1:'2x',2:'4x',3:'8x'}"},
+	{ "mode", CTRL_IN | GROUP, {DEFAULT_1 | INTEGER, 0, 1},
 		"{0:'low pass',1:'band pass',}" },
-	{ "filter", CTRL_IN | GROUP, {DEFAULT_1 | INTEGER, 0, 1}, 
-		"{0:'breathy',1:'fat'}", }, 
-	/* 2 */
+	{ "filter", CTRL_IN | GROUP, {DEFAULT_1 | INTEGER, 0, 4}, 
+		"{0:'breathy',1:'fat A',2:'fat B',3:'fat C',4:'fat D'}", }, 
+	{ "gain (dB)", CTRL_IN, {DEFAULT_LOW, 0, 24} }, 
+	/* 4 */
 	{ "f (Hz)", CTRL_IN | GROUP, {LOG | DEFAULT_LOW, 43, 3743} }, 
 	{ "Q", CTRL_IN, {DEFAULT_0, 0, 1} }, 
-	/* 4 */
+	/* 6 */
 	{ "range", CTRL_IN | GROUP, {DEFAULT_1, 0, 1} }, 
 	{ "lfo/env", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
 	{ "rate", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} }, 
 	{ "x/z", CTRL_IN, {DEFAULT_1, 0, 1} }, 
-	/* 8 */
+	/* 10 */
 	{ "in", AUDIO_IN}, 
 	{	"out", AUDIO_OUT}
 };

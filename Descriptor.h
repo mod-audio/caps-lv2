@@ -120,6 +120,7 @@ class Descriptor
 
                 plugin->ports = new sample_t * [n];
                 plugin->fs = sample_rate;
+				plugin->over_fs = 1./sample_rate;
                 plugin->normal = NOISE_FLOOR;
                 plugin->init();
 

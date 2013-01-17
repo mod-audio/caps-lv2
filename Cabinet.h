@@ -89,14 +89,42 @@ class CabinetII
 
 /* /////////////////////////////////////////////////////////////////////// */
 
-/* parfilt-based cabinet: banks of parallel 2nd-order filters */
-
 template <uint N, uint FIR>
 class ParModel {
 	public:
 		float gain;
 		float a1[4*N], a2[4*N], b1[4*N], b2[4*N];
 		float fir[FIR];
+};
+
+class CabinetIII
+: public Plugin
+{
+	public:
+		enum { 
+			N = 128/4, /* number of bands/4 */
+			FIR = 128 /* FIR filter taps */
+		}; 
+
+		int model;
+		static ParModel<N,FIR> models [];
+		void switch_model (int m);
+
+		sample_t gain;
+		DSP::BiQuad4fBank<N> bank;
+		DSP::FIR4f<FIR> fir;
+
+		template <yield_func_t F>
+				void cycle (uint frames);
+
+	public:
+		static PortInfo port_info [];
+
+		void init();
+		void activate();
+
+		void run (uint n) { cycle<store_func> (n); }
+		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 class CabinetIV

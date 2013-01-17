@@ -93,7 +93,7 @@ float _power_clip_7 (float x)
 void
 Saturate::init()
 {
-	hp.set_f (40./fs);
+	hp.set_f (40*over_fs);
 }
 
 void
@@ -247,8 +247,8 @@ void
 Spice::cycle (uint frames)
 {
 	struct { float f, squash, gain; } 
-			lo = {getport(2)/fs, getport(3), getport(4)},
-			hi = {getport(5)/fs, 0, getport(6)};
+			lo = {getport(2)*over_fs, getport(3), getport(4)},
+			hi = {getport(5)*over_fs, 0, getport(6)};
 
 	if (split[0].f != lo.f)
 	{

@@ -41,10 +41,10 @@ class NoiseGate
 : public Plugin
 {
 	public:
-		enum { N = 512 };
-		DSP::RMS<N> rms;
-		uint remain;
+		int N;
 		float over_N;
+		DSP::RMS<2048> rms;
+		uint remain;
 		struct {
 			sample_t current, delta, quiet;
 		} gain;

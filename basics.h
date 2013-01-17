@@ -48,7 +48,7 @@
 #include <stdio.h>
 
 #include "ladspa.h"
-#include "lv2.h"
+#include <lv2.h>
 
 typedef __int8_t			int8;
 typedef __uint8_t			uint8;
@@ -105,9 +105,7 @@ typedef struct {
 	const char * meta;
 } PortInfo;
 
-// typedef LADSPA_Data sample_t;
 typedef float sample_t;
-
 typedef unsigned int uint;
 typedef unsigned long ulong;
 
@@ -196,13 +194,13 @@ next_power_of_2 (uint n)
 inline double 
 db2lin (double db)
 {
-	return pow (10., db * .05);
+	return pow(10, db*.05);
 }
 
 inline double
 lin2db (double lin)
 {
-	return 20. * log10 (lin);
+	return 20*log10(lin);
 }
 
 #ifdef __i386__
@@ -215,9 +213,10 @@ lin2db (double lin)
 
 #define CAPS "C* "
 
-class Plugin {
+class Plugin 
+{
 	public:
-		float fs; /* sample rate, obviously */
+		float fs, over_fs; /* sample rate and 1/fs */
 		float adding_gain; /* for run_adding() */
 
 		int first_run; /* 1st block after activate(), do no parameter smoothing */
@@ -240,7 +239,6 @@ class Plugin {
 				//LADSPA_PortRangeHint & r = ranges[i];
 				sample_t v = getport_unclamped (i);
                 return v;
-				// return clamp (v, r.LowerBound, r.UpperBound);
 			}
 };
 

@@ -36,7 +36,8 @@ AmpVTS::init()
 {
 	tonestack.init (fs);
 	
-	DSP::RBJ::LP (1/fs, .7, biaslp);
+	dc2.set_f (25*over_fs); 
+	DSP::RBJ::LP (1*over_fs, .7, biaslp);
 	/* compress is initialised in activate() */
 }
 
@@ -46,14 +47,14 @@ AmpVTS::activate()
 	hp.reset();
 	lp.reset();
 
-	bias = 0;
-
 	remain = 0;
 	compress.init (fs);
 	compress.set_threshold(0);
 	compress.set_release(0);
 
-	/* dcblock is reset in setratio() */
+	dc2.reset();
+
+	/* dc1 is reset in setratio() */
 
 	model = -1;
 	ratio = -1;
@@ -65,9 +66,11 @@ AmpVTS::setratio (int r)
 {
 	if (r == ratio) 
 		return;
+
 	ratio = r;
-	dcblock.set_f (15./(ratio*fs)); 
-	dcblock.reset();
+	dc1.set_f (25./(ratio*fs)); 
+	dc1.reset();
+
 	over2.reset();
 	over4.reset();
 	over8.reset();
@@ -91,40 +94,38 @@ AmpVTS::cycle (uint frames)
 #define preamp DSP::Polynomial::one5
 #define poweramp DSP::Polynomial::atan
 
-/* correction for tonestack model gain differences */
-static float tsgain[] = {.764, .615, 1.240, 1.599, 1.132, .628, .715, .393, 1.218};
+/* rough correction for tonestack model gain differences */
+static float tsgain[] = {.639, 1.290, .534, 1.008, .542, .936, .605, 1.146, .211};
 
 template <yield_func_t yield, class Over>
 void
 AmpVTS::subcycle (uint frames, Over & over)
 {
-	int m = getport(1);
+	int m = getport(4);
 	if (m != model)
 		tonestack.setmodel (model = m);
 	tonestack.updatecoefs (getport(5),getport(6),getport(7));
 
 	compress.set_attack (.25*getport(8));
 	
-	float x=getport(2), y=getport(4); /* = gain,powa :: shorthand for gain calc */
+	float x=getport(1), y=getport(3); /* = gain,powa :: shorthand for gain calc */
+	float bright = .59*getport(2)*(1-x*.81);
+	DSP::RBJ::LP ((2000*pow(10,bright))/(over.Ratio*fs), .7, lp);
+
 	float gain = x*x;
 	float powa = .9*gain + (1-.9*gain)*y; /* ramp up powa with gain */
 	float squash = .01+.21*getport(9)*(1 - powa*gain);
 
-	bias = .12*powa;
+	float bias = .22*powa;
 
-	/* rough correction for loudness increase with gain */
-	/* TODO: check 1/gain * 1/powa as alternative */
+	/* roughly correcting for loudness increase */
 	float makeup = (.086-.06*y)/(11.6+exp((12.1-5*y)*(.81-.08*y-x)))+0.00032+.0026*y;
-	makeup = 0 ? 1 : .0005/makeup;
+	makeup = 0 ? 1 : .0006/makeup;
 
-	float lowcut = .1 + 372*getport (10); 
-	DSP::RBJ::HP (lowcut/fs, .7, hp);
+	float lowcut = .1 + 342*getport(10); 
+	DSP::RBJ::HP (lowcut*over_fs, .7, hp);
 
-	float bright = .59*getport(3)*(1-x*.81);
-	DSP::RBJ::LP ((2000*pow(10,bright))/(over.Ratio*fs), .7, lp);
-
-	/* negated to correct for amplitude inversion */
-	gain = tsgain[model] * -pow (200, gain);
+	gain = pow (200, gain) * -tsgain[model];
 	powa = pow (125, powa);
 
 	sample_t * s = ports[11];
@@ -141,39 +142,42 @@ AmpVTS::subcycle (uint frames, Over & over)
 		uint n = min (frames, remain);
 		for (uint i = 0; i < n; ++i)
 		{
-			double a = s[i];
+			sample_t a = s[i];
+			sample_t b = biaslp.process (bias*compress.power.current - .00002);
 
 			a = hp.process (a);
 			a *= gain * compress.get();
 			a = tonestack.process (a + normal);
-			a += biaslp.process (bias*compress.power.current - .00002);
+			a += .5*b;
 
 			a = over.upsample (a);
 			a = preamp (a);
-			a = dcblock.process (a);
+			a = dc1.process (a);
 			a = lp.process (a);
-			a = poweramp (powa * a);
+			a = poweramp (powa*a - b);
 			a = over.downsample (a);
 
 			for (int o = 1; o < over.Ratio; ++o)
 			{
 				sample_t a = over.uppad (o);
 				a = preamp (a);
-				a = dcblock.process (a);
+				a = dc1.process (a);
 				a = lp.process (a);
-				a = poweramp (powa * a);
+				a = poweramp (powa*a - b);
 				over.downstore (a);
 			}
 
+			a = dc2.process (a+normal);
 			compress.store (a);
 
 			a *= makeup;
+
 			yield (d, i, a, adding_gain);
 		}
 
-		s += n; d += n;
-		frames -= n;
-		remain -= n;
+		s+=n;d+=n;
+		frames-=n;
+		remain-=n;
 	}
 }
 
@@ -182,15 +186,16 @@ AmpVTS::subcycle (uint frames, Over & over)
 PortInfo
 AmpVTS::port_info [] = 
 {
-	{	"ratio", CTRL_IN, {DEFAULT_MAX | INTEGER, 0, 2}, "{0:'2x',1:'4x',2:'8x'}"},
-	{	"model", CTRL_IN | GROUP, {DEFAULT_0 | INTEGER, 0, 8}, DSP::ToneStack::presetdict},
+	{	"over", CTRL_IN, {DEFAULT_MAX | INTEGER, 0, 2}, "{0:'2x',1:'4x',2:'8x'}"},
 
-	/* 2 */
-	{ "gain", CTRL_IN | GROUP, {DEFAULT_0, 0, 1} }, 
+	/* 1 */
+	{ "gain", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} }, 
 	{ "bright", CTRL_IN, {DEFAULT_MID, 0, 1} }, 
 	{ "power", CTRL_IN, {DEFAULT_MID, 0, 1} },
 	
-	/* 5 */
+	/* 4 */
+	{	"tonestack", CTRL_IN | GROUP, {DEFAULT_1 | INTEGER, 0, 8}, DSP::ToneStack::presetdict},
+
 	{ "bass", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} }, 
 	{ "mid", CTRL_IN, {DEFAULT_1, 0, 1} }, 
 	{ "treble", CTRL_IN, {DEFAULT_HIGH, 0, 1} }, 

@@ -38,35 +38,32 @@
 
 const char *
 DSP::ToneStack::presetdict =
-		"{0:'basswoman', 1:'wookie', 2:'DC 30', 3:'twin', 4:'stanford',\
-			5:'juice 800', 6:'HK 20', 7:'porky', 8:'nihon ace', \
-			9:'5F6-A LT'}";
+		"{0:'basswoman', 1:'twin', 2:'wookie', 3:'DC 30', 4:'juice 800',"
+		"5:'stanford', 6:'HK 20', 7:'nihon ace', 8:'porky',"
+		"9:'5F6-A LT'}";
 
 DSP::TSParameters 
 DSP::ToneStack::presets[] = {
-	/* conveniently, */
-	#define k *1000
-	#define M *1000000
+	/* for convenience, */
+	#define k *1e3
+	#define M *1e6
 	#define nF *1e-9
 	#define pF *1e-12
 	/* parameter order is R1 - R4, C1 - C3 */
 	/* R1=treble R2=Bass R3=Mid, C1-3 related caps, R4 = parallel resistor */
 	/* { 250000, 1000000, 25000, 56000, 0.25e-9, 20e-9, 20e-9 }, DY */
-	/* 59 Bassman 5F6-A */
-	{250 k, 1 M, 25 k, 56 k, 250 pF, 20 nF, 20 nF}, 
-	/* Mesa/Boogie Dual Rect. 'Orange' */
-	{250 k, 1 M, 25 k, 47 k, 600 pF, 20 nF, 20 nF}, 
-	/* Vox -- R3 is fixed (circuit differs anyway) */
-	{1 M, 1 M, 10 k, 100 k, 50 pF, 22 nF, 22 nF}, /* 59/86 AC-30 */
-	/* more Fenders */
+	{250 k, 1 M, 25 k, 56 k, 250 pF, 20 nF, 20 nF},  /* 59 Bassman 5F6-A */
 	{250 k, 250 k, 10 k, 100 k, 120 pF, 100 nF, 47 nF}, /* 69 Twin Reverb AA270 */
-	{250 k, 250 k, 4.8 k, 100 k, 250 pF, 100 nF, 47 nF}, /* 64 Princeton AA1164 */
-	/* Marshall */
+	{250 k, 1 M, 25 k, 47 k, 600 pF, 20 nF, 20 nF}, /* Mesa Dual Rect. 'Orange' */
+	/* Vox -- R3 is fixed (circuit differs anyway) */
+	{1 M, 1 M, 10 k, 100 k, 50 pF, 22 nF, 22 nF}, /* 59/86 Vox AC-30 */
+	
 	{220 k, 1 M, 22 k, 33 k, 470 pF, 22 nF, 22 nF}, /* 59/81 JCM-800 Lead 100 2203 */
+	{250 k, 250 k, 4.8 k, 100 k, 250 pF, 100 nF, 47 nF}, /* 64 Princeton AA1164 */
 
 	{500 k, 1 M, 25 k, 47 k, 150 pF, 22 nF, 22 nF}, /* Hughes & Kettner Tube 20 */
-	{250 k, 1 M, 50 k, 33 k, 100 pF, 22 nF, 22 nF}, /* Pignose G40V */
 	{250 k, 250 k, 10 k, 100 k, 150 pF, 82 nF, 47 nF}, /* Roland Jazz Chorus */
+	{250 k, 1 M, 50 k, 33 k, 100 pF, 22 nF, 22 nF}, /* Pignose G40V */
 	#if 0
 	/* R4 is a 10 k fixed + 100 k pot in series actually */
 	{250 k, 1 M, 25 k, 33 k, 500 pF, 22 nF, 22 nF}, /* 67 Major Lead 200 */

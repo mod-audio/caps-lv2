@@ -32,6 +32,98 @@
 
 template <yield_func_t F>
 void
+ChorusI::one_cycle (int frames)
+{
+	sample_t * s = ports[0];
+
+	double one_over_n = 1 / (double) frames;
+	double ms = .001 * fs;
+
+	double t = time;
+	time = getport(1) * ms;
+	double dt = (time - t) * one_over_n;
+
+	double w = width;
+	width = getport(2) * ms;
+	/* clamp, or we need future samples from the delay line */
+	if (width >= t - 3) width = t - 3;
+	double dw = (width - w) * one_over_n;
+
+	if (rate != *ports[3]) 
+		lfo.set_f (max (rate = getport(3), .000001), fs, lfo.get_phase());
+			
+	double blend = getport(4);
+	double ff = getport(5);
+	double fb = getport(6);
+
+	sample_t * d = ports[7];
+
+	DSP::FPTruncateMode truncate;
+
+	for (int i = 0; i < frames; ++i)
+	{
+		sample_t x = s[i];
+
+		/* truncate the feedback tap to integer, better quality for less
+		 * cycles (just a bit of zipper when changing 't', but it does sound
+		 * interesting) */
+		int ti;
+		fistp (t, ti);
+		x -= fb * delay[ti];
+
+		delay.put (x + normal);
+
+#		if 0
+		/* allpass delay sounds a little cleaner for a chorus
+		 * but sucks big time when flanging. */
+		x = blend * x + ff * tap.get (delay, t + w * lfo.get());
+#		elif 0
+		/* linear interpolation */
+		x = blend * x + ff * delay.get_at (t + w * lfo.get());
+#		else
+		/* cubic interpolation */
+		x = blend * x + ff * delay.get_cubic (t + w * lfo.get());
+#		endif
+
+		F (d, i, x, adding_gain);
+
+		t += dt;
+		w += dw;
+	}
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+
+PortInfo
+ChorusI::port_info [] =
+{
+	{ "in", INPUT | AUDIO }, 
+	{ "t (ms)", CTRL_IN, {BOUNDED | LOG | DEFAULT_LOW, 2.5, 40} }, 
+	{ "width (ms)", CTRL_IN, {BOUNDED | DEFAULT_1, .5, 10} }, 
+	{ "rate (Hz)", CTRL_IN | GROUP, {BOUNDED | DEFAULT_LOW, 0, 5} }, 
+	{ "blend", CTRL_IN, {BOUNDED | DEFAULT_1, 0, 1} }, 
+	{ "feedforward", CTRL_IN | GROUP, {BOUNDED | DEFAULT_LOW, 0, 1} }, 
+	{ "feedback", CTRL_IN, {BOUNDED | DEFAULT_0, 0, 1} }, 
+	{ "out", OUTPUT | AUDIO }
+};
+
+template <> void
+Descriptor<ChorusI>::setup()
+{
+	Label = "ChorusI";
+
+	Name = CAPS "ChorusI - Mono chorus/flanger";
+	Maker = "Tim Goetze <tim@quitte.de>";
+	Copyright = "GPL, 2004-13";
+
+	/* fill port info and vtable */
+	autogen();
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+
+template <yield_func_t F>
+void
 ChorusII::cycle (uint frames)
 {
 	sample_t * s = ports[0];
@@ -116,8 +208,6 @@ Descriptor<ChorusII>::setup()
 void 
 StereoChorusII::set_rate (sample_t r)
 {
-	double over_fs = 1/fs;
-
 	rate = r;
 	r *= FRACTAL_RATE * 44100 * over_fs;
 	left.fractal.set_rate (r);
@@ -192,12 +282,12 @@ StereoChorusII::cycle (uint frames, int mode)
 PortInfo
 StereoChorusII::port_info [] =
 {
-	{ "t (ms)", INPUT | CONTROL, {DEFAULT_LOW, 2.5, 25} }, 
-	{ "width (ms)", INPUT | CONTROL, {DEFAULT_1, .5, 10} }, 
-	{ "rate", INPUT | CONTROL | GROUP, {DEFAULT_LOW, 0, 1} }, 
-	{ "blend", INPUT | CONTROL, {DEFAULT_LOW, 0, 1} }, 
-	{ "feedforward", INPUT | CONTROL | GROUP, {DEFAULT_1, 0, 1} }, 
-	{ "feedback", INPUT | CONTROL, {DEFAULT_MID, 0, 1} }, 
+	{ "t (ms)", CTRL_IN, {DEFAULT_LOW, 2.5, 25} }, 
+	{ "width (ms)", CTRL_IN, {DEFAULT_1, .5, 10} }, 
+	{ "rate", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} }, 
+	{ "blend", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
+	{ "feedforward", CTRL_IN | GROUP, {DEFAULT_1, 0, 1} }, 
+	{ "feedback", CTRL_IN, {DEFAULT_MID, 0, 1} }, 
 	{ "in", INPUT | AUDIO }, 
 	{ "out.l", OUTPUT | AUDIO }, 
 	{ "out.r", OUTPUT | AUDIO }
@@ -221,12 +311,12 @@ Descriptor<StereoChorusII>::setup()
 PortInfo
 StereoChorusII2x2::port_info [] =
 {
-	{ "t (ms)", INPUT | CONTROL, {DEFAULT_LOW, 2.5, 25} }, 
-	{ "width (ms)", INPUT | CONTROL, {DEFAULT_1, .5, 10} }, 
-	{ "rate", INPUT | CONTROL | GROUP, {DEFAULT_LOW, 0, 1} }, 
-	{ "blend", INPUT | CONTROL, {DEFAULT_LOW, 0, 1} }, 
-	{ "feedforward", INPUT | CONTROL | GROUP, {DEFAULT_1, 0, 1} }, 
-	{ "feedback", INPUT | CONTROL, {DEFAULT_MID, 0, 1} }, 
+	{ "t (ms)", CTRL_IN, {DEFAULT_LOW, 2.5, 25} }, 
+	{ "width (ms)", CTRL_IN, {DEFAULT_1, .5, 10} }, 
+	{ "rate", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} }, 
+	{ "blend", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
+	{ "feedforward", CTRL_IN | GROUP, {DEFAULT_1, 0, 1} }, 
+	{ "feedback", CTRL_IN, {DEFAULT_MID, 0, 1} }, 
 	{ "in.l", INPUT | AUDIO }, 
 	{ "in.r", INPUT | AUDIO }, 
 	{ "out.l", OUTPUT | AUDIO }, 

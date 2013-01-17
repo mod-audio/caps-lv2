@@ -47,7 +47,7 @@ class CompSaturate
 		void init (double fs)
 			{
 				/* going a bit lower than nominal with fc */
-				double f = .7 * M_PI / Over;
+				double f = .7 * M_PI/Over;
 				
 				DSP::sinc (f, up.c, FIRSize);
 				DSP::kaiser<DSP::apply_window> (up.c, FIRSize, 6.4);
@@ -58,7 +58,7 @@ class CompSaturate
 					down.c[i] = up.c[i],
 					s += up.c[i];
 				
-				s = 1 / s;
+				s = 1/s;
 
 				/* scale kernels for unity gain */
 				for (uint i = 0; i < FIRSize; ++i)
@@ -93,7 +93,10 @@ class CompressStub
 {
 	public:
 		uint remain;
-		DSP::CompressPeak compress;
+		struct {
+			DSP::CompressPeak peak;
+			DSP::CompressRMS rms;
+		} compress;
 
 		enum { Stereo = (Channels == 2) };
 
@@ -105,8 +108,10 @@ class CompressStub
 
 		template <yield_func_t F>
 				void cycle (uint frames);
-		template <yield_func_t F, class Sat>
-				void subcycle (uint frames, Sat & satl, Sat & satr);
+		template <yield_func_t F, class Comp>
+				void subcycle (uint frames, Comp & comp);
+		template <yield_func_t F, class Comp, class Sat>
+				void subsubcycle (uint frames, Comp & comp, Sat & satl, Sat & satr);
 
 	public:
 		static PortInfo port_info [];

@@ -46,8 +46,8 @@ void
 ClickStub<Waves>::cycle (uint frames)
 {
 	static double scale16 = 1./32768;
-	int p = Waves > 1 ? 1 : 0;
-	int w = p ? getport(0) : 0;
+	int p = Waves > 1 ? 1 : 0; /* port */
+	int w = p ? getport(0) : 0; /* wave */
 	bpm = getport(p);
 	sample_t gain = getport(p+1);
 	gain *= scale16 * gain;
@@ -110,24 +110,24 @@ Click::initsimple()
 	};
 
 	DSP::OnePoleLP<sample_t> lp1;
-	lp1.set_f (8/fs);
+	lp1.set_f (8*over_fs);
 	DSP::BiQuad<sample_t> lp;
-	DSP::RBJ::LP (8000./fs, .2, lp);
+	DSP::RBJ::LP (8000*over_fs, .2, lp);
 
 	DSP::BiQuad<sample_t> peaks[Peaks];
 	for (int i = 0; i < Peaks; ++i)
 	{
 		/* tune to g' = 784 Hz */
-		float f = .8740245*_peaks[i][0] / fs;
+		float f = .8740245*_peaks[i][0]*over_fs;
 		float g = _peaks[i][1];
 		DSP::RBJ::BP (f, 22*g, peaks[i]);
 	}
 
 	DSP::BiQuad<sample_t> bp;
-	DSP::RBJ::BP (150/fs, 3.8, bp);
+	DSP::RBJ::BP (150*over_fs, 3.8, bp);
 
 	DSP::BiQuad<sample_t> post;
-	DSP::RBJ::PeakingEQ (1000 / fs, 1.8, 24, post);
+	DSP::RBJ::PeakingEQ (1000*over_fs, 1.8, 24, post);
 
 	int n = (int) (fs * 2800. / 44100.);
 	int16 * click = new int16 [n];
@@ -151,7 +151,7 @@ Click::initsimple()
 		x = 0;
 	}
 
-	this->ClickStub::initwave (0, click, n);
+	initwave (0, click, n);
 }
 
 /* using parfilt models to generate the click */
@@ -178,7 +178,7 @@ Click::initparfilt()
 	int16 * click = new int16 [n];
 
 	DSP::BiQuad<sample_t> hp;
-	DSP::RBJ::HP (900/fs, .707, hp);
+	DSP::RBJ::HP (900*over_fs, .707, hp);
 
 	DSP::White white;
 	int m = 3;
@@ -194,21 +194,21 @@ Click::initparfilt()
 		x = 0;
 	}
 
-	this->ClickStub::initwave (1, click, n);
+	initwave (1, click, n);
 }
 
 void
 Click::initsine()
 {
 	float f = 2*784;
-	DSP::Sine sin (2*M_PI*f/fs);
+	DSP::Sine sin (2*M_PI*f*over_fs);
 
 	int n = (int) (20*fs/f);
 	int m = 6*n/4;
 	int16 * click = new int16 [m];
 
 	DSP::BiQuad<sample_t> lp;
-	DSP::RBJ::BP (f/fs,2.5,lp);
+	DSP::RBJ::BP (f*over_fs,2.5,lp);
 
 	float a = .4 * 32767;
 	for (int i = 0; i < n; ++i)
@@ -223,7 +223,7 @@ Click::initsine()
 		click[i] = (int16) (x);
 	}
 
-	this->ClickStub::initwave (2, click, m);
+	initwave (2, click, m);
 }
 
 template <> void
@@ -276,7 +276,7 @@ CEO::init()
 
 	DSP::BiQuad<sample_t> lp;
 	/* suppress aliasing with an additional lowpass */
-	DSP::RBJ::LP (3000./fs,1.5,lp);
+	DSP::RBJ::LP (3000*over_fs,1.5,lp);
 	#if 1 /* linear */
 	float x = 0;
 	for (int i = 0; i < n-1; ++i)
@@ -311,7 +311,7 @@ CEO::init()
 	}
 	#endif
 
-	this->ClickStub::initwave (0, wave, n-1);
+	initwave (0, wave, n-1);
 }
 
 template <> void
@@ -343,7 +343,7 @@ Dirac::init()
 { 
 	int16 * dirac = new int16[1];
 	*dirac = 32767;
-	this->ClickStub::initwave (0, dirac, 1);
+	initwave (0, dirac, 1);
 }
 
 template <> void

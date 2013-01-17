@@ -36,6 +36,18 @@
 
 namespace DSP {
 
+/* do-nothing 1:1 oversampler substitute, occasionally needed as a 
+ * template parameter */
+class NoOversampler 
+{
+	public:
+		enum { Ratio = 1 };
+		sample_t downsample (sample_t x) { return x; }
+		sample_t upsample (sample_t x) { return x; }
+		void downstore (sample_t x) { }
+		sample_t uppad (uint z) { return 0; }
+};
+
 template <int Oversample, int FIRSize>
 class Oversampler
 {

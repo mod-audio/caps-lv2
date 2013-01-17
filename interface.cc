@@ -86,9 +86,7 @@ void caps_so_init()
 	*d++ = new Descriptor<ToneStack>(CAPS_URI "tonestack");
 	*d++ = new Descriptor<AmpVTS>(CAPS_URI "ampvts");
 	*d++ = new Descriptor<CabinetII>(CAPS_URI "cabinetii");
-	#if 0
 	*d++ = new Descriptor<CabinetIII>(CAPS_URI "cabinetiii");
-	#endif
 	*d++ = new Descriptor<CabinetIV>(CAPS_URI "cabinetiv");
 
 	*d++ = new Descriptor<JVRev>(CAPS_URI "jvrev");
@@ -100,6 +98,7 @@ void caps_so_init()
 	*d++ = new Descriptor<Spice>(CAPS_URI "spice");
 	#endif
 
+	*d++ = new Descriptor<ChorusI>(CAPS_URI "chorusi");
 	*d++ = new Descriptor<ChorusII>(CAPS_URI "chorusii");
 	*d++ = new Descriptor<StereoChorusII>(CAPS_URI "stereochorusii");
 	*d++ = new Descriptor<StereoChorusII2x2>(CAPS_URI "stereochorusii2x2");

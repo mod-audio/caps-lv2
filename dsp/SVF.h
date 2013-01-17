@@ -233,7 +233,7 @@ class SVFII
 
 		void set_f_Q (sample_t fc, sample_t q)
 			{
-				k = (1-.91*q);
+				k = (1-.99*q);
 				g = tan (fc*M_PI);
 				c1 = 2*(g+k);
 				c2 = g/(1 + g*(g+k));
@@ -305,7 +305,7 @@ class StackedSVF
 		sample_t process (sample_t x, sample_t g)
 			{
 				for (int i = 0; i < N; ++i)
-					x = g*clip (svf[i].process (x));
+					x = clip (svf[i].process (g*x));
 				return x;
 			}
 };

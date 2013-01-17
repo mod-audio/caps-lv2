@@ -1,11 +1,9 @@
 /*
 	Compress.cc
 	
-	Copyright 2004-12 Tim Goetze <tim@quitte.de>
+	Copyright 2011-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
-
-	Dynamic range processors.
 	
 */
 /*
@@ -34,54 +32,67 @@ template <int Channels>
 void
 CompressStub<Channels>::activate()
 {
-	compress.init (fs);
+	compress.peak.init (fs);
+	compress.rms.init (fs);
 	remain = 0;
 }
-
-struct NoSat { sample_t process(sample_t x) { return x; } };
 
 template <int Channels>
 template <yield_func_t F>
 void
 CompressStub<Channels>::cycle (uint frames)
 {
+	int c = getport(0);
+	if (c == 0) 
+		subcycle<F,DSP::CompressPeak> (frames, compress.peak);
+	else 
+		subcycle<F,DSP::CompressRMS> (frames, compress.rms);
+}
+
+/* do-nothing 'saturator' as template for linear instead of saturating mode */
+struct NoSat { sample_t process(sample_t x) { return x; } };
+
+template <int Channels>
+template <yield_func_t F, class Comp>
+void
+CompressStub<Channels>::subcycle (uint frames, Comp & comp)
+{
 	static NoSat none;
 
-	int s = getport(0);
-	if (!s) subcycle<F,NoSat> 
-		(frames, none, none);
-	else if (s == 1) subcycle<F,CompSat2> 
-		(frames, saturate[0].two, saturate[1].two);
-	else if (s == 2) subcycle<F,CompSat4> 
-		(frames, saturate[0].four, saturate[1].four);
-	else if (s == 3) subcycle<F,CompSat8> 
-		(frames, saturate[0].eight, saturate[1].eight);
+	int s = getport(1);
+	if (s == 1) subsubcycle<F,Comp,CompSat2> 
+			(frames, comp, saturate[0].two, saturate[1].two);
+	else if (s == 2) subsubcycle<F,Comp,CompSat4> 
+			(frames, comp, saturate[0].four, saturate[1].four);
+	else if (s == 3) subsubcycle<F,Comp,CompSat8> 
+			(frames, comp, saturate[0].eight, saturate[1].eight);
+	else subsubcycle<F, Comp, NoSat> 
+			(frames, comp, none, none);
 }
 
 template <int Channels>
-template <yield_func_t F, class Sat>
+template <yield_func_t F, class Comp, class Sat>
 void
-CompressStub<Channels>::subcycle (uint frames, Sat & satl, Sat & satr)
+CompressStub<Channels>::subsubcycle (uint frames, Comp & comp, Sat & satl, Sat & satr)
 {
-	/* mode port value is Saturate template parameter */
-	compress.set_threshold (getport(1));
-	sample_t strength = getport(2);
-	compress.set_attack (getport(3));
-	compress.set_release (getport(4));
-	sample_t gain_out = db2lin (getport (5));
+	comp.set_threshold (getport(2));
+	sample_t strength = getport(3);
+	comp.set_attack (getport(4));
+	comp.set_release (getport(5));
+	sample_t gain_out = db2lin (getport (6));
 
-	sample_t * sl = ports[Stereo ? 6 : 6]; /* ;) */
-	sample_t * sr = ports[Stereo ? 7 : 6];
+	sample_t * sl = ports[Stereo ?  7 : 7]; /* ;) */
+	sample_t * sr = ports[Stereo ?  8 : 7];
 
-	sample_t * dl = ports[Stereo ? 8 : 7];
-	sample_t * dr = ports[Stereo ? 9 : 7];
+	sample_t * dl = ports[Stereo ?  9 : 8];
+	sample_t * dr = ports[Stereo ? 10 : 8];
 
 	while (frames)
 	{
 		if (remain == 0)
 		{
-			remain = compress.blocksize;
-			compress.start_block (strength);
+			remain = comp.blocksize;
+			comp.start_block (strength);
 		}
 
 		uint n = min (frames, remain);
@@ -91,13 +102,13 @@ CompressStub<Channels>::subcycle (uint frames, Sat & satl, Sat & satr)
 			sample_t xl = sl[i], xr = sr[i];
 
 			if (Stereo)
-				compress.store (xl, xr);
+				comp.store (xl, xr);
 			else
-				compress.store (xl);
-			sample_t gain = gain_out * compress.get();
+				comp.store (xl);
+
+			sample_t gain = gain_out * comp.get();
 
 			xl = satl.process (xl * gain);
-
 			if (Stereo)
 				xr = satr.process (xr * gain);
 
@@ -120,7 +131,9 @@ CompressStub<Channels>::subcycle (uint frames, Sat & satl, Sat & satr)
 PortInfo
 Compress::port_info [] =
 {
-	{ "mode", CTRL_IN, {INTEGER | DEFAULT_1, 0, 2},
+	{ "measure", CTRL_IN, {INTEGER | DEFAULT_0, 0, 1},
+		"{0:'peak',1:'rms'}" }, 
+	{ "mode", CTRL_IN | GROUP, {INTEGER | DEFAULT_1, 0, 3},
 		"{0:'linear',1:'saturating 2x',2:'saturating 4x',3:'saturating 4x128'}" }, 
 	{ "threshold", CTRL_IN | GROUP, {DEFAULT_0, 0, 1} }, 
 	{ "strength", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
@@ -136,9 +149,9 @@ Descriptor<Compress>::setup()
 {
 	Label = "Compress";
 
-	Name = CAPS "Compress - Mono compressor";
+	Name = CAPS "Compress - Compressor and saturating limiter";
 	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2011-12";
+	Copyright = "2011-13";
 
 	/* fill port info and vtable */
 	autogen();
@@ -149,7 +162,9 @@ Descriptor<Compress>::setup()
 PortInfo
 Compress2x2::port_info [] =
 {
-	{ "mode", CTRL_IN, {INTEGER | DEFAULT_1, 0, 2},
+	{ "measure", CTRL_IN, {INTEGER | DEFAULT_0, 0, 1},
+		"{0:'peak',1:'rms'}" }, 
+	{ "mode", CTRL_IN | GROUP, {INTEGER | DEFAULT_1, 0, 2},
 		"{0:'linear',1:'saturating 2x',2:'saturating 4x',3:'saturating 4x128'}" }, 
 	{ "threshold", CTRL_IN | GROUP, {DEFAULT_0, 0, 1} }, 
 	{ "strength", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
@@ -167,9 +182,9 @@ Descriptor<Compress2x2>::setup()
 {
 	Label = "Compress2x2";
 
-	Name = CAPS "Compress2x2 - Stereo compressor";
+	Name = CAPS "Compress2x2 - Stereo compressor and saturating limiter";
 	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2011-12";
+	Copyright = "2011-13";
 
 	/* fill port info and vtable */
 	autogen();

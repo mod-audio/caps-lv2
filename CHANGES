@@ -1,4 +1,32 @@
+0.9.7
+	* ChorusI is back
+	* AutoFilter modulation range and default parameter updates
+
+0.9.6
+	* Click fixed to compile by older g++ versions
+
+0.9.5
+	* AmpVTS model port moved, renamed to the more apt 'tonestack'
+	* documentation refinements
+	* appreciable AmpVTS speedup by going back to sample_t for accumulator
+	* NoiseRatio attack time control
+	* sample rate dependencies in NoiseGate removed, time constants revised
+	* Tonestacks reordered
+	* Plugin::over_fs
+	* AmpVTS model setting fixed to follow the correct input
+	* CabinetIII resurrected
+	* AmpVTS 'ratio' port renamed to 'over'
+	* more filters for AutoFilter, ladder stage gain control
+	* AutoFilter oversampling
+	* AmpVTS bias in poweramp, dcblock before output
+	* AutoFilter envelope calculation fixed for fs > 153.6 kHz
+	* peak/rms selection for Compress
+	* AmpVTS tuning
+
 0.9.4
+	* AmpVTS bright mapping revised
+	* Compress hi-pass removed 
+	* Compress saturation changed from tanh to atan
 	* beep wave for Click
 	* selectable oversampling ratio for Compress in saturating mode
 	* fixed Compress to apply gain before saturation

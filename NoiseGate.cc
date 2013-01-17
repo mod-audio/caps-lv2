@@ -34,6 +34,7 @@
 void
 NoiseGate::init()
 {
+	N = 882*fs/44100; /* 20 ms RMS accumulation when open */
 	over_N = 1./N;
 	gain.quiet = db2lin (-60);
 }
@@ -56,9 +57,10 @@ NoiseGate::cycle (uint frames)
 	sample_t * d = ports[1]; 
 
 	float open = db2lin (getport (2));
-	float close = db2lin (getport (3));
+	float attack = max (.005*N*getport(3), 2); 
+	float close = db2lin (getport (4));
 
-	float f = getport (4);
+	float f = getport (5);
 	if (f != f_mains)
 	{
 		f_mains = f;
@@ -69,8 +71,8 @@ NoiseGate::cycle (uint frames)
 		}
 		else
 		{
-			DSP::RBJ::BP (f_mains/fs, 5, humfilter[0]);
-			DSP::RBJ::BP (f_mains/fs, 1, humfilter[1]);
+			DSP::RBJ::BP (f_mains*over_fs, 5, humfilter[0]);
+			DSP::RBJ::BP (f_mains*over_fs, 1, humfilter[1]);
 		}
 		humfilter[0].reset();
 		humfilter[1].reset();
@@ -109,14 +111,14 @@ NoiseGate::cycle (uint frames)
 		else for (  ; i < n; ++i) /* currently closed */
 		{
 			register sample_t a = s[i];
-			store (a);
-			if (fabs (a) < open)
+			store(a);
+			if (fabs(a) < open)
 				F (d, i, a * gain.current, adding_gain);
 			else 
 			{
-				remain = 32;
-				gain.delta = (1 - gain.current) / remain;
-				/* correct for later addition */
+				remain = (int) attack;
+				gain.delta = (1-gain.current) / remain;
+				/* correct for later subtraction of i */
 				remain += i;
 				break;
 			}
@@ -133,15 +135,17 @@ NoiseGate::cycle (uint frames)
 PortInfo
 NoiseGate::port_info [] = 
 {
-	{ "in", INPUT | AUDIO, {BOUNDED, -1, 1} }, 
-	{	"out", OUTPUT | AUDIO, {0} }, 
+	{ "in", INPUT | AUDIO },
+	{	"out", OUTPUT | AUDIO },
 
 	/* 2 */
-	{ "open (dB)", INPUT | CONTROL, {DEFAULT_LOW, -60, 0} }, 
-	{ "close (dB)", INPUT | CONTROL, {DEFAULT_LOW, -90, 0} }, 
+	{ "open (dB)", CTRL_IN, {DEFAULT_LOW, -60, 0} }, 
+	{ "attack (ms)", CTRL_IN, {DEFAULT_LOW, 0, 3} }, 
+	{ "close (dB)", CTRL_IN, {DEFAULT_LOW, -90, 0} }, 
 
 	/* mains */
-	{ "mains (Hz)", INPUT | CONTROL | GROUP, {DEFAULT_MID, 0, 100} }, 
+	{ "mains (Hz)", CTRL_IN|GROUP, {INTEGER|DEFAULT_MID, 0, 100},
+		"{0:'off',50:'global',60:'imperial'}"}, 
 };
 
 template <> void

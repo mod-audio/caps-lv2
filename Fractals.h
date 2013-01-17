@@ -51,7 +51,7 @@ class Lorenz
 		void activate() 
 			{ 
 				gain = getport(4); 
-				hp.set_f (100/fs);
+				hp.set_f (100*over_fs);
 				hp.reset();
 			}
 
@@ -80,7 +80,7 @@ class Roessler
 		void activate()
 			{ 
 				gain = getport(4); 
-				hp.set_f (100/fs);
+				hp.set_f (100*over_fs);
 				hp.reset();
 			}
 

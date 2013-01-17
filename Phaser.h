@@ -89,10 +89,10 @@ class PhaserII
 				y0 = 0.;
 				remain = 0;
 
-				delay.bottom = 400. / fs;
-				delay.range = 2200. / fs;
+				delay.bottom = 400*over_fs;
+				delay.range = 2200*over_fs;
 
-				lfo_lp.set_f(.000001/fs);
+				lfo_lp.set_f(.000001*over_fs);
 				rate = -1; /* force lfo reset in cycle() */
 			}
 
@@ -137,10 +137,10 @@ class StereoPhaserII
 				y0l = y0r = 0;
 				remain = 0;
 
-				delay.bottom = 400/fs;
-				delay.range = 2200/fs;
+				delay.bottom = 400*over_fs;
+				delay.range = 2200*over_fs;
 
-				lfo_lp.set_f(.000001/fs);
+				lfo_lp.set_f(.000001*over_fs);
 			}
 
 		void run (uint n) { cycle<store_func, false> (n); }

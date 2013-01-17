@@ -49,7 +49,7 @@ Scape::init()
 	{
 		lfo[i].lorenz.init(),
 		lfo[i].lorenz.set_rate (.00000001*fs);
-		lfo[i].lp.set_f (.00001/fs);
+		lfo[i].lp.set_f (.00001*over_fs);
 	}
 }
 
@@ -62,7 +62,7 @@ Scape::activate()
 	for (int i = 0; i < 4; ++i)
 		svf[i].reset(),
 		svf[i].set_out (1), /* band pass */
-		hipass[i].set_f (250. / fs);
+		hipass[i].set_f (250*over_fs);
 	svf[3].set_out (0); /* low pass */
 
 	delay.reset();
@@ -83,8 +83,6 @@ void
 Scape::cycle (int frames)
 {
 	sample_t * s = ports[0];
-
-	double over_fs = 1/fs;
 
 	/* delay times */
 	double t1 = fs * 60. / getport(1);

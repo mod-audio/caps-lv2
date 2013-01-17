@@ -1,7 +1,7 @@
 /*
 	Saturate.h
 	
-	Copyright 2004-12 Tim Goetze <tim@quitte.de>
+	Copyright 2004-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -37,8 +37,6 @@
 #include "dsp/Butterworth.h"
 #include "dsp/Delay.h"
 #include "dsp/ChebyshevPoly.h"
-
-/* prototype for the saturating/waveshaping function template parameter */
 
 class Saturate
 : public Plugin

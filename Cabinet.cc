@@ -148,6 +148,92 @@ Descriptor<CabinetII>::setup()
 
 /* //////////////////////////////////////////////////////////////////////// */
 
+#include "CabIIIModels.h"
+
+void
+CabinetIII::init()
+{
+	model = -1;
+}
+
+void
+CabinetIII::switch_model (int m)
+{
+	model = m;
+
+	if (model < 0) return;
+	
+	gain = CabIIIModels[m].gain;
+
+	bank.set_a (1, CabIIIModels[m].a1);
+	bank.set_a (2, CabIIIModels[m].a2);
+	bank.set_b (1, CabIIIModels[m].b1);
+	bank.set_b (2, CabIIIModels[m].b2);
+	bank.reset();
+
+	fir.set_kernel (CabIIIModels[m].fir);
+	fir.reset();
+}
+
+void
+CabinetIII::activate()
+{
+	switch_model ((int) getport(1));
+}
+
+template <yield_func_t F>
+void
+CabinetIII::cycle (uint frames)
+{
+	sample_t * s = ports[0];
+
+	int m = (int) getport (1);
+	if (m != model) switch_model (m);
+
+	sample_t * d = ports[3];
+
+	double g = gain * db2lin (getport(2));
+
+	for (uint i = 0; i < frames; ++i)
+	{
+		sample_t x = s[i];
+		/* process */ 
+		x = g*x + normal;
+		v4f_t a = (v4f_t) {x,x,x,x};
+		a = bank.process_no_a0 (a);
+		x = sum(a + fir.process(x));
+		F (d, i, x, adding_gain);
+	}
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+
+PortInfo
+CabinetIII::port_info [] =
+{
+	{ "in", INPUT | AUDIO }, 
+	{ "model", CTRL_IN, {INTEGER | DEFAULT_1, 0, 2}, 
+		"{0:'wookie A', 1:'wookie B', 2:'wookie C'}" },
+	{ "gain (dB)", CTRL_IN | GROUP, {DEFAULT_0, -24, 0} }, 
+	{ "out", OUTPUT | AUDIO } 
+};
+
+
+template <> void
+Descriptor<CabinetIII>::setup()
+{
+	Label = "CabinetIII";
+
+	Name = CAPS "CabinetIII - Idealised loudspeaker cabinet emulation";
+	Maker = "Tim Goetze <tim@quitte.de>";
+	Copyright = "2012-13";
+
+	/* fill port info and vtable */
+	autogen();
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+
 #include "CabIV_64_128.h"
 
 void
@@ -192,25 +278,14 @@ CabinetIV::activate()
 	remain = 0;
 }
 
-/* do-nothing 1:1 oversampler class, needed as a template parameter */
-class NoOversampler 
-{
-	public:
-		enum { Ratio = 1 };
-		sample_t downsample (sample_t x) { return x; }
-		sample_t upsample (sample_t x) { return x; }
-		void downstore (sample_t x) { }
-		sample_t uppad (uint z) { return 0; }
-};
-
 template <yield_func_t F>
 void
 CabinetIV::cycle (uint frames)
 {
-	static NoOversampler over1;
+	static DSP::NoOversampler over1;
 
 	if (over == 1)
-		cycle<F,NoOversampler,1>(frames,over1);
+		cycle<F,DSP::NoOversampler,1>(frames,over1);
 	else if (over == 2)
 		cycle<F,DSP::Oversampler<2,32>,2>(frames,over2);
 	else if (over == 4)

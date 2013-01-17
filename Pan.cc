@@ -44,7 +44,7 @@ Pan::activate()
 	set_pan (getport(1));
 	float fc[3] = { 150, 900, 5000 };
 	for (int i = 0; i < 3; ++i)
-		DSP::RBJ::AllPass (fc[i]/fs, .707, ap[i]);
+		DSP::RBJ::AllPass (fc[i]*over_fs, .707, ap[i]);
 }
 
 inline void

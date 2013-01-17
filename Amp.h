@@ -52,7 +52,7 @@ class AmpVTS
 		DSP::Oversampler<8,64> over8;
 
 		DSP::BiQuad<sample_t> hp, lp, biaslp;
-		DSP::OnePoleHP<sample_t> dcblock;
+		DSP::OnePoleHP<sample_t> dc1, dc2; /* dc blockers */
 
 		int model;
 		DSP::ToneStack tonestack;
@@ -64,8 +64,6 @@ class AmpVTS
 
 		template <yield_func_t F> void cycle (uint frames);
 		template <yield_func_t F, class Over> void subcycle (uint frames, Over & over);
-
-		float bias;
 
 	public:
 		static PortInfo port_info[];

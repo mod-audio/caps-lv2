@@ -69,6 +69,52 @@ class FracTap
 			}
 };
 
+class ChorusI
+: public ChorusStub
+{
+	public:
+		DSP::Sine lfo;
+		DSP::Delay delay;
+		DSP::DelayTapA tap;
+
+		template <yield_func_t>
+				void one_cycle (int frames);
+	
+	public:
+		static PortInfo port_info [];
+
+		void init()
+			{
+				rate = .15;
+				delay.init ((int) (.040 * fs));
+			}
+
+		void activate()
+			{
+				time = 0;
+				width = 0;
+				
+				rate = *ports[3];
+				
+				delay.reset();
+				tap.reset();
+
+				lfo.set_f (rate, fs, 0);
+			}
+
+		void run (int n)
+			{
+				one_cycle<store_func> (n);
+			}
+		
+		void run_adding (int n)
+			{
+				one_cycle<adding_func> (n);
+			}
+};
+
+/* ///////////////////////////////////////////////////////////////////////// */
+
 class ChorusII
 : public ChorusStub
 {
@@ -86,7 +132,7 @@ class ChorusII
 		void set_rate (sample_t r)
 			{
 				rate = r;
-				r *= FRACTAL_RATE*44100/fs;
+				r *= FRACTAL_RATE*44100*over_fs;
 				for (int i = 0; i < Taps; ++i)
 				{
 					taps[i].set_rate (r);
@@ -99,7 +145,7 @@ class ChorusII
 
 		void init()
 			{
-				hp.set_f (350./fs);
+				hp.set_f (350*over_fs);
 				delay.init ((int) (.025*fs));
 				for (int i = 0; i < Taps; ++i)
 					taps[i].init (fs);
@@ -147,7 +193,7 @@ class StereoChorusII
 
 		void init()
 			{
-				hp.set_f (350./fs);
+				hp.set_f (350*over_fs);
 				delay.init ((int) (.025 * fs));
 
 				left.fractal.init (.001, frandom());
