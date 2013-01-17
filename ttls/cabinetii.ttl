@@ -47,6 +47,7 @@
         lv2:minimum 0;
         lv2:maximum 7;
         lv2:portProperty lv2:enumeration ;
+        lv2:scalePoint [rdfs:label "none"; rdf:value 0];
         lv2:scalePoint [rdfs:label "Unmatched A"; rdf:value 1];
         lv2:scalePoint [rdfs:label "Unmatched B"; rdf:value 2];
         lv2:scalePoint [rdfs:label "Supertramp"; rdf:value 3];
@@ -64,7 +65,7 @@
         lv2:name "Gain";
         lv2:default 0;
         lv2:minimum -24;
-        lv2:maximum 0;
+        lv2:maximum 12;
     units:unit units:db ;
     mod:iconLabel "Gain";
     mod:pedalButton "1-5";
