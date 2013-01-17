@@ -22,8 +22,7 @@ HEADERS = $(wildcard *.h) $(wildcard dsp/*.h) $(wildcard util/*.h) $(wildcard ds
 
 PDF = releases/caps-$(VERSION).pdf
 
-DEST = $(PREFIX)/lib/ladspa
-RDFDEST = $(PREFIX)/share/ladspa/rdf
+DEST = ~/.lv2/$(PLUG).lv2/
 
 # targets following -------------------------------------------------------------
 
