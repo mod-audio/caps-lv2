@@ -35,8 +35,20 @@
 
     lv2:port
     [
-        a lv2:ControlPort, lv2:InputPort;
+        a lv2:AudioPort, lv2:InputPort;
         lv2:index 0;
+        lv2:symbol "in";
+        lv2:name "in";
+    ],
+    [
+        a lv2:AudioPort, lv2:OutputPort;
+        lv2:index 1;
+        lv2:symbol "out";
+        lv2:name "out";
+    ],
+    [
+        a lv2:ControlPort, lv2:InputPort;
+        lv2:index 2;
         lv2:symbol "open";
         lv2:name "Open";
         lv2:default -45;
@@ -47,7 +59,7 @@
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
-        lv2:index 1;
+        lv2:index 3;
         lv2:symbol "attack";
         lv2:name "Attack";
         lv2:default 0.75;
@@ -58,7 +70,7 @@
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
-        lv2:index 2;
+        lv2:index 4;
         lv2:symbol "close";
         lv2:name "Close";
         lv2:default -67.5;
@@ -69,7 +81,7 @@
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
-        lv2:index 3;
+        lv2:index 5;
         lv2:symbol "mains";
         lv2:name "Mains";
         lv2:default 50;
@@ -80,16 +92,4 @@
         lv2:scalePoint [rdfs:label "imperial"; rdf:value 60];
         units:unit units:hz ;
     mod:iconLabel "Mains";
-    ],
-    [
-        a lv2:AudioPort, lv2:InputPort;
-        lv2:index 4;
-        lv2:symbol "in";
-        lv2:name "in";
-    ],
-    [
-        a lv2:AudioPort, lv2:OutputPort;
-        lv2:index 5;
-        lv2:symbol "out";
-        lv2:name "out";
     ].

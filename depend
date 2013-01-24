@@ -1,0 +1,69 @@
+Amp.o: Amp.cc basics.h ladspa.h Amp.h dsp/util.h dsp/OnePole.h \
+ dsp/BiQuad.h dsp/complex.h dsp/Oversampler.h dsp/FIR.h dsp/util.h \
+ dsp/sinc.h dsp/Sine.h dsp/windows.h dsp/RBJ.h dsp/BiQuad.h dsp/Eq.h \
+ dsp/ToneStack.h dsp/TDFII.h dsp/LatFilt.h dsp/tonestack/tables.h \
+ dsp/Compress.h dsp/RMS.h dsp/OnePole.h Descriptor.h dsp/polynomials.h
+AutoFilter.o: AutoFilter.cc basics.h ladspa.h AutoFilter.h dsp/SVF.h \
+ dsp/Lorenz.h dsp/Roessler.h dsp/RMS.h dsp/BiQuad.h dsp/complex.h \
+ dsp/OnePole.h dsp/Oversampler.h dsp/FIR.h dsp/util.h dsp/sinc.h \
+ dsp/Sine.h dsp/windows.h dsp/polynomials.h Descriptor.h dsp/RBJ.h \
+ dsp/BiQuad.h
+Cabinet.o: Cabinet.cc basics.h ladspa.h dsp/RBJ.h dsp/BiQuad.h \
+ dsp/complex.h Cabinet.h dsp/util.h dsp/BiQuad.h dsp/Oversampler.h \
+ dsp/FIR.h dsp/util.h dsp/sinc.h dsp/Sine.h dsp/windows.h dsp/v4f.h \
+ dsp/v4f_FIR.h dsp/v4f.h dsp/v4f_BiQuad.h Descriptor.h CabIIModels.h \
+ CabIIIModels.h CabIV_64_128.h
+Chorus.o: Chorus.cc basics.h ladspa.h Chorus.h dsp/Sine.h dsp/Roessler.h \
+ dsp/Lorenz.h dsp/Delay.h dsp/util.h dsp/FPTruncateMode.h dsp/OnePole.h \
+ dsp/BiQuad.h dsp/complex.h dsp/RBJ.h dsp/BiQuad.h Descriptor.h
+Click.o: Click.cc basics.h ladspa.h dsp/RBJ.h dsp/BiQuad.h dsp/complex.h \
+ dsp/White.h Click.h dsp/OnePole.h dsp/BiQuad.h dsp/util.h Descriptor.h \
+ Cabinet.h dsp/Oversampler.h dsp/FIR.h dsp/util.h dsp/sinc.h dsp/Sine.h \
+ dsp/windows.h dsp/v4f.h dsp/v4f_FIR.h dsp/v4f.h dsp/v4f_BiQuad.h \
+ waves/click.h waves/profit.h
+Compress.o: Compress.cc basics.h ladspa.h Compress.h dsp/util.h \
+ dsp/Compress.h dsp/RMS.h dsp/OnePole.h dsp/util.h dsp/polynomials.h \
+ dsp/FIR.h dsp/sinc.h dsp/Sine.h dsp/windows.h Descriptor.h
+Eq.o: Eq.cc basics.h ladspa.h Eq.h dsp/util.h dsp/Eq.h dsp/BiQuad.h \
+ dsp/complex.h dsp/RBJ.h dsp/BiQuad.h Descriptor.h
+Fractals.o: Fractals.cc basics.h ladspa.h Fractals.h dsp/Lorenz.h \
+ dsp/Roessler.h dsp/OnePole.h Descriptor.h
+interface.o: interface.cc version.h basics.h ladspa.h Cabinet.h \
+ dsp/util.h dsp/BiQuad.h dsp/complex.h dsp/Oversampler.h dsp/FIR.h \
+ dsp/util.h dsp/sinc.h dsp/Sine.h dsp/windows.h dsp/v4f.h dsp/v4f_FIR.h \
+ dsp/v4f.h dsp/v4f_BiQuad.h Chorus.h dsp/Sine.h dsp/Roessler.h \
+ dsp/Lorenz.h dsp/Delay.h dsp/FPTruncateMode.h dsp/OnePole.h dsp/RBJ.h \
+ dsp/BiQuad.h Phaser.h Sin.h Fractals.h Reverb.h Compress.h \
+ dsp/Compress.h dsp/RMS.h dsp/OnePole.h dsp/polynomials.h dsp/FIR.h \
+ dsp/sinc.h dsp/windows.h Click.h Eq.h dsp/Eq.h Saturate.h dsp/RMS.h \
+ dsp/Butterworth.h dsp/ChebyshevPoly.h White.h dsp/White.h AutoFilter.h \
+ dsp/SVF.h Amp.h dsp/ToneStack.h dsp/TDFII.h dsp/LatFilt.h \
+ dsp/tonestack/tables.h Pan.h Scape.h ToneStack.h NoiseGate.h \
+ Descriptor.h
+NoiseGate.o: NoiseGate.cc basics.h ladspa.h NoiseGate.h dsp/util.h \
+ dsp/BiQuad.h dsp/complex.h dsp/RBJ.h dsp/BiQuad.h dsp/RMS.h dsp/Delay.h \
+ dsp/util.h dsp/FPTruncateMode.h dsp/OnePole.h Descriptor.h
+Pan.o: Pan.cc basics.h ladspa.h dsp/RBJ.h dsp/BiQuad.h dsp/complex.h \
+ Pan.h dsp/Delay.h dsp/util.h dsp/FPTruncateMode.h dsp/BiQuad.h \
+ Descriptor.h
+Phaser.o: Phaser.cc basics.h ladspa.h Phaser.h dsp/Sine.h dsp/Lorenz.h \
+ dsp/Delay.h dsp/util.h dsp/FPTruncateMode.h dsp/OnePole.h Descriptor.h
+Reverb.o: Reverb.cc basics.h ladspa.h Reverb.h dsp/Delay.h dsp/util.h \
+ dsp/FPTruncateMode.h dsp/OnePole.h dsp/Sine.h dsp/util.h Descriptor.h
+Saturate.o: Saturate.cc basics.h ladspa.h Saturate.h dsp/util.h \
+ dsp/Oversampler.h dsp/FIR.h dsp/util.h dsp/sinc.h dsp/Sine.h \
+ dsp/windows.h dsp/RMS.h dsp/Compress.h dsp/RMS.h dsp/OnePole.h \
+ dsp/OnePole.h dsp/BiQuad.h dsp/complex.h dsp/Butterworth.h dsp/BiQuad.h \
+ dsp/Delay.h dsp/FPTruncateMode.h dsp/ChebyshevPoly.h Descriptor.h \
+ dsp/polynomials.h dsp/RBJ.h
+Scape.o: Scape.cc basics.h ladspa.h Scape.h dsp/Sine.h dsp/Roessler.h \
+ dsp/Lorenz.h dsp/Delay.h dsp/util.h dsp/FPTruncateMode.h dsp/OnePole.h \
+ dsp/BiQuad.h dsp/complex.h dsp/RBJ.h dsp/BiQuad.h dsp/SVF.h Descriptor.h
+Sin.o: Sin.cc basics.h ladspa.h Sin.h dsp/Sine.h Descriptor.h
+ToneStack.o: ToneStack.cc basics.h ladspa.h dsp/util.h ToneStack.h \
+ dsp/windows.h dsp/ToneStack.h dsp/util.h dsp/windows.h dsp/TDFII.h \
+ dsp/LatFilt.h dsp/tonestack/tables.h Descriptor.h dsp/tonestack/ks_tab.h \
+ dsp/tonestack/vs_tab.h
+White.o: White.cc basics.h ladspa.h White.h dsp/White.h dsp/OnePole.h \
+ Descriptor.h
+polynomials.o: dsp/polynomials.cc dsp/../basics.h dsp/../ladspa.h

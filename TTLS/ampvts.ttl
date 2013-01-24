@@ -36,8 +36,8 @@
     [
         a lv2:ControlPort, lv2:InputPort;
         lv2:index 0;
-        lv2:symbol "over";
-        lv2:name "Over";
+        lv2:symbol "ratio";
+        lv2:name "Ratio";
         lv2:default 2;
         lv2:minimum 0;
         lv2:maximum 2;
@@ -45,7 +45,7 @@
         lv2:scalePoint [rdfs:label "2x"; rdf:value 0];
         lv2:scalePoint [rdfs:label "4x"; rdf:value 1];
         lv2:scalePoint [rdfs:label "8x"; rdf:value 2];
-        mod:iconLabel "Over";
+        mod:iconLabel "Ratio";
         mod:pedalButton "0-0";
     ],
     [
@@ -53,7 +53,7 @@
         lv2:index 1;
         lv2:symbol "gain";
         lv2:name "Gain";
-        lv2:default 0.25;
+        lv2:default 0;
         lv2:minimum 0;
         lv2:maximum 1;
         mod:iconLabel "Gain";
@@ -84,23 +84,23 @@
     [
         a lv2:ControlPort, lv2:InputPort;
         lv2:index 4;
-        lv2:symbol "tonestack";
-        lv2:name "Tonestack";
-        lv2:default 1;
+        lv2:symbol "model";
+        lv2:name "Model";
+        lv2:default 0;
         lv2:minimum 0;
         lv2:maximum 8;
         lv2:portProperty lv2:integer;
         lv2:portProperty lv2:enumeration ;
         lv2:scalePoint [rdfs:label "basswoman"; rdf:value 0];
-        lv2:scalePoint [rdfs:label "twin"; rdf:value 1];
-        lv2:scalePoint [rdfs:label "wookie"; rdf:value 2];
-        lv2:scalePoint [rdfs:label "DC 30"; rdf:value 3];
-        lv2:scalePoint [rdfs:label "juice 800"; rdf:value 4];
-        lv2:scalePoint [rdfs:label "stanford"; rdf:value 5];
+        lv2:scalePoint [rdfs:label "wookie"; rdf:value 1];
+        lv2:scalePoint [rdfs:label "DC 30"; rdf:value 2];
+        lv2:scalePoint [rdfs:label "twin"; rdf:value 3];
+        lv2:scalePoint [rdfs:label "stanford"; rdf:value 4];
+        lv2:scalePoint [rdfs:label "juice 800"; rdf:value 5];
         lv2:scalePoint [rdfs:label "HK 20"; rdf:value 6];
-        lv2:scalePoint [rdfs:label "nihon ace"; rdf:value 7];
-        lv2:scalePoint [rdfs:label "porky"; rdf:value 8];
-        mod:iconLabel "Tonestack";
+        lv2:scalePoint [rdfs:label "porky"; rdf:value 7];
+        lv2:scalePoint [rdfs:label "nihon ace"; rdf:value 8];
+        mod:iconLabel "Model";
         mod:pedalButton "0-2";
     ],
     [

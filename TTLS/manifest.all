@@ -1,0 +1,35 @@
+@prefix lv2: <http://lv2plug.in/ns/lv2core#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+<http://portalmod.com/plugins/caps/ampvts> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <ampvts.ttl>.
+<http://portalmod.com/plugins/caps/autofilter> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <autofilter.ttl>.
+<http://portalmod.com/plugins/caps/cabinetii> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <cabinetii.ttl>.
+<http://portalmod.com/plugins/caps/cabinetiii> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <cabinetiii.ttl>.
+<http://portalmod.com/plugins/caps/cabinetiv> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <cabinetiv.ttl>.
+<http://portalmod.com/plugins/caps/ceo> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <ceo.ttl>.
+<http://portalmod.com/plugins/caps/chorusi> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <chorusi.ttl>.
+<http://portalmod.com/plugins/caps/chorusii> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <chorusii.ttl>.
+<http://portalmod.com/plugins/caps/click> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <click.ttl>.
+<http://portalmod.com/plugins/caps/compress> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <compress.ttl>.
+<http://portalmod.com/plugins/caps/compress2x2> a lv2:Plugin; lv2:binary <compress2x2.so>; rdfs:seeAlso <compress2x2.ttl>.
+<http://portalmod.com/plugins/caps/dirac> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <dirac.ttl>.
+<http://portalmod.com/plugins/caps/eq> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <eq.ttl>.
+<http://portalmod.com/plugins/caps/eq2x2> a lv2:Plugin; lv2:binary <eq2x2.so>; rdfs:seeAlso <eq2x2.ttl>.
+<http://portalmod.com/plugins/caps/jvrev> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <jvrev.ttl>.
+<http://portalmod.com/plugins/caps/lorenz> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <lorenz.ttl>.
+<http://portalmod.com/plugins/caps/narrower> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <narrower.ttl>.
+<http://portalmod.com/plugins/caps/noisegate> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <noisegate.ttl>.
+<http://portalmod.com/plugins/caps/pan> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <pan.ttl>.
+<http://portalmod.com/plugins/caps/phaserii> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <phaserii.ttl>.
+<http://portalmod.com/plugins/caps/plate> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <plate.ttl>.
+<http://portalmod.com/plugins/caps/plate2x2> a lv2:Plugin; lv2:binary <plate2x2.so>; rdfs:seeAlso <plate2x2.ttl>.
+<http://portalmod.com/plugins/caps/roessler> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <roessler.ttl>.
+<http://portalmod.com/plugins/caps/saturate> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <saturate.ttl>.
+<http://portalmod.com/plugins/caps/scape> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <scape.ttl>.
+<http://portalmod.com/plugins/caps/sin> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <sin.ttl>.
+<http://portalmod.com/plugins/caps/stereochorusii> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <stereochorusii.ttl>.
+<http://portalmod.com/plugins/caps/stereochorusii2x2> a lv2:Plugin; lv2:binary <stereochorusii2x2.so>; rdfs:seeAlso <stereochorusii2x2.ttl>.
+<http://portalmod.com/plugins/caps/stereophaserii> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <stereophaserii.ttl>.
+<http://portalmod.com/plugins/caps/stereophaserii2x2> a lv2:Plugin; lv2:binary <stereophaserii2x2.so>; rdfs:seeAlso <stereophaserii2x2.ttl>.
+<http://portalmod.com/plugins/caps/tonestack> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <tonestack.ttl>.
+<http://portalmod.com/plugins/caps/white> a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <white.ttl>.
