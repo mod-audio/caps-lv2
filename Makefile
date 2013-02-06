@@ -101,14 +101,14 @@ depend: $(SOURCES) $(HEADERS)
 LV2all: $(OBJECTS)
 	$(CC) $(LDFLAGS) $(LV2FLAGS) -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o $(PLUG).so $(OBJECTS)
-	cp TTLS/manifest.all .
+	cp ttls/manifest.all .
 	mv manifest.all manifest.ttl
-	mv manifest.ttl TTLS/
+	mv manifest.ttl ttls/
 
 LV2single: $(LV2RULES)
-	cp TTLS/manifest.single .
+	cp ttls/manifest.single .
 	mv manifest.single manifest.ttl
-	mv manifest.ttl TTLS/
+	mv manifest.ttl ttls/
 
 
 AMPVTS_: Amp.o ToneStack.o dsp/polynomials.o
