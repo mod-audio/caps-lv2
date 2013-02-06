@@ -105,170 +105,328 @@ LV2all: $(OBJECTS)
 	mv manifest.all manifest.ttl
 	mv manifest.ttl ttls/
 
-LV2single: $(LV2RULES) ttlsingle
-
-ttlsingle:
+LV2single: $(LV2RULES)
+	rm manifest.ttl.*
 	cp ttls/manifest.single .
 	mv manifest.single manifest.ttl
 	mv manifest.ttl ttls/
 
-
 AMPVTS_: Amp.o ToneStack.o dsp/polynomials.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 AUTOFILTER_: AutoFilter.o dsp/polynomials.o Amp.o ToneStack.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 CABINETII_: Cabinet.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 CABINETIII_: Cabinet.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 CABINETIV_: Cabinet.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 CEO_: Click.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 CHORUSI_: Chorus.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 CHORUSII_: Chorus.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 CLICK_: Click.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 COMPRESS2X2_: Compress.o dsp/polynomials.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 COMPRESS_: Compress.o dsp/polynomials.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 DIRAC_: Click.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 EQ2X2_: Eq.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 EQ_: Eq.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 JVREV_: Reverb.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 LORENZ_: Fractals.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 NARROWER_: Pan.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 NOISEGATE_: NoiseGate.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 PAN_: Pan.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 PHASERII_: Phaser.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 PLATE2X2_: Reverb.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 PLATE_: Reverb.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 ROESSLER_: Fractals.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 SATURATE_: Saturate.o dsp/polynomials.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 SCAPE_: Scape.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 SIN_: Sin.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 STEREOCHORUSII2X2_: Chorus.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 STEREOCHORUSII_: Chorus.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 STEREOPHASERII2X2_: Phaser.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 STEREOPHASERII_: Phaser.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 TONESTACK_: ToneStack.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?
 
 WHITE_: White.o
-	$(MAKE) ttlsingle
+
+	echo "@prefix lv2: <http://lv2plug.in/ns/lv2core#>.\n\
+	@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n\n\
+	<http://portalmod.com/plugins/caps/`echo $(@:_=) | tr A-Z a-z`> a lv2:Plugin; lv2:binary \
+	<`echo $(@:_=) | tr A-Z a-z`.so>; rdfs:seeAlso <`echo $(@:_=) | tr A-Z a-z`.ttl>." > manifest.ttl.`echo $(@:_=) | tr A-Z a-z`
+
 	$(CC) $(LDFLAGS) -D$@ -o interface.o -c interface.cc
 	$(CC) $(LDFLAGS) -o `echo $(@:_=) | tr A-Z a-z`.so interface.o $?

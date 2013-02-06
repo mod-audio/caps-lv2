@@ -40,7 +40,7 @@
         lv2:index 0;
         lv2:symbol "f";
         lv2:name "f";
-        units:unit units:Hz ;
+        units:unit units:hz ;
         lv2:portProperty epp:logarithmic;
         lv2:portProperty pprops:logarithmic ;
         lv2:default 100.0;
