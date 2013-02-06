@@ -58,7 +58,7 @@ installLV2:
 	@$(STRIP) $(PLUG).so > /dev/null
 	install -d $(DEST)
 	install -m 644 $(PLUG).so $(DEST)
-	install -m 644 TTLS/* $(DEST)
+	install -m 644 ttls/* $(DEST)
 
 installLADSPA: all
 	@$(STRIP) $(PLUG).so > /dev/null
