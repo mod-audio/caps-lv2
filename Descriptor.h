@@ -407,4 +407,4 @@ class Descriptor
 
 #endif /* _DESCRIPTOR_H_ */
 
-#endif // LADSPAFLAG
+#endif

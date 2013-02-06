@@ -1,7 +1,19 @@
-This is CAPS, the C* Audio Plugin Suite
-=======================================
+Makefile was altered to have the following rules:
 
-For all questions, please be referred to the HTML documentation of 
-this software package in the file 'doc/index.html', also available as
+all
+    Will compile all plugins in one single shared object following the LADSPA API.
 
-http://quitte.de/dsp/caps.html
+LV2all
+    Will compile all plugins in one single shared object following the LV2 API.
+
+LV2single
+    Will compile all plugins in each analog shared object following the LV2 API.
+
+PLUGINNAME_
+    Will compile only this plugin following the LV2API.
+
+installLV2 (will work only after at least one of the 3 rules above)
+    Will install all shared objects and ttls in the directory DEST.
+
+installLADSPA
+    Will install all shared objects and rdfs in the directory DEST.
