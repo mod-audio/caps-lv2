@@ -54,11 +54,14 @@ tags: $(SOURCES) $(HEADERS)
 	@echo making tags
 	@-if [ -x /usr/bin/ctags ]; then ctags $(SOURCES) $(HEADERS) ; fi
 
-installLV2:
-	@$(STRIP) $(PLUG).so > /dev/null
+installLV2all:
+	@$(STRIP) $(PLUG) > /dev/null
 	install -d $(DEST)
-	install -m 644 $(PLUG).so $(DEST)
+	install -m 644 $(PLUG) $(DEST)
 	install -m 644 ttls/* $(DEST)
+	
+installLV2single:
+	./make_install.sh
 
 installLADSPA: all
 	@$(STRIP) $(PLUG).so > /dev/null
