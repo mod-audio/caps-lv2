@@ -1,36 +1,35 @@
 /*
-    Descriptor.h
+	Descriptor.h
 
-    Copyright 2004-11 Tim Goetze <tim@quitte.de>
+	Copyright 2004-11 Tim Goetze <tim@quitte.de>
 
-    http://quitte.de/dsp/
+	http://quitte.de/dsp/
 
-    Creating a LADSPA_Descriptor for a CAPS plugin via a C++ template,
-    saving a virtual function call compared to the usual method used
-    for C++ plugins in a C context.
+	Creating a LADSPA_Descriptor for a CAPS plugin via a C++ template,
+	saving a virtual function call compared to the usual method used
+	for C++ plugins in a C context.
 
-    Descriptor<P> expects P to declare some common methods, like init(),
-    activate() etc, plus a static port_info[] and LADSPA_Data * ports[]
-    and adding_gain.  (P should derive from Plugin, too.)
+	Descriptor<P> expects P to declare some common methods, like init(),
+	activate() etc, plus a static port_info[] and LADSPA_Data * ports[]
+	and adding_gain.  (P should derive from Plugin, too.)
 
 */
 /*
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License
-    as published by the Free Software Foundation; either version 3
-    of the License, or (at your option) any later version.
+	This program is free software; you can redistribute it and/or
+	modify it under the terms of the GNU General Public License
+	as published by the Free Software Foundation; either version 3
+	of the License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
-    02111-1307, USA or point your web browser to http://www.gnu.org.
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
-#ifdef LADSPAFLAG
 
 #ifndef _DESCRIPTOR_H_
 #define _DESCRIPTOR_H_
@@ -42,369 +41,243 @@
 #include <pmmintrin.h>
 #endif
 
+#include <lv2.h>
 
+/* common stub for Descriptor makes it possible to delete() without special-
+ * casing for every plugin class.
+ */
 class DescriptorStub
-: public LADSPA_Descriptor
+: public LADSPA_Descriptor, public LV2_Descriptor
 {
-    public:
-        DescriptorStub()
-            {
-                PortCount = 0;
-            }
+	public:
+		DescriptorStub()
+			{
+				PortCount = 0;
+				URI = 0;
+			}
 
-        ~DescriptorStub()
-            {
-                if (PortCount)
-                {
-                    delete [] PortNames;
-                    delete [] PortDescriptors;
-                    delete [] PortRangeHints;
-                }
-            }
+		~DescriptorStub()
+			{
+				if (PortCount)
+				{
+					delete [] PortNames;
+					delete [] PortDescriptors;
+					delete [] PortRangeHints;
+				}
+			}
 };
 
 inline void
 processor_specific_denormal_measures()
 {
-    #ifdef __SSE3__
-    /* this one works reliably on a 6600 Core2 */
-    _MM_SET_DENORMALS_ZERO_MODE (_MM_DENORMALS_ZERO_ON);
-    #endif
+	#ifdef __SSE3__
+	/* this one works reliably on a 6600 Core2 */
+	_MM_SET_DENORMALS_ZERO_MODE (_MM_DENORMALS_ZERO_ON);
+	#endif
 
-    #ifdef __SSE__
-    /* this one doesn't ... */
-    _MM_SET_FLUSH_ZERO_MODE (_MM_FLUSH_ZERO_ON);
-    #endif
+	#ifdef __SSE__
+	/* this one doesn't ... */
+	_MM_SET_FLUSH_ZERO_MODE (_MM_FLUSH_ZERO_ON);
+	#endif
 }
 
 template <class T>
 class Descriptor
 : public DescriptorStub
 {
-    public:
-        LADSPA_PortRangeHint * ranges;
+	public:
+		LADSPA_PortRangeHint * ranges;
 
-    public:
-        Descriptor (uint id) { UniqueID = id; setup(); }
+	public:
+		Descriptor (uint id) { UniqueID = id; setup(); }
+		Descriptor (const char *uri) { URI = uri; setup(); }
 
-        void setup();
-        /* setup() is in the plugin's .cc implementation file because it needs
-         * access to the port_info implementation, instantiating the following
-         * function: */
-        void autogen()
-            {
-                Properties = HARD_RT;
-                PortCount = (sizeof (T::port_info) / sizeof (PortInfo));
+		void setup();
+		/* setup() is in the plugin's .cc implementation file because it needs
+		 * access to the port_info implementation, instantiating the following
+		 * function: */
+		void autogen()
+			{
+				ranges = 0;
 
-                ImplementationData = T::port_info;
+				/* Is LADSPA? */
+				if (!URI)
+				{
+					Properties = HARD_RT;
+					PortCount = (sizeof (T::port_info) / sizeof (PortInfo));
 
-                /* convert PortInfo members to Descriptor properties */
-                const char ** names = new const char * [PortCount];
-                PortNames = names;
+					ImplementationData = T::port_info;
 
-                LADSPA_PortDescriptor * desc = new LADSPA_PortDescriptor [PortCount];
-                PortDescriptors = desc;
+					/* convert PortInfo members to Descriptor properties */
+					const char ** names = new const char * [PortCount];
+					PortNames = names;
 
-                ranges = new LADSPA_PortRangeHint [PortCount];
-                PortRangeHints = ranges;
+					LADSPA_PortDescriptor * desc = new LADSPA_PortDescriptor [PortCount];
+					PortDescriptors = desc;
 
-                for (int i = 0; i < (int) PortCount; ++i)
-                {
-                    names[i] = T::port_info[i].name;
-                    desc[i] = T::port_info[i].descriptor;
-                    ranges[i] = T::port_info[i].range;
-                    if (desc[i] & INPUT)
-                        ranges[i].HintDescriptor |= BOUNDED;
-                }
+					ranges = new LADSPA_PortRangeHint [PortCount];
+					PortRangeHints = ranges;
 
-                /* Descriptor vtable */
-                instantiate = _instantiate;
-                connect_port = _connect_port;
-                activate = _activate;
-                run = _run;
-                run_adding = _run_adding;
-                set_run_adding_gain = _set_run_adding_gain;
-                deactivate = 0;
-                cleanup = _cleanup;
-            }
+					for (int i = 0; i < (int) PortCount; ++i)
+					{
+						names[i] = T::port_info[i].name;
+						desc[i] = T::port_info[i].descriptor;
+						ranges[i] = T::port_info[i].range;
+						if (desc[i] & INPUT)
+							ranges[i].HintDescriptor |= BOUNDED;
+					}
+				}
 
-        static LADSPA_Handle _instantiate (
-                const struct _LADSPA_Descriptor * d, ulong fs)
-            {
-                T * plugin = new T();
+				/* Descriptor vtable */
+				LADSPA_Descriptor::instantiate = _instantiate;
+				LADSPA_Descriptor::connect_port = _connect_port;
+				LADSPA_Descriptor::activate = _activate;
+				LADSPA_Descriptor::run = _run;
+				LADSPA_Descriptor::run_adding = _run_adding;
+				LADSPA_Descriptor::set_run_adding_gain = _set_run_adding_gain;
+				LADSPA_Descriptor::deactivate = 0;
+				LADSPA_Descriptor::cleanup = _cleanup;
 
-                LADSPA_PortRangeHint * ranges = ((Descriptor *) d)->ranges;
-                plugin->ranges = ranges;
+				LV2_Descriptor::instantiate = _instantiate_lv2;
+				LV2_Descriptor::connect_port = _connect_port_lv2;
+				LV2_Descriptor::activate = _activate_lv2;
+				LV2_Descriptor::run = _run_lv2;
+				LV2_Descriptor::deactivate = 0;
+				LV2_Descriptor::cleanup = _cleanup_lv2;
+			}
 
-                int n = (int) d->PortCount;
-                plugin->ports = new sample_t * [n];
-                /* connect to lower bound as a safety measure */
-                for (int i = 0; i < n; ++i)
-                    plugin->ports[i] = &(ranges[i].LowerBound);
+		static LADSPA_Handle _instantiate (
+				const struct _LADSPA_Descriptor * d, ulong fs)
+			{
+				T * plugin = new T();
 
-                plugin->fs = fs;
-                plugin->over_fs = 1./fs;
-                plugin->normal = NOISE_FLOOR;
-                plugin->init();
+				LADSPA_PortRangeHint * ranges = ((Descriptor *) d)->ranges;
+				plugin->ranges = ranges;
 
-                return plugin;
-            }
+				int n = (int) d->PortCount;
+				plugin->ports = new sample_t * [n];
+				/* connect to lower bound as a safety measure */
+				for (int i = 0; i < n; ++i)
+					plugin->ports[i] = &(ranges[i].LowerBound);
 
-        static void _connect_port (LADSPA_Handle h, ulong i, LADSPA_Data * p)
-            {
-                ((T *) h)->ports[i] = p;
-            }
+				plugin->fs = fs;
+				plugin->over_fs = 1./fs;
+				plugin->normal = NOISE_FLOOR;
+				plugin->init();
 
-        static void _activate (LADSPA_Handle h)
-            {
-                T * plugin = (T *) h;
+				return plugin;
+			}
 
-                plugin->first_run = 1;
+		static void _connect_port (LADSPA_Handle h, ulong i, LADSPA_Data * p)
+			{
+				((T *) h)->ports[i] = p;
+			}
 
-                /* since none of the plugins do any RT-critical work in
-                 * activate(), it's safe to defer the actual call into
-                 * the first run() after the host called activate().
-                 *
-                 * It's the simplest way to prevent a parameter smoothing sweep
-                 * in the first audio block after activation.
-                plugin->activate();
-                 */
-            }
+		static void _activate (LADSPA_Handle h)
+			{
+				T * plugin = (T *) h;
 
-        static void _run (LADSPA_Handle h, ulong n)
-            {
-                T * plugin = (T *) h;
+				plugin->first_run = 1;
 
-                /* We don't reset the processor flags later, it's true. */
-                processor_specific_denormal_measures();
+				/* since none of the plugins do any RT-critical work in
+				 * activate(), it's safe to defer the actual call into
+				 * the first run() after the host called activate().
+				 *
+				 * It's the simplest way to prevent a parameter smoothing sweep
+				 * in the first audio block after activation.
+				plugin->activate();
+				 */
+			}
 
-                /* If this is the first audio block after activation,
-                 * initialize the plugin from the current set of parameters. */
-                if (plugin->first_run)
-                {
-                    plugin->activate();
-                    plugin->first_run = 0;
-                }
+		static void _run (LADSPA_Handle h, ulong n)
+			{
+				T * plugin = (T *) h;
 
-                plugin->run (n);
-                plugin->normal = -plugin->normal;
-            }
+				/* We don't reset the processor flags later, it's true. */
+				processor_specific_denormal_measures();
 
-        static void _run_adding (LADSPA_Handle h, ulong n)
-            {
-                T * plugin = (T *) h;
+				/* If this is the first audio block after activation,
+				 * initialize the plugin from the current set of parameters. */
+				if (plugin->first_run)
+				{
+					plugin->activate();
+					plugin->first_run = 0;
+				}
 
-                /* We don't reset the processor flags later, it's true. */
-                processor_specific_denormal_measures();
+				plugin->run (n);
+				plugin->normal = -plugin->normal;
+			}
 
-                /* If this is the first audio block after activation,
-                 * initialize the plugin from the current set of parameters. */
-                if (plugin->first_run)
-                {
-                    plugin->activate();
-                    plugin->first_run = 0;
-                }
+		static void _run_adding (LADSPA_Handle h, ulong n)
+			{
+				T * plugin = (T *) h;
 
-                plugin->run_adding (n);
-                plugin->normal = -plugin->normal;
-            }
+				/* We don't reset the processor flags later, it's true. */
+				processor_specific_denormal_measures();
 
-        static void _set_run_adding_gain (LADSPA_Handle h, LADSPA_Data g)
-            {
-                T * plugin = (T *) h;
+				/* If this is the first audio block after activation,
+				 * initialize the plugin from the current set of parameters. */
+				if (plugin->first_run)
+				{
+					plugin->activate();
+					plugin->first_run = 0;
+				}
 
-                plugin->adding_gain = g;
-            }
+				plugin->run_adding (n);
+				plugin->normal = -plugin->normal;
+			}
 
-        static void _cleanup (LADSPA_Handle h)
-            {
-                T * plugin = (T *) h;
+		static void _set_run_adding_gain (LADSPA_Handle h, LADSPA_Data g)
+			{
+				T * plugin = (T *) h;
 
-                delete [] plugin->ports;
-                delete plugin;
-            }
+				plugin->adding_gain = g;
+			}
+
+		static void _cleanup (LADSPA_Handle h)
+			{
+				T * plugin = (T *) h;
+
+				delete [] plugin->ports;
+				delete plugin;
+			}
+
+		/* LV2 */
+		static LV2_Handle _instantiate_lv2 (
+				const LV2_Descriptor *d, double fs, const char *bundle_path, const LV2_Feature *const *features)
+			{
+				T * plugin = new T();
+
+				int n = 32; /* FIXME: hardcoded port numbers */
+				plugin->ports = new sample_t * [n];
+
+				plugin->fs = fs;
+				plugin->over_fs = 1./fs;
+				plugin->normal = NOISE_FLOOR;
+				plugin->init();
+
+				return plugin;
+			}
+
+		static void _connect_port_lv2 (LV2_Handle h, uint32_t i, void * p)
+			{
+				((T *) h)->ports[i] = (sample_t *) p;
+			}
+
+		static void _activate_lv2 (LV2_Handle h)
+			{
+				_activate(h);
+			}
+
+		static void _run_lv2 (LV2_Handle h, uint32_t n)
+			{
+				_run(h, n);
+			}
+
+		static void _cleanup_lv2 (LV2_Handle h)
+			{
+				_cleanup(h);
+			}
 };
 
 #endif /* _DESCRIPTOR_H_ */
-
-
-#else
-
-#ifndef _DESCRIPTOR_H_
-#define _DESCRIPTOR_H_
-
-#ifdef __SSE__
-#include <xmmintrin.h>
-#endif
-#ifdef __SSE3__
-#include <pmmintrin.h>
-#endif
-
-#include <iostream>
-
-inline void
-processor_specific_denormal_measures()
-{
-    #ifdef __SSE3__
-    /* this one works reliably on a 6600 Core2 */
-    _MM_SET_DENORMALS_ZERO_MODE (_MM_DENORMALS_ZERO_ON);
-    #endif
-
-    #ifdef __SSE__
-    /* this one doesn't ... */
-    _MM_SET_FLUSH_ZERO_MODE (_MM_FLUSH_ZERO_ON);
-    #endif
-}
-
-template <class T>
-class Descriptor
-: public LV2_Descriptor
-{
-
-    public:
-
-        LADSPA_PortRangeHint * ranges;
-
-        Descriptor (const char *uri) {
-            URI = uri;
-            setup();
-        }
-
-        /* in plugin's .cc file because it needs port_info implementation */
-        void setup();
-
-        const char *Label;
-        const char *Maker;
-        const char *Name;
-        const char *Copyright;
-
-        unsigned long PortCount;
-
-        void autogen() {
-                PortCount = (sizeof (T::port_info) / sizeof (PortInfo));
-
-                /* unroll PortInfo members */
-                const char ** names = new const char * [PortCount];
-                LADSPA_PortDescriptor * desc = new LADSPA_PortDescriptor [PortCount];
-                ranges = new LADSPA_PortRangeHint [PortCount];
-
-                /* could also assign directly but const_cast is ugly. */
-                for (int i = 0; i < (int) PortCount; ++i)
-                {
-                    names[i] = T::port_info[i].name;
-                    desc[i] = T::port_info[i].descriptor;
-                    ranges[i] = T::port_info[i].range;
-                }
-
-                //PortNames = names;
-                //PortDescriptors = desc;
-                //PortRangeHints = ranges;
-
-                /* LADSPA_Descriptor vtable entries */
-                instantiate = _instantiate;
-                connect_port = _connect_port;
-                activate = _activate;
-                run = _run;
-                //run_adding = _run_adding;
-                //set_run_adding_gain = _set_run_adding_gain;
-                deactivate = NULL;
-                cleanup = _cleanup;
-        }
-
-        static LV2_Handle _instantiate (
-                const LV2_Descriptor *descriptor, double sample_rate, const char *bundle_path, const LV2_Feature *const *features)
-            {
-
-                T * plugin = new T();
-                int n;
-                for (n = 0; plugin->port_info[n].name; n++);
-
-                plugin->ports = new sample_t * [n];
-                plugin->fs = sample_rate;
-                plugin->over_fs = 1./sample_rate;
-                plugin->normal = NOISE_FLOOR;
-                plugin->init();
-
-
-                return plugin;
-            }
-
-        static void _connect_port (LV2_Handle h, uint32_t i, void * p)
-            {
-                ((T *) h)->ports[i] = (sample_t*)p;
-            }
-
-        static void _activate (LV2_Handle h)
-            {
-                T * plugin = (T *) h;
-
-
-                plugin->first_run = 1;
-
-                /* since none of the plugins do any RT-critical work in
-                 * activate(), it's safe to defer the actual call into
-                 * the first run() after the host called activate().
-                 *
-                 * It's the simplest way to prevent a parameter smoothing sweep
-                 * in the first audio block after activation.
-                plugin->activate();
-                 */
-            }
-
-        static void _run (LV2_Handle h, uint32_t n)
-            {
-                T * plugin = (T *) h;
-
-                /* We don't reset the processor flags later, it's true. */
-                processor_specific_denormal_measures();
-
-                /* If this is the first audio block after activation,
-                 * initialize the plugin from the current set of parameters. */
-                if (plugin->first_run)
-                {
-                    plugin->activate();
-                    plugin->first_run = 0;
-                }
-
-                plugin->run (n);
-                plugin->normal = -plugin->normal;
-            }
-
-        static void _run_adding (LV2_Handle h, ulong n)
-            {
-                T * plugin = (T *) h;
-
-                /* We don't reset the processor flags later, it's true. */
-                processor_specific_denormal_measures();
-
-                /* If this is the first audio block after activation,
-                 * initialize the plugin from the current set of parameters. */
-                if (plugin->first_run)
-                {
-                    plugin->activate();
-                    plugin->first_run = 0;
-                }
-
-                plugin->run_adding (n);
-                plugin->normal = -plugin->normal;
-            }
-
-        static void _set_run_adding_gain (LV2_Handle h, LADSPA_Data g)
-            {
-                T * plugin = (T *) h;
-
-                plugin->adding_gain = g;
-            }
-
-        static void _cleanup (LV2_Handle h)
-            {
-                T * plugin = (T *) h;
-
-                delete [] plugin->ports;
-                delete plugin;
-            }
-};
-
-#endif /* _DESCRIPTOR_H_ */
-
-#endif

@@ -1,0 +1,96 @@
+@prefix lv2:  <http://lv2plug.in/ns/lv2core#>.
+@prefix doap: <http://usefulinc.com/ns/doap#>.
+@prefix epp: <http://lv2plug.in/ns/ext/port-props/#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix units: <http://lv2plug.in/ns/extension/units#> .
+@prefix mod:   <http://portalmod.com/ns/extensions/effect#> .
+
+<http://portalmod.com/plugins/caps/CabinetIV> a lv2:Plugin, lv2:SimulatorPlugin;
+    doap:name  "C* CabinetIV - Idealised loudspeaker cabinet emulation";
+    doap:developer [
+        foaf:name "Tim Goetze";
+        foaf:homepage <http://quitte.de/dsp/caps.html>;
+        foaf:mbox <mailto:tim@quitte.de>;
+        ];
+    doap:maintainer [
+        foaf:name "MOD Team";
+        foaf:homepage <http://portalmod.com>;
+        foaf:mbox <mailto:devel@portalmod.com>;
+        ];
+    doap:license <http://usefulinc.com/doap/licenses/gpl>;
+    lv2:optionalFeature lv2:hardRtCapable;
+    lv2:minorVersion 0;
+    lv2:microVersion 4;
+
+    mod:pedalModel "japanese";
+    mod:pedalColor "brown";
+    mod:brand "caps";
+    mod:pedalLabel "Cabinet II";
+    mod:smallLabel "CabinetII";
+    mod:bypassLedPosition "118-83";
+    lv2:port
+    [
+        a lv2:AudioPort, lv2:InputPort;
+        lv2:index 0;
+        lv2:symbol "in";
+        lv2:name "in";
+    ],
+    [
+        a lv2:ControlPort, lv2:InputPort;
+        lv2:index 1;
+        lv2:symbol "model";
+        lv2:name "Model";
+    lv2:portProperty lv2:integer;
+        lv2:default 12;
+        lv2:minimum 0;
+        lv2:maximum 24;
+        lv2:portProperty lv2:enumeration ;
+        lv2:scalePoint [rdfs:label "Mega Wookie 800"; rdf:value 0];
+        lv2:scalePoint [rdfs:label "Mega Wookie 812"; rdf:value 1];
+        lv2:scalePoint [rdfs:label "Mega Wookie 828"; rdf:value 2];
+        lv2:scalePoint [rdfs:label "Mega Wookie 868"; rdf:value 3];
+        lv2:scalePoint [rdfs:label "Mega Wookie 908"; rdf:value 4];
+        lv2:scalePoint [rdfs:label "Mega Wookie 912"; rdf:value 5];
+        lv2:scalePoint [rdfs:label "Mega Wookie 936"; rdf:value 6];
+        lv2:scalePoint [rdfs:label "Mega Wookie 968"; rdf:value 7];
+        lv2:scalePoint [rdfs:label "Mega Wookie 992"; rdf:value 8];
+        lv2:scalePoint [rdfs:label "Unmatched"; rdf:value 9];
+        lv2:scalePoint [rdfs:label "Twin A"; rdf:value 10];
+        lv2:scalePoint [rdfs:label "Twin B"; rdf:value 11];
+        lv2:scalePoint [rdfs:label "Twin C"; rdf:value 12];
+        lv2:scalePoint [rdfs:label "Blue A"; rdf:value 13];
+        lv2:scalePoint [rdfs:label "Blue B"; rdf:value 14];
+        lv2:scalePoint [rdfs:label "Tweedie A"; rdf:value 15];
+        lv2:scalePoint [rdfs:label "Tweedie B"; rdf:value 16];
+        lv2:scalePoint [rdfs:label "Miniwookie A"; rdf:value 17];
+        lv2:scalePoint [rdfs:label "Miniwookie B"; rdf:value 18];
+        lv2:scalePoint [rdfs:label "Rosie A"; rdf:value 19];
+        lv2:scalePoint [rdfs:label "Rosie B"; rdf:value 20];
+        lv2:scalePoint [rdfs:label "Indigo"; rdf:value 21];
+        lv2:scalePoint [rdfs:label "Angel"; rdf:value 22];
+        lv2:scalePoint [rdfs:label "Sixty-one"; rdf:value 23];
+        lv2:scalePoint [rdfs:label "Sixty-two"; rdf:value 24];
+    mod:iconLabel "Model";
+    mod:pedalButton "1-1";
+    ],
+    [
+        a lv2:ControlPort, lv2:InputPort;
+        lv2:index 2;
+        lv2:symbol "gain";
+        lv2:name "Gain";
+        lv2:default 0;
+        lv2:minimum -24;
+        lv2:maximum 12;
+    units:unit units:db ;
+    mod:iconLabel "Gain";
+    mod:pedalButton "1-5";
+
+    ],
+    [
+        a lv2:AudioPort, lv2:OutputPort;
+        lv2:index 3;
+        lv2:symbol "out";
+        lv2:name "out";
+    ].

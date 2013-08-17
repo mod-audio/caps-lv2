@@ -1,29 +1,29 @@
 /*
-    basics.h
+	basics.h
 
-    Copyright 2004-12 Tim Goetze <tim@quitte.de>
+	Copyright 2004-12 Tim Goetze <tim@quitte.de>
 
-    http://quitte.de/dsp/
+	http://quitte.de/dsp/
 
-    Common constants, typedefs, utility functions
-    and simplified LADSPA #defines.
+	Common constants, typedefs, utility functions
+	and simplified LADSPA #defines.
 
 */
 /*
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License
-    as published by the Free Software Foundation; either version 3
-    of the License, or (at your option) any later version.
+	This program is free software; you can redistribute it and/or
+	modify it under the terms of the GNU General Public License
+	as published by the Free Software Foundation; either version 3
+	of the License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
-    02111-1307, USA or point your web browser to http://www.gnu.org.
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
 #ifndef _BASICS_H_
@@ -48,16 +48,15 @@
 #include <stdio.h>
 
 #include "ladspa.h"
-#include <lv2.h>
 
-typedef __int8_t            int8;
-typedef __uint8_t           uint8;
-typedef __int16_t           int16;
-typedef __uint16_t      uint16;
-typedef __int32_t           int32;
-typedef __uint32_t      uint32;
-typedef __int64_t           int64;
-typedef __uint64_t      uint64;
+typedef __int8_t			int8;
+typedef __uint8_t			uint8;
+typedef __int16_t			int16;
+typedef __uint16_t		uint16;
+typedef __int32_t			int32;
+typedef __uint32_t		uint32;
+typedef __int64_t			int64;
+typedef __uint64_t		uint64;
 
 #define MIN_GAIN .000001 /* -120 dB */
 /* smallest non-denormal 32 bit IEEE float is 1.18e-38 */
@@ -73,8 +72,8 @@ typedef __uint64_t      uint64;
 
 #define AUDIO_IN  AUDIO|INPUT
 #define AUDIO_OUT AUDIO|OUTPUT
-#define CTRL_IN     CONTROL|INPUT
-#define CTRL_OUT    CONTROL|OUTPUT
+#define CTRL_IN  	CONTROL|INPUT
+#define CTRL_OUT 	CONTROL|OUTPUT
 
 /* extending LADSPA_PORT_* */
 #define LADSPA_PORT_GROUP (AUDIO<<1) /* 16 */
@@ -99,17 +98,13 @@ typedef __uint64_t      uint64;
 /* //////////////////////////////////////////////////////////////////////// */
 
 typedef struct {
-    const char * name;
-    LADSPA_PortDescriptor descriptor;
-    LADSPA_PortRangeHint range;
-    const char * meta;
+	const char * name;
+	LADSPA_PortDescriptor descriptor;
+	LADSPA_PortRangeHint range;
+	const char * meta;
 } PortInfo;
 
-#ifdef LADSPAFLAG
 typedef LADSPA_Data sample_t;
-#else
-typedef float sample_t;
-#endif
 typedef unsigned int uint;
 typedef unsigned long ulong;
 
@@ -122,13 +117,13 @@ typedef void (*yield_func_t) (sample_t *, uint, sample_t, sample_t);
 inline void
 store_func (sample_t * s, uint i, sample_t x, sample_t gain)
 {
-    s[i] = x;
+	s[i] = x;
 }
 
 inline void
 adding_func (sample_t * s, uint i, sample_t x, sample_t gain)
 {
-    s[i] += gain * x;
+	s[i] += gain * x;
 }
 
 #ifndef max
@@ -136,13 +131,13 @@ adding_func (sample_t * s, uint i, sample_t x, sample_t gain)
 template <class X, class Y>
 X min (X x, Y y)
 {
-    return x < y ? x : (X) y;
+	return x < y ? x : (X) y;
 }
 
 template <class X, class Y>
 X max (X x, Y y)
 {
-    return x > y ? x : (X) y;
+	return x > y ? x : (X) y;
 }
 
 #endif /* ! max */
@@ -150,31 +145,31 @@ X max (X x, Y y)
 template <class T>
 T clamp (T value, T lower, T upper)
 {
-    if (value < lower) return lower;
-    if (value > upper) return upper;
-    return value;
+	if (value < lower) return lower;
+	if (value > upper) return upper;
+	return value;
 }
 
 static inline float
 frandom()
 {
-    return (float) random() / (float) RAND_MAX;
+	return (float) random() / (float) RAND_MAX;
 }
 
 /* NB: also true if 0  */
 inline bool
 is_denormal (float & f)
 {
-    int32 i = *((int32 *) &f);
-    return ((i & 0x7f800000) == 0);
+	int32 i = *((int32 *) &f);
+	return ((i & 0x7f800000) == 0);
 }
 
 /* not used, check validity before using */
 inline bool
 is_denormal (double & f)
 {
-    int64 i = *((int64 *) &f);
-    return ((i & 0x7fe0000000000000ll) == 0);
+	int64 i = *((int64 *) &f);
+	return ((i & 0x7fe0000000000000ll) == 0);
 }
 
 /* lovely algorithm from
@@ -183,72 +178,70 @@ is_denormal (double & f)
 inline uint
 next_power_of_2 (uint n)
 {
-    assert (n <= 0x40000000);
+	assert (n <= 0x40000000);
 
-    --n;
-    n |= n >> 1;
-    n |= n >> 2;
-    n |= n >> 4;
-    n |= n >> 8;
-    n |= n >> 16;
+	--n;
+	n |= n >> 1;
+	n |= n >> 2;
+	n |= n >> 4;
+	n |= n >> 8;
+	n |= n >> 16;
 
-    return ++n;
+	return ++n;
 }
 
 inline double
 db2lin (double db)
 {
-    return pow(10, db*.05);
+	return pow(10, db*.05);
 }
 
 inline double
 lin2db (double lin)
 {
-    return 20*log10(lin);
+	return 20*log10(lin);
 }
 
 #ifdef __i386__
-    #define TRAP asm ("int $3;")
+	#define TRAP asm ("int $3;")
 #else
-    #define TRAP
+	#define TRAP
 #endif
 
 /* //////////////////////////////////////////////////////////////////////// */
 
 #define CAPS "C* "
+#define CAPS_URI "http://quitte.de/dsp/caps.html#"
 
 class Plugin
 {
-    public:
-        float fs, over_fs; /* sample rate and 1/fs */
-        float adding_gain; /* for run_adding() */
+	public:
+		float fs, over_fs; /* sample rate and 1/fs */
+		float adding_gain; /* for run_adding() */
 
-        int first_run; /* 1st block after activate(), do no parameter smoothing */
-        sample_t normal; /* renormal constant */
+		int first_run; /* 1st block after activate(), do no parameter smoothing */
+		sample_t normal; /* renormal constant */
 
-        sample_t ** ports;
-        LADSPA_PortRangeHint * ranges; /* for getport() below */
+		sample_t ** ports;
+		LADSPA_PortRangeHint * ranges; /* for getport() below */
 
-    public:
-        /* get port value, mapping inf or nan to 0 */
-        inline sample_t getport_unclamped (int i)
-            {
-                sample_t v = *ports[i];
-                return (isinf (v) || isnan(v)) ? 0 : v;
-            }
+	public:
+		/* get port value, mapping inf or nan to 0 */
+		inline sample_t getport_unclamped (int i)
+			{
+				sample_t v = *ports[i];
+				return (isinf (v) || isnan(v)) ? 0 : v;
+			}
 
-        /* get port value and clamp to port range */
-        inline sample_t getport (int i)
-            {
-                #ifdef LADSPAFLAG
-                LADSPA_PortRangeHint & r = ranges[i];
-                sample_t v = getport_unclamped (i);
-                return clamp (v, r.LowerBound, r.UpperBound);
-                #else
-                sample_t v = getport_unclamped (i);
-                return v;
-                #endif
-            }
+		/* get port value and clamp to port range */
+		inline sample_t getport (int i)
+			{
+				sample_t v = getport_unclamped (i);
+				if (!ranges) return v;
+
+				LADSPA_PortRangeHint & r = ranges[i];
+				return clamp (v, r.LowerBound, r.UpperBound);
+			}
 };
 
 #endif /* _BASICS_H_ */

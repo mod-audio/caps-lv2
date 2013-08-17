@@ -1,0 +1,35 @@
+@prefix lv2: <http://lv2plug.in/ns/lv2core#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+<http://quitte.de/dsp/caps.html#AmpVTS>              a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <AmpVTS.ttl>.
+<http://quitte.de/dsp/caps.html#AutoFilter>          a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <AutoFilter.ttl>.
+<http://quitte.de/dsp/caps.html#CabinetII>           a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <CabinetII.ttl>.
+<http://quitte.de/dsp/caps.html#CabinetIII>          a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <CabinetIII.ttl>.
+<http://quitte.de/dsp/caps.html#CabinetIV>           a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <CabinetIV.ttl>.
+<http://quitte.de/dsp/caps.html#CEO>                 a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <CEO.ttl>.
+<http://quitte.de/dsp/caps.html#ChorusI>             a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <ChorusI.ttl>.
+<http://quitte.de/dsp/caps.html#ChorusII>            a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <ChorusII.ttl>.
+<http://quitte.de/dsp/caps.html#Click>               a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Click.ttl>.
+<http://quitte.de/dsp/caps.html#Compress>            a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Compress.ttl>.
+<http://quitte.de/dsp/caps.html#Compress2x2>         a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Compress2x2.ttl>.
+<http://quitte.de/dsp/caps.html#Dirac>               a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Dirac.ttl>.
+<http://quitte.de/dsp/caps.html#Eq>                  a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Eq.ttl>.
+<http://quitte.de/dsp/caps.html#Eq2x2>               a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Eq2x2.ttl>.
+<http://quitte.de/dsp/caps.html#JVRev>               a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <JVRev.ttl>.
+<http://quitte.de/dsp/caps.html#Lorenz>              a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Lorenz.ttl>.
+<http://quitte.de/dsp/caps.html#Narrower>            a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Narrower.ttl>.
+<http://quitte.de/dsp/caps.html#NoiseGate>           a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <NoiseGate.ttl>.
+<http://quitte.de/dsp/caps.html#Pan>                 a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Pan.ttl>.
+<http://quitte.de/dsp/caps.html#PhaserII>            a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <PhaserII.ttl>.
+<http://quitte.de/dsp/caps.html#Plate>               a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Plate.ttl>.
+<http://quitte.de/dsp/caps.html#Plate2x2>            a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Plate2x2.ttl>.
+<http://quitte.de/dsp/caps.html#Roessler>            a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Roessler.ttl>.
+<http://quitte.de/dsp/caps.html#Saturate>            a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Saturate.ttl>.
+<http://quitte.de/dsp/caps.html#Scape>               a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Scape.ttl>.
+<http://quitte.de/dsp/caps.html#Sin>                 a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Sin.ttl>.
+<http://quitte.de/dsp/caps.html#StereoChorusII>      a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <StereoChorusII.ttl>.
+<http://quitte.de/dsp/caps.html#StereoChorusII2x2>   a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <StereoChorusII2x2.ttl>.
+<http://quitte.de/dsp/caps.html#StereoPhaserII>      a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <StereoPhaserII.ttl>.
+<http://quitte.de/dsp/caps.html#StereoPhaserII2x2>   a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <StereoPhaserII2x2.ttl>.
+<http://quitte.de/dsp/caps.html#ToneStack>           a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <ToneStack.ttl>.
+<http://quitte.de/dsp/caps.html#White>               a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <White.ttl>.
