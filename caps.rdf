@@ -507,6 +507,16 @@
 		</ladspa:hasPort> 
 	</ladspa:DistortionPlugin> 
 
+	<!-- Spice -->
+	<ladspa:DistortionPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#Spice'> 
+	</ladspa:DistortionPlugin> 
+
+	<!-- Spice2x2 -->
+	<ladspa:DistortionPlugin 
+			rdf:about='http://quitte.de/dsp/caps.html#Spice2x2'> 
+	</ladspa:DistortionPlugin> 
+
 	<!-- ChorusI -->
 	<ladspa:ChorusPlugin 
 			rdf:about='http://quitte.de/dsp/caps.html#ChorusI'> 

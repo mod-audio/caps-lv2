@@ -1,11 +1,11 @@
 /*
 	dsp/RMS.h
 	
-	Copyright 2004 Tim Goetze <tim@quitte.de>
+	Copyright 2004-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
-	root-mean-square accumulator.
+	Sliding window, running sum root-mean-square.
 
 */
 /*
@@ -65,7 +65,8 @@ class RMS
 
 		sample_t get()
 			{
-				return sqrt (sum * over_N);
+				/* lack of running sum accuracy necessitates fabs() */
+				return sqrt(fabs(sum * over_N));
 			}
 };
 

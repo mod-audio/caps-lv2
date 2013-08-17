@@ -25,6 +25,8 @@
 <http://quitte.de/dsp/caps.html#Plate2x2>            a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Plate2x2.ttl>.
 <http://quitte.de/dsp/caps.html#Roessler>            a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Roessler.ttl>.
 <http://quitte.de/dsp/caps.html#Saturate>            a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Saturate.ttl>.
+<http://quitte.de/dsp/caps.html#Spice>               a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Spice.ttl>.
+<http://quitte.de/dsp/caps.html#Spice2x2>            a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Spice2x2.ttl>.
 <http://quitte.de/dsp/caps.html#Scape>               a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Scape.ttl>.
 <http://quitte.de/dsp/caps.html#Sin>                 a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Sin.ttl>.
 <http://quitte.de/dsp/caps.html#StereoChorusII>      a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <StereoChorusII.ttl>.

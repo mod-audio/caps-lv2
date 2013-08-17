@@ -1,7 +1,7 @@
 /*
 	dsp/OnePole.h
 	
-	Copyright 2003-7 Tim Goetze <tim@quitte.de>
+	Copyright 2003-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -49,13 +49,13 @@ class OnePoleLP
 
 		inline void set_f (T fc)
 			{
-				set (exp (-2*M_PI*fc));
+				set (1 - exp(-2*M_PI*fc));
 			}
 
 		inline void set (T d)
 			{
 				a0 = d;
-				b1 = 1. - d;
+				b1 = 1 - d;
 			}
 
 		inline T process (T x)
@@ -67,13 +67,6 @@ class OnePoleLP
 			{
 				a0 *= d;
 				b1 = 1. - a0;
-			}
-
-		/* clear denormal numbers in history */
-		void flush_0()
-			{
-				if (is_denormal (y1))
-					y1 = 0;
 			}
 };
 
@@ -111,13 +104,6 @@ class OnePoleHP
 		void reset()
 			{
 				x1 = y1 = 0;
-			}
-
-		/* clear denormal numbers in history */
-		void flush_0()
-			{
-				if (is_denormal (y1))
-					y1 = 0;
 			}
 };
 

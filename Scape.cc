@@ -49,7 +49,7 @@ Scape::init()
 	{
 		lfo[i].lorenz.init(),
 		lfo[i].lorenz.set_rate (.00000001*fs);
-		lfo[i].lp.set_f (.00001*over_fs);
+		lfo[i].lp.set_f (3*over_fs);
 	}
 }
 
@@ -123,8 +123,8 @@ Scape::cycle (int frames)
 		{
 			sample_t x = s[i] + normal;
 
-			sample_t x1 = delay.get_at (t1);
-			sample_t x2 = delay.get_at (t2);
+			sample_t x1 = delay.get_linear (t1);
+			sample_t x2 = delay.get_linear (t2);
 
 			delay.put (x + fb*x1);
 			x = dry*x + .2*svf[0].process (x) + .6*svf[3].process(x);

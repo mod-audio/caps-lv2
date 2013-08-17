@@ -1,7 +1,7 @@
 /*
 	dsp/v4f_BiQuad.h
 	
-	Copyright 2003-12 Tim Goetze <tim@quitte.de>
+	Copyright 2003-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -32,6 +32,10 @@
 
 namespace DSP {
 
+#ifdef __APPLE__
+inline float pow10f(float f) {return pow(10,f);}
+#endif
+
 class RBJ4f
 {
 	public:
@@ -41,8 +45,8 @@ class RBJ4f
 			{
 				v4f_t w = v4f_2pi * f;
 
-				sin = map<__builtin_sinf> (w);
-				cos = map<__builtin_cosf> (w);
+				sin = v4f_map<__builtin_sinf> (w);
+				cos = v4f_map<__builtin_cosf> (w);
 
 				alpha = sin / (v4f_2 * Q);
 			}
@@ -141,7 +145,7 @@ class BiQuad4f
 				/* A = pow (10, gain / 40) */
 				v4f_t A = (v4f_t) {.025,.025,.025,.025};
 				A *= gain;
-				A = map<pow10f> (A);
+				A = v4f_map<pow10f> (A);
 
 				RBJ4f p (f, Q);
 
@@ -165,11 +169,11 @@ class BiQuad4f
 			{
 				v4f_t G = (v4f_t) {.025,.025,.025,.025};
 				G *= gain;
-				G = map<pow10f> (G);
+				G = v4f_map<pow10f> (G);
 				
 				v4f_t A = f;
 				A *= v4f_2pi;
-				A = map<__builtin_sinf> (A);
+				A = v4f_map<__builtin_sinf> (A);
 				A *= G;
 
 				v4f_t *a = data();
@@ -187,7 +191,7 @@ class BiQuad4f
 				A = B = Q;
 				A *= v4f_2;
 				B *= v4f_2pi;
-				B = map<__builtin_cosf> (A);
+				B = v4f_map<__builtin_cosf> (A);
 				B *= A;
 				b[1] = B;
 			}
@@ -438,7 +442,7 @@ class BiQuad4fBank
 					/* A = pow (10, gain / 40) */
 					v4f_t A = (v4f_t) {.025,.025,.025,.025};
 					A *= gain[i];
-					A = map<pow10f> (A);
+					A = v4f_map<pow10f> (A);
 
 					RBJ4f p (f[i], Q[i]);
 
@@ -545,9 +549,9 @@ class Resonator4fBank
 			{
 				v4f_t * a = state + i*Item;
 				f *= v4f_2pi;
-				a[0] = map<__builtin_sinf> (f);
+				a[0] = v4f_map<__builtin_sinf> (f);
 				a[0] *= gain;
-				a[5] = map<__builtin_cosf> (f);
+				a[5] = v4f_map<__builtin_cosf> (f);
 				set_r (i, r);
 			}
 		void set_r (int i, v4f_t r)

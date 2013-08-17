@@ -1,7 +1,7 @@
 /*
 	dsp/Delay.h
 	
-	Copyright 2003-11 Tim Goetze <tim@quitte.de>
+	Copyright 2003-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -44,23 +44,16 @@ class Delay
 		sample_t * data;
 		uint read, write;
 
-		Delay()
-			{
-				read = write = 0;
-				data = 0;
-			}
+		Delay() { read = write = 0; data = 0; }
 
-		~Delay()
-			{
-				if (data) free (data);
-			}
+		~Delay() { free (data); }
 
 		void init (uint n)
 			{
 				size = next_power_of_2 (n);
 				assert (size <= (1 << 20));
 				data = (sample_t *) calloc (sizeof (sample_t), size);
-				size -= 1;
+				--size; /* used as mask for confining access */
 				write = n;
 			}
 
@@ -69,37 +62,25 @@ class Delay
 				memset (data, 0, (size + 1) * sizeof (sample_t));
 			}
 
-		sample_t & 
-		operator [] (int i)
-			{
-				return data [(write - i) & size];
-			}
+		sample_t & operator [] (int i) { return data [(write - i) & size]; }
 
-		inline void 
-		put (sample_t x)
+		inline void put (sample_t x)
 			{
 				data [write] = x;
 				write = (write + 1) & size;
 			}
 
-		inline sample_t 
-		get()
+		inline sample_t get()
 			{
 				sample_t x = data [read];
 				read = (read + 1) & size;
 				return x;
 			}
-
-		inline sample_t
-		putget (sample_t x)
-			{
-				put (x);
-				return get();
-			}
+		inline sample_t peek() { return data [read]; }
+		inline sample_t putget (sample_t x) {put(x); return get();}
 
 		/* fractional lookup, linear interpolation */
-		inline sample_t 
-		get_at (float f)
+		inline sample_t get_linear (float f)
 			{
 				int n;
 				fistp (f, n); /* read: i = (int) f; relies on FPTruncateMode */
@@ -109,8 +90,7 @@ class Delay
 			}
 
 		/* fractional lookup, cubic interpolation */
-		inline sample_t
-		get_cubic (float f)
+		inline sample_t get_cubic (float f)
 			{
 				int n;
 				fistp (f, n); /* see FPTruncateMode */
@@ -130,40 +110,6 @@ class Delay
 						(x1 - x_1) * .5;
 
 				return x0 + (((a * f) + b) * f + c) * f;
-			}
-};
-
-/* allpass variant, proof of concept version */
-
-class DelayTapA
-{
-	public:
-		sample_t x1, y1;
-
-		DelayTapA()
-			{
-				reset();
-			}
-
-		void reset()
-			{
-				x1 = y1 = 0;
-			}
-
-		sample_t get (Delay & d, float f)
-			{
-				int n;
-				fistp (f, n); /* read: n = (int) f; relies on FPTruncateMode */
-				f -= n;
-				if (0 && f < .5)
-					f += 1,
-					n -= 1;
-
-				sample_t x = d[n];
-				f = (1 - f) / (1 + f);
-				y1 = x1 + f * x - f * y1;
-				x1 = x;
-				return y1;
 			}
 };
 

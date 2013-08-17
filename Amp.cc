@@ -1,11 +1,11 @@
 /*
 	Amp.cc
-
+	
 	Copyright 2003-13 Tim Goetze <tim@quitte.de>
-
+	
 	http://quitte.de/dsp/
 
-	Idealised tube amplifer emulation.
+	Idealised guitar amplification.
 
 */
 /*
@@ -35,8 +35,8 @@ void
 AmpVTS::init()
 {
 	tonestack.init (fs);
-
-	dc2.set_f (25*over_fs);
+	
+	dc2.set_f (25*over_fs); 
 	DSP::RBJ::LP (1*over_fs, .7, biaslp);
 	/* compress is initialised in activate() */
 }
@@ -64,11 +64,11 @@ AmpVTS::activate()
 void
 AmpVTS::setratio (int r)
 {
-	if (r == ratio)
+	if (r == ratio) 
 		return;
 
 	ratio = r;
-	dc1.set_f (25./(ratio*fs));
+	dc1.set_f (25./(ratio*fs)); 
 	dc1.reset();
 
 	over2.reset();
@@ -107,7 +107,7 @@ AmpVTS::subcycle (uint frames, Over & over)
 	tonestack.updatecoefs (getport(5),getport(6),getport(7));
 
 	compress.set_attack (.25*getport(8));
-
+	
 	float x=getport(1), y=getport(3); /* = gain,powa :: shorthand for gain calc */
 	float bright = .59*getport(2)*(1-x*.81);
 	DSP::RBJ::LP ((2000*pow(10,bright))/(over.Ratio*fs), .7, lp);
@@ -122,14 +122,14 @@ AmpVTS::subcycle (uint frames, Over & over)
 	float makeup = (.086-.06*y)/(11.6+exp((12.1-5*y)*(.81-.08*y-x)))+0.00032+.0026*y;
 	makeup = 0 ? 1 : .0006/makeup;
 
-	float lowcut = .1 + 342*getport(10);
+	float lowcut = .1 + 342*getport(10); 
 	DSP::RBJ::HP (lowcut*over_fs, .7, hp);
 
 	gain = pow (200, gain) * -tsgain[model];
 	powa = pow (125, powa);
 
 	sample_t * s = ports[11];
-	sample_t * d = ports[12];
+	sample_t * d = ports[12]; 
 
 	while (frames)
 	{
@@ -184,21 +184,21 @@ AmpVTS::subcycle (uint frames, Over & over)
 /* //////////////////////////////////////////////////////////////////////// */
 
 PortInfo
-AmpVTS::port_info [] =
+AmpVTS::port_info [] = 
 {
-	{	"over", CTRL_IN, {DEFAULT_MAX | INTEGER, 0, 2}, "{0:'2x',1:'4x',2:'8x'}"},
+	{	"over", CTRL_IN, {DEFAULT_1 | INTEGER, 0, 2}, "{0:'2x',1:'4x',2:'8x'}"},
 
 	/* 1 */
-	{ "gain", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} },
-	{ "bright", CTRL_IN, {DEFAULT_MID, 0, 1} },
+	{ "gain", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} }, 
+	{ "bright", CTRL_IN, {DEFAULT_MID, 0, 1} }, 
 	{ "power", CTRL_IN, {DEFAULT_MID, 0, 1} },
-
+	
 	/* 4 */
 	{	"tonestack", CTRL_IN | GROUP, {DEFAULT_1 | INTEGER, 0, 8}, DSP::ToneStack::presetdict},
 
-	{ "bass", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} },
-	{ "mid", CTRL_IN, {DEFAULT_1, 0, 1} },
-	{ "treble", CTRL_IN, {DEFAULT_HIGH, 0, 1} },
+	{ "bass", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} }, 
+	{ "mid", CTRL_IN, {DEFAULT_1, 0, 1} }, 
+	{ "treble", CTRL_IN, {DEFAULT_HIGH, 0, 1} }, 
 
 	/* 8 */
 	{ "attack", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} },
@@ -207,8 +207,8 @@ AmpVTS::port_info [] =
 	/* 10 */
 	{ "low cut", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} },
 
-	{ "in", INPUT | AUDIO },
-	{	"out", OUTPUT | AUDIO },
+	{ "in", INPUT | AUDIO }, 
+	{	"out", OUTPUT | AUDIO }, 
 };
 
 template <> void

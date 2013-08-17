@@ -1,14 +1,12 @@
 /*
 	AutoFilter.cc
 	
-	Copyright 2002-12 Tim Goetze <tim@quitte.de>
+	Copyright 2002-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
 	AutoFilter, a Lorenz fractal modulating the cutoff frequency of a 
 	state-variable (ladder) filter.
-
-	AutoFilter, RMS envelope modulating a SVF bandpass filter.
 
 */
 /*
@@ -48,7 +46,9 @@ AutoFilter::init()
 
 	/* for envelope RMS calculation */
 	hp.set_f (250*over_fs);
-	DSP::RBJ::LP (.001, .5, smoothenv);
+
+	smooth.lfo.set(.86);
+	DSP::RBJ::LP (.001, .5, smooth.env);
 }
 
 void 
@@ -63,7 +63,8 @@ AutoFilter::activate()
 
 	rms.reset();
 	hp.reset();
-	smoothenv.reset();
+	smooth.lfo.reset();
+	smooth.env.reset();
 
 	oversampler.two.reset();
 	oversampler.four.reset();
@@ -102,7 +103,8 @@ AutoFilter::subsubcycle (uint frames, SVF & svf, Over & over)
 		lorenz.step();
 
 		float fmod = 2.5*(x*lorenz.get_x() + z*lorenz.get_z());
-		float fenv = smoothenv.process (rms.get()+normal);
+		fmod = smooth.lfo.process(fmod);
+		float fenv = smooth.env.process (rms.get()+normal);
 		fenv = 64*fenv*fenv;
 
 		#if 0 
@@ -218,7 +220,7 @@ Descriptor<AutoFilter>::setup()
 
 	Name = CAPS "AutoFilter - Resonant automodulating filter";
 	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2004-12";
+	Copyright = "2004-13";
 
 	/* fill port info and vtable */
 	autogen();

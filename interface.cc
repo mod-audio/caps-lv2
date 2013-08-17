@@ -52,7 +52,7 @@
 
 #include "Descriptor.h"
 
-#define N 33
+#define N 34
 
 static DescriptorStub * descriptors [N+1];
 static DescriptorStub * lv2_descriptors [N+1];
@@ -93,8 +93,9 @@ void caps_so_init()
 	*d++ = new Descriptor<Plate2x2>(1795);
 
 	*d++ = new Descriptor<Saturate>(1771);
-	#if 0
+	#if 1
 	*d++ = new Descriptor<Spice>(2603);
+    *d++ = new Descriptor<Spice2x2>(2607);
 	#endif
 
 	*d++ = new Descriptor<ChorusI>(1767);
@@ -145,8 +146,9 @@ void caps_so_init()
 	*d++ = new Descriptor<Plate2x2>(CAPS_URI "Plate2x2");
 
 	*d++ = new Descriptor<Saturate>(CAPS_URI "Saturate");
-	#if 0
+	#if 1
 	*d++ = new Descriptor<Spice>(CAPS_URI "Spice");
+	*d++ = new Descriptor<Spice2x2>(CAPS_URI "Spice2x2");
 	#endif
 
 	*d++ = new Descriptor<ChorusI>(CAPS_URI "ChorusI");

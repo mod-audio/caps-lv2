@@ -1,7 +1,7 @@
 /*
 	Descriptor.h
 
-	Copyright 2004-11 Tim Goetze <tim@quitte.de>
+	Copyright 2004-13 Tim Goetze <tim@quitte.de>
 
 	http://quitte.de/dsp/
 
@@ -43,6 +43,20 @@
 
 #include <lv2.h>
 
+inline void
+processor_specific_denormal_measures()
+{
+	#ifdef __SSE3__
+	/* this one works reliably on a 6600 Core2 */
+	_MM_SET_DENORMALS_ZERO_MODE (_MM_DENORMALS_ZERO_ON);
+	#endif
+
+	#ifdef __SSE__
+	/* this one doesn't ... */
+	_MM_SET_FLUSH_ZERO_MODE (_MM_FLUSH_ZERO_ON);
+	#endif
+}
+
 /* common stub for Descriptor makes it possible to delete() without special-
  * casing for every plugin class.
  */
@@ -66,20 +80,6 @@ class DescriptorStub
 				}
 			}
 };
-
-inline void
-processor_specific_denormal_measures()
-{
-	#ifdef __SSE3__
-	/* this one works reliably on a 6600 Core2 */
-	_MM_SET_DENORMALS_ZERO_MODE (_MM_DENORMALS_ZERO_ON);
-	#endif
-
-	#ifdef __SSE__
-	/* this one doesn't ... */
-	_MM_SET_FLUSH_ZERO_MODE (_MM_FLUSH_ZERO_ON);
-	#endif
-}
 
 template <class T>
 class Descriptor
@@ -177,6 +177,9 @@ class Descriptor
 			{
 				T * plugin = (T *) h;
 
+				/* We don't reset the processor flags later, it's true. */
+				processor_specific_denormal_measures();
+
 				plugin->first_run = 1;
 
 				/* since none of the plugins do any RT-critical work in
@@ -185,6 +188,11 @@ class Descriptor
 				 *
 				 * It's the simplest way to prevent a parameter smoothing sweep
 				 * in the first audio block after activation.
+				 *
+				 * While it would be preferable to set up the plugin's internal
+				 * state from the current set of parameters, ladspa.h allows hosts to
+				 * call activate() without even having connected the inputs, so that
+				 * is out of the question.
 				plugin->activate();
 				 */
 			}

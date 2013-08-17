@@ -1,5 +1,5 @@
-caps-lv2 0.9.7
-==============
+caps-lv2 0.9.10
+===============
 
 LV2 port for the CAPS Audio Plugin Suite
 
@@ -41,6 +41,10 @@ sudo ./make-single-plugins install AmpVTS ToneStack
 CAPS Plugins Documentation
 ==========================
 
-For all questions about CAPS, please be referred to the HTML documentation of this software package in the file 'caps.html', also available from:
+For all questions, please be referred to the documentation at
 
-http://quitte.de/dsp/caps.html
+    http://quitte.de/dsp/caps.html
+
+If that doesn't help, you can contact
+
+    tim@quitte.de

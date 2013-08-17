@@ -1,11 +1,11 @@
 /*
 	dsp/Compress.h
 	
-	Copyright 2011 Tim Goetze <tim@quitte.de>
+	Copyright 2011-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
-	Basic dynamic range processor.
+	Simplistic dynamic range processor.
 
 */
 /*
@@ -141,12 +141,12 @@ class CompressRMS
 
 		void store (sample_t x)
 			{
-				power.rms.store (x * x);
+				power.rms.store (x*x);
 			}
 
 		void store (sample_t xl, sample_t xr)
 			{
-				power.rms.store (.5 * (xl * xl + xr * xr));
+				power.rms.store (.5*(xl*xl + xr*xr));
 			}
 };
 

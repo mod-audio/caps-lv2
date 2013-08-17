@@ -113,4 +113,30 @@ class Spice
 		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
+class Spice2x2
+: public Plugin
+{
+	public:
+		struct {
+			Splitter split[2];
+			DSP::BiQuad<sample_t> shape[2];
+		} chan[2];
+		DSP::ChebPoly<5> cheby; 
+
+		uint remain;
+		DSP::CompressPeak compress;
+
+		template <yield_func_t F>
+				void cycle (uint frames);
+
+	public:
+		static PortInfo port_info[];
+
+		void init();
+		void activate();
+
+		void run (uint n) { cycle<store_func> (n); }
+		void run_adding (uint n) { cycle<adding_func> (n); }
+};
+
 #endif /* _SATURATE_H_ */

@@ -1,7 +1,7 @@
 /*
 	v4f.h
 	
-	Copyright 2011-12 Tim Goetze <tim@quitte.de>
+	Copyright 2011-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -30,29 +30,41 @@
 #ifndef __V4F_H__
 #define __V4F_H__
 
+#include <xmmintrin.h>
+
 typedef float v4f_t __attribute__ ((vector_size (16), aligned(16))); 
 
-inline float sum (v4f_t v)
+inline v4f_t v4f (float x) 
+	{ v4f_t v = {x,x,x,x}; return v; }
+
+inline v4f_t v4f (float x0, float x1, float x2, float x3) 
+	{ v4f_t v = {x0,x1,x2,x3}; return v; }
+
+#define v4fa(x) ((float *) &x)
+#define v4f_shuffle(x,s3,s2,s1,s0) _mm_shuffle_ps(x,x,((s0)<<6|(s1)<<4|(s2)<<2|s3))
+
+#define mk_v4f(s) ((v4f_t) {s,s,s,s})
+
+inline float v4f_sum (v4f_t v)
 {
 	float * f = (float *) &v;
 	return f[0]+f[1]+f[2]+f[3];
 }
 
-/* mapping a float to float function to a vector */
+/* mapping a float to float function [e.g. sinf() e.a.] to a vector */
 typedef float (*f2f_fn) (float f);
 
 template <f2f_fn fn>
-v4f_t map (v4f_t x)
+v4f_t v4f_map (v4f_t x)
 {
 	v4f_t y;
 	float * s = (float *) &x;
 	float * d = (float *) &y;
 	for (uint i = 0; i < 4; ++i)
-		d[i] = fn (s[i]);
+		d[i] = fn(s[i]);
 	return y;
 }
 
-#define mk_v4f(s) ((v4f_t) {s,s,s,s})
 #define v4f_0 ((v4f_t) {0, 0, 0, 0})
 #define v4f_half ((v4f_t) {.5, .5, .5, .5})
 #define v4f_1 ((v4f_t) {1, 1, 1, 1})
@@ -61,7 +73,7 @@ v4f_t map (v4f_t x)
 #define v4f_2pi ((v4f_t) {2*M_PI, 2*M_PI, 2*M_PI, 2*M_PI})
 
 template <int N>
-class V4FArray
+class V4fArray
 {
 	private:
 		/* sufficient space to align actual array to 16-byte boundary */
@@ -70,13 +82,35 @@ class V4FArray
 	public:
 		v4f_t * v;
 
-		V4FArray() 
+		V4fArray() 
 			{
-				uint64 p = ((uint64) _data + 16) & ~15ll;
+				uint64 p = (uint64) ((uint64) _data + 16) & ~15ll;
 				v = (v4f_t*) p;
 			}
 
 		void reset() { memset (_data, 0, sizeof (_data)); }
+};
+
+class V4fData
+{
+	private:
+		void * _data;
+
+	public:
+		v4f_t * v;
+
+		V4fData() {_data = 0;}
+		~V4fData() {free(_data);}
+
+		operator v4f_t * () {return v;}
+		operator void * () {return (void *) v;}
+
+		void init (int N)
+			{
+				_data = calloc(N+1, sizeof(v4f_t));
+				uint64 p = (16 + (uint64) _data) & ~15ll;
+				v = (v4f_t*) p;
+			}
 };
 
 /* four parallel sine oscillators */
@@ -98,10 +132,10 @@ class Sin4f
 			{
 				v4f_t *y = data();
 				v4f_t w = -v4f_pi * f;
-				y[0] = map<__builtin_sinf> (w);
-				y[1] = map<__builtin_sinf> (v4f_2 * w);
+				y[0] = v4f_map<__builtin_sinf> (w);
+				y[1] = v4f_map<__builtin_sinf> (v4f_2 * w);
 				/* b in above scalar implementation is y[2] in the flat data */
-				y[2] = v4f_2 * map<__builtin_cosf> (w); /* b */
+				y[2] = v4f_2 * v4f_map<__builtin_cosf> (w); /* b */
 				z = 0;
 			}
 

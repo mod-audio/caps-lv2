@@ -58,7 +58,7 @@ class BiQuad
 
 		double gain (double f)
 			{
-				polar_complex w1(2*M_PI*f);
+				complex w1 = complex::polar(2*M_PI*f);
 				complex w2 = w1*w1;
 				complex n = a[0]*w2 + a[1]*w1 + a[2];
 				complex d = w2 - b[1]*w1 - b[2];

@@ -13,7 +13,7 @@ STRIP = strip
 CFLAGS = $(OPTS) $(_CFLAGS)
 LDFLAGS = $(_LDFLAGS) $(CFLAGS)
 
-VERSION = 0.9.7
+VERSION = 0.9.10
 PLUG = caps
 
 SOURCES = $(wildcard *.cc) $(wildcard dsp/*.cc)
@@ -33,26 +33,28 @@ LV2DEST   = $(PREFIX)/lib/lv2/$(LV2BUNDLE)
 all: depend $(PLUG).so tags
 
 run: all
-	python -i bin/rack.py White AutoFilter cream.Audio.Meter Pan
+	#python bin/enhance_dp_wsop.py
+	#python -i bin/rack.py White AutoFilter cream.Audio.Meter Pan
 	#python -i bin/rack.py White AutoFilter Pan
 	#@~/cream/gdb-python html/graph.py Compress,spectrum.png
+	@~/cream/gdb-python ~/reve/bin/sailormoon.py
 
 rdf: $(PLUG).rdf
 $(PLUG).rdf: all tools/make-rdf.py
 	python tools/make-rdf.py > $(PLUG).rdf
 
 $(PLUG).so: $(OBJECTS)
-	$(CC) $(LDFLAGS) -o $@ $(OBJECTS)
+	$(CC) $(ARCH) $(LDFLAGS) -o $@ $(OBJECTS)
 
 .cc.s:
-	$(CC) $(CFLAGS) -S $<
+	$(CC) $(ARCH) $(CFLAGS) -S $<
 
 .cc.o: depend
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(ARCH) $(CFLAGS) -o $@ -c $<
 
 tags: $(SOURCES) $(HEADERS)
 	@echo making tags
-	@-if [ -x /usr/bin/ctags ]; then ctags $(SOURCES) $(HEADERS) ; fi
+	@-if [ -x /usr/bin/ctags ]; then ctags $(SOURCES) $(HEADERS) >/dev/null 2>&1 ; fi
 
 install: all
 	@$(STRIP) $(PLUG).so > /dev/null

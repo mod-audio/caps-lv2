@@ -40,23 +40,23 @@ class complex
     complex (double r, double i=0) { re = r; im = i; }
 		void operator = (double r) { re = r; im = 0; }
 
-		double abs() { return sqrt (re*re + im*im); }
+		double abs() { return sqrt(_squared()); }
+		double _squared() { return re*re + im*im; }
+
 		static inline complex polar (double phi, double mag=1)
+			{ return complex (mag*cos(phi), mag*sin(phi)); }
+
+		inline complex exp()
 			{
-				return complex (mag*cos(phi), mag*sin(phi));
+				double r = ::exp(re);
+				return complex (r*cos(im), r*sin(im));
 			}
+		inline complex conj()
+			{ return complex (re,-im); }
 };
 
-class polar_complex
-: public complex
-{
-	public:
-		polar_complex (double phi, double mag=1)
-			: complex (mag*cos(phi), mag*sin(phi))
-			{ }
-};
-
-inline complex operator * (double a, complex z)
+inline complex 
+operator * (double a, complex z)
 {
 	z.re *= a; 
 	z.im *= a;
@@ -64,14 +64,16 @@ inline complex operator * (double a, complex z)
 	return z;
 }
 
-inline complex operator * (complex z1, complex z2)
+inline complex 
+operator * (complex z1, complex z2)
 {
 	return complex (
 			z1.re * z2.re - z1.im * z2.im,
 			z1.re * z2.im + z1.im * z2.re);
 }
 
-inline complex operator / (complex z1, complex z2)
+inline complex 
+operator / (complex z1, complex z2)
 {
 	double m = z2.re * z2.re + z2.im * z2.im;
 	return complex (
@@ -79,7 +81,8 @@ inline complex operator / (complex z1, complex z2)
 			((z1.re * z2.im) - (z1.im * z2.re)) / m);
 }
 						
-inline complex operator / (complex z, double a)
+inline complex 
+operator / (complex z, double a)
 { 
 	z.re /= a; 
 	z.im /= a;
@@ -87,12 +90,14 @@ inline complex operator / (complex z, double a)
 	return z;
 }
 
-inline void operator /= (complex &z, double a)
+inline void 
+operator /= (complex &z, double a)
 { 
 	z = z / a;
 }
 
-inline complex operator + (complex z1, complex z2)
+inline complex 
+operator + (complex z1, complex z2)
 { 
 	z1.re += z2.re;
 	z1.im += z2.im;
@@ -100,7 +105,8 @@ inline complex operator + (complex z1, complex z2)
 	return z1;
 }
 
-inline complex operator - (complex z1, complex z2)
+inline complex 
+operator - (complex z1, complex z2)
 { 
 	z1.re -= z2.re;
 	z1.im -= z2.im;
@@ -108,18 +114,21 @@ inline complex operator - (complex z1, complex z2)
 	return z1;
 }
 
-inline complex operator - (complex z)
+inline complex 
+operator - (complex z)
 { 
 	return 0.0 - z;
 }
 
 /* */
-inline complex expj (double theta)
+inline complex 
+expj (double theta)
 {
 	return complex (cos (theta), sin (theta));
 }
 
-inline double hypot (complex z)
+inline double 
+hypot (complex z)
 {
 	return ::hypot (z.im, z.re);
 }

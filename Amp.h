@@ -35,7 +35,6 @@
 #include "dsp/Oversampler.h"
 
 #include "dsp/RBJ.h"
-#include "dsp/Eq.h"
 
 #include "dsp/ToneStack.h"
 #include "dsp/Compress.h"

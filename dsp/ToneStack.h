@@ -1,8 +1,10 @@
 /*
 	ToneStack.h
 	
-	Copyright 2006-12
+	Copyright 2006
 		David Yeh <dtyeh@ccrma.stanford.edu> (implementation)
+
+	Copyright 2006-13
 		Tim Goetze <tim@quitte.de> (cosmetics)
 
 	Tone Stack emulation.

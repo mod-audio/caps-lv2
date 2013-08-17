@@ -1,7 +1,7 @@
 /*
 	Reverb.h
 	
-	Copyright 2002-12 Tim Goetze <tim@quitte.de>
+	Copyright 2002-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -127,7 +127,6 @@ class ModLattice
 
 		DSP::Delay delay;
 		DSP::Sine lfo;
-		DSP::DelayTapA tap;
 		
 		void init (int n, int w)
 			{
@@ -139,14 +138,12 @@ class ModLattice
 		void reset()
 			{
 				delay.reset();
-				tap.reset();
 			}
 
 		inline sample_t
 		process (sample_t x, double d)
 			{
-				/* TODO: try all-pass interpolation */
-				sample_t y = delay.get_at (n0 + width * lfo.get());
+				sample_t y = delay.get_linear (n0 + width * lfo.get());
 				x += d * y;
 				delay.put (x);
 				return y - d * x; /* note sign */

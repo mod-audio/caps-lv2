@@ -99,7 +99,7 @@ ChorusI::port_info [] =
 {
 	{ "in", INPUT | AUDIO }, 
 	{ "t (ms)", CTRL_IN, {BOUNDED | LOG | DEFAULT_LOW, 2.5, 40} }, 
-	{ "width (ms)", CTRL_IN, {BOUNDED | DEFAULT_1, .5, 10} }, 
+	{ "width (ms)", CTRL_IN, {BOUNDED | DEFAULT_LOW, .5, 10} }, 
 	{ "rate (Hz)", CTRL_IN | GROUP, {BOUNDED | DEFAULT_LOW, 0, 5} }, 
 	{ "blend", CTRL_IN, {BOUNDED | DEFAULT_1, 0, 1} }, 
 	{ "feedforward", CTRL_IN | GROUP, {BOUNDED | DEFAULT_LOW, 0, 1} }, 
@@ -111,7 +111,6 @@ template <> void
 Descriptor<ChorusI>::setup()
 {
 	Label = "ChorusI";
-	Properties = HARD_RT;
 
 	Name = CAPS "ChorusI - Mono chorus/flanger";
 	Maker = "Tim Goetze <tim@quitte.de>";
@@ -213,8 +212,8 @@ StereoChorusII::set_rate (sample_t r)
 	r *= FRACTAL_RATE * 44100 * over_fs;
 	left.fractal.set_rate (r);
 	right.fractal.set_rate (1.1*r);
-	left.lfo_lp.set_f (.0001 * over_fs);
-	right.lfo_lp.set_f (.0001 * over_fs);
+	left.lfo_lp.set_f (3 * over_fs);
+	right.lfo_lp.set_f (3 * over_fs);
 }
 
 template <yield_func_t F>
@@ -284,7 +283,7 @@ PortInfo
 StereoChorusII::port_info [] =
 {
 	{ "t (ms)", CTRL_IN, {DEFAULT_LOW, 2.5, 25} }, 
-	{ "width (ms)", CTRL_IN, {DEFAULT_1, .5, 10} }, 
+	{ "width (ms)", CTRL_IN, {DEFAULT_LOW, .5, 10} }, 
 	{ "rate", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} }, 
 	{ "blend", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
 	{ "feedforward", CTRL_IN | GROUP, {DEFAULT_1, 0, 1} }, 
@@ -313,7 +312,7 @@ PortInfo
 StereoChorusII2x2::port_info [] =
 {
 	{ "t (ms)", CTRL_IN, {DEFAULT_LOW, 2.5, 25} }, 
-	{ "width (ms)", CTRL_IN, {DEFAULT_1, .5, 10} }, 
+	{ "width (ms)", CTRL_IN, {DEFAULT_LOW, .5, 10} }, 
 	{ "rate", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} }, 
 	{ "blend", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
 	{ "feedforward", CTRL_IN | GROUP, {DEFAULT_1, 0, 1} }, 

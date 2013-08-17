@@ -1,3 +1,25 @@
+0.9.10
+	* DSP::RMS protected against negative sum of squares 
+	* documentation updates
+
+0.9.9
+	* OSX compilation configuration refinements
+
+0.9.8
+	* Spice enabled by default, Spice2x2 added
+	* AmpVTS default oversampling ratio changed to 4x
+	* JVRev refinements
+	* Cabinet gain upper limit reinstated to 24 dB
+	* AutoFilter modulation slightly adjusted
+	* more *ChorusII modulation smoothness
+	* 1st-order IIR lp set_f fix part 2
+	* 1st-order IIR lp set_f fix part 1
+	* 1st order low-pass for AutoFilter modulation LFO
+	* DelayTapA removed
+	* README updated
+	* Click 'stick' sound brightened
+	* moved processor_specific_denormal_measures() to activate(), speedup
+
 0.9.7
 	* ChorusI is back
 	* AutoFilter modulation range and default parameter updates

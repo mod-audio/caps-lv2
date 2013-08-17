@@ -25,6 +25,8 @@
 <http://portalmod.com/plugins/caps/Plate2x2>            a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Plate2x2.ttl>.
 <http://portalmod.com/plugins/caps/Roessler>            a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Roessler.ttl>.
 <http://portalmod.com/plugins/caps/Saturate>            a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Saturate.ttl>.
+<http://portalmod.com/plugins/caps/Spice>               a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Spice.ttl>.
+<http://portalmod.com/plugins/caps/Spice2x2>            a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Spice2x2.ttl>.
 <http://portalmod.com/plugins/caps/Scape>               a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Scape.ttl>.
 <http://portalmod.com/plugins/caps/Sin>                 a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Sin.ttl>.
 <http://portalmod.com/plugins/caps/StereoChorusII>      a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <StereoChorusII.ttl>.

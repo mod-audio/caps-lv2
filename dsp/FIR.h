@@ -55,16 +55,8 @@ class FIR
 		/* history index */
 		int h; 
 		
-		FIR (uint N)
-			{
-				init (N);
-			}
-
-		~FIR()
-			{
-				free (c);
-				free (x);
-			}
+		FIR() { c = x = 0; }
+		~FIR() { free(c); free(x); }
 		
 		void init (uint N)
 			{

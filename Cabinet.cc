@@ -123,7 +123,7 @@ CabinetII::port_info [] =
 	}, {
 		"gain (dB)",
 		CTRL_IN | GROUP,
-		{DEFAULT_0, -24, 0}
+		{DEFAULT_0, -24, 24}
 	}, {
 		"out",
 		OUTPUT | AUDIO,
@@ -201,7 +201,7 @@ CabinetIII::cycle (uint frames)
 		x = g*x + normal;
 		v4f_t a = (v4f_t) {x,x,x,x};
 		a = bank.process_no_a0 (a);
-		x = sum(a + fir.process(x));
+		x = v4f_sum(a + fir.process(x));
 		F (d, i, x, adding_gain);
 	}
 }
@@ -214,7 +214,7 @@ CabinetIII::port_info [] =
 	{ "in", INPUT | AUDIO }, 
 	{ "model", CTRL_IN, {INTEGER | DEFAULT_1, 0, 2}, 
 		"{0:'wookie A', 1:'wookie B', 2:'wookie C'}" },
-	{ "gain (dB)", CTRL_IN | GROUP, {DEFAULT_0, -24, 0} }, 
+	{ "gain (dB)", CTRL_IN | GROUP, {DEFAULT_0, -24, 24} }, 
 	{ "out", OUTPUT | AUDIO } 
 };
 
@@ -346,7 +346,7 @@ CabinetIV::cycle (uint frames, O & Over)
 		x = g*x + normal;
 		v4f_t a = (v4f_t) {x,x,x,x};
 		a = bank.process_no_a0 (a);
-		x = sum(a + fir.process(x));
+		x = v4f_sum(a + fir.process(x));
 
 		x = Over.upsample (x);
 		F (d, i, x, adding_gain);
@@ -371,7 +371,7 @@ CabinetIV::cycle (uint frames, O & Over)
 	x = g*x + normal;
 	v4f_t a = (v4f_t) {x,x,x,x};
 	a = bank.process_no_a0 (a);
-	x = sum(a + fir.process(x));
+	x = v4f_sum(a + fir.process(x));
 
 	x = Over.upsample (x);
 	F (d, i, x, adding_gain);
@@ -394,7 +394,7 @@ CabinetIV::port_info [] =
 {
 	{ "in", INPUT | AUDIO }, 
 	{ "model", CTRL_IN, {INTEGER | DEFAULT_MID, 0, NCabIVModels-1}, CabIVModelDict },
-	{ "gain (dB)", CTRL_IN | GROUP, {DEFAULT_0, -24, 0} }, 
+	{ "gain (dB)", CTRL_IN | GROUP, {DEFAULT_0, -24, 24} }, 
 	{ "out", OUTPUT | AUDIO } 
 };
 

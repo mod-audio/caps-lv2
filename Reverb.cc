@@ -1,7 +1,7 @@
 /*
 	Reverb.cc
 	
-	Copyright 2002-12 Tim Goetze <tim@quitte.de>
+	Copyright 2002-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -20,7 +20,8 @@
 
 	The algorithm is mostly unchanged in this implementation; the delay
 	line lengths have been fiddled with to make the stereo field more
-	evenly weighted, and denormal protection has been added.
+	evenly weighted, denormal protection and a bandwidth control have been 
+	added as well.
 
 	The latter two are based on the circuit discussed in Jon Dattorro's 
 	September 1997 JAES paper on effect design (part 1: reverb & filters).
@@ -61,18 +62,15 @@ JVRev::init()
 {
 	memcpy (length, default_length, sizeof (length));
 
-	if (fs != 44100)
-	{
-		double s = fs/44100.;
+	double s = 1.5*fs/44100.;
 
-		for (int i = 0; i < 9; ++i)
-		{
-			int v = (int) (s * length[i]);
-			v |= 1;
-			while (!DSP::isprime (v))
-				v += 2;
-			length[i] = v;
-		}
+	for (int i = 0; i < 9; ++i)
+	{
+		int v = (int) (s * length[i]);
+		v |= 1;
+		while (!DSP::isprime (v))
+			v += 2;
+		length[i] = v;
 	}
 	
 	for (int i = 0; i < 4; ++i)
@@ -130,7 +128,7 @@ JVRev::cycle (uint frames)
 		set_t60 (getport(2));
 
 	double wet = getport(3);
-	wet = .28*wet*wet;
+	wet = .38*wet*wet;
 	double dry = 1 - wet;
 	
 	sample_t * dl = ports[4];
@@ -155,8 +153,8 @@ JVRev::cycle (uint frames)
 		for (int j = 0; j < 4; ++j)
 			t += comb[j].process (a);
 
-		F (dl, i, x + wet * left.putget (t), adding_gain);
-		F (dr, i, x + wet * right.putget (t), adding_gain);
+		F (dl, i, x + wet * left.putget(t), adding_gain);
+		F (dr, i, x + wet * right.putget(t), adding_gain);
 	}
 }
 
@@ -165,31 +163,11 @@ JVRev::cycle (uint frames)
 PortInfo
 JVRev::port_info [] =
 {
-	{
-		"in",
-		INPUT | AUDIO,
-		{BOUNDED, -1, 1}
-	}, {
-		"bandwidth",
-		INPUT | CONTROL,
-		{DEFAULT_HIGH, 0, 1} 
-	}, {
-		"t60 (s)",
-		INPUT | CONTROL,
-		{DEFAULT_MID, 0, 4.6}
-	}, {
-		"blend",
-		INPUT | CONTROL | GROUP,
-		{DEFAULT_LOW, 0, 1} 
-	}, {
-		"out.l",
-		OUTPUT | AUDIO,
-		{0}
-	}, {
-		"out.r",
-		OUTPUT | AUDIO,
-		{0}
-	}
+	{ "in", INPUT | AUDIO }, 
+	{ "bandwidth", INPUT | CONTROL, {DEFAULT_MID, 0, 1} }, 
+	{ "t60 (s)", INPUT | CONTROL | GROUP, {DEFAULT_MID, 0, 5.6} }, 
+	{ "blend", INPUT | CONTROL, {DEFAULT_LOW, 0, 1} }, 
+	{ "out.l", OUTPUT | AUDIO }, { "out.r", OUTPUT | AUDIO }
 };
 
 template <> void

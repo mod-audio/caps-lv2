@@ -1,7 +1,7 @@
 /*
 	NoiseGate.cc
 	
-	Copyright 2011-12 Tim Goetze <tim@quitte.de>
+	Copyright 2011-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -153,9 +153,9 @@ Descriptor<NoiseGate>::setup()
 {
 	Label = "NoiseGate";
 
-	Name = CAPS "NoiseGate - Attenuate noise resident in silence";
+	Name = CAPS "NoiseGate - Attenuate hum and noise";
 	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2011-12";
+	Copyright = "2011-13";
 
 	/* fill port info and vtable */
 	autogen();

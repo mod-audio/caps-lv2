@@ -1,7 +1,7 @@
 /*
 	Click.cc
 	
-	Copyright 2002-11 Tim Goetze <tim@quitte.de>
+	Copyright 2002-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -110,7 +110,7 @@ Click::initsimple()
 	};
 
 	DSP::OnePoleLP<sample_t> lp1;
-	lp1.set_f (8*over_fs);
+	lp1.set_f (800*over_fs);
 	DSP::BiQuad<sample_t> lp;
 	DSP::RBJ::LP (8000*over_fs, .2, lp);
 
@@ -178,7 +178,7 @@ Click::initparfilt()
 	int16 * click = new int16 [n];
 
 	DSP::BiQuad<sample_t> hp;
-	DSP::RBJ::HP (900*over_fs, .707, hp);
+	DSP::RBJ::HP (1220*over_fs, .707, hp);
 
 	DSP::White white;
 	int m = 3;
@@ -188,7 +188,7 @@ Click::initparfilt()
 	{
 		if (i < m) /* simplistic noise excitation signal */
 			x = .5 * white.get() * (m-i)*mi;
-		x = sum (bank.process_no_a1(mk_v4f(x)));
+		x = v4f_sum (bank.process_no_a1(mk_v4f(x)));
 		x = hp.process(x);
 		click[i] = (int16) (x * 32767.);
 		x = 0;
@@ -244,7 +244,7 @@ Descriptor<Click>::setup()
 PortInfo
 Click::port_info [] =
 {
-	{ "model", CTRL_IN, {INTEGER | DEFAULT_0, 0, 2}, "{0:'box',1:'stick',2:'beep'}" }, 
+	{ "model", CTRL_IN, {INTEGER | DEFAULT_1, 0, 2}, "{0:'box',1:'stick',2:'beep'}" }, 
 	{ "bpm", CTRL_IN | GROUP, {DEFAULT_LOW, 4, 384} }, 
 	{	"volume", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} }, 
 	{	"damping", CTRL_IN, {DEFAULT_HIGH, 0, 1} }, 

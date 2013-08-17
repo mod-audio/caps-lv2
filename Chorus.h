@@ -42,40 +42,12 @@ class ChorusStub
 		sample_t time, width, rate;
 };
 
-#define FRACTAL_RATE 0.004
-
-class FracTap 
-{
-	public:
-		DSP::Roessler lfo;
-		DSP::OnePoleLP<sample_t> lp;
-		
-		void init (double fs)
-			{	
-				lp.set_f (.0001/fs); 
-				lfo.init (.001, frandom());
-			}
-		
-		void set_rate (sample_t r)
-			{
-				lfo.set_rate (r);
-			}
-
-		/* t = time, w = width, should inline nicely */
-		sample_t get (DSP::Delay & d, double t, double w)
-			{
-				double m = lp.process (lfo.get());
-				return d.get_cubic (t + w * m);
-			}
-};
-
 class ChorusI
 : public ChorusStub
 {
 	public:
 		DSP::Sine lfo;
 		DSP::Delay delay;
-		DSP::DelayTapA tap;
 
 		template <yield_func_t>
 				void one_cycle (int frames);
@@ -97,7 +69,6 @@ class ChorusI
 				rate = *ports[3];
 				
 				delay.reset();
-				tap.reset();
 
 				lfo.set_f (rate, fs, 0);
 			}
@@ -114,6 +85,33 @@ class ChorusI
 };
 
 /* ///////////////////////////////////////////////////////////////////////// */
+
+#define FRACTAL_RATE 0.004
+
+class FracTap 
+{
+	public:
+		DSP::Roessler lfo;
+		DSP::OnePoleLP<sample_t> lp;
+		
+		void init (double fs)
+			{	
+				lp.set_f (1/fs); 
+				lfo.init (.001, frandom());
+			}
+		
+		void set_rate (sample_t r)
+			{
+				lfo.set_rate (r);
+			}
+
+		/* t = time, w = width, should inline nicely */
+		sample_t get (DSP::Delay & d, double t, double w)
+			{
+				double m = lp.process (lfo.get());
+				return d.get_cubic (t + w * m);
+			}
+};
 
 class ChorusII
 : public ChorusStub
@@ -178,7 +176,6 @@ class StereoChorusII
 		struct {
 			DSP::Roessler fractal;
 			DSP::OnePoleLP<sample_t> lfo_lp;
-			DSP::DelayTapA tap;
 		} left, right;
 
 		enum {Mono=0,Stereo=1};
@@ -207,9 +204,6 @@ class StereoChorusII
 
 				hp.reset();
 				delay.reset();
-
-				left.tap.reset();
-				right.tap.reset();
 
 				set_rate (*ports[3]);
 			}

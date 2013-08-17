@@ -1,7 +1,7 @@
 /*
   dsp/White.h
 
-	Copyright 2004 Tim Goetze <tim@quitte.de>
+	Copyright 2004-13 Tim Goetze <tim@quitte.de>
 
 	simple white noise generator, based on Jon Dattorro's 3/2002 JAES 
 	paper. quite an elegant design; consumes next to no CPU	on a processor
@@ -56,24 +56,20 @@ class White
 		/* 32-bit version */
 		sample_t get()
 			{
-#				define BIT(y) ((b << (31 - y)) & 0x80000000)
-
+				#define BIT(y) ((b << (31 - y)) & 0x80000000)
 				b = ((BIT (28) ^ BIT (27) ^ BIT (1) ^ BIT (0))) | (b >> 1);
 				return (4.6566128730773926e-10 * (sample_t) b) - 1;
-
-#				undef BIT
+				#undef BIT
 			}
 
 		/* 31-bit version, at least 6 instructions less / sample. probably only
 		 * pays off on a processor not providing a decent binary shift. */
 		sample_t get_31()
 			{
-#				define BIT(y) ((b << (30 - y)) & 0x40000000)
-
+				#define BIT(y) ((b << (30 - y)) & 0x40000000)
 				b = ((BIT (3) ^ BIT (0))) | (b >> 1);
 				return (9.3132257461547852e-10 * (sample_t) b) - 1;
-
-#				undef BIT
+				#undef BIT
 			}
 };
 

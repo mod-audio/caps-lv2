@@ -1,7 +1,7 @@
 /*
 	Saturate.cc
 	
-	Copyright 2003-11 Tim Goetze <tim@quitte.de>
+	Copyright 2003-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -334,6 +334,142 @@ Descriptor<Spice>::setup()
 	Name = CAPS "Spice - Not an exciter";
 	Maker = "Tim Goetze <tim@quitte.de>";
 	Copyright = "2012";
+
+	/* fill port info and vtable */
+	autogen();
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+
+void
+Spice2x2::init()
+{
+	float amp[] = {0,0,1,.3,.01};
+	cheby.setup (amp);
+}
+
+void
+Spice2x2::activate()
+{
+	remain = 0;
+
+	for (int c=0; c < 2; ++c)
+		for (int i=0; i < 2; ++i)
+		{
+			chan[c].split[i].reset();
+			chan[c].shape[i].reset();
+		}
+	compress.init(fs);
+	compress.set_threshold(0);
+	compress.set_attack(0);
+	compress.set_release(0);
+}
+
+template <yield_func_t F>
+void
+Spice2x2::cycle (uint frames)
+{
+	struct { float f, squash, gain; } 
+			lo = {getport(0)*over_fs, getport(1), getport(2)},
+			hi = {getport(3)*over_fs, 0, getport(4)};
+
+	if (chan[0].split[0].f != lo.f)
+	{
+		for (int c=0; c<2; ++c)
+		{
+			chan[c].split[0].set_f(lo.f);
+			DSP::RBJ::BP (2*lo.f,.7,chan[c].shape[0]);
+		}
+	}
+	if (chan[0].split[1].f != hi.f)
+	{
+		for (int c=0; c<2; ++c)
+		{
+			chan[c].split[1].set_f(hi.f);
+			DSP::RBJ::BP (2*hi.f,.7,chan[c].shape[1]);
+		}
+	}
+
+	lo.gain = pow (24,lo.gain) - 1;
+	hi.gain = pow (8,hi.gain) - 1;
+
+	sample_t dc = cheby.calculate(0);
+
+	sample_t * s[2] = {ports[5],ports[6]};
+	sample_t * d[2] = {ports[7],ports[8]};
+
+	while (frames)
+	{
+		if (remain == 0)
+		{
+			remain = compress.blocksize;
+			compress.start_block (lo.squash); 
+		}
+
+		uint n = min (frames, remain);
+		for (uint i = 0; i < n; ++i)
+		{
+			sample_t x,a,b,bass[2];
+
+			float comp = compress.get();
+			for (int c=0; c<2; ++c)
+			{
+				/* lo */
+				x = s[c][i];
+				a = chan[c].split[0].low(x);
+				b = chan[c].split[0].high(x);
+				x = a;
+				x *= comp;
+				x *= lo.gain;
+				x = cheby.calculate(x)-dc;
+				x = chan[c].shape[0].process(x);
+				bass[c] = x;
+
+				/* hi */
+				x = a+b;
+				a = chan[c].split[1].low(x);
+				b = chan[c].split[1].high(x);
+				x = b;
+				//x = cheby.calculate(x)-dc;
+				x *= hi.gain;
+				x = DSP::Polynomial::atan(x);
+				x = chan[c].shape[1].process (x);
+				x = x+a+b+bass[c];
+				F (d[c], i, x, adding_gain);
+			}
+			compress.store (bass[0],bass[1]);
+		}
+
+		for (int c=0; c<2; ++c)
+			s[c]+=n, d[c]+=n;
+		remain-=n, frames-=n;
+	}
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+
+PortInfo
+Spice2x2::port_info [] = 
+{
+	{	"lo.f (Hz)",   CTRL_IN,	{LOG | DEFAULT_LOW, 50, 800}}, 
+	{	"lo.compress", CTRL_IN,	{DEFAULT_1, 0, 1}}, 
+	{	"lo.gain",     CTRL_IN,	{DEFAULT_LOW, 0, 1}}, 
+	{	"hi.f (Hz)",   CTRL_IN | GROUP,	{LOG | DEFAULT_LOW, 400, 5000}}, 
+	{	"hi.gain",     CTRL_IN,	{DEFAULT_LOW, 0, 1}}, 
+	{ "in:l", INPUT | AUDIO }, 
+	{ "in:r", INPUT | AUDIO }, 
+	{ "out:l", OUTPUT | AUDIO }, 
+	{ "out:r", OUTPUT | AUDIO }, 
+};
+
+template <> void
+Descriptor<Spice2x2>::setup()
+{
+	Label = "Spice2x2";
+
+	Name = CAPS "Spice2x2 - Not an exciter";
+	Maker = "Tim Goetze <tim@quitte.de>";
+	Copyright = "2012-2013";
 
 	/* fill port info and vtable */
 	autogen();

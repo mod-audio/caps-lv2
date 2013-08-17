@@ -104,7 +104,10 @@ class AutoFilter
 		/* rms calculation and smoothing */
 		DSP::OnePoleHP<sample_t> hp;
 		DSP::RMS<256> rms;
-		DSP::BiQuad<sample_t> smoothenv; 
+		struct {
+			DSP::BiQuad<sample_t> env;
+			DSP::OnePoleLP<sample_t> lfo;
+		} smooth;
 
 		struct {
 			DSP::NoOversampler one;

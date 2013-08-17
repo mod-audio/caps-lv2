@@ -26,7 +26,8 @@ effects_info = [
 ('1779',    'Plate',                ['Reverb.cc']),
 ('1795',    'Plate2x2',             ['Reverb.cc']),
 ('1771',    'Saturate',             ['Saturate.cc']),
-#('2603',   'Spice',                ['']),
+('2603',    'Spice',                ['Saturate.cc']),
+('2607',    'Spice2x2',             ['Saturate.cc']),
 ('1767',    'ChorusI',              ['Chorus.cc']),
 ('2583',    'ChorusII',             ['Chorus.cc']),
 ('2584',    'StereoChorusII',       ['Chorus.cc']),
@@ -124,6 +125,13 @@ manifest = """
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 
 <http://quitte.de/dsp/caps.html#__EFFECT__> a lv2:Plugin; lv2:binary <__EFFECT__.so>; rdfs:seeAlso <__EFFECT__.ttl>.
+"""
+
+manifest_mod = """
+@prefix lv2: <http://lv2plug.in/ns/lv2core#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+<http://portalmod.com/plugins/caps/__EFFECT__> a lv2:Plugin; lv2:binary <__EFFECT__.so>; rdfs:seeAlso <__EFFECT__.ttl>.
 """
 
 def get_source(fx_name):
