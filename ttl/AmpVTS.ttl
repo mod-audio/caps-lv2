@@ -5,27 +5,33 @@
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 @prefix units: <http://lv2plug.in/ns/extension/units#> .
+@prefix mod:   <http://portalmod.com/ns/extensions/effect#> .
 
-<http://quitte.de/dsp/caps.html#AmpVTS> a lv2:Plugin, lv2:SimulatorPlugin;
+<http://portalmod.com/plugins/caps/AmpVTS> a lv2:Plugin, lv2:SimulatorPlugin;
     doap:name  "C* AmpVTS - Tube amp + Tone stack";
-
+    mod:label "C* AmpVTS";
     doap:developer [
         foaf:name "Tim Goetze";
         foaf:homepage <http://quitte.de/dsp/caps.html>;
         foaf:mbox <mailto:tim@quitte.de>;
         ];
-
     doap:maintainer [
-        foaf:name "Tim Goetze";
-        foaf:homepage <http://quitte.de/dsp/caps.html>;
-        foaf:mbox <mailto:tim@quitte.de>;
+        foaf:name "MOD Team";
+        foaf:homepage <http://portalmod.com>;
+        foaf:mbox <mailto:devel@portalmod.com>;
         ];
-
     doap:license <http://usefulinc.com/doap/licenses/gpl>;
     lv2:optionalFeature lv2:hardRtCapable;
+
+    mod:pedalModel "japanese";
+    mod:pedalColor "brown";
+    mod:brand "C*";
+    mod:pedalLabel "AmpVTS";
+    mod:smallLabel "AmpVTS";
+    mod:bypassLedPosition "118-83";
+
     lv2:minorVersion 0;
     lv2:microVersion 4;
-
     lv2:port
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -39,6 +45,8 @@
         lv2:scalePoint [rdfs:label "2x"; rdf:value 0];
         lv2:scalePoint [rdfs:label "4x"; rdf:value 1];
         lv2:scalePoint [rdfs:label "8x"; rdf:value 2];
+        mod:iconLabel "Over";
+        mod:pedalButton "0-0";
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -48,6 +56,8 @@
         lv2:default 0.25;
         lv2:minimum 0;
         lv2:maximum 1;
+        mod:iconLabel "Gain";
+        mod:pedalButton "0-4";
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -57,6 +67,8 @@
         lv2:default 0.5;
         lv2:minimum 0;
         lv2:maximum 1;
+        mod:iconLabel "Bright";
+        mod:pedalButton "0-6";
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -66,6 +78,8 @@
         lv2:default 0.5;
         lv2:minimum 0;
         lv2:maximum 1;
+        mod:iconLabel "Power";
+        mod:pedalButton "2-0";
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -86,6 +100,8 @@
         lv2:scalePoint [rdfs:label "HK 20"; rdf:value 6];
         lv2:scalePoint [rdfs:label "nihon ace"; rdf:value 7];
         lv2:scalePoint [rdfs:label "porky"; rdf:value 8];
+        mod:iconLabel "Tonestack";
+        mod:pedalButton "0-2";
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -95,6 +111,8 @@
         lv2:default 0.25;
         lv2:minimum 0;
         lv2:maximum 1;
+        mod:iconLabel "Bass";
+        mod:pedalButton "2-2";
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -104,6 +122,8 @@
         lv2:default 1;
         lv2:minimum 0;
         lv2:maximum 1;
+        mod:iconLabel "Mid";
+        mod:pedalButton "2-4";
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -113,6 +133,8 @@
         lv2:default 0.75;
         lv2:minimum 0;
         lv2:maximum 1;
+        mod:iconLabel "Treble";
+        mod:pedalButton "2-6";
     ],
     [
         a lv2:ControlPort, lv2:InputPort;

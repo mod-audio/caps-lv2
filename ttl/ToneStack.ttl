@@ -4,27 +4,33 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/>.
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix mod:   <http://portalmod.com/ns/extensions/effect#> .
 
-<http://quitte.de/dsp/caps.html#ToneStack> a lv2:Plugin, lv2:SimulatorPlugin;
+<http://portalmod.com/plugins/caps/ToneStack> a lv2:Plugin, lv2:SimulatorPlugin;
     doap:name  "C* ToneStack - Tone stack emulation";
-
+    mod:label "C* ToneStack";
     doap:developer [
         foaf:name "Tim Goetze";
         foaf:homepage <http://quitte.de/dsp/caps.html>;
         foaf:mbox <mailto:tim@quitte.de>;
         ];
-
     doap:maintainer [
-        foaf:name "Tim Goetze";
-        foaf:homepage <http://quitte.de/dsp/caps.html>;
-        foaf:mbox <mailto:tim@quitte.de>;
+        foaf:name "MOD Team";
+        foaf:homepage <http://portalmod.com>;
+        foaf:mbox <mailto:devel@portalmod.com>;
         ];
-
     doap:license <http://usefulinc.com/doap/licenses/gpl>;
     lv2:optionalFeature lv2:hardRtCapable;
+
+    mod:pedalModel "japanese";
+	mod:pedalColor "brown";
+	mod:brand "caps";
+	mod:pedalLabel "ToneStack";
+	mod:smallLabel "ToneStack";
+	mod:bypassLedPosition "118-83";
+
     lv2:minorVersion 0;
     lv2:microVersion 1;
-
     lv2:port
     [
         a lv2:AudioPort, lv2:InputPort;

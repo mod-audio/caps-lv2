@@ -8,7 +8,7 @@
 @prefix epp: <http://lv2plug.in/ns/ext/port-props/#>.
 @prefix pprops: <http://lv2plug.in/ns/ext/port-props#> .
 
-<http://quitte.de/dsp/caps.html#Spice2x2> a lv2:Plugin, lv2:DistortionPlugin;
+<http://portalmod.com/plugins/caps/Spice2x2> a lv2:Plugin, lv2:DistortionPlugin;
     doap:name  "C* Spice2x2";
 
     doap:developer [
@@ -18,9 +18,9 @@
         ];
 
     doap:maintainer [
-        foaf:name "Tim Goetze";
-        foaf:homepage <http://quitte.de/dsp/caps.html>;
-        foaf:mbox <mailto:tim@quitte.de>;
+        foaf:name "MOD Team";
+        foaf:homepage <http://portalmod.com>;
+        foaf:mbox <mailto:devel@portalmod.com>;
         ];
 
     doap:license <http://usefulinc.com/doap/licenses/gpl>;

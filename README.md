@@ -18,9 +18,9 @@ So it's really easy to keep in track with new upstream releases
 Compile and Install
 ===================
 
-make
+    make
 
-sudo make install
+    sudo make install
 
 The default LV2 path installation is /usr/local/lv2/caps.lv2/
 
@@ -29,13 +29,13 @@ LV2 and LADSPA are hosted in same shared object, so when you install you will ha
 Alternatively you can install the plugins in single format, in other words, one shared object per plugin.
 To do this run:
 
-./make-single-plugins
+    ./make-single-plugins
 
-sudo ./make-single-plugins install
+    sudo ./make-single-plugins install
 
 This will install all plugins, if you want install specific plugins, you can do in this way:
 
-sudo ./make-single-plugins install AmpVTS ToneStack
+    sudo ./make-single-plugins install AmpVTS ToneStack
 
 
 CAPS Plugins Documentation

@@ -4,27 +4,25 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/>.
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix mod:   <http://portalmod.com/ns/extensions/effect#> .
 
-<http://quitte.de/dsp/caps.html#Click> a lv2:Plugin, lv2:UtilityPlugin;
+<http://portalmod.com/plugins/caps/Click> a lv2:Plugin, lv2:UtilityPlugin;
     doap:name  "C* Click - Metronome";
-
+    mod:label "C* Click";
     doap:developer [
         foaf:name "Tim Goetze";
         foaf:homepage <http://quitte.de/dsp/caps.html>;
         foaf:mbox <mailto:tim@quitte.de>;
         ];
-
     doap:maintainer [
-        foaf:name "Tim Goetze";
-        foaf:homepage <http://quitte.de/dsp/caps.html>;
-        foaf:mbox <mailto:tim@quitte.de>;
+        foaf:name "MOD Team";
+        foaf:homepage <http://portalmod.com>;
+        foaf:mbox <mailto:devel@portalmod.com>;
         ];
-
     doap:license <http://usefulinc.com/doap/licenses/gpl>;
     lv2:optionalFeature lv2:hardRtCapable;
     lv2:minorVersion 0;
     lv2:microVersion 1;
-
     lv2:port
     [
         a lv2:ControlPort, lv2:InputPort;

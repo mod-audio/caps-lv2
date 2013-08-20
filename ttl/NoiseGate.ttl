@@ -4,27 +4,34 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/>.
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix mod:   <http://portalmod.com/ns/extensions/effect#> .
 @prefix units: <http://lv2plug.in/ns/extension/units#> .
 
-<http://quitte.de/dsp/caps.html#NoiseGate> a lv2:Plugin, lv2:FilterPlugin;
-    doap:name  "C* NoiseGate - Attenuate noise resident in silence";
 
+<http://portalmod.com/plugins/caps/NoiseGate> a lv2:Plugin, lv2:FilterPlugin;
+    doap:name  "C* NoiseGate - Attenuate noise resident in silence";
+    mod:label "C* NoiseGate";
     doap:developer [
         foaf:name "Tim Goetze";
         foaf:homepage <http://quitte.de/dsp/caps.html>;
         foaf:mbox <mailto:tim@quitte.de>;
         ];
-
     doap:maintainer [
-        foaf:name "Tim Goetze";
-        foaf:homepage <http://quitte.de/dsp/caps.html>;
-        foaf:mbox <mailto:tim@quitte.de>;
+        foaf:name "MOD Team";
+        foaf:homepage <http://portalmod.com>;
+        foaf:mbox <mailto:devel@portalmod.com>;
         ];
-
     doap:license <http://usefulinc.com/doap/licenses/gpl>;
     lv2:optionalFeature lv2:hardRtCapable;
     lv2:minorVersion 0;
     lv2:microVersion 1;
+
+        mod:pedalModel "japanese";
+    mod:pedalColor "purple";
+    mod:brand "caps";
+    mod:pedalLabel "NoiseGate";
+    mod:smallLabel "NoiseGate";
+    mod:bypassLedPosition "118-83";
 
     lv2:port
     [
@@ -48,6 +55,7 @@
         lv2:minimum -60;
         lv2:maximum 0;
         units:unit units:db ;
+    mod:iconLabel "Open";
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -58,6 +66,7 @@
         lv2:minimum 0;
         lv2:maximum 3;
         units:unit units:ms ;
+    mod:iconLabel "Attack";
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -68,6 +77,7 @@
         lv2:minimum -90;
         lv2:maximum 0;
         units:unit units:db ;
+    mod:iconLabel "Close";
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -81,4 +91,5 @@
         lv2:scalePoint [rdfs:label "global"; rdf:value 50];
         lv2:scalePoint [rdfs:label "imperial"; rdf:value 60];
         units:unit units:hz ;
+    mod:iconLabel "Mains";
     ].

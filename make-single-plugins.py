@@ -134,12 +134,24 @@ manifest_mod = """
 <http://portalmod.com/plugins/caps/__EFFECT__> a lv2:Plugin; lv2:binary <__EFFECT__.so>; rdfs:seeAlso <__EFFECT__.ttl>.
 """
 
+# comment the below line to use the caps URI
+manifest = manifest_mod
+
+
+os.chdir(TMP_DIR)
+
+if manifest == manifest_mod:
+    f = open('./basics.h', 'r')
+    basics = f.read()
+    basics = basics.replace('#define CAPS_URI "http://quitte.de/dsp/caps.html#"', '#define CAPS_URI "http://portalmod.com/plugins/caps/"')
+    f = open('./basics.h', 'w')
+    f.write(basics);
+    f.close()
+
 def get_source(fx_name):
     for fx in effects_info:
         if fx_name == fx[1]:
             return ' '.join(fx[2])
-
-os.chdir(TMP_DIR)
 
 if len(sys.argv) == 1:
     for fx in effects_info:

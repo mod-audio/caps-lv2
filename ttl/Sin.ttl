@@ -6,26 +6,33 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 @prefix units: <http://lv2plug.in/ns/extension/units#> .
 @prefix pprops: <http://lv2plug.in/ns/ext/port-props#> .
+@prefix mod:   <http://portalmod.com/ns/extensions/effect#> .
 
-<http://quitte.de/dsp/caps.html#Sin> a lv2:Plugin, lv2:OscillatorPlugin;
+
+<http://portalmod.com/plugins/caps/Sin> a lv2:Plugin, lv2:OscillatorPlugin;
     doap:name  "C* Sin - Sine wave generator";
-
+    mod:label "C* Sin";
     doap:developer [
         foaf:name "Tim Goetze";
         foaf:homepage <http://quitte.de/dsp/caps.html>;
         foaf:mbox <mailto:tim@quitte.de>;
         ];
-
     doap:maintainer [
-        foaf:name "Tim Goetze";
-        foaf:homepage <http://quitte.de/dsp/caps.html>;
-        foaf:mbox <mailto:tim@quitte.de>;
+        foaf:name "MOD Team";
+        foaf:homepage <http://portalmod.com>;
+        foaf:mbox <mailto:devel@portalmod.com>;
         ];
-
     doap:license <http://usefulinc.com/doap/licenses/gpl>;
     lv2:optionalFeature lv2:hardRtCapable;
     lv2:minorVersion 0;
     lv2:microVersion 1;
+
+    mod:pedalModel "japanese";
+    mod:pedalColor "green";
+    mod:brand "caps";
+    mod:pedalLabel "Sin";
+    mod:smallLabel "Sin";
+    mod:bypassLedPosition "118-83";
 
     lv2:port
     [
