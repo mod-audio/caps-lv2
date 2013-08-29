@@ -33,13 +33,13 @@
 #include "Descriptor.h"
 
 void
-Pan::init()
+Wider::init()
 {
 	pan = FLT_MAX; /* invalid setting to make sure gain is updated */
 }
 
 void
-Pan::activate()
+Wider::activate()
 { 
 	set_pan (getport(1));
 	float fc[3] = { 150, 900, 5000 };
@@ -48,7 +48,7 @@ Pan::activate()
 }
 
 inline void
-Pan::set_pan (sample_t p)
+Wider::set_pan (sample_t p)
 {
 	if (pan == p) 
 		return;
@@ -63,7 +63,7 @@ Pan::set_pan (sample_t p)
 
 template <yield_func_t F>
 void
-Pan::cycle (uint frames)
+Wider::cycle (uint frames)
 {
 	sample_t * src = ports[0];
 
@@ -100,31 +100,23 @@ Pan::cycle (uint frames)
 /* //////////////////////////////////////////////////////////////////////// */
 
 PortInfo
-Pan::port_info [] =
+Wider::port_info [] =
 {
-	{
-		"in", INPUT | AUDIO
-	}, {
-		"pan", INPUT | CONTROL,
-		{DEFAULT_0, -1, 1}
-	}, {
-		"width", INPUT | CONTROL,
-		{DEFAULT_1, 0, 1}
-	}, {
-		"out.l", OUTPUT | AUDIO
-	}, {
-		"out.r", OUTPUT | AUDIO
-	}
+	{ "in", INPUT | AUDIO }, 
+	{ "pan", INPUT | CONTROL, {DEFAULT_0, -1, 1} }, 
+	{ "width", INPUT | CONTROL, {DEFAULT_1, 0, 1} }, 
+	{	"out.l", OUTPUT | AUDIO	}, 
+	{ "out.r", OUTPUT | AUDIO }
 };
 
 template <> void
-Descriptor<Pan>::setup()
+Descriptor<Wider>::setup()
 {
-	Label = "Pan";
+	Label = "Wider";
 
-	Name = CAPS "Pan - Stereo image";
+	Name = CAPS "Wider - Stereo image synthesis";
 	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2011-12";
+	Copyright = "2011-13";
 
 	/* fill port info and vtable */
 	autogen();

@@ -205,7 +205,7 @@ AmpVTS::port_info [] =
 	{ "squash", CTRL_IN, {DEFAULT_MID, 0, 1} },
 
 	/* 10 */
-	{ "low cut", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} },
+	{ "lowcut", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} },
 
 	{ "in", INPUT | AUDIO }, 
 	{	"out", OUTPUT | AUDIO }, 

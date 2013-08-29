@@ -1,4 +1,4 @@
-caps-lv2 0.9.10
+caps-lv2 0.9.16
 ===============
 
 LV2 port for the CAPS Audio Plugin Suite

@@ -216,7 +216,7 @@ class Plate
 
 /* /////////////////////////////////////////////////////////////////////// */
 
-class Plate2x2
+class PlateX2
 : public PlateStub
 {
 	public:

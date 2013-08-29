@@ -1,7 +1,7 @@
 /*
 	Fractals.cc
 	
-	Copyright 2002-12 Tim Goetze <tim@quitte.de>
+	Copyright 2002-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -33,154 +33,100 @@
 #include "Descriptor.h"
 
 void
-Lorenz::init()
+Fractal::init()
 {
-	lorenz.init (h = .001, 0.1 * frandom());
-	gain = 0;
+	lorenz.init (h = .001, 0.1*frandom());
+	roessler.init (h = .001, frandom());
+	gain = 1;
+}
+
+void
+Fractal::activate()
+{ 
+	gain = getport(6); 
+	hp.reset();
 }
 
 template <yield_func_t F>
 void
-Lorenz::cycle (uint frames)
+Fractal::cycle (uint frames)
 {
-	lorenz.set_rate (2.268e-05 *fs * getport(0));
+	float mode = getport(1);
+	if (mode < .5)
+		subcycle<F,0> (frames);
+	else
+		subcycle<F,1> (frames);
+}
 
-	double g = (gain == *ports[4]) ? 
-		1 : pow (getport(4) / gain, 1. / (double) frames);
+template <yield_func_t yield, int Mode>
+void
+Fractal::subcycle (uint frames)
+{
+	float r = 2.268e-05*fs*getport(0);
+	lorenz.set_rate(r);
+	roessler.set_rate(r);
 
-	sample_t * d = ports[5];
+	float f = getport(5);
+	if (f) hp.set_f (f*200*over_fs);
+	else hp.identity();
 
-	sample_t x, sx = getport(1), sy = getport(2), sz = getport(3);
-	
+	float _gain = getport(6);
+	float g = _gain*_gain;
+	g = (gain == g) ? 1 : pow (g/gain, 1./(double)frames);
+
+	sample_t * d = ports[7];
+
+	sample_t sx=getport(2), sy=getport(3), sz=getport(4);
 	for (uint i = 0; i < frames; ++i)
 	{
-		lorenz.step();
+		sample_t x;
 
-		x = sx * lorenz.get_x() + sy * lorenz.get_y() + sz * lorenz.get_z();
+		if (Mode == 0)
+		{
+			lorenz.step();
+			x = sx*lorenz.get_x() + sy*lorenz.get_y() + sz*lorenz.get_z();
+		}
+		else /* Mode == 1 */
+		{
+			roessler.step();
+			x = sx*roessler.get_x() + sy*roessler.get_y() + sz*roessler.get_z();
+		}
 
 		x = hp.process (x + normal);
-		F (d, i, gain * x, adding_gain);
+		yield (d, i, gain*x, adding_gain);
 		gain *= g;
 	}
 
-	gain = getport(4);
+	gain = _gain;
 }
 
 /* //////////////////////////////////////////////////////////////////////// */
 
 PortInfo
-Lorenz::port_info [] =
+Fractal::port_info [] =
 {
-	{
-		"rate", INPUT | CONTROL,
-		{DEFAULT_LOW, 0, 1}
-	}, {
-		"x", INPUT | CONTROL | GROUP,
-		{DEFAULT_1, 0, 1}
-	}, {
-		"y", INPUT | CONTROL,
-		{DEFAULT_0, 0, 1}
-	}, {
-		"z", INPUT | CONTROL,
-		{DEFAULT_0, 0, 1}
-	}, {
-		"volume", INPUT | CONTROL | GROUP,
-		{DEFAULT_MID, MIN_GAIN, 1}
-	}, {
-		"out", OUTPUT | AUDIO
-	}
+	{ "rate", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
+	{ "mode", CTRL_IN, {DEFAULT_0 | INTEGER, 0, 1}, 
+		"{0:'lorenz',1:'roessler'}" }, 
+	{ "x", CTRL_IN | GROUP, {DEFAULT_1, 0, 1} }, 
+	{ "y", CTRL_IN, {DEFAULT_0, 0, 1} }, 
+	{ "z", CTRL_IN, {DEFAULT_0, 0, 1} }, 
+	{ "hp", CTRL_IN | GROUP, {DEFAULT_MID, 0, 1} }, 
+	{ "volume", CTRL_IN, {DEFAULT_MID, MIN_GAIN, 1} }, 
+	{ "out", OUTPUT | AUDIO }
 };
 
 template <> void
-Descriptor<Lorenz>::setup()
+Descriptor<Fractal>::setup()
 {
-	Label = "Lorenz";
+	Label = "Fractal";
 
-	Name = CAPS "Lorenz - Audio stream from a Lorenz attractor";
+	Name = CAPS "Fractal - Audio stream from deterministic chaos";
 	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2004-12";
+	Copyright = "2004-13";
 
 	/* fill port info and vtable */
 	autogen();
 }
 
-/* //////////////////////////////////////////////////////////////////////// */
-
-void
-Roessler::init()
-{
-	roessler.init (h = .001, frandom());
-	gain = 0;
-}
-
-template <yield_func_t F>
-void
-Roessler::cycle (uint frames)
-{
-	roessler.set_rate (2.268e-05 *fs * getport(0));
-
-	double g = (gain == getport(4)) ? 
-		1 : pow (getport(4) / gain, 1. / (double) frames);
-
-	sample_t * d = ports[5];
-
-	sample_t x,
-			sx = .043 * getport(1), 
-			sy = .051 * getport(2), 
-			sz = .018 * getport(3);
-	
-	for (uint i = 0; i < frames; ++i)
-	{
-		roessler.get();
-
-		x = 
-				sx * (roessler.get_x() - .515) + 
-				sy * (roessler.get_y() + 2.577) + 
-				sz * (roessler.get_z() - 2.578);
-
-		x = hp.process (x + normal);
-		F (d, i, gain * x, adding_gain);
-		gain *= g;
-	}
-
-	gain = getport(4);
-}
-
-/* //////////////////////////////////////////////////////////////////////// */
-
-PortInfo 
-Roessler::port_info [] =
-{
-	{
-		"rate", INPUT | CONTROL,
-		{DEFAULT_LOW, 0, 1}
-	}, {
-		"x", INPUT | CONTROL | GROUP,
-		{DEFAULT_1, 0, 1}
-	}, {
-		"y", INPUT | CONTROL,
-		{DEFAULT_MID, 0, 1}
-	}, {
-		"z", INPUT | CONTROL,
-		{DEFAULT_0, 0, 1}
-	}, {
-		"volume", INPUT | CONTROL | GROUP,
-		{DEFAULT_MID, MIN_GAIN, 1}
-	}, {
-		"out", OUTPUT | AUDIO
-	}
-};
-
-template <> void
-Descriptor<Roessler>::setup()
-{
-	Label = "Roessler";
-
-	Name = CAPS "Roessler - Audio stream from a Roessler attractor";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2004-12";
-
-	/* fill port info and vtable */
-	autogen();
-}
 

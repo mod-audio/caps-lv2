@@ -404,7 +404,7 @@ Descriptor<CabinetIV>::setup()
 {
 	Label = "CabinetIV";
 
-	Name = CAPS "CabinetIV - Idealised loudspeaker cabinet emulation";
+	Name = CAPS "CabinetIV - Idealised loudspeaker cabinet";
 	Maker = "Tim Goetze <tim@quitte.de>";
 	Copyright = "2012";
 

@@ -138,7 +138,7 @@ class Compress
 		static PortInfo port_info [];
 };
 
-class Compress2x2
+class CompressX2
 : public CompressStub<2>
 {
 	public:

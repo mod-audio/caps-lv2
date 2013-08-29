@@ -1,7 +1,7 @@
 /*
 	dsp/Roessler.h
 	
-	Copyright 2003-12 Tim Goetze <tim@quitte.de>
+	Copyright 2003-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -58,41 +58,37 @@ class Roessler
 
 				I = 0;
 
-				x[0] = .0002 + .0001 * seed;
-				y[0] = .03;
-				z[0] = .0001;
+				x[0] = -0.327732 + .0001 * seed;
+				y[0] = 2.569375;
+				z[0] = 0.036099;
+			}
 
-				for (int i = 0; i < 8000; ++i)
-					get();
+		void step()
+			{
+				int J = I ^ 1;
+
+				x[J] = x[I] + h*(-y[I] - z[I]);
+				y[J] = y[I] + h*(x[I] + a*y[I]);
+				z[J] = z[I] + h*(b + z[I]*(x[I] - c));
+
+				I = J;
 			}
 
 		sample_t get()
 			{
-				int J = I ^ 1;
-
-				x[J] = x[I] + h * (- y[I] - z[I]);
-				y[J] = y[I] + h * (x[I] + a * y[I]);
-				z[J] = z[I] + h * (b + z[I] * (x[I] - c));
-
-				I = J;
-
-				return x[I] * .01725 + z[I] * .015;
+				step();	
+				return x[I]*.01725 + z[I]*.015;
 			}
 
-		double get_x()
-			{
-				return x[I];
-			}
-
-		double get_y()
-			{
-				return y[I];
-			}
-
-		double get_z()
-			{
-				return z[I];
-			}
+#if 0
+		double get_x() { return x[I]; }
+		double get_y() { return y[I]; }
+		double get_z() { return z[I]; }
+#else
+		double get_x() {return (x[I]-0.22784)*-.08;}
+		double get_y() {return (y[I]+1.13942)*-.09;}
+		double get_z() {return (z[I]-1.13929)*.055;}
+#endif
 };
 
 } /* namespace DSP */

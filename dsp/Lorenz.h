@@ -1,7 +1,7 @@
 /*
 	dsp/Lorenz.h
 	
-	Copyright 2001-4 Tim Goetze <tim@quitte.de>
+	Copyright 2001-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -52,20 +52,13 @@ class Lorenz
 				h = max (.0000001, r * .015);
 			}
 
-		void init (double _h = .001, double seed = 1.0)
+		void init (double _h = .001, double seed = .0)
 			{
 				I = 0;
 
-				x[0] = .1 + seed - .1;
-				y[0] = 0.01;
-				z[0] = -0.01;
-
-				/* progress quickly to get a 'stable' system */
-				h = .015; 
-				
-				int n = 10000 + min ((int) (10000 * seed), 10000);
-				for (int i = 0; i < n; ++i)
-					step();
+				x[0] = -2.884960 + seed;
+				y[0] = -5.549104;
+				z[0] = 7.801511;
 
 				h = _h;
 			}
@@ -80,29 +73,23 @@ class Lorenz
 			{
 				int J = I ^ 1;
 
-				x[J] = x[I] + h * a * (y[I] - x[I]);
-				y[J] = y[I] + h * (x[I] * (b - z[I]) - y[I]);
-				z[J] = z[I] + h * (x[I] * y[I] - c * z[I]);
+				x[J] = x[I] + h*a*(y[I] - x[I]);
+				y[J] = y[I] + h*(x[I] * (b - z[I]) - y[I]);
+				z[J] = z[I] + h*(x[I] * y[I] - c * z[I]);
 
 				I = J;
 			}
-
-		double get_x()
-			{
-				return .024 * (x[I] - .172);
-			}
-
-		double get_y()
-			{
-				return .018 * (y[I] - .172);
-			}
-
-		double get_z()
-			{
-				return .019 * (z[I] - 25.43);
-			}
+#if 0
+		double get_x() {return x[I];}
+		double get_y() {return y[I];}
+		double get_z() {return z[I];}
+#else
+		double get_x() {return (x[I]+0.01661)*-.04;}
+		double get_y() {return (y[I]-0.02379)*-.03;}
+		double get_z() {return (z[I]-24.1559)*.03;}
+#endif
 };
 
 } /* namespace DSP */
 
-#endif /* _DSP_LORENZ_H_ */
+#endif /*_DSP_LORENZ_H_ */

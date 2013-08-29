@@ -78,27 +78,21 @@ class ClickStub
 };
 
 class Click
-: public ClickStub<3>
+: public ClickStub<4>
 {
 	public:
-		void init() { initsimple(); initparfilt(); initsine(); }
 		void initsimple();
 		void initparfilt();
 		void initsine();
+		void initdirac();
+
+		void init()
+			{ initsimple(); initparfilt(); initsine(); initdirac(); }
 
 		static PortInfo port_info [];
 };
 
 class CEO
-: public ClickStub<1>
-{
-	public:
-		void init();
-
-		static PortInfo port_info [];
-};
-
-class Dirac
 : public ClickStub<1>
 {
 	public:

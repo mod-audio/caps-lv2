@@ -93,10 +93,10 @@ AutoFilter::subsubcycle (uint frames, SVF & svf, Over & over)
 	float env = getport(7);
 
 	lorenz.set_rate (3e-05*fs * .6*sq(getport(8)));
-	float x = getport(9), z = 1-x;
+	float x=.9, z=.1;;
 
-	sample_t * s = ports[10];
-	sample_t * d = ports[11];
+	sample_t * s = ports[9];
+	sample_t * d = ports[10];
 
 	while (frames)
 	{
@@ -201,14 +201,13 @@ AutoFilter::port_info [] =
 		"{0:'breathy',1:'fat A',2:'fat B',3:'fat C',4:'fat D'}", }, 
 	{ "gain (dB)", CTRL_IN, {DEFAULT_LOW, 0, 24} }, 
 	/* 4 */
-	{ "f (Hz)", CTRL_IN | GROUP, {LOG | DEFAULT_LOW, 43, 3743} }, 
+	{ "f (Hz)", CTRL_IN | GROUP, {LOG | DEFAULT_HIGH, 20, 3000} }, 
 	{ "Q", CTRL_IN, {DEFAULT_0, 0, 1} }, 
 	/* 6 */
-	{ "range", CTRL_IN | GROUP, {DEFAULT_1, 0, 1} }, 
+	{ "range", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} }, 
 	{ "lfo/env", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
-	{ "rate", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} }, 
-	{ "x/z", CTRL_IN, {DEFAULT_1, 0, 1} }, 
-	/* 10 */
+	{ "rate", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
+	/* 9 */
 	{ "in", AUDIO_IN}, 
 	{	"out", AUDIO_OUT}
 };
@@ -218,7 +217,7 @@ Descriptor<AutoFilter>::setup()
 {
 	Label = "AutoFilter";
 
-	Name = CAPS "AutoFilter - Resonant automodulating filter";
+	Name = CAPS "AutoFilter - Modulated filter cascade";
 	Maker = "Tim Goetze <tim@quitte.de>";
 	Copyright = "2004-13";
 

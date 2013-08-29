@@ -5,7 +5,7 @@
 	
 	http://quitte.de/dsp/
 
-	10-band octave-spread equalizer.
+	10-band octave-spread equaliser.
 
 */
 /*
@@ -24,6 +24,8 @@
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
+
+/* todo: Eq5p -- 20-400, 60-1k, 150-2.5k, 500-8k, 1k-20k */
 
 #include "basics.h"
 #include <stdio.h>
@@ -47,16 +49,16 @@ adjust_gain (int i, double g)
 	return g * adjust[i];
 }
 
-#define Q 0.707
+#define Eq10Q 0.707
 
 void
-Eq::init()
+Eq10::init()
 {
-	eq.init (fs, Q); 
+	eq.init (fs, Eq10Q); 
 }
 
 void
-Eq::activate()
+Eq10::activate()
 {
 	for (int i = 0; i < 10; ++i)
 	{
@@ -68,7 +70,7 @@ Eq::activate()
 
 template <yield_func_t F>
 void
-Eq::cycle (uint frames)
+Eq10::cycle (uint frames)
 {
 	sample_t * s = ports[0];
 
@@ -107,56 +109,32 @@ Eq::cycle (uint frames)
 /* //////////////////////////////////////////////////////////////////////// */
 
 PortInfo
-Eq::port_info [] =
+Eq10::port_info [] =
 {
-	{
-		"in", INPUT | AUDIO,
-		{0, -1, 1}
-	}, {
-		"31 Hz", INPUT | CONTROL,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"63 Hz", INPUT | CONTROL,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"125 Hz", INPUT | CONTROL | GROUP,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"250 Hz", INPUT | CONTROL,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"500 Hz", INPUT | CONTROL,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"1 kHz", INPUT | CONTROL | GROUP,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"2 kHz", INPUT | CONTROL,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"4 kHz", INPUT | CONTROL,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"8 kHz", INPUT | CONTROL | GROUP,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"16 kHz", INPUT | CONTROL,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"out",
-		OUTPUT | AUDIO,
-		{0}
-	}
+	{"in", INPUT | AUDIO, {0, -1, 1}}, 
+
+	{"31 Hz", CTRL_IN, {DEFAULT_0, -48, 24}}, 
+	{"63 Hz", CTRL_IN, {DEFAULT_0, -48, 24}}, 
+	{"125 Hz", CTRL_IN | GROUP, {DEFAULT_0, -48, 24}}, 
+	{"250 Hz", CTRL_IN, {DEFAULT_0, -48, 24}}, 
+	{"500 Hz", CTRL_IN, {DEFAULT_0, -48, 24}}, 
+	{"1 kHz", CTRL_IN | GROUP, {DEFAULT_0, -48, 24}}, 
+	{"2 kHz", CTRL_IN, {DEFAULT_0, -48, 24}}, 
+	{"4 kHz", CTRL_IN, {DEFAULT_0, -48, 24}}, 
+	{"8 kHz", CTRL_IN | GROUP, {DEFAULT_0, -48, 24}}, 
+	{"16 kHz", CTRL_IN, {DEFAULT_0, -48, 24}}, 
+
+	{"out", OUTPUT | AUDIO, {0}}
 };
 
 template <> void
-Descriptor<Eq>::setup()
+Descriptor<Eq10>::setup()
 {
-	Label = "Eq";
+	Label = "Eq10";
 
-	Name = CAPS "Eq - 10-band equalizer";
+	Name = CAPS "Eq10 - 10-band equaliser";
 	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2004-7";
+	Copyright = "2004-13";
 
 	/* fill port info and vtable */
 	autogen();
@@ -165,14 +143,14 @@ Descriptor<Eq>::setup()
 /* //////////////////////////////////////////////////////////////////////// */
 
 void
-Eq2x2::init()
+Eq10X2::init()
 {
 	for (int c = 0; c < 2; ++c)
-		eq[c].init (fs, Q);
+		eq[c].init (fs, Eq10Q);
 }
 
 void
-Eq2x2::activate()
+Eq10X2::activate()
 {
 	/* Fetch current parameter settings so we won't sweep band gains in the
 	 * first block to process.
@@ -189,7 +167,7 @@ Eq2x2::activate()
 
 template <yield_func_t F>
 void
-Eq2x2::cycle (uint frames)
+Eq10X2::cycle (uint frames)
 {
 	/* evaluate band gain changes and compute recursion factor to prevent
 	 * zipper noise */
@@ -238,61 +216,34 @@ Eq2x2::cycle (uint frames)
 }
 
 PortInfo
-Eq2x2::port_info [] =
+Eq10X2::port_info [] =
 {
-	{
-		"in.l", INPUT | AUDIO,
-		{0, -1, 1}
-	}, {
-		"in.r", INPUT | AUDIO,
-		{0, -1, 1}
-	}, {
-		"31 Hz", INPUT | CONTROL,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"63 Hz", INPUT | CONTROL,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"125 Hz", INPUT | CONTROL | GROUP,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"250 Hz", INPUT | CONTROL,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"500 Hz", INPUT | CONTROL,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"1 kHz", INPUT | CONTROL | GROUP,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"2 kHz", INPUT | CONTROL,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"4 kHz", INPUT | CONTROL,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"8 kHz", INPUT | CONTROL | GROUP,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"16 kHz", INPUT | CONTROL,
-		{DEFAULT_0, -48, 24}
-	}, {
-		"out.l", OUTPUT | AUDIO,
-		{0}
-	}, {
-		"out.r", OUTPUT | AUDIO,
-		{0}
-	}
+	{"in.l", INPUT | AUDIO, {0, -1, 1}}, 
+	{"in.r", INPUT | AUDIO, {0, -1, 1}}, 
+
+	{"31 Hz", CTRL_IN, {DEFAULT_0, -48, 24}}, 
+	{"63 Hz", CTRL_IN, {DEFAULT_0, -48, 24}}, 
+	{"125 Hz", CTRL_IN | GROUP, {DEFAULT_0, -48, 24}}, 
+	{"250 Hz", CTRL_IN, {DEFAULT_0, -48, 24}}, 
+	{"500 Hz", CTRL_IN, {DEFAULT_0, -48, 24}}, 
+	{"1 kHz", CTRL_IN | GROUP, {DEFAULT_0, -48, 24}}, 
+	{"2 kHz", CTRL_IN, {DEFAULT_0, -48, 24}}, 
+	{"4 kHz", CTRL_IN, {DEFAULT_0, -48, 24}}, 
+	{"8 kHz", CTRL_IN | GROUP, {DEFAULT_0, -48, 24}}, 
+	{"16 kHz", CTRL_IN, {DEFAULT_0, -48, 24}}, 
+
+	{"out.l", OUTPUT | AUDIO, {0}}, 
+	{"out.r", OUTPUT | AUDIO, {0}}
 };
 
 template <> void
-Descriptor<Eq2x2>::setup()
+Descriptor<Eq10X2>::setup()
 {
-	Label = "Eq2x2";
+	Label = "Eq10X2";
 
-	Name = CAPS "Eq2x2 - Stereo 10-band equalizer";
+	Name = CAPS "Eq10X2 - Stereo 10-band equaliser";
 	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2004-7";
+	Copyright = "2004-13";
 
 	/* fill port info and vtable */
 	autogen();
@@ -300,7 +251,150 @@ Descriptor<Eq2x2>::setup()
 
 /* //////////////////////////////////////////////////////////////////////// */
 
-/*
-	todo: parametric -- 20-400, 60-1k, 150-2.5k, 500-8k, 1k-20k 
-	bandwidth 0-2 octaves
- */
+void
+Eq4p::init()
+{
+	/* limit filter frequency to slightly under Nyquist to be on the safe side */
+	float limit = .48*fs; 
+	for (int i = 0; i < 4; ++i)
+	{
+		state[i].f = -1; /* ensure all coefficients updated */
+		ranges[4*i + 1].UpperBound = min(ranges[4*i + 1].UpperBound, limit);
+	}
+}
+
+void
+Eq4p::activate()
+{
+	filter[0].reset();
+	filter[1].reset();
+
+	updatestate();
+	filter[0] = filter[1];
+	xfade = false;
+}
+
+typedef struct {sample_t a[3], b[3];} BiQuad_ab;
+
+void
+Eq4p::updatestate()
+{
+	for (int i=0; i<4; ++i)
+	{
+		sample_t mode = getport(i*4);
+		sample_t f = getport(i*4 + 1);
+		sample_t Q = getport(i*4 + 2);
+		sample_t gain = getport(i*4 + 3);
+
+		if (mode==state[i].mode && gain==state[i].gain && f==state[i].f && Q==state[i].Q) 
+			continue;
+
+		xfade = true;
+
+		state[i].mode = mode;
+		state[i].Q = Q;
+		state[i].f = f;
+		state[i].gain = gain;
+
+		BiQuad_ab c; 
+
+		f *= over_fs;
+		/* maxima: solve([a/(1-b*0)=.5,a/(1-b)=50,a/(1-b*x)=.707],[a,b,x]); */
+		Q = .5/(1-.99*Q);
+		if (mode < 0)
+			c.a[0]=1,c.a[1]=0,c.a[2]=0,c.b[1]=0,c.b[2]=0; /* off = identity filter */
+		else if (mode < 0.5)
+			DSP::RBJ::LoShelve (f,Q,gain,c);
+		else if (mode < 1.5)
+			DSP::RBJ::PeakingEQ (f,Q,gain,c);
+		else /* if (mode < 2.5) */
+			DSP::RBJ::HiShelve (f,Q,gain,c);
+
+		filter[1].set_ab (i, c.a, c.b);
+	}
+}
+
+template <yield_func_t yield>
+void
+Eq4p::cycle (uint frames)
+{
+	sample_t * s = ports[16];
+	sample_t * d = ports[17];
+
+	updatestate(); 
+
+	if (!xfade)
+	{
+		for (uint i = 0; i < frames; ++i)
+		{
+			sample_t x = s[i] + normal;
+			x = filter[0].seriesprocess(x);
+			yield (d,i, x, adding_gain);
+		}
+	}
+	else
+	{
+		/* simple linear crossfade */
+		sample_t g0=1, g1=0, dg=1./frames;
+		for (uint i = 0; i < frames; ++i)
+		{
+			sample_t x = s[i] + normal;
+			x = g0*filter[0].seriesprocess(x) + g1*filter[1].seriesprocess(x);
+			yield (d,i, x, adding_gain);
+			g0 -= dg, g1 += dg;
+		}
+		
+		filter[0] = filter[1];
+		filter[1].reset();
+		xfade = false;
+	}
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+
+static const char * Eq4pBandModes = "{-1:'off',0:'lowshelve',1:'band',2:'hishelve'}";
+
+PortInfo
+Eq4p::port_info [] =
+{
+	{"a.mode", CTRL_IN, {DEFAULT_0 | INTEGER, -1,2}, Eq4pBandModes},
+	{"a.f (Hz)", CTRL_IN, {DEFAULT_LOW | LOG, 20, 14000}},
+	{"a.Q", CTRL_IN, {DEFAULT_LOW, 0, 1}},
+	{"a.gain (dB)", CTRL_IN, {DEFAULT_0, -48, 24}},
+
+	/* 4 */
+	{"b.mode", CTRL_IN | GROUP, {DEFAULT_1 | INTEGER, -1,2}, Eq4pBandModes},
+	{"b.f (Hz)", CTRL_IN, {DEFAULT_MID | LOG, 20, 14000}},
+	{"b.Q", CTRL_IN, {DEFAULT_MID, 0, 1}},
+	{"b.gain (dB)", CTRL_IN, {DEFAULT_0, -48, 24}},
+
+	/* 8 */
+	{"c.mode", CTRL_IN | GROUP, {DEFAULT_1 | INTEGER, -1,2}, Eq4pBandModes},
+	{"c.f (Hz)", CTRL_IN, {DEFAULT_MID | LOG, 20, 14000}},
+	{"c.Q", CTRL_IN, {DEFAULT_LOW, 0, 1}},
+	{"c.gain (dB)", CTRL_IN, {DEFAULT_0, -48, 24}},
+
+	/* 12 */
+	{"d.mode", CTRL_IN | GROUP, {DEFAULT_MAX | INTEGER, -1,2}, Eq4pBandModes},
+	{"d.f (Hz)", CTRL_IN, {DEFAULT_HIGH | LOG, 20, 14000}},
+	{"d.Q", CTRL_IN, {DEFAULT_LOW, 0, 1}},
+	{"d.gain (dB)", CTRL_IN, {DEFAULT_0, -48, 24}},
+
+	/* 16 */
+	{"in", INPUT | AUDIO, {0, -1, 1}}, 
+	{"out", OUTPUT | AUDIO, {0}}
+};
+
+template <> void
+Descriptor<Eq4p>::setup()
+{
+	Label = "Eq4p";
+
+	Name = CAPS "Eq4p - 4-band parametric equaliser";
+	Maker = "Tim Goetze <tim@quitte.de>";
+	Copyright = "2013";
+
+	/* fill port info and vtable */
+	autogen();
+}
+

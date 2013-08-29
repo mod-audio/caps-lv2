@@ -226,6 +226,14 @@ Click::initsine()
 	initwave (2, click, m);
 }
 
+void
+Click::initdirac()
+{ 
+	int16 * dirac = new int16[1];
+	*dirac = 32767;
+	initwave (3, dirac, 1);
+}
+
 template <> void
 Descriptor<Click>::setup()
 {
@@ -244,8 +252,9 @@ Descriptor<Click>::setup()
 PortInfo
 Click::port_info [] =
 {
-	{ "model", CTRL_IN, {INTEGER | DEFAULT_1, 0, 2}, "{0:'box',1:'stick',2:'beep'}" }, 
-	{ "bpm", CTRL_IN | GROUP, {DEFAULT_LOW, 4, 384} }, 
+	{ "model", CTRL_IN, {INTEGER | DEFAULT_1, 0, 3}, 
+		"{0:'box',1:'stick',2:'beep',3:'dirac'}" }, 
+	{ "bpm", CTRL_IN | GROUP, {DEFAULT_LOW, 4, 240} }, 
 	{	"volume", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} }, 
 	{	"damping", CTRL_IN, {DEFAULT_HIGH, 0, 1} }, 
 	{ "out", OUTPUT | AUDIO}
@@ -275,7 +284,7 @@ CEO::init()
 	int16 * wave = new int16 [n];
 
 	DSP::BiQuad<sample_t> lp;
-	/* suppress aliasing with an additional lowpass */
+	/* suppress aliasing with an additional lowpass; also slight gain at 3 kHz */
 	DSP::RBJ::LP (3000*over_fs,1.5,lp);
 	#if 1 /* linear */
 	float x = 0;
@@ -288,7 +297,7 @@ CEO::init()
 		wave[i] = (int16) a;
 		x += dx;
 	}
-	#else /* cubic */
+	#else /* cubic, unneeded */
 	float x = 0;
 	for (int i=0; i < n; ++i, x+=dx)
 	{
@@ -322,38 +331,6 @@ Descriptor<CEO>::setup()
 	Name = CAPS "CEO - Chief Executive Oscillator";
 	Maker = "Tim Goetze <tim@quitte.de>";
 	Copyright = "2004-12";
-
-	/* fill port info and vtable */
-	autogen();
-}
-
-/* //////////////////////////////////////////////////////////////////////// */
-
-PortInfo
-Dirac::port_info [] =
-{
-	{ "ppm", CTRL_IN, {DEFAULT_LOW, 2, 360} }, 
-	{ "volume", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} }, 
-	{	"damping", CTRL_IN,	{DEFAULT_0, 0, 1}	}, 
-	{	"out", OUTPUT | AUDIO}
-};
-
-void
-Dirac::init()
-{ 
-	int16 * dirac = new int16[1];
-	*dirac = 32767;
-	initwave (0, dirac, 1);
-}
-
-template <> void
-Descriptor<Dirac>::setup()
-{
-	Label = "Dirac";
-
-	Name = CAPS "Dirac - One-sample impulse generator";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2004-7";
 
 	/* fill port info and vtable */
 	autogen();

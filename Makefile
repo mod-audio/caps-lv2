@@ -13,7 +13,7 @@ STRIP = strip
 CFLAGS = $(OPTS) $(_CFLAGS)
 LDFLAGS = $(_LDFLAGS) $(CFLAGS)
 
-VERSION = 0.9.10
+VERSION = 0.9.16
 PLUG = caps
 
 SOURCES = $(wildcard *.cc) $(wildcard dsp/*.cc)

@@ -1,11 +1,11 @@
 /*
 	Phaser.h
 	
-	Copyright 2002-12 Tim Goetze <tim@quitte.de>
+	Copyright 2002-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
-	Fractal-modulated phaser units.
+	Phaser effect plugin.
 
 */
 /*
@@ -29,7 +29,7 @@
 #define _PHASER_H_
 
 #include "dsp/Sine.h"
-#include "dsp/Lorenz.h"
+#include "dsp/Roessler.h"
 #include "dsp/Delay.h"
 #include "dsp/OnePole.h"
 
@@ -57,8 +57,11 @@ class PhaserII
 	public:
 		enum {Notches = 12};
 		PhaserAP ap[Notches];
-		DSP::Lorenz lorenz;
-		DSP::OnePoleLP<sample_t> lfo_lp;
+		struct {
+			DSP::Sine sine;
+			DSP::Roessler roessler;
+			DSP::OnePoleLP<sample_t> lp;
+		} lfo;
 
 		sample_t rate;
 		sample_t y0;
@@ -81,7 +84,9 @@ class PhaserII
 				if (fs > 32000) blocksize *= 2;
 				if (fs > 64000) blocksize *= 2;
 				if (fs > 128000) blocksize *= 2;
-				lorenz.init();
+
+				lfo.roessler.init();
+				lfo.sine.set_f (300*over_fs,0);
 			}
 
 		void activate()
@@ -91,70 +96,10 @@ class PhaserII
 
 				delay.bottom = 400*over_fs;
 				delay.range = 2200*over_fs;
-
-				lfo_lp.set_f(3*over_fs);
-				rate = -1; /* force lfo reset in cycle() */
 			}
 
 		void run (uint n) { cycle<store_func> (n); }
 		void run_adding (uint n) { cycle<adding_func> (n); }
-};
-
-class StereoPhaserII
-: public Plugin
-{
-	public:
-		enum {Notches = 12};
-		PhaserAP apl[Notches], apr[Notches];
-		DSP::Lorenz lorenz;
-		DSP::OnePoleLP<sample_t> lfo_lp;
-
-		sample_t y0l, y0r;
-
-		struct {
-			double bottom, range;
-		} delay;
-
-		template <yield_func_t, bool StereoIn>
-			void cycle (uint frames);
-	
-		uint blocksize, remain;
-
-	public:
-		static PortInfo port_info [];
-
-		void init()
-			{
-				blocksize = 16;
-				if (fs > 32000) blocksize *= 2;
-				if (fs > 64000) blocksize *= 2;
-				if (fs > 128000) blocksize *= 2;
-				lorenz.init();
-			}
-
-		void activate()
-			{
-				y0l = y0r = 0;
-				remain = 0;
-
-				delay.bottom = 400*over_fs;
-				delay.range = 2200*over_fs;
-
-				lfo_lp.set_f(3*over_fs);
-			}
-
-		void run (uint n) { cycle<store_func, false> (n); }
-		void run_adding (uint n) { cycle<adding_func, false> (n); }
-};
-
-class StereoPhaserII2x2
-: public StereoPhaserII
-{
-	public:
-		static PortInfo port_info [];
-
-		void run (uint n) { cycle<store_func, true> (n); }
-		void run_adding (uint n) { cycle<adding_func, true> (n); }
 };
 
 #endif /* _PHASER_H_ */

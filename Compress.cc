@@ -160,7 +160,7 @@ Descriptor<Compress>::setup()
 /* //////////////////////////////////////////////////////////////////////// */
 
 PortInfo
-Compress2x2::port_info [] =
+CompressX2::port_info [] =
 {
 	{ "measure", CTRL_IN, {INTEGER | DEFAULT_0, 0, 1},
 		"{0:'peak',1:'rms'}" }, 
@@ -178,11 +178,11 @@ Compress2x2::port_info [] =
 };
 
 template <> void
-Descriptor<Compress2x2>::setup()
+Descriptor<CompressX2>::setup()
 {
-	Label = "Compress2x2";
+	Label = "CompressX2";
 
-	Name = CAPS "Compress2x2 - Stereo compressor and saturating limiter";
+	Name = CAPS "CompressX2 - Stereo compressor and saturating limiter";
 	Maker = "Tim Goetze <tim@quitte.de>";
 	Copyright = "2011-13";
 

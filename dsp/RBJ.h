@@ -1,10 +1,9 @@
 /*
   dsp/RBJ.h
 
-	Copyright 
-		2004-12 Tim Goetze <tim@quitte.de>
+	Copyright 2004-13 Tim Goetze <tim@quitte.de>
 
-	Robert Bristow-Johnson's lovely eq cookbook.
+	Filter prototypes from Robert Bristow-Johnson's lovely eq cookbook.
 
 */
 /*
@@ -64,10 +63,11 @@ class RBJ
 				ca[2] = b[2] * a0i;
 
 				/* our bi-quad implementation /adds/ b[i] * y[i] so we need to 
-				 * toggle the sign for the b[] coefficients. 
-				 */
-				cb[1] = -a[1] * a0i;
-				cb[2] = -a[2] * a0i;
+				 * toggle the sign for the b[] coefficients. */
+				a0i = -a0i;
+
+				cb[1] = a[1] * a0i;
+				cb[2] = a[2] * a0i;
 			}
 };
 
@@ -204,7 +204,7 @@ class PeakShelve
 			{
 				A = pow (10, dB * .025);
 				double S = Q; /* slope */
-				beta = sqrt ((A * A + 1) / S - (A - 1) * (A - 1));
+				beta = sqrt ((A*A + 1)/S - (A-1)*(A-1));
 			}
 };
 
@@ -220,16 +220,16 @@ class LoShelve
 		template <class T>
 		void ab (T * ca, T * cb)
 			{
-				double Ap1 = A + 1, Am1 = A - 1;
-				double beta_sin = beta * sin;
+				double Ap1 = A+1, Am1 = A-1;
+				double beta = 2*sqrt(A)*alpha;
 
-				b[0] =     A * (Ap1 - Am1 * cos + beta_sin);
-				b[1] = 2 * A * (Am1 - Ap1 * cos);
-				b[2] =     A * (Ap1 - Am1 * cos - beta_sin);
+				b[0] =   A*(Ap1 - Am1*cos + beta);
+				b[1] = 2*A*(Am1 - Ap1*cos);
+				b[2] =   A*(Ap1 - Am1*cos - beta);
 
-				a[0] =          Ap1 + Am1 * cos + beta_sin;
-				a[1] = -2 *    (Am1 + Ap1 * cos);
-				a[2] =          Ap1 + Am1 * cos - beta_sin;
+				a[0] =          Ap1 + Am1*cos + beta;
+				a[1] = -2 *    (Am1 + Ap1*cos);
+				a[2] =          Ap1 + Am1*cos - beta;
 				
 				make_direct_I (ca, cb);
 			}
@@ -272,15 +272,15 @@ class HiShelve
 		void ab (T * ca, T * cb)
 			{
 				double Ap1 = A + 1, Am1 = A - 1;
-				double beta_sin = beta * sin;
+				double beta = 2*sqrt(A)*alpha;
 
-				b[0] =      A * (Ap1 + Am1 * cos + beta_sin);
+				b[0] =      A * (Ap1 + Am1 * cos + beta);
 				b[1] = -2 * A * (Am1 + Ap1 * cos);
-				b[2] =      A * (Ap1 + Am1 * cos - beta_sin);
+				b[2] =      A * (Ap1 + Am1 * cos - beta);
 
-				a[0] =           Ap1 - Am1 * cos + beta_sin;
+				a[0] =           Ap1 - Am1 * cos + beta;
 				a[1] =  2 *     (Am1 - Ap1 * cos);
-				a[2] =           Ap1 - Am1 * cos - beta_sin;
+				a[2] =           Ap1 - Am1 * cos - beta;
 				
 				make_direct_I (ca, cb);
 			}

@@ -1,11 +1,11 @@
 /*
 	Eq.h
 	
-	Copyright 2004-5 Tim Goetze <tim@quitte.de>
+	Copyright 2004-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
-	equalizer circuit using recursive filtering.
+	IIR equalisation filters.
 
 */
 /*
@@ -32,8 +32,11 @@
 #include "dsp/Eq.h"
 #include "dsp/BiQuad.h"
 #include "dsp/RBJ.h"
+#include "dsp/v4f.h"
+#include "dsp/v4f_BiQuad.h"
 
-class Eq
+/* octave-band variants, mono and stereo */
+class Eq10
 : public Plugin
 {
 	public:
@@ -56,12 +59,37 @@ class Eq
 		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
-class Eq2x2
+class Eq10X2
 : public Plugin
 {
 	public:
 		sample_t gain[10];
 		DSP::Eq<10> eq[2];
+
+		template <yield_func_t F>
+			void cycle (uint frames);
+
+	public:
+		static PortInfo port_info [];
+
+		void init();
+		void activate();
+
+		void run (uint n) { cycle<store_func> (n); }
+		void run_adding (uint n) { cycle<adding_func> (n); }
+};
+
+/* 4-way parametric, parallel implementation */
+class Eq4p
+: public Plugin
+{
+	public:
+		struct {sample_t mode,gain,f,Q;} state[4]; /* parameters */
+
+		DSP::BiQuad4f filter[2];
+
+		bool xfade;
+		void updatestate();
 
 		template <yield_func_t F>
 			void cycle (uint frames);

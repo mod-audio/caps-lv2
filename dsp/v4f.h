@@ -7,7 +7,7 @@
 
 	Vectors of four 32-bit floats for SIMD arithmetic, gcc style.
 
-	Bit of a crude implementation, will have to clean up someday, sorry!
+	Implementation is evolving so the code is not maximally elegant yet, sorry.
 
 */
 /*
@@ -30,7 +30,9 @@
 #ifndef __V4F_H__
 #define __V4F_H__
 
+#ifdef __SSE__
 #include <xmmintrin.h>
+#endif
 
 typedef float v4f_t __attribute__ ((vector_size (16), aligned(16))); 
 
@@ -41,7 +43,20 @@ inline v4f_t v4f (float x0, float x1, float x2, float x3)
 	{ v4f_t v = {x0,x1,x2,x3}; return v; }
 
 #define v4fa(x) ((float *) &x)
-#define v4f_shuffle(x,s3,s2,s1,s0) _mm_shuffle_ps(x,x,((s0)<<6|(s1)<<4|(s2)<<2|s3))
+
+/* gcc's __builtin_shuffle is useless */
+#ifdef __SSE__
+#define v4f_shuffle(x,s3,s2,s1,s0) \
+	_mm_shuffle_ps(x,x,((s0)<<6|(s1)<<4|(s2)<<2|s3))
+#else
+inline v4f_t v4f_shuffle(v4f_t x, int s3, int s2, int s1, int s0) 
+{
+	v4f_t y=x; 
+	float*px=(float*)&x; float*py=(float*)&y; 
+	px[3]=py[s0];px[2]=py[s1];px[1]=py[s2];px[0]=py[s3];
+	return y;
+}
+#endif
 
 #define mk_v4f(s) ((v4f_t) {s,s,s,s})
 

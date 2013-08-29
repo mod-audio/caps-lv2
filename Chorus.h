@@ -34,58 +34,46 @@
 #include "dsp/BiQuad.h"
 #include "dsp/RBJ.h"
 
-class ChorusStub
+class ChorusI
 : public Plugin
 {
 	public:
 		DSP::OnePoleHP<sample_t> hp;
-		sample_t time, width, rate;
-};
+		float time, width, rate;
 
-class ChorusI
-: public ChorusStub
-{
-	public:
-		DSP::Sine lfo;
+		struct {
+			DSP::Sine sine;
+		} lfo;
+
 		DSP::Delay delay;
 
 		template <yield_func_t>
 				void one_cycle (int frames);
 	
+		void setrate (float r);
+
 	public:
 		static PortInfo port_info [];
 
 		void init()
 			{
 				rate = .15;
-				delay.init ((int) (.040 * fs));
+				lfo.sine.set_f (rate, fs, 0);
+				delay.init ((int) (.050 * fs));
 			}
 
-		void activate()
-			{
-				time = 0;
-				width = 0;
-				
-				rate = *ports[3];
-				
-				delay.reset();
-
-				lfo.set_f (rate, fs, 0);
-			}
+		void activate();
 
 		void run (int n)
-			{
-				one_cycle<store_func> (n);
-			}
+			{ one_cycle<store_func> (n); }
 		
 		void run_adding (int n)
-			{
-				one_cycle<adding_func> (n);
-			}
+			{ one_cycle<adding_func> (n); }
 };
 
 /* ///////////////////////////////////////////////////////////////////////// */
 
+#if 0
 #define FRACTAL_RATE 0.004
 
 class FracTap 
@@ -164,62 +152,5 @@ class ChorusII
 		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
-class StereoChorusII
-: public ChorusStub
-{
-	public:
-		sample_t rate;
-		sample_t phase;
-
-		DSP::Delay delay;
-
-		struct {
-			DSP::Roessler fractal;
-			DSP::OnePoleLP<sample_t> lfo_lp;
-		} left, right;
-
-		enum {Mono=0,Stereo=1};
-		template <yield_func_t>
-			void cycle (uint frames, int mode=Mono);
-	
-		void set_rate (sample_t r);
-
-	public:
-		static PortInfo port_info [];
-		sample_t adding_gain;
-
-		void init()
-			{
-				hp.set_f (350*over_fs);
-				delay.init ((int) (.025 * fs));
-
-				left.fractal.init (.001, frandom());
-				right.fractal.init (.001, frandom());
-			}
-
-		void activate()
-			{
-				time = 0;
-				width = 0;
-
-				hp.reset();
-				delay.reset();
-
-				set_rate (*ports[3]);
-			}
-
-		void run (uint n) { cycle<store_func> (n,Mono); }
-		void run_adding (uint n) { cycle<adding_func> (n,Mono); }
-};
-
-class StereoChorusII2x2
-: public StereoChorusII
-{
-	public:
-		static PortInfo port_info [];
-
-		void run (uint n) { cycle<store_func> (n,Stereo); }
-		void run_adding (uint n) { cycle<adding_func> (n,Stereo); }
-};
-
+#endif
 #endif /* _CHORUS_H_ */

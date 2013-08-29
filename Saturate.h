@@ -113,7 +113,7 @@ class Spice
 		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
-class Spice2x2
+class SpiceX2
 : public Plugin
 {
 	public:

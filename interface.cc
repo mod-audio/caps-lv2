@@ -52,7 +52,7 @@
 
 #include "Descriptor.h"
 
-#define N 34
+#define N 35 
 
 static DescriptorStub * descriptors [N+1];
 static DescriptorStub * lv2_descriptors [N+1];
@@ -80,50 +80,38 @@ void caps_so_init()
 
 	*d++ = new Descriptor<NoiseGate>(2602);
 	*d++ = new Descriptor<Compress>(1772);
-	*d++ = new Descriptor<Compress2x2>(2598);
+	*d++ = new Descriptor<CompressX2>(2598);
 
 	*d++ = new Descriptor<ToneStack>(2589);
 	*d++ = new Descriptor<AmpVTS>(2592);
-	*d++ = new Descriptor<CabinetII>(2581);
-	*d++ = new Descriptor<CabinetIII>(2601);
 	*d++ = new Descriptor<CabinetIV>(2606);
 
-	*d++ = new Descriptor<JVRev>(1778);
 	*d++ = new Descriptor<Plate>(1779);
-	*d++ = new Descriptor<Plate2x2>(1795);
+	*d++ = new Descriptor<PlateX2>(1795);
 
 	*d++ = new Descriptor<Saturate>(1771);
-	#if 1
 	*d++ = new Descriptor<Spice>(2603);
-    *d++ = new Descriptor<Spice2x2>(2607);
-	#endif
+	*d++ = new Descriptor<SpiceX2>(2607);
 
 	*d++ = new Descriptor<ChorusI>(1767);
-	*d++ = new Descriptor<ChorusII>(2583);
-	*d++ = new Descriptor<StereoChorusII>(2584);
-	*d++ = new Descriptor<StereoChorusII2x2>(2605);
 	*d++ = new Descriptor<PhaserII>(2586);
-	*d++ = new Descriptor<StereoPhaserII>(2596);
-	*d++ = new Descriptor<StereoPhaserII2x2>(2597);
 
 	*d++ = new Descriptor<AutoFilter>(2593);
 	*d++ = new Descriptor<Scape>(2588);
 
-	*d++ = new Descriptor<Pan>(1788);
-	*d++ = new Descriptor<Narrower>(2595);
+	*d++ = new Descriptor<Eq10>(1773);
+	*d++ = new Descriptor<Eq10X2>(2594);
+	*d++ = new Descriptor<Eq4p>(2608);
 
-	*d++ = new Descriptor<Eq>(1773);
-	*d++ = new Descriptor<Eq2x2>(2594);
+	*d++ = new Descriptor<Wider>(1788);
+	*d++ = new Descriptor<Narrower>(2595);
 
 	*d++ = new Descriptor<Sin>(1781);
 	*d++ = new Descriptor<White>(1785);
-	*d++ = new Descriptor<Lorenz>(1774);
-	*d++ = new Descriptor<Roessler>(1780);
+	*d++ = new Descriptor<Fractal>(1774);
 
 	*d++ = new Descriptor<Click>(1769);
 	*d++ = new Descriptor<CEO>(1770);
-	*d++ = new Descriptor<Dirac>(2585);
-
 	assert (d - descriptors <= N);
 
 	/* LV2 */
@@ -132,50 +120,38 @@ void caps_so_init()
 
 	*d++ = new Descriptor<NoiseGate>(CAPS_URI "NoiseGate");
 	*d++ = new Descriptor<Compress>(CAPS_URI "Compress");
-
-	*d++ = new Descriptor<Compress2x2>(CAPS_URI "Compress2x2");
+	*d++ = new Descriptor<CompressX2>(CAPS_URI "CompressX2");
 
 	*d++ = new Descriptor<ToneStack>(CAPS_URI "ToneStack");
 	*d++ = new Descriptor<AmpVTS>(CAPS_URI "AmpVTS");
-	*d++ = new Descriptor<CabinetII>(CAPS_URI "CabinetII");
-	*d++ = new Descriptor<CabinetIII>(CAPS_URI "CabinetIII");
 	*d++ = new Descriptor<CabinetIV>(CAPS_URI "CabinetIV");
 
-	*d++ = new Descriptor<JVRev>(CAPS_URI "JVRev");
 	*d++ = new Descriptor<Plate>(CAPS_URI "Plate");
-	*d++ = new Descriptor<Plate2x2>(CAPS_URI "Plate2x2");
+	*d++ = new Descriptor<PlateX2>(CAPS_URI "PlateX2");
 
 	*d++ = new Descriptor<Saturate>(CAPS_URI "Saturate");
-	#if 1
 	*d++ = new Descriptor<Spice>(CAPS_URI "Spice");
-	*d++ = new Descriptor<Spice2x2>(CAPS_URI "Spice2x2");
-	#endif
+	*d++ = new Descriptor<SpiceX2>(CAPS_URI "SpiceX2");
 
 	*d++ = new Descriptor<ChorusI>(CAPS_URI "ChorusI");
-	*d++ = new Descriptor<ChorusII>(CAPS_URI "ChorusII");
-	*d++ = new Descriptor<StereoChorusII>(CAPS_URI "StereoChorusII");
-	*d++ = new Descriptor<StereoChorusII2x2>(CAPS_URI "StereoChorusII2x2");
 	*d++ = new Descriptor<PhaserII>(CAPS_URI "PhaserII");
-	*d++ = new Descriptor<StereoPhaserII>(CAPS_URI "StereoPhaserII");
-	*d++ = new Descriptor<StereoPhaserII2x2>(CAPS_URI "StereoPhaserII2x2");
 
 	*d++ = new Descriptor<AutoFilter>(CAPS_URI "AutoFilter");
 	*d++ = new Descriptor<Scape>(CAPS_URI "Scape");
 
-	*d++ = new Descriptor<Pan>(CAPS_URI "Pan");
-	*d++ = new Descriptor<Narrower>(CAPS_URI "Narrower");
+	*d++ = new Descriptor<Eq10>(CAPS_URI "Eq10");
+	*d++ = new Descriptor<Eq10X2>(CAPS_URI "Eq10X2");
+	*d++ = new Descriptor<Eq4p>(CAPS_URI "Eq4p");
 
-	*d++ = new Descriptor<Eq>(CAPS_URI "Eq");
-	*d++ = new Descriptor<Eq2x2>(CAPS_URI "Eq2x2");
+	*d++ = new Descriptor<Wider>(CAPS_URI "Wider");
+	*d++ = new Descriptor<Narrower>(CAPS_URI "Narrower");
 
 	*d++ = new Descriptor<Sin>(CAPS_URI "Sin");
 	*d++ = new Descriptor<White>(CAPS_URI "White");
-	*d++ = new Descriptor<Lorenz>(CAPS_URI "Lorenz");
-	*d++ = new Descriptor<Roessler>(CAPS_URI "Roessler");
+	*d++ = new Descriptor<Fractal>(CAPS_URI "Fractal");
 
 	*d++ = new Descriptor<Click>(CAPS_URI "Click");
 	*d++ = new Descriptor<CEO>(CAPS_URI "CEO");
-	*d++ = new Descriptor<Dirac>(CAPS_URI "Dirac");
 
 	assert (d - lv2_descriptors <= N);
 }

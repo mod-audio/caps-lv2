@@ -5,7 +5,7 @@
 	
 	http://quitte.de/dsp/
 
-	Three reverb units: JVRev, Plate and Plate2x2.
+	Three reverb units: JVRev, Plate and PlateX2.
 	
 	The former is a rewrite of STK's JVRev, a traditional design.
 	
@@ -390,7 +390,7 @@ Descriptor<Plate>::setup()
 
 template <yield_func_t F>
 void
-Plate2x2::cycle (uint frames)
+PlateX2::cycle (uint frames)
 {
 	sample_t * sl = ports[0];
 	sample_t * sr = ports[1];
@@ -433,7 +433,7 @@ Plate2x2::cycle (uint frames)
 /* //////////////////////////////////////////////////////////////////////// */
 
 PortInfo
-Plate2x2::port_info [] =
+PlateX2::port_info [] =
 {
 	{
 		"in.l",
@@ -471,11 +471,11 @@ Plate2x2::port_info [] =
 };
 
 template <> void
-Descriptor<Plate2x2>::setup()
+Descriptor<PlateX2>::setup()
 {
-	Label = "Plate2x2";
+	Label = "PlateX2";
 
-	Name = CAPS "Plate2x2 - Versatile plate reverb, stereo inputs";
+	Name = CAPS "PlateX2 - Versatile plate reverb, stereo inputs";
 	Maker = "Tim Goetze <tim@quitte.de>";
 	Copyright = "2004-11";
 

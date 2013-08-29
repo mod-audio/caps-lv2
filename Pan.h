@@ -32,7 +32,7 @@
 #include "dsp/Delay.h"
 #include "dsp/BiQuad.h"
 
-class Pan
+class Wider
 : public Plugin
 {
 	public:

@@ -32,57 +32,26 @@
 #include "dsp/Roessler.h"
 #include "dsp/OnePole.h"
 
-class Lorenz
+class Fractal
 : public Plugin
 {
 	public:
 		sample_t h, gain;
 
 		DSP::Lorenz lorenz;
-		DSP::OnePoleHP<sample_t> hp; /* dc removal */
-
-		template <yield_func_t F>
-			void cycle (uint frames);
-
-	public:
-		static PortInfo port_info [];
-
-		void init();
-		void activate() 
-			{ 
-				gain = getport(4); 
-				hp.set_f (100*over_fs);
-				hp.reset();
-			}
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
-};
-
-class Roessler
-: public Plugin
-{
-	public:
-		sample_t h, gain;
-
 		DSP::Roessler roessler;
 		DSP::OnePoleHP<sample_t> hp; /* dc removal */
 
 		template <yield_func_t F>
-			void cycle (uint frames);
+				void cycle (uint frames);
+		template <yield_func_t F, int Mode>
+				void subcycle (uint frames);
 
 	public:
 		static PortInfo port_info [];
 
-		sample_t adding_gain;
-
 		void init();
-		void activate()
-			{ 
-				gain = getport(4); 
-				hp.set_f (100*over_fs);
-				hp.reset();
-			}
+		void activate();
 
 		void run (uint n) { cycle<store_func> (n); }
 		void run_adding (uint n) { cycle<adding_func> (n); }

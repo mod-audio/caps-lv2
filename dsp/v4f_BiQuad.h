@@ -57,13 +57,17 @@ class BiQuad4f
 {
 	public:
 		/* sufficient space to align a,b,x,y[] into */
-		char _data [10 * sizeof (v4f_t)];
+		char __data [10 * sizeof (v4f_t)];
+		v4f_t * _data;
+		inline v4f_t * data() { return _data; }
 
 		int h; /* history index */
 
 		BiQuad4f()
 			{
 				h = 0;
+				_data = (v4f_t *) (((uint64)__data + 16) & ~15ll);
+				unity();
 				reset();
 			}
 		
@@ -74,16 +78,9 @@ class BiQuad4f
 				memcpy (data(), b.data(), 9 * sizeof (v4f_t));
 			}
 
-		/* get 16-byte aligned data base */
-		inline v4f_t * data()
-			{
-				uint64 p = ((uint64) _data + 16) & ~15ll;
-				return (v4f_t *) p;
-			}
-
 		void unity()
 			{
-				v4f_t *a = data(), *b = a + 2;
+				v4f_t *a = data(), *b = a+2;
 				a[0] = v4f_1;
 				a[1] = a[2] = b[1] = b[2] = v4f_0;
 			}
@@ -165,38 +162,6 @@ class BiQuad4f
 				make_direct_I (a, b);
 			}
 
-		void set_resonator (v4f_t f, v4f_t Q, v4f_t gain)
-			{
-				v4f_t G = (v4f_t) {.025,.025,.025,.025};
-				G *= gain;
-				G = v4f_map<pow10f> (G);
-				
-				v4f_t A = f;
-				A *= v4f_2pi;
-				A = v4f_map<__builtin_sinf> (A);
-				A *= G;
-
-				v4f_t *a = data();
-				a[0] = A;
-				a[1] = a[2] = v4f_0;
-
-				v4f_t *b = a + 2;
-				/* b[2] = -r*r; */
-				v4f_t B = Q;
-				b[1] = B;
-				B *= -B;
-				b[2] = B;
-
-				/* b[1] = 2*r * cos(2*M_PI*f); */
-				A = B = Q;
-				A *= v4f_2;
-				B *= v4f_2pi;
-				B = v4f_map<__builtin_cosf> (A);
-				B *= A;
-				b[1] = B;
-			}
-
-
 		void make_direct_I (v4f_t * ha, v4f_t * hb)
 			{
 				v4f_t *a = data(), *b = a + 2;
@@ -252,6 +217,8 @@ class BiQuad4f
 				return r;
 			}
 
+		/* resonators / bandpass filters have a zero a[1] coefficient, allowing for
+		 * optimisation: */
 		inline v4f_t process_no_a1 (v4f_t s)
 			{
 				v4f_t *a = data();
@@ -269,7 +236,31 @@ class BiQuad4f
 				
 				return r;
 			}
-};
+
+		/* using the parallel structure as four filters in series by 
+		 * sequential rotation */
+		inline float seriesprocess (float x)
+			{
+				v4f_t *a = data();
+				v4f_t s = a[7+h]; /* y[-1] = last output */
+				s = v4f_shuffle (s, 3,0,1,2); 
+				v4fa(s)[0] = x;
+				s = process(s);
+				return v4fa(s)[3];
+			}
+
+		/* set the coefficients of one filter only */
+		void set_ab (int i, float * ca, float * cb)
+			{
+				/* map to v4f array address */
+				v4f_t *a = data(), *b = a+2;
+				/* assign */
+				for (int j=0; j<3; ++j)
+					((float *) &(a[j]))[i] = ca[j];
+				for (int j=1; j<3; ++j)
+					((float *) &(b[j]))[i] = cb[j];
+			}
+}; /* class BiQuad4f */
 
 /* N*4 parallel filters */
 template <uint N>
@@ -279,15 +270,18 @@ class BiQuad4fBank
 		enum { DataSize = (2 + 7*N) * sizeof (v4f_t) };
 		/* data layout: x[2] first, then N * (a[3], b[2], y[2]) 
 		 * plus 16 extra bytes to ensure sufficient room for alignment */
-		char _data [DataSize + sizeof (v4f_t)];
+		char __data [DataSize + sizeof (v4f_t)];
+		v4f_t * _data;
+		inline v4f_t * data() {return _data;}
 		int h1; /* history index */
 
 		BiQuad4fBank()
 			{
-				h1 = 0;
+				_data = (v4f_t*) (((uint64) __data + 16) & ~15ll);
 				memset (data(), 0, DataSize);
+				h1 = 0;
 			}
-		
+
 		void reset()
 			{
 				v4f_t *x = data();
@@ -296,13 +290,6 @@ class BiQuad4fBank
 				x += 2 + 5; /* point to y[] */
 				for (uint i = 0; i < N; ++i, x += 7)
 					x[0] = x[1] = v4f_0;
-			}
-
-		/* get 16-byte aligned data base */
-		inline v4f_t * data()
-			{
-				uint64 p = ((uint64) _data + 16) & ~15ll;
-				return (v4f_t *) p;
 			}
 
 		void unity()
@@ -489,6 +476,7 @@ class BiQuad4fBank
 
 		void set_b (uint k, float *c, uint n = N) { set_a (k+2, c, n); }
 
+		/* initialise coefficients wholesale */
 		void set_ab (uint n, v4f_t *a0, v4f_t *a1, v4f_t *a2, v4f_t *b1, v4f_t *b2)
 			{
 				v4f_t * a = data() + 2; 
@@ -502,6 +490,20 @@ class BiQuad4fBank
 					a[2+2] = b2[i];
 				}
 			}
+
+		/* set the coefficients of one filter only */
+		void set_ab (int i, float * ca, float * cb)
+			{
+				/* map to v4f array address */
+				int base = i >> 2; i &= 3;
+				v4f_t *a = data()+2+base, *b = a+2;
+				/* assign */
+				for (int j=0; j<3; ++j)
+					((float *) &(a[j]))[i] = ca[j];
+				for (int j=1; j<3; ++j)
+					((float *) &(b[j]))[i] = cb[j];
+			}
+
 };
 
 /* 16-byte aligned v4f array */

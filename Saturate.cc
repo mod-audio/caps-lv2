@@ -94,6 +94,7 @@ void
 Saturate::init()
 {
 	hp.set_f (40*over_fs);
+	gain.linear = db2lin(-144); /* fade in */
 }
 
 void
@@ -101,7 +102,6 @@ Saturate::activate()
 {
 	hp.reset();
 	over.reset();
-	gain.linear = db2lin(-144); /* fade in */
 	bias = 0;
 }
 
@@ -319,10 +319,10 @@ Spice::port_info [] =
 {
 	{ "in", INPUT | AUDIO }, 
 	{ "out", OUTPUT | AUDIO }, 
-	{	"lo.f (Hz)",   CTRL_IN,	{LOG | DEFAULT_LOW, 50, 400}}, 
-	{	"lo.compress", CTRL_IN,	{DEFAULT_1, 0, 1}}, 
+	{	"lo.f (Hz)",   CTRL_IN,	{LOG | DEFAULT_MID, 50, 400}}, 
+	{	"lo.compress", CTRL_IN,	{DEFAULT_MID, 0, 1}}, 
 	{	"lo.gain",     CTRL_IN,	{DEFAULT_LOW, 0, 1}}, 
-	{	"hi.f (Hz)",   CTRL_IN | GROUP,	{LOG | DEFAULT_LOW, 400, 5000}}, 
+	{	"hi.f (Hz)",   CTRL_IN | GROUP,	{LOG | DEFAULT_MID, 400, 5000}}, 
 	{	"hi.gain",     CTRL_IN,	{DEFAULT_LOW, 0, 1}}, 
 };
 
@@ -333,7 +333,7 @@ Descriptor<Spice>::setup()
 
 	Name = CAPS "Spice - Not an exciter";
 	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2012";
+	Copyright = "2012-13";
 
 	/* fill port info and vtable */
 	autogen();
@@ -342,14 +342,14 @@ Descriptor<Spice>::setup()
 /* //////////////////////////////////////////////////////////////////////// */
 
 void
-Spice2x2::init()
+SpiceX2::init()
 {
 	float amp[] = {0,0,1,.3,.01};
 	cheby.setup (amp);
 }
 
 void
-Spice2x2::activate()
+SpiceX2::activate()
 {
 	remain = 0;
 
@@ -367,7 +367,7 @@ Spice2x2::activate()
 
 template <yield_func_t F>
 void
-Spice2x2::cycle (uint frames)
+SpiceX2::cycle (uint frames)
 {
 	struct { float f, squash, gain; } 
 			lo = {getport(0)*over_fs, getport(1), getport(2)},
@@ -449,10 +449,10 @@ Spice2x2::cycle (uint frames)
 /* //////////////////////////////////////////////////////////////////////// */
 
 PortInfo
-Spice2x2::port_info [] = 
+SpiceX2::port_info [] = 
 {
 	{	"lo.f (Hz)",   CTRL_IN,	{LOG | DEFAULT_LOW, 50, 800}}, 
-	{	"lo.compress", CTRL_IN,	{DEFAULT_1, 0, 1}}, 
+	{	"lo.compress", CTRL_IN,	{DEFAULT_MID, 0, 1}}, 
 	{	"lo.gain",     CTRL_IN,	{DEFAULT_LOW, 0, 1}}, 
 	{	"hi.f (Hz)",   CTRL_IN | GROUP,	{LOG | DEFAULT_LOW, 400, 5000}}, 
 	{	"hi.gain",     CTRL_IN,	{DEFAULT_LOW, 0, 1}}, 
@@ -463,11 +463,11 @@ Spice2x2::port_info [] =
 };
 
 template <> void
-Descriptor<Spice2x2>::setup()
+Descriptor<SpiceX2>::setup()
 {
-	Label = "Spice2x2";
+	Label = "SpiceX2";
 
-	Name = CAPS "Spice2x2 - Not an exciter";
+	Name = CAPS "SpiceX2 - Not an exciter";
 	Maker = "Tim Goetze <tim@quitte.de>";
 	Copyright = "2012-2013";
 

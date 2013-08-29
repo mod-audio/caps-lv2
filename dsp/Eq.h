@@ -5,8 +5,7 @@
 	
 	http://quitte.de/dsp/
 
-	Equalizer circuit using recursive filtering.
-	Based on a motorola paper implementing a similar circuit on a DSP56001.
+	Filter prototypes from a motorola paper implementing a similar circuit on a DSP56k.
 
 */
 /*

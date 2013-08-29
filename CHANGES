@@ -1,3 +1,44 @@
+0.9.15
+	* no-vector-arithmetic compilation fixed 
+
+0.9.14
+	* AutoFilter x/y parameter eliminated
+	* Fractal hp changed to be configurable, attractors recalibrated
+	* documentation polish
+
+0.9.13
+	* Eq4p softens drastic parameter changes by crossfading static filters
+	* Eq4p employing single v4f filter, slightly quicker
+	* Eq4p 'off' filter mode
+	* documentation and interface polish
+
+0.9.12
+	* non-SSE compilation fixed
+
+0.9.11
+	* DSP::Roessler instantly initialises to useful state 
+	* Logarithmic port bounds and values fixed to reflect actual intent, 
+		affecting Spice, AutoFilter and ChorusI
+	* clicking automatic gain fade on activate() eliminated in Saturate
+	* Dirac merged into Click
+	* Lorenz and Roessler merged into Fractal 
+	* JVRev removed
+	* running plugins for zero frames returns without touching state
+	* CabinetII and III removed
+	* PhaserII sine LFO and LFO choice port added
+	* PhaserII fractal modulation extensively revised
+	* ChorusI rate lower bound slightly increased
+	* ChorusI delay line length adjusted to accommodate full t+width range
+	* all Chorus and Phaser plugins removed save for ChorusI and PhaserII
+	* major documentation revision
+	* Eq4p parametric equaliser plugin
+	* RBJ shelving filter prototype implementation fixed
+	* "2x2" stereo plugin label postfix changed to "X2"
+	* Eq renamed Eq10
+	* SIMD implementation updates
+	* DSP::RBJ coefficient calculation rearranged
+	* Click bpm range changed, default lowered substantially
+
 0.9.10
 	* DSP::RMS protected against negative sum of squares 
 	* documentation updates

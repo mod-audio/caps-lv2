@@ -1,7 +1,7 @@
 /*
 	Scape.cc
 	
-	Copyright 2004-12 Tim Goetze <tim@quitte.de>
+	Copyright 2004-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -165,7 +165,7 @@ Scape::port_info [] =
 	{ "feedback", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} }, 
 	{ "dry", CTRL_IN | GROUP, {DEFAULT_MID, 0, 1} }, 
 	{ "blend", CTRL_IN, {DEFAULT_1, 0, 1} }, 
-	{ "tune", CTRL_IN | GROUP, {DEFAULT_440, 415, 467} }, 
+	{ "tune (Hz)", CTRL_IN | GROUP, {DEFAULT_440, 415, 467} }, 
 	{ "out.l", AUDIO_OUT }, 
 	{ "out.r", AUDIO_OUT }
 };

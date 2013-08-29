@@ -101,6 +101,12 @@ class OnePoleHP
 				return y1;
 			}
 
+		void identity()
+			{
+				a0=1;
+				a1=b1=0;
+			}
+
 		void reset()
 			{
 				x1 = y1 = 0;
