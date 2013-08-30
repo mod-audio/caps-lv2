@@ -32,7 +32,7 @@
     mod:bypassLedPosition "118-83";
 
     lv2:minorVersion 0;
-    lv2:microVersion 1;
+    lv2:microVersion 2;
     lv2:port
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -153,25 +153,14 @@
         mod:pedalButton "2-4";
     ],
     [
-        a lv2:ControlPort, lv2:InputPort;
-        lv2:index 9;
-        lv2:symbol "xz";
-        lv2:name "X/Z";
-        lv2:default 1;
-        lv2:minimum 0;
-        lv2:maximum 1;
-        mod:iconLabel "x/z";
-        mod:pedalButton "2-6";
-    ],
-    [
         a lv2:AudioPort, lv2:InputPort;
-        lv2:index 10;
+        lv2:index 9;
         lv2:symbol "in";
         lv2:name "in";
     ],
     [
         a lv2:AudioPort, lv2:OutputPort;
-        lv2:index 11;
+        lv2:index 10;
         lv2:symbol "out";
         lv2:name "out";
     ].

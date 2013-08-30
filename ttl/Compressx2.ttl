@@ -8,9 +8,8 @@
 @prefix mod:   <http://portalmod.com/ns/extensions/effect#> .
 
 
-<http://portalmod.com/plugins/caps/Compress> a lv2:Plugin, lv2:CompressorPlugin;
-    doap:name  "C* Compress - Mono compressor";
-    mod:label "C* Compress";
+<http://portalmod.com/plugins/caps/Compressx2> a lv2:Plugin, lv2:CompressorPlugin;
+    doap:name  "C* Compressx2 - Stereo compressor";
     doap:developer [
         foaf:name "Tim Goetze";
         foaf:homepage <http://quitte.de/dsp/caps.html>;
@@ -29,8 +28,8 @@
         mod:pedalModel "japanese";
     mod:pedalColor "red";
     mod:brand "caps";
-    mod:pedalLabel "Compress";
-    mod:smallLabel "Compress";
+    mod:pedalLabel "Compressx2";
+    mod:smallLabel "Compressx2";
     mod:bypassLedPosition "118-83";
 
     lv2:port
@@ -39,7 +38,7 @@
         lv2:index 0;
         lv2:symbol "measure";
         lv2:name "Measure";
-        lv2:default 0;
+        lv2:default 1;
         lv2:minimum 0;
         lv2:maximum 1;
         lv2:portProperty lv2:integer;
@@ -55,12 +54,11 @@
         lv2:name "Mode";
         lv2:default 1;
         lv2:minimum 0;
-        lv2:maximum 3;
+        lv2:maximum 2;
         lv2:portProperty lv2:integer;
         lv2:scalePoint [rdfs:label "linear"; rdf:value 0];
-        lv2:scalePoint [rdfs:label "saturating 2x"; rdf:value 1];
+        lv2:scalePoint [rdfs:label "saturating"; rdf:value 1];
         lv2:scalePoint [rdfs:label "saturating 4x"; rdf:value 2];
-        lv2:scalePoint [rdfs:label "saturating 4x128"; rdf:value 3];
     mod:iconLabel "Mode";
     mod:pedalButton "0-5";
     ],
@@ -91,7 +89,7 @@
         lv2:index 4;
         lv2:symbol "attack";
         lv2:name "Attack";
-        lv2:default 0;
+        lv2:default 0.1;
         lv2:minimum 0;
         lv2:maximum 1;
     mod:iconLabel "Attack";
@@ -102,7 +100,7 @@
         lv2:index 5;
         lv2:symbol "release";
         lv2:name "release";
-        lv2:default 0.25;
+        lv2:default 0.5;
         lv2:minimum 0;
         lv2:maximum 1;
     mod:iconLabel "release";
@@ -113,7 +111,7 @@
         lv2:index 6;
         lv2:symbol "gain";
         lv2:name "gain";
-        lv2:default 0;
+        lv2:default 5;
         lv2:minimum -12;
         lv2:maximum 24;
         units:unit units:db ;
@@ -123,12 +121,24 @@
     [
         a lv2:AudioPort, lv2:InputPort;
         lv2:index 7;
-        lv2:symbol "in";
-        lv2:name "in";
+        lv2:symbol "in_l";
+        lv2:name "in left";
+    ],
+    [
+        a lv2:AudioPort, lv2:InputPort;
+        lv2:index 8;
+        lv2:symbol "in_r";
+        lv2:name "in right";
     ],
     [
         a lv2:AudioPort, lv2:OutputPort;
-        lv2:index 8;
-        lv2:symbol "out";
-        lv2:name "out";
+        lv2:index 9;
+        lv2:symbol "out_l";
+        lv2:name "out left";
+    ],
+    [
+        a lv2:AudioPort, lv2:OutputPort;
+        lv2:index 10;
+        lv2:symbol "out_r";
+        lv2:name "out right";
     ].

@@ -24,7 +24,7 @@
     doap:license <http://usefulinc.com/doap/licenses/gpl>;
     lv2:optionalFeature lv2:hardRtCapable;
     lv2:minorVersion 0;
-    lv2:microVersion 3;
+    lv2:microVersion 4;
 
     mod:pedalModel "japanese";
     mod:pedalColor "white";
@@ -56,14 +56,14 @@
         lv2:index 2;
         lv2:symbol "divider";
         lv2:name "divider";
-    lv2:portProperty lv2:integer;
-    lv2:portProperty lv2:enumeration ;
-        lv2:scalePoint [rdfs:label "eighths"; rdf:value 2];
-        lv2:scalePoint [rdfs:label "triplets"; rdf:value 3];
-        lv2:scalePoint [rdfs:label "sixteenths"; rdf:value 4];
         lv2:default 2;
         lv2:minimum 2;
         lv2:maximum 4;
+        lv2:portProperty lv2:integer;
+        lv2:portProperty lv2:enumeration ;
+        lv2:scalePoint [rdfs:label "eighths"; rdf:value 2];
+        lv2:scalePoint [rdfs:label "triplets"; rdf:value 3];
+        lv2:scalePoint [rdfs:label "sixteenths"; rdf:value 4];
 	mod:pedalButton "0-3";
     ],
     [

@@ -25,7 +25,7 @@
     doap:license <http://usefulinc.com/doap/licenses/gpl>;
     lv2:optionalFeature lv2:hardRtCapable;
     lv2:minorVersion 0;
-    lv2:microVersion 1;
+    lv2:microVersion 2;
     lv2:port
     [
         a lv2:AudioPort, lv2:InputPort;
@@ -57,7 +57,7 @@
         lv2:index 3;
         lv2:symbol "strength";
         lv2:name "Strength";
-        lv2:default 0.5;
+        lv2:default 0.25;
         lv2:minimum 0;
         lv2:maximum 1;
     ],

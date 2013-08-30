@@ -32,7 +32,7 @@
     mod:bypassLedPosition "118-83";
 
     lv2:minorVersion 0;
-    lv2:microVersion 1;
+    lv2:microVersion 2;
     lv2:port
     [
         a lv2:AudioPort, lv2:InputPort;

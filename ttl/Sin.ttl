@@ -25,7 +25,7 @@
     doap:license <http://usefulinc.com/doap/licenses/gpl>;
     lv2:optionalFeature lv2:hardRtCapable;
     lv2:minorVersion 0;
-    lv2:microVersion 1;
+    lv2:microVersion 2;
 
     mod:pedalModel "japanese";
     mod:pedalColor "green";
@@ -44,7 +44,7 @@
         lv2:portProperty epp:logarithmic;
         lv2:portProperty pprops:logarithmic ;
         lv2:default 100.0;
-        lv2:minimum 0.1;
+        lv2:minimum 0.0001;
         lv2:maximum 20000;
     ],
     [

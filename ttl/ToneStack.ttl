@@ -30,7 +30,7 @@
 	mod:bypassLedPosition "118-83";
 
     lv2:minorVersion 0;
-    lv2:microVersion 1;
+    lv2:microVersion 2;
     lv2:port
     [
         a lv2:AudioPort, lv2:InputPort;
@@ -43,21 +43,21 @@
         lv2:index 1;
         lv2:symbol "model";
         lv2:name "model";
-        lv2:default 0.0;
+        lv2:default 0;
         lv2:minimum 0;
         lv2:maximum 9;
         lv2:portProperty lv2:integer;
         lv2:portProperty lv2:enumeration ;
         lv2:scalePoint [rdfs:label "Basswoman"; rdf:value 0];
-        lv2:scalePoint [rdfs:label "Wookie"; rdf:value 1];
-        lv2:scalePoint [rdfs:label "DC 30"; rdf:value 2];
-        lv2:scalePoint [rdfs:label "Twin"; rdf:value 3];
-        lv2:scalePoint [rdfs:label "Stanford"; rdf:value 4];
-        lv2:scalePoint [rdfs:label "Juice 800"; rdf:value 5];
-        lv2:scalePoint [rdfs:label "HK 20"; rdf:value 6];
-        lv2:scalePoint [rdfs:label "Porky"; rdf:value 7];
-        lv2:scalePoint [rdfs:label "Nihon Ace"; rdf:value 8];
-        lv2:scalePoint [rdfs:label "5F6-A LT"; rdf:value 9];
+        lv2:scalePoint [rdfs:label "Twin";      rdf:value 1];
+        lv2:scalePoint [rdfs:label "Wookie";    rdf:value 2];
+        lv2:scalePoint [rdfs:label "DC 30";     rdf:value 3];
+        lv2:scalePoint [rdfs:label "Juice 800"; rdf:value 4];
+        lv2:scalePoint [rdfs:label "Stanford";  rdf:value 5];
+        lv2:scalePoint [rdfs:label "HK 20";     rdf:value 6];
+        lv2:scalePoint [rdfs:label "Nihon Ace"; rdf:value 7];
+        lv2:scalePoint [rdfs:label "Porky";     rdf:value 8];
+        lv2:scalePoint [rdfs:label "5F6-A LT";  rdf:value 9];
     ],
     [
         a lv2:ControlPort, lv2:InputPort;

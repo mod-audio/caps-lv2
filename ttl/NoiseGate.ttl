@@ -26,7 +26,7 @@
     lv2:minorVersion 0;
     lv2:microVersion 1;
 
-        mod:pedalModel "japanese";
+    mod:pedalModel "japanese";
     mod:pedalColor "purple";
     mod:brand "caps";
     mod:pedalLabel "NoiseGate";
@@ -55,7 +55,7 @@
         lv2:minimum -60;
         lv2:maximum 0;
         units:unit units:db ;
-    mod:iconLabel "Open";
+        mod:iconLabel "Open";
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -66,7 +66,7 @@
         lv2:minimum 0;
         lv2:maximum 3;
         units:unit units:ms ;
-    mod:iconLabel "Attack";
+        mod:iconLabel "Attack";
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -77,7 +77,7 @@
         lv2:minimum -90;
         lv2:maximum 0;
         units:unit units:db ;
-    mod:iconLabel "Close";
+        mod:iconLabel "Close";
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -91,5 +91,5 @@
         lv2:scalePoint [rdfs:label "global"; rdf:value 50];
         lv2:scalePoint [rdfs:label "imperial"; rdf:value 60];
         units:unit units:hz ;
-    mod:iconLabel "Mains";
+        mod:iconLabel "Mains";
     ].
