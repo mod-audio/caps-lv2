@@ -116,6 +116,7 @@ class Descriptor
 					PortDescriptors = desc;
 
 					ranges = new LADSPA_PortRangeHint [PortCount];
+
 					PortRangeHints = ranges;
 
 					for (int i = 0; i < (int) PortCount; ++i)
@@ -123,8 +124,9 @@ class Descriptor
 						names[i] = T::port_info[i].name;
 						desc[i] = T::port_info[i].descriptor;
 						ranges[i] = T::port_info[i].range;
-						if (desc[i] & INPUT)
+						if (desc[i] & INPUT){
 							ranges[i].HintDescriptor |= BOUNDED;
+						}
 					}
 				}
 
@@ -254,9 +256,11 @@ class Descriptor
 		static LV2_Handle _instantiate_lv2 (
 				const LV2_Descriptor *d, double fs, const char *bundle_path, const LV2_Feature *const *features)
 			{
+
 				T * plugin = new T();
 
 				int n = 32; /* FIXME: hardcoded port numbers */
+
 				plugin->ports = new sample_t * [n];
 
 				plugin->fs = fs;

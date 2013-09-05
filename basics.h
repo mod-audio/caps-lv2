@@ -211,7 +211,7 @@ lin2db (double lin)
 /* //////////////////////////////////////////////////////////////////////// */
 
 #define CAPS "C* "
-#define CAPS_URI "http://quitte.de/dsp/caps.html#"
+#define CAPS_URI "http://portalmod.com/plugins/caps/"
 
 class Plugin
 {

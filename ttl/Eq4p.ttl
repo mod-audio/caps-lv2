@@ -32,11 +32,11 @@
         lv2:index 0;
         lv2:symbol "a_mode";
         lv2:name "a.mode";
+        lv2:portProperty lv2:integer;
+        lv2:portProperty lv2:enumeration ;
         lv2:default 0;
         lv2:minimum -1;
         lv2:maximum 2;
-        lv2:portProperty lv2:integer;
-        lv2:portProperty lv2:enumeration ;
         lv2:scalePoint [rdfs:label "off"; rdf:value -1];
         lv2:scalePoint [rdfs:label "lowshelve"; rdf:value 0];
         lv2:scalePoint [rdfs:label "band"; rdf:value 1];
@@ -72,16 +72,19 @@
         lv2:minimum -48;
         lv2:maximum 24;
     ],
+
+
+
     [
         a lv2:ControlPort, lv2:InputPort;
         lv2:index 4;
         lv2:symbol "b_mode";
         lv2:name "b.mode";
+        lv2:portProperty lv2:integer;
+        lv2:portProperty lv2:enumeration ;
         lv2:default 1;
         lv2:minimum -1;
         lv2:maximum 2;
-        lv2:portProperty lv2:integer;
-        lv2:portProperty lv2:enumeration ;
         lv2:scalePoint [rdfs:label "off"; rdf:value -1];
         lv2:scalePoint [rdfs:label "lowshelve"; rdf:value 0];
         lv2:scalePoint [rdfs:label "band"; rdf:value 1];
@@ -90,8 +93,8 @@
     [
         a lv2:ControlPort, lv2:InputPort;
         lv2:index 5;
-        lv2:symbol "a_freq";
-        lv2:name "a.freq";
+        lv2:symbol "b_freq";
+        lv2:name "b.freq";
         units:unit units:hz ;
         lv2:portProperty epp:logarithmic;
         lv2:default 529.15;
@@ -101,8 +104,8 @@
     [
         a lv2:ControlPort, lv2:InputPort;
         lv2:index 6;
-        lv2:symbol "a_q";
-        lv2:name "a.Q";
+        lv2:symbol "b_q";
+        lv2:name "b.Q";
         lv2:default 0.5;
         lv2:minimum 0;
         lv2:maximum 1;
@@ -110,23 +113,27 @@
     [
         a lv2:ControlPort, lv2:InputPort;
         lv2:index 7;
-        lv2:symbol "a_gain";
-        lv2:name "a.gain";
+        lv2:symbol "b_gain";
+        lv2:name "b.gain";
         units:unit units:db ;
         lv2:default 0;
         lv2:minimum -48;
         lv2:maximum 24;
     ],
+
+
+
+
     [
         a lv2:ControlPort, lv2:InputPort;
         lv2:index 8;
         lv2:symbol "c_mode";
         lv2:name "c.mode";
+        lv2:portProperty lv2:integer;
+        lv2:portProperty lv2:enumeration ;
         lv2:default 1;
         lv2:minimum -1;
         lv2:maximum 2;
-        lv2:portProperty lv2:integer;
-        lv2:portProperty lv2:enumeration ;
         lv2:scalePoint [rdfs:label "off"; rdf:value -1];
         lv2:scalePoint [rdfs:label "lowshelve"; rdf:value 0];
         lv2:scalePoint [rdfs:label "band"; rdf:value 1];
@@ -135,8 +142,8 @@
     [
         a lv2:ControlPort, lv2:InputPort;
         lv2:index 9;
-        lv2:symbol "a_freq";
-        lv2:name "a.freq";
+        lv2:symbol "c_freq";
+        lv2:name "c.freq";
         units:unit units:hz ;
         lv2:portProperty epp:logarithmic;
         lv2:default 529.15;
@@ -146,8 +153,8 @@
     [
         a lv2:ControlPort, lv2:InputPort;
         lv2:index 10;
-        lv2:symbol "a_q";
-        lv2:name "a.Q";
+        lv2:symbol "c_q";
+        lv2:name "c.Q";
         lv2:default 0.25;
         lv2:minimum 0;
         lv2:maximum 1;
@@ -155,23 +162,28 @@
     [
         a lv2:ControlPort, lv2:InputPort;
         lv2:index 11;
-        lv2:symbol "a_gain";
-        lv2:name "a.gain";
+        lv2:symbol "c_gain";
+        lv2:name "c.gain";
         units:unit units:db ;
         lv2:default 0;
         lv2:minimum -48;
         lv2:maximum 24;
     ],
+
+
+
+
+
     [
         a lv2:ControlPort, lv2:InputPort;
         lv2:index 12;
         lv2:symbol "d_mode";
         lv2:name "d.mode";
+        lv2:portProperty lv2:integer;
+        lv2:portProperty lv2:enumeration ;
         lv2:default 2;
         lv2:minimum -1;
         lv2:maximum 2;
-        lv2:portProperty lv2:integer;
-        lv2:portProperty lv2:enumeration ;
         lv2:scalePoint [rdfs:label "off"; rdf:value -1];
         lv2:scalePoint [rdfs:label "lowshelve"; rdf:value 0];
         lv2:scalePoint [rdfs:label "band"; rdf:value 1];
@@ -180,8 +192,8 @@
     [
         a lv2:ControlPort, lv2:InputPort;
         lv2:index 13;
-        lv2:symbol "a_freq";
-        lv2:name "a.freq";
+        lv2:symbol "d_freq";
+        lv2:name "d.freq";
         units:unit units:hz ;
         lv2:portProperty epp:logarithmic;
         lv2:default 2721.78;
@@ -191,8 +203,8 @@
     [
         a lv2:ControlPort, lv2:InputPort;
         lv2:index 14;
-        lv2:symbol "a_q";
-        lv2:name "a.Q";
+        lv2:symbol "d_q";
+        lv2:name "d.Q";
         lv2:default 0.25;
         lv2:minimum 0;
         lv2:maximum 1;
@@ -200,13 +212,17 @@
     [
         a lv2:ControlPort, lv2:InputPort;
         lv2:index 15;
-        lv2:symbol "a_gain";
-        lv2:name "a.gain";
+        lv2:symbol "d_gain";
+        lv2:name "d.gain";
         units:unit units:db ;
         lv2:default 0;
         lv2:minimum -48;
         lv2:maximum 24;
     ],
+
+
+
+    
     [
         a lv2:AudioPort, lv2:InputPort;
         lv2:index 16;

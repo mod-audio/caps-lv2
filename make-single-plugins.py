@@ -18,7 +18,7 @@ effects_info = [
 ('1772',    'Compress',         ['Compress.cc']),               
 ('2598',    'CompressX2',       ['Compress.cc']),               
 ('2589',    'ToneStack',        ['ToneStack.cc']),              
-('2592',    'AmpVTS',           ['AmpVTS.cc','ToneStack.cc']),              
+('2592',    'AmpVTS',           ['Amp.cc','ToneStack.cc']),              
 ('2606',    'CabinetIV',        ['Cabinet.cc']),                
 ('1779',    'Plate',            ['Reverb.cc']),             
 ('1795',    'PlateX2',          ['Reverb.cc']),             
