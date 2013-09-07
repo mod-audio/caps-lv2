@@ -236,10 +236,8 @@ class Plugin
 		/* get port value and clamp to port range */
 		inline sample_t getport (int i)
 			{
-				sample_t v = getport_unclamped (i);
-				if (!ranges) return v;
-
 				LADSPA_PortRangeHint & r = ranges[i];
+				sample_t v = getport_unclamped (i);
 				return clamp (v, r.LowerBound, r.UpperBound);
 			}
 };

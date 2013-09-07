@@ -98,36 +98,28 @@ class Descriptor
 		 * function: */
 		void autogen()
 			{
-				ranges = 0;
+				Properties = HARD_RT;
+				PortCount = (sizeof (T::port_info) / sizeof (PortInfo));
 
-				/* Is LADSPA? */
-				if (!URI)
+				ImplementationData = T::port_info;
+
+				/* convert PortInfo members to Descriptor properties */
+				const char ** names = new const char * [PortCount];
+				PortNames = names;
+
+				LADSPA_PortDescriptor * desc = new LADSPA_PortDescriptor [PortCount];
+				PortDescriptors = desc;
+
+				ranges = new LADSPA_PortRangeHint [PortCount];
+				PortRangeHints = ranges;
+
+				for (int i = 0; i < (int) PortCount; ++i)
 				{
-					Properties = HARD_RT;
-					PortCount = (sizeof (T::port_info) / sizeof (PortInfo));
-
-					ImplementationData = T::port_info;
-
-					/* convert PortInfo members to Descriptor properties */
-					const char ** names = new const char * [PortCount];
-					PortNames = names;
-
-					LADSPA_PortDescriptor * desc = new LADSPA_PortDescriptor [PortCount];
-					PortDescriptors = desc;
-
-					ranges = new LADSPA_PortRangeHint [PortCount];
-
-					PortRangeHints = ranges;
-
-					for (int i = 0; i < (int) PortCount; ++i)
-					{
-						names[i] = T::port_info[i].name;
-						desc[i] = T::port_info[i].descriptor;
-						ranges[i] = T::port_info[i].range;
-						if (desc[i] & INPUT){
-							ranges[i].HintDescriptor |= BOUNDED;
-						}
-					}
+					names[i] = T::port_info[i].name;
+					desc[i] = T::port_info[i].descriptor;
+					ranges[i] = T::port_info[i].range;
+					if (desc[i] & INPUT)
+						ranges[i].HintDescriptor |= BOUNDED;
 				}
 
 				/* Descriptor vtable */
@@ -256,11 +248,12 @@ class Descriptor
 		static LV2_Handle _instantiate_lv2 (
 				const LV2_Descriptor *d, double fs, const char *bundle_path, const LV2_Feature *const *features)
 			{
-
 				T * plugin = new T();
 
-				int n = 32; /* FIXME: hardcoded port numbers */
+				LADSPA_PortRangeHint * ranges = ((Descriptor *) d)->ranges;
+				plugin->ranges = ranges;
 
+				int n = 32; /* FIXME: hardcoded port numbers */
 				plugin->ports = new sample_t * [n];
 
 				plugin->fs = fs;
