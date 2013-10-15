@@ -19,3 +19,7 @@
 # Temporary
 .tmp
 depend
+
+#screenshots
+ttl/modgui/*.png
+
