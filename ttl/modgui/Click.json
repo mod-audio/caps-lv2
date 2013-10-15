@@ -1,0 +1,23 @@
+{
+    "author": "CAPS", 
+    "color": "gray", 
+    "controls": [
+        {
+            "name": "Model", 
+            "symbol": "model"
+        }, 
+        {
+            "name": "bpm", 
+            "symbol": "bpm"
+        }, 
+        {
+            "name": "volume", 
+            "symbol": "volume"
+        }, 
+        {
+            "name": "damping", 
+            "symbol": "damping"
+        }
+    ], 
+    "label": "Click"
+}

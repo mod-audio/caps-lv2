@@ -1,0 +1,11 @@
+{
+    "author": "CAPS", 
+    "color": "green", 
+    "controls": [
+        {
+            "name": "volume", 
+            "symbol": "volume"
+        }
+    ], 
+    "label": "White Noise"
+}

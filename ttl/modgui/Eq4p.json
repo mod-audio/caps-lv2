@@ -1,0 +1,39 @@
+{
+    "author": "CAPS", 
+    "color": "yellow", 
+    "controls": [
+        {
+            "name": "a.freq", 
+            "symbol": "a_freq"
+        }, 
+        {
+            "name": "b.freq", 
+            "symbol": "b_freq"
+        }, 
+        {
+            "name": "c.freq", 
+            "symbol": "c_freq"
+        }, 
+        {
+            "name": "d.freq", 
+            "symbol": "d_freq"
+        }, 
+        {
+            "name": "a.gain", 
+            "symbol": "a_gain"
+        }, 
+        {
+            "name": "b.gain", 
+            "symbol": "b_gain"
+        }, 
+        {
+            "name": "c.gain", 
+            "symbol": "c_gain"
+        }, 
+        {
+            "name": "d.gain", 
+            "symbol": "d_gain"
+        }
+    ], 
+    "label": "Eq4p"
+}

@@ -1,0 +1,27 @@
+{
+    "author": "CAPS", 
+    "color": "red", 
+    "controls": [
+        {
+            "name": "Threshold", 
+            "symbol": "threshold"
+        }, 
+        {
+            "name": "Attack", 
+            "symbol": "attack"
+        }, 
+        {
+            "name": "release", 
+            "symbol": "release"
+        }, 
+        {
+            "name": "Strenght", 
+            "symbol": "strenght"
+        }, 
+        {
+            "name": "gain", 
+            "symbol": "gain"
+        }
+    ], 
+    "label": "Mono Compress"
+}

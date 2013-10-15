@@ -1,0 +1,47 @@
+{
+    "author": "CAPS", 
+    "color": "yellow", 
+    "controls": [
+        {
+            "name": "31", 
+            "symbol": "band31hz"
+        }, 
+        {
+            "name": "63", 
+            "symbol": "band63hz"
+        }, 
+        {
+            "name": "125", 
+            "symbol": "band125hz"
+        }, 
+        {
+            "name": "250", 
+            "symbol": "band250hz"
+        }, 
+        {
+            "name": "500", 
+            "symbol": "band500hz"
+        }, 
+        {
+            "name": "1k", 
+            "symbol": "band1khz"
+        }, 
+        {
+            "name": "2k", 
+            "symbol": "band2khz"
+        }, 
+        {
+            "name": "4k", 
+            "symbol": "band4khz"
+        }, 
+        {
+            "name": "8k", 
+            "symbol": "band8khz"
+        }, 
+        {
+            "name": "16k", 
+            "symbol": "band16khz"
+        }
+    ], 
+    "label": "Eq10"
+}
