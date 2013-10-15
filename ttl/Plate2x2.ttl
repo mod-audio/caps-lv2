@@ -7,11 +7,9 @@
 @prefix units: <http://lv2plug.in/ns/extension/units#> .
 @prefix epp: <http://lv2plug.in/ns/ext/port-props/#>.
 @prefix pprops: <http://lv2plug.in/ns/ext/port-props#> .
-@prefix mod:   <http://portalmod.com/ns/extensions/effect#> .
 
 <http://portalmod.com/plugins/caps/Plate2x2> a lv2:Plugin, lv2:ReverbPlugin;
     doap:name  "C* Plate2x2 - Stereo in/out Versatile plate reverb";
-    mod:label "C* Plate2x2";
     doap:developer [
         foaf:name "Tim Goetze";
         foaf:homepage <http://quitte.de/dsp/caps.html>;

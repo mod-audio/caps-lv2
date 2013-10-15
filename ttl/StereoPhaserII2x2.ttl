@@ -5,11 +5,9 @@
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
-@prefix mod:   <http://portalmod.com/ns/extensions/effect#> .
 
 <http://portalmod.com/plugins/caps/StereoPhaserII2x2> a lv2:Plugin, lv2:PhaserPlugin;
     doap:name  "C* StereoPhaserII 2x2 - Stereo phaser modulated by a Lorenz fractal";
-    mod:label "C* StereoPhaserII 2x2";
     doap:developer [
         foaf:name "Tim Goetze";
         foaf:homepage <http://quitte.de/dsp/caps.html>;
@@ -26,12 +24,6 @@
     lv2:microVersion 2;
 
 
-    mod:pedalModel "japanese";
-    mod:pedalColor "purple";
-    mod:brand "caps";
-    mod:pedalLabel "StereoPhaser II 2x2";
-    mod:smallLabel "StPhaserII2x2";
-    mod:bypassLedPosition "118-83";
 
 
     lv2:port
@@ -55,7 +47,6 @@
         lv2:default 0.25;
         lv2:minimum 0;
         lv2:maximum 1;
-	mod:pedalButton "1-0";
 
     ],
     [
@@ -66,7 +57,6 @@
         lv2:default 1;
         lv2:minimum 0;
         lv2:maximum 1;
-	mod:pedalButton "1-2";
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -76,7 +66,6 @@
         lv2:default 0.5;
         lv2:minimum 0;
         lv2:maximum 1;
-	mod:pedalButton "1-4";
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -86,7 +75,6 @@
         lv2:default 0;
         lv2:minimum 0;
         lv2:maximum 1;
-	mod:pedalButton "1-6";
     ],
     [
         a lv2:AudioPort, lv2:OutputPort;

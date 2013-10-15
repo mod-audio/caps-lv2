@@ -4,11 +4,9 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/>.
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix mod:   <http://portalmod.com/ns/extensions/effect#> .
 
 <http://portalmod.com/plugins/caps/Pan> a lv2:Plugin, lv2:DelayPlugin;
     doap:name  "C* Pan - Pan and width";
-    mod:label "C* Pan";
     doap:developer [
         foaf:name "Tim Goetze";
         foaf:homepage <http://quitte.de/dsp/caps.html>;

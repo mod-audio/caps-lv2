@@ -5,7 +5,6 @@
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 @prefix units: <http://lv2plug.in/ns/extension/units#> .
-@prefix mod:   <http://portalmod.com/ns/extensions/effect#> .
 
 <http://portalmod.com/plugins/caps/CabinetIII> a lv2:Plugin, lv2:SimulatorPlugin;
     doap:name  "C* CabinetIII - Idealised loudspeaker cabinet emulation";
@@ -24,12 +23,6 @@
     lv2:minorVersion 0;
     lv2:microVersion 4;
 
-    mod:pedalModel "japanese";
-    mod:pedalColor "brown";
-    mod:brand "caps";
-    mod:pedalLabel "Cabinet III";
-    mod:smallLabel "CabinetIII";
-    mod:bypassLedPosition "118-83";
     lv2:port
     [
         a lv2:AudioPort, lv2:InputPort;
@@ -50,8 +43,6 @@
         lv2:scalePoint [rdfs:label "Wookie A"; rdf:value 0];
         lv2:scalePoint [rdfs:label "Wookie B"; rdf:value 1];
         lv2:scalePoint [rdfs:label "Wookie C"; rdf:value 2];
-    mod:iconLabel "Model";
-    mod:pedalButton "1-1";
     ],
     [
         a lv2:ControlPort, lv2:InputPort;
@@ -62,8 +53,6 @@
         lv2:minimum -24;
         lv2:maximum 12;
     units:unit units:db ;
-    mod:iconLabel "Gain";
-    mod:pedalButton "1-5";
 
     ],
     [
