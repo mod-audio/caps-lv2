@@ -1,0 +1,15 @@
+{
+    "author": "CAPS", 
+    "color": "green", 
+    "controls": [
+        {
+            "name": "f", 
+            "symbol": "f"
+        }, 
+        {
+            "name": "volume", 
+            "symbol": "volume"
+        }
+    ], 
+    "label": "Sin"
+}

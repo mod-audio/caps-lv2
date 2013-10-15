@@ -1,0 +1,46 @@
+{
+    "author": "CAPS", 
+    "controls": [
+        {
+            "name": "Tonestack", 
+            "symbol": "tonestack"
+        }, 
+        {
+            "name": "Low cut", 
+            "symbol": "low_cut"
+        }, 
+        {
+            "name": "Bass", 
+            "symbol": "bass"
+        }, 
+        {
+            "name": "Mid", 
+            "symbol": "mid"
+        }, 
+        {
+            "name": "Treble", 
+            "symbol": "treble"
+        }, 
+        {
+            "name": "Gain", 
+            "symbol": "gain"
+        }, 
+        {
+            "name": "Bright", 
+            "symbol": "bright"
+        }, 
+        {
+            "name": "Attack", 
+            "symbol": "attack"
+        }, 
+        {
+            "name": "Squash", 
+            "symbol": "squash"
+        }, 
+        {
+            "name": "Power", 
+            "symbol": "power"
+        }
+    ], 
+    "label": "Amp VTS"
+}
