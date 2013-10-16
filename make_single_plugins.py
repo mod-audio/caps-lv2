@@ -128,73 +128,77 @@ manifest_mod = """
 # comment the below line to use the caps URI
 manifest = manifest_mod
 
+if __name__ == "__main__":
+    os.chdir(TMP_DIR)
 
-os.chdir(TMP_DIR)
-
-if manifest == manifest_mod:
-    f = open('./basics.h', 'r')
-    basics = f.read()
-    basics = basics.replace('#define CAPS_URI "http://quitte.de/dsp/caps.html#"', '#define CAPS_URI "http://portalmod.com/plugins/caps/"')
-    f = open('./basics.h', 'w')
-    f.write(basics);
-    f.close()
-
-def get_source(fx_name):
-    for fx in effects_info:
-        if fx_name == fx[1]:
-            return ' '.join(fx[2])
-
-if len(sys.argv) == 1:
-    for fx in effects_info:
-        ladspa_uid = fx[0]
-        effect_name = fx[1]
-        files = ' '.join(fx[2])
-
-        # composes the interface code
-        interface = interface_code
-        interface = interface.replace('__LADSPA_UID__', ladspa_uid)
-        interface = interface.replace('__EFFECT__', effect_name)
-
-        # create the interface file
-        f = open('interface.cc', 'w')
-        f.writelines(interface)
+    if manifest == manifest_mod:
+        f = open('./basics.h', 'r')
+        basics = f.read()
+        basics = basics.replace('#define CAPS_URI "http://quitte.de/dsp/caps.html#"', '#define CAPS_URI "http://portalmod.com/plugins/caps/"')
+        f = open('./basics.h', 'w')
+        f.write(basics);
         f.close()
 
-        # sources and plugin name
-        sources = ' SOURCES=\"interface.cc ' + dsp_sources + ' ' + files + '\"'
-        plugin_name = ' PLUG=' + effect_name
+    def get_source(fx_name):
+        for fx in effects_info:
+            if fx_name == fx[1]:
+                return ' '.join(fx[2])
 
-        # run make
-        os.system('make' + sources + plugin_name)
-else:
-    fx_names = []
-    for effect in effects_info:
-        fx_names.append(effect[1])
+    if len(sys.argv) == 1:
+        for fx in effects_info:
+            ladspa_uid = fx[0]
+            effect_name = fx[1]
+            files = ' '.join(fx[2])
 
-    sys.argv.pop(0)
-    effects_in_args = list(set(fx_names) & set(sys.argv))
-    args = list(set(sys.argv) - set(effects_in_args))
+            # composes the interface code
+            interface = interface_code
+            interface = interface.replace('__LADSPA_UID__', ladspa_uid)
+            interface = interface.replace('__EFFECT__', effect_name)
 
-    if 'install' in args:
-        if effects_in_args == []: effects_in_args = fx_names
-
-        for fx in effects_in_args:
-            # create a fake rdf file to avoid error on make install
-            os.system('touch ' + fx + '.rdf')
-            rdf_dest = ' RDFDEST=/tmp/rdf'
-
-            # ttl files
-            os.system('rm -rf ./ttl')
-            os.system('mkdir ./ttl')
-            os.system('cp ../ttl/' + fx + '.ttl ./ttl')
-            f = open('./ttl/manifest.ttl', 'w')
-            f.write(manifest.replace('__EFFECT__', fx))
+            # create the interface file
+            f = open('interface.cc', 'w')
+            f.writelines(interface)
             f.close()
 
-            sources = ' SOURCES=\" ' + get_source(fx) + '\"'
-            plugin_name = ' PLUG=' + fx
-            bundle_name = ' LV2BUNDLE=caps-' + fx
-            os.system('make ' + ' '.join(args) + sources + plugin_name + bundle_name + rdf_dest)
+            # sources and plugin name
+            sources = ' SOURCES=\"interface.cc ' + dsp_sources + ' ' + files + '\"'
+            plugin_name = ' PLUG=' + effect_name
 
-    elif 'clean' in args:
-        os.system('make ' + ' '.join(args) + ' PLUG=*')
+            # run make
+            os.system('make' + sources + plugin_name)
+    else:
+        fx_names = []
+        for effect in effects_info:
+            fx_names.append(effect[1])
+
+        sys.argv.pop(0)
+        effects_in_args = list(set(fx_names) & set(sys.argv))
+        args = list(set(sys.argv) - set(effects_in_args))
+
+        if 'install' in args or 'install-lv2' in args:
+            if effects_in_args == []: effects_in_args = fx_names
+
+            for fx in effects_in_args:
+                # create a fake rdf file to avoid error on make install
+                os.system('touch ' + fx + '.rdf')
+                rdf_dest = ' RDFDEST=/tmp/rdf'
+
+                # ttl files
+                os.system('rm -rf ./ttl')
+                os.system('mkdir ./ttl')
+                os.system('cp ../ttl/' + fx + '.ttl ./ttl')
+                f = open('./ttl/manifest.ttl', 'w')
+                f.write(manifest.replace('__EFFECT__', fx))
+                f.close()
+
+                sources = ' SOURCES=\" ' + get_source(fx) + '\"'
+                plugin_name = ' PLUG=' + fx
+                bundle_name = ' LV2BUNDLE=caps-' + fx + '.lv2'
+                path = os.environ.get('LV2_PATH', None)
+                if path is not None:
+                    os.system('make ' + ' '.join(args) + sources + plugin_name + bundle_name + rdf_dest + path)
+                else:
+                    os.system('make ' + ' '.join(args) + sources + plugin_name + bundle_name + rdf_dest)
+
+        elif 'clean' in args:
+            os.system('make ' + ' '.join(args) + ' PLUG=*')

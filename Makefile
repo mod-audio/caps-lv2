@@ -26,7 +26,12 @@ PDF = releases/caps-$(VERSION).pdf
 DEST      = $(PREFIX)/lib/ladspa
 RDFDEST   = $(PREFIX)/share/ladspa/rdf
 LV2BUNDLE = $(PLUG).lv2
-LV2DEST   = $(PREFIX)/lib/lv2/$(LV2BUNDLE)
+
+ifndef LV2_PATH
+	LV2DEST   = $(PREFIX)/lib/lv2/$(LV2BUNDLE)
+else
+	LV2DEST   = $(LV2_PATH)/$(LV2BUNDLE)
+endif 
 
 # targets following -------------------------------------------------------------
 
@@ -62,6 +67,12 @@ install: all
 	install -m 644 $(PLUG).so $(DEST)
 	install -d $(RDFDEST)
 	install -m 644 $(PLUG).rdf $(RDFDEST)
+	install -d $(LV2DEST)
+	install -m 644 $(PLUG).so $(LV2DEST)
+	install -m 644 $(TTL) $(LV2DEST)
+
+install-lv2: all
+	@$(STRIP) $(PLUG).so > /dev/null
 	install -d $(LV2DEST)
 	install -m 644 $(PLUG).so $(LV2DEST)
 	install -m 644 $(TTL) $(LV2DEST)

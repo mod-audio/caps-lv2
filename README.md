@@ -29,13 +29,13 @@ LV2 and LADSPA are hosted in same shared object, so when you install you will ha
 Alternatively you can install the plugins in single format, in other words, one shared object per plugin.
 To do this run:
 
-    ./make-single-plugins
+    ./make_single_plugins
 
-    sudo ./make-single-plugins install
+    sudo ./make_single_plugins install
 
 This will install all plugins, if you want install specific plugins, you can do in this way:
 
-    sudo ./make-single-plugins install AmpVTS ToneStack
+    sudo ./make_single_plugins install AmpVTS ToneStack
 
 
 CAPS Plugins Documentation
