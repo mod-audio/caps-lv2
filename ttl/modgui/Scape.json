@@ -1,0 +1,23 @@
+{
+    "author": "CAPS", 
+    "color": "white", 
+    "controls": [
+        {
+            "name": "bpm", 
+            "symbol": "bpm"
+        }, 
+        {
+            "name": "divider", 
+            "symbol": "divider"
+        }, 
+        {
+            "name": "feedback", 
+            "symbol": "feedback"
+        }, 
+        {
+            "name": "blend", 
+            "symbol": "blend"
+        }
+    ], 
+    "label": "Scape"
+}

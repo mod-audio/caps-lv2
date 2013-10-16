@@ -1,0 +1,23 @@
+{
+    "author": "CAPS", 
+    "color": "cream", 
+    "controls": [
+        {
+            "name": "bandwidth", 
+            "symbol": "bandwidth"
+        }, 
+        {
+            "name": "tail", 
+            "symbol": "tail"
+        }, 
+        {
+            "name": "damping", 
+            "symbol": "damping"
+        }, 
+        {
+            "name": "blend", 
+            "symbol": "blend"
+        }
+    ], 
+    "label": "Stereo Plate Reverb"
+}

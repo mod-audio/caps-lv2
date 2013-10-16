@@ -1,0 +1,31 @@
+{
+    "author": "CAPS", 
+    "color": "purple", 
+    "controls": [
+        {
+            "name": "time", 
+            "symbol": "time"
+        }, 
+        {
+            "name": "width", 
+            "symbol": "width"
+        }, 
+        {
+            "name": "rate", 
+            "symbol": "rate"
+        }, 
+        {
+            "name": "blend", 
+            "symbol": "blend"
+        }, 
+        {
+            "name": "feedforward", 
+            "symbol": "feedforward"
+        }, 
+        {
+            "name": "feedback", 
+            "symbol": "feedback"
+        }
+    ], 
+    "label": "Chorus I"
+}

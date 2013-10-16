@@ -1,0 +1,15 @@
+{
+    "author": "CAPS", 
+    "color": "blue", 
+    "controls": [
+        {
+            "name": "Mode", 
+            "symbol": "mode"
+        }, 
+        {
+            "name": "Strength", 
+            "symbol": "strength"
+        }
+    ], 
+    "label": "Narrower"
+}

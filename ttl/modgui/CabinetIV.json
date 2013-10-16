@@ -1,0 +1,15 @@
+{
+    "author": "CAPS", 
+    "color": "brown", 
+    "controls": [
+        {
+            "name": "Model", 
+            "symbol": "model"
+        }, 
+        {
+            "name": "Gain", 
+            "symbol": "gain"
+        }
+    ], 
+    "label": "Cabinet IV"
+}

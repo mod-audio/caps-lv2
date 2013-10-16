@@ -1,0 +1,23 @@
+{
+    "author": "CAPS", 
+    "color": "yellow", 
+    "controls": [
+        {
+            "name": "Filter", 
+            "symbol": "filter"
+        }, 
+        {
+            "name": "Frequency", 
+            "symbol": "frequency"
+        }, 
+        {
+            "name": "Q", 
+            "symbol": "Q"
+        }, 
+        {
+            "name": "Gain", 
+            "symbol": "gain"
+        }
+    ], 
+    "label": "Auto Filter"
+}

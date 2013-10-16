@@ -1,0 +1,19 @@
+{
+    "author": "CAPS", 
+    "color": "green", 
+    "controls": [
+        {
+            "name": "Profit per minute", 
+            "symbol": "ppm"
+        }, 
+        {
+            "name": "volume", 
+            "symbol": "volume"
+        }, 
+        {
+            "name": "damping", 
+            "symbol": "damping"
+        }
+    ], 
+    "label": "CEO"
+}

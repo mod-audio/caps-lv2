@@ -1,0 +1,27 @@
+{
+    "author": "CAPS", 
+    "color": "red", 
+    "controls": [
+        {
+            "name": "lo.f", 
+            "symbol": "lof"
+        }, 
+        {
+            "name": "lo.compress", 
+            "symbol": "locomp"
+        }, 
+        {
+            "name": "lo.gain", 
+            "symbol": "logain"
+        }, 
+        {
+            "name": "hi.f", 
+            "symbol": "hif"
+        }, 
+        {
+            "name": "hi.gain", 
+            "symbol": "higain"
+        }
+    ], 
+    "label": "Stereo Spice"
+}

@@ -1,0 +1,23 @@
+{
+    "author": "CAPS", 
+    "color": "purple", 
+    "controls": [
+        {
+            "name": "rate", 
+            "symbol": "rate"
+        }, 
+        {
+            "name": "depth", 
+            "symbol": "depth"
+        }, 
+        {
+            "name": "resonance", 
+            "symbol": "resonance"
+        }, 
+        {
+            "name": "spread", 
+            "symbol": "spread"
+        }
+    ], 
+    "label": "Phaser II"
+}

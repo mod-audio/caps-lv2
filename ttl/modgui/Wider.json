@@ -1,0 +1,15 @@
+{
+    "author": "CAPS", 
+    "color": "blue", 
+    "controls": [
+        {
+            "name": "pan", 
+            "symbol": "pan"
+        }, 
+        {
+            "name": "width", 
+            "symbol": "width"
+        }
+    ], 
+    "label": "Wider"
+}

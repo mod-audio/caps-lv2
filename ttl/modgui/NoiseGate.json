@@ -1,0 +1,19 @@
+{
+    "author": "CAPS", 
+    "color": "gray", 
+    "controls": [
+        {
+            "name": "Open", 
+            "symbol": "open"
+        }, 
+        {
+            "name": "Attack", 
+            "symbol": "attack"
+        }, 
+        {
+            "name": "Close", 
+            "symbol": "close"
+        }
+    ], 
+    "label": "Noise Gate"
+}

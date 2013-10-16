@@ -1,0 +1,19 @@
+{
+    "author": "CAPS", 
+    "color": "yellow", 
+    "controls": [
+        {
+            "name": "Mode", 
+            "symbol": "mode"
+        }, 
+        {
+            "name": "Gain", 
+            "symbol": "gain"
+        }, 
+        {
+            "name": "Bias", 
+            "symbol": "bias"
+        }
+    ], 
+    "label": "Saturate"
+}

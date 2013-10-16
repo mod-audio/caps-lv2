@@ -1,0 +1,23 @@
+{
+    "author": "CAPS", 
+    "color": "brown", 
+    "controls": [
+        {
+            "name": "model", 
+            "symbol": "model"
+        }, 
+        {
+            "name": "bass", 
+            "symbol": "bass"
+        }, 
+        {
+            "name": "mid", 
+            "symbol": "mid"
+        }, 
+        {
+            "name": "treble", 
+            "symbol": "treble"
+        }
+    ], 
+    "label": "ToneStack"
+}
