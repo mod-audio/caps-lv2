@@ -8,11 +8,11 @@ from make_single_plugins  import  effects_info
 def list_bundles():
     print "\n".join("caps-%s.lv2" % e[1] for e in effects_info)
 
-if sys.argv[1] == "-l":
+if len(sys.argv) > 1 and sys.argv[1] == "-l":
     list_bundles()
     sys.exit(0)
 
-if os.environ.get(LV2_PATH, None) is None:
+if os.environ.get("LV2_PATH", None) is None:
     os.environ['LV2_PATH'] = '~/.lv2/'
 
 subprocess.call(["./make_single_plugins.py"])

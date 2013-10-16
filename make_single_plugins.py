@@ -187,6 +187,10 @@ if __name__ == "__main__":
                 os.system('rm -rf ./ttl')
                 os.system('mkdir ./ttl')
                 os.system('cp ../ttl/' + fx + '.ttl ./ttl')
+                # modgui
+                os.system('mkdir ./ttl/modgui/')
+                os.system('cp ../ttl/modgui/' + fx + '.* ./ttl/modgui/')
+
                 f = open('./ttl/manifest.ttl', 'w')
                 f.write(manifest.replace('__EFFECT__', fx))
                 f.close()
