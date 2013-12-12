@@ -3,9 +3,9 @@
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
 @prefix mod: <http://portalmod.com/ns/modgui#> .
 
-<http://portalmod.com/plugins/caps/Wider> a lv2:DelayPlugin,
+<http://portalmod.com/plugins/caps/Wider> a lv2:SpatialPlugin,
         lv2:Plugin;
-    lv2:microVersion 16;
+    lv2:microVersion 17;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
     lv2:port [ a lv2:AudioPort,
