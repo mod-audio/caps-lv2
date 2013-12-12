@@ -8,7 +8,7 @@
 
 <http://portalmod.com/plugins/caps/Saturate> a lv2:DistortionPlugin,
         lv2:Plugin;
-    lv2:microVersion 17;
+    lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
     lv2:port [ a lv2:AudioPort,
