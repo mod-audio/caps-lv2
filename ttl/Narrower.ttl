@@ -5,9 +5,9 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-<http://portalmod.com/plugins/caps/Narrower> a lv2:FilterPlugin,
+<http://portalmod.com/plugins/caps/Narrower> a lv2:SpatialPlugin,
         lv2:Plugin;
-    lv2:microVersion 16;
+    lv2:microVersion 17;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
     lv2:port [ a lv2:AudioPort,
