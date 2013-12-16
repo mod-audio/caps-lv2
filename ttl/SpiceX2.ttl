@@ -7,7 +7,7 @@
 
 <http://portalmod.com/plugins/caps/SpiceX2> a lv2:DynamicsPlugin,
         lv2:Plugin;
-    lv2:microVersion 17;
+    lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
     lv2:port [ a lv2:ControlPort,
