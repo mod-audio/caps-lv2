@@ -4,7 +4,7 @@
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
 @prefix mod: <http://portalmod.com/ns/modgui#> .
 @prefix pprops: <http://lv2plug.in/ns/ext/port-props#> .
-@prefix units: <http://lv2plug.in/ns/extension/units#> .
+@prefix units: <http://lv2plug.in/ns/extensions/units#> .
 
 <http://portalmod.com/plugins/caps/Sin> a lv2:OscillatorPlugin,
         lv2:Plugin;
