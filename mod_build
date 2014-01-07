@@ -13,7 +13,7 @@ if len(sys.argv) > 1 and sys.argv[1] == "-l":
     sys.exit(0)
 
 if os.environ.get("LV2_PATH", None) is None:
-    os.environ['LV2_PATH'] = '~/.lv2/'
+    os.environ['LV2_PATH'] = '~/.lv2'
 
 subprocess.call(["./make_single_plugins.py"])
 subprocess.call(["./make_single_plugins.py", "install-lv2"])

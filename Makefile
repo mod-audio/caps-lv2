@@ -31,7 +31,7 @@ ifndef LV2_PATH
 	LV2DEST   = $(PREFIX)/lib/lv2/$(LV2BUNDLE)
 else
 	LV2DEST   = $(LV2_PATH)/$(LV2BUNDLE)
-endif 
+endif
 
 # targets following -------------------------------------------------------------
 
@@ -61,15 +61,12 @@ tags: $(SOURCES) $(HEADERS)
 	@echo making tags
 	@-if [ -x /usr/bin/ctags ]; then ctags $(SOURCES) $(HEADERS) >/dev/null 2>&1 ; fi
 
-install: all
+install: all install-lv2
 	@$(STRIP) $(PLUG).so > /dev/null
 	install -d $(DEST)
 	install -m 644 $(PLUG).so $(DEST)
 	install -d $(RDFDEST)
 	install -m 644 $(PLUG).rdf $(RDFDEST)
-	install -d $(LV2DEST)
-	install -m 644 $(PLUG).so $(LV2DEST)
-	install -m 644 $(TTL) $(LV2DEST)
 
 install-lv2: all
 	@$(STRIP) $(PLUG).so > /dev/null

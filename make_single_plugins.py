@@ -14,30 +14,30 @@ dsp_sources = ' '.join(glob.glob('dsp/*.cc'))
 
 # LADSPA_UID, EFFECT_NAME, FILES
 effects_info = [
-('2602',    'NoiseGate',        ['NoiseGate.cc']),                      
-('1772',    'Compress',         ['Compress.cc']),               
-('2598',    'CompressX2',       ['Compress.cc']),               
-('2589',    'ToneStack',        ['ToneStack.cc']),              
-('2592',    'AmpVTS',           ['Amp.cc','ToneStack.cc']),              
-('2606',    'CabinetIV',        ['Cabinet.cc']),                
-('1779',    'Plate',            ['Reverb.cc']),             
-('1795',    'PlateX2',          ['Reverb.cc']),             
-('1771',    'Saturate',         ['Saturate.cc']),               
-('2603',    'Spice',            ['Saturate.cc']),               
-('2607',    'SpiceX2',          ['Saturate.cc']),               
-('1767',    'ChorusI',          ['Chorus.cc']),             
-('2586',    'PhaserII',         ['Phaser.cc']),             
-('2593',    'AutoFilter',       ['AutoFilter.cc']),             
-('2588',    'Scape',            ['Scape.cc']),              
-('1773',    'Eq10',             ['Eq.cc']),             
-('2594',    'Eq10X2',           ['Eq.cc']),             
-('2608',    'Eq4p',             ['Eq.cc']),             
-('1788',    'Wider',            ['Pan.cc']),                
-('2595',    'Narrower',         ['Pan.cc']),                
-('1781',    'Sin',              ['Sin.cc']),                
-('1785',    'White',            ['White.cc']),              
-('1774',    'Fractal',          ['Fractals.cc']),               
-('1769',    'Click',            ['Click.cc']),              
+('2602',    'NoiseGate',        ['NoiseGate.cc']),
+('1772',    'Compress',         ['Compress.cc']),
+('2598',    'CompressX2',       ['Compress.cc']),
+('2589',    'ToneStack',        ['ToneStack.cc']),
+('2592',    'AmpVTS',           ['Amp.cc','ToneStack.cc']),
+('2606',    'CabinetIV',        ['Cabinet.cc']),
+('1779',    'Plate',            ['Reverb.cc']),
+('1795',    'PlateX2',          ['Reverb.cc']),
+('1771',    'Saturate',         ['Saturate.cc']),
+('2603',    'Spice',            ['Saturate.cc']),
+('2607',    'SpiceX2',          ['Saturate.cc']),
+('1767',    'ChorusI',          ['Chorus.cc']),
+('2586',    'PhaserII',         ['Phaser.cc']),
+('2593',    'AutoFilter',       ['AutoFilter.cc']),
+('2588',    'Scape',            ['Scape.cc']),
+('1773',    'Eq10',             ['Eq.cc']),
+('2594',    'Eq10X2',           ['Eq.cc']),
+('2608',    'Eq4p',             ['Eq.cc']),
+('1788',    'Wider',            ['Pan.cc']),
+('2595',    'Narrower',         ['Pan.cc']),
+('1781',    'Sin',              ['Sin.cc']),
+('1785',    'White',            ['White.cc']),
+('1774',    'Fractal',          ['Fractals.cc']),
+('1769',    'Click',            ['Click.cc']),
 ('1770',    'CEO',              ['Click.cc'])
 ]
 
@@ -187,22 +187,20 @@ if __name__ == "__main__":
                 os.system('rm -rf ./ttl')
                 os.system('mkdir ./ttl')
                 os.system('cp ../ttl/' + fx + '.ttl ./ttl')
+
                 # modgui
-                os.system('mkdir ./ttl/modgui/')
+                os.system('mkdir -p ./ttl/modgui/')
                 os.system('cp ../ttl/modgui/' + fx + '.* ./ttl/modgui/')
 
                 f = open('./ttl/manifest.ttl', 'w')
                 f.write(manifest.replace('__EFFECT__', fx))
                 f.close()
 
-                sources = ' SOURCES=\" ' + get_source(fx) + '\"'
+                sources = ' SOURCES=\"\" HEADERS=\"\" '
                 plugin_name = ' PLUG=' + fx
                 bundle_name = ' LV2BUNDLE=caps-' + fx + '.lv2'
-                path = os.environ.get('LV2_PATH', None)
-                if path is not None:
-                    os.system('make ' + ' '.join(args) + sources + plugin_name + bundle_name + rdf_dest + path)
-                else:
-                    os.system('make ' + ' '.join(args) + sources + plugin_name + bundle_name + rdf_dest)
+
+                os.system('make ' + ' '.join(args) + sources + plugin_name + bundle_name + rdf_dest)
 
         elif 'clean' in args:
             os.system('make ' + ' '.join(args) + ' PLUG=*')

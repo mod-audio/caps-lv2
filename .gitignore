@@ -1,5 +1,6 @@
 # Object files
 *.o
+*.pyc
 
 # Libraries
 *.lib
@@ -20,6 +21,6 @@
 .tmp
 depend
 
-#screenshots
+# screenshots
 ttl/modgui/*.png
 
