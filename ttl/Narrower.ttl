@@ -11,7 +11,7 @@
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
    
-rdfs:comments """
+rdfs:comment """
 This plugin reduces the width of a stereophonic signal. Its primary use is for preventing fatigue from listening to 'creatively panned' music on headphones. 
 
 Mid/side processing tends to sound more transparent for moderate strength settings.  However, it will more strongly attenuate signals that are panned to the far sides of the stereo image (rarely encountered in contemporary music production anymore but quite common, for example, on early Beatles recordings or others from that time). 

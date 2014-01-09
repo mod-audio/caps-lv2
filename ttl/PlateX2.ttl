@@ -10,7 +10,7 @@
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
 
-rdfs:comments """
+rdfs:comment """
 This version of the Plate reverberator comes with stereo inputs. 
 
 source: http://quitte.de/dsp/caps.html#Plate
