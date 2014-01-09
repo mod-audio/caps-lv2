@@ -5,6 +5,7 @@
 @prefix mod: <http://portalmod.com/ns/modgui#> .
 @prefix pprops: <http://lv2plug.in/ns/ext/port-props#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 <http://portalmod.com/plugins/caps/Sin> a lv2:OscillatorPlugin,
         lv2:Plugin;

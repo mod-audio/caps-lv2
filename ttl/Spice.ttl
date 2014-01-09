@@ -4,6 +4,7 @@
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
 @prefix mod: <http://portalmod.com/ns/modgui#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 <http://portalmod.com/plugins/caps/Spice> a lv2:DynamicsPlugin,
         lv2:Plugin;
