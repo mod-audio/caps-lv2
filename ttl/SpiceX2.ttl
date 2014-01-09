@@ -20,7 +20,7 @@ source: http://quitte.de/dsp/caps.html#Spice
 
     lv2:port [ a lv2:ControlPort,
                 lv2:InputPort;
-            units:unit units:Hz;
+            units:unit units:hz;
             lv2:default 225.0;
             lv2:index 0;
             lv2:maximum 800.0;
@@ -46,7 +46,7 @@ source: http://quitte.de/dsp/caps.html#Spice
             lv2:symbol "logain" ],
         [ a lv2:ControlPort,
                 lv2:InputPort;
-            units:unit units:Hz;
+            units:unit units:hz;
             lv2:default 1350.0;
             lv2:index 3;
             lv2:maximum 5000.0;
