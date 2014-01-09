@@ -11,6 +11,19 @@
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+
+rdfs:comment """
+This compressor has been designed primarily to create natural-sounding sustain for the electric guitar without sacrificing its brightly percussive character. However, it appears to apply well to a variety of other sound sources, and with CompressX2 a stereo version is available as well. 
+
+To be able produce strong compression and still maintain a natural sound, the design catches (attack-phase) power spikes with a soft saturation circuit, converting them into additional harmonic content and enforcing a strict limit on the output level. Saturating operation is the default setting of the mode control. Three anti-aliasing options are available, 2x oversampling with 32-tap filters and 4x with 64 and 128 taps. 
+
+The measure control select which indicator of loudness to base calculations on: peak – instantaneous amplitude – measurement allows the unit to react very quickly, while rms – root mean square power – is of a gentler kind. 
+
+Compression amount is controlled through the strength knob, from 0 effectively disabling the effect, up to a maximum ratio of 16:1. The attack and release controls map higher values to slower reactions. 
+
+source: http://quitte.de/dsp/caps.html#Compress
+""";
+
     lv2:port [ a lv2:AudioPort,
                 lv2:InputPort;
             lv2:index 7;

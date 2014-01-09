@@ -10,6 +10,19 @@
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+   
+rdfs:comment """
+This emulation of the tone stack of a traditional Fender-design instrument amplifier has been devised and implemented by David T. Yeh, with subsequent expansion to include more models by Tim Goetze. 
+
+Due to the nature of the original circuit, the bass, mid and treble controls are not operating independently as in a modern three-way equaliser. 
+
+All but the last model are using the procedural implementation with continuously updated direct form II filters and sample rate independency.  It must be noted that the "DC 30" preset has been included despite the slight difference in topology between the British original and the Fender circuit. 
+
+The "5F6-A LT" model is using the lattice filter implementation mentioned in [yeh06], operating on precomputed simulation data for 44.1 kHz. 
+
+source: http://quitte.de/dsp/caps.html#ToneStack
+""";
+
     lv2:port [ a lv2:AudioPort,
                 lv2:InputPort;
             lv2:index 0;

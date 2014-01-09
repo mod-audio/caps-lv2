@@ -10,6 +10,13 @@
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+
+rdfs:comment """
+Stereo version of Spice. Bass compression is governed by the sum of both channels, as in CompressX2. Nevertheless, the amount of harmonic generation differing between the two channels can have subtle effects on the stereo image. 
+
+source: http://quitte.de/dsp/caps.html#Spice
+""";
+
     lv2:port [ a lv2:ControlPort,
                 lv2:InputPort;
             units:unit units:Hz;

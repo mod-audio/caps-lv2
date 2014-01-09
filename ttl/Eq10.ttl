@@ -8,6 +8,15 @@
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+    
+rdfs:comment """
+A classic octave-band biquad-filter design, basically a direct digital translation of the analog original. There's also a stereo version (Eq10X2). 
+
+Frequency bands centered above Nyquist are automatically disabled. 
+
+source: http://quitte.de/dsp/caps.html#Eq10
+""";
+
     lv2:port [ a lv2:ControlPort,
                 lv2:InputPort;
             lv2:default 0.0;

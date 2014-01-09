@@ -10,6 +10,15 @@
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+
+rdfs:comment """
+A standard mono chorus with optional feedback. The parameter range suits subtle effects as well as all-out flanging. 
+
+Modifying the delay time t when feedback is active will cause audible 'zipper' noise. 
+
+source: http://quitte.de/dsp/caps.html#ChorusI
+""";
+
     lv2:port [ a lv2:AudioPort,
                 lv2:InputPort;
             lv2:index 0;

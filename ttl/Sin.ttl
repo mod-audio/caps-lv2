@@ -11,6 +11,13 @@
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+
+rdfs:comment """
+The old friend, indispensable for testing and tuning. 
+
+source: http://quitte.de/dsp/caps.html#Sin
+""";
+
     lv2:port [ a lv2:ControlPort,
                 lv2:InputPort;
             units:unit units:hz;

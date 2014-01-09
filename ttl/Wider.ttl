@@ -8,6 +8,17 @@
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+
+rdfs:comment """
+In addition to provoding a basic panorama control, a perception of stereo width is created using complementary filters on the two output channels. 
+
+The output channels always sum to a flat frequency response. 
+
+The design of this plugin owes to the Orban 245F Stereo Synthesizer.
+
+source: http://quitte.de/dsp/caps.html#Wider
+""";
+
     lv2:port [ a lv2:AudioPort,
                 lv2:InputPort;
             lv2:index 0;
