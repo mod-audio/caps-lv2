@@ -11,6 +11,17 @@
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+
+rdfs:comment """
+This plugin aims to reduce undesirable background noise and hum in otherwise silent passages. 
+
+When the signal's instantaneous amplitude exceeds the opening threshold, the gate is opened. The time it takes until the gate is fully open can be set with the attack control. As soon as the signal's RMS power level drops below the closing threshold, the gate closes. This takes a fixed time of 20 ms; closed gate attenuation is 60 dB. 
+
+To cope with powerline hum as often present in signals from electric guitars, a notch filter can be activated by setting the mains frequency control to a non-zero value.  The filter will prevent this frequency from contributing to the signal power measurement. This allows a low closing threshold setting without mains hum keeping the gate open unduly.  The default mains setting is 50 Hz. 
+
+source: http://quitte.de/dsp/caps.html#NoiseGate
+""";
+
     lv2:port 
         [
          a lv2:AudioPort,

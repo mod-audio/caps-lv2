@@ -2,12 +2,22 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
 @prefix mod: <http://portalmod.com/ns/modgui#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 <http://portalmod.com/plugins/caps/Eq10> a lv2:EQPlugin,
         lv2:Plugin;
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+    
+rdfs:comment """
+A classic octave-band biquad-filter design, basically a direct digital translation of the analog original. There's also a stereo version (Eq10X2). 
+
+Frequency bands centered above Nyquist are automatically disabled. 
+
+source: http://quitte.de/dsp/caps.html#Eq10
+""";
+
     lv2:port [ a lv2:ControlPort,
                 lv2:InputPort;
             lv2:default 0.0;

@@ -11,6 +11,19 @@
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+
+rdfs:comment """
+This plugin applies an acoustic instrument body modeling technique to recreate the timbre-shaping of an electric instrument amplifier's speaker cabinet. Nonlinear effects occurring in physical speakers under high load are not emulated.
+
+A selection of several hundred response shapes automatically created in the likeness of classic cabinets has been narrowed down to a handful of idealised tones.  As with AmpVTS, which provides a matching recreation of traditional guitar amplification, the design and selection process has been ruled by musicality over fidelity.
+
+The filter banks implemented are 64 2nd order IIR and one 128-tap FIR in parallel. Their parameter presets are shared between the 44.1 and 48 kHz sample rates, the higher rate implying that timbre brightens up. Higher sample rates produce the same tones by rate conversion, up to 192 kHz.
+ 
+Despite the complexity, computational load is very modest thanks to vector arithmetic if a hardware implementation is available – if not, however, the load will be easily an order of magnitude higher, and possibly found to be prohibitive on less powerful hardware.
+
+source: http://quitte.de/dsp/caps.html#CabinetIV
+""";
+
     lv2:port [ a lv2:AudioPort,
                 lv2:InputPort;
             lv2:index 0;

@@ -2,12 +2,22 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
 @prefix mod: <http://portalmod.com/ns/modgui#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 <http://portalmod.com/plugins/caps/Plate> a lv2:Plugin,
         lv2:ReverbPlugin;
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+
+rdfs:comment """
+This reverb processor is an adaptation of the design discussed in [dat97a]. Tuned for a soft attack and smooth ambience, it consists of a network of twelve delay lines of varying length. At its heart, two of these are modulated very subtly, in a chorus-like fashion. 
+
+The bandwidth control reduces high-frequency content before it enters the 'tank', while damping controls how quickly the reverberating tail darkens. 
+
+source: http://quitte.de/dsp/caps.html#Plate
+""";
+
     lv2:port [ a lv2:AudioPort,
                 lv2:InputPort;
             lv2:index 0;

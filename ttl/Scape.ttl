@@ -12,6 +12,15 @@
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+   
+rdfs:comment """
+A stereo delay with resonant filters and fractally modulated panning. 
+
+The delay times are set through the bpm control and the divider adjustment. Triplet and sixteenth settings create a dotted rhythm. With every beat, the filter resonance frequencies are retuned to random steps on an equal-tempered chromatic scale, to the reference set through the tune control. 
+
+source: http://quitte.de/dsp/caps.html#Scape
+""";
+
     lv2:port [ a lv2:AudioPort,
                 lv2:OutputPort;
             lv2:index 8;

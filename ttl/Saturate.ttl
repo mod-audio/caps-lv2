@@ -11,6 +11,17 @@
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+
+rdfs:comment """
+Please note that this plugin embodies a very basic building block of audio DSP, not an elaborate effect that will be pleasing to hear right away. To turn saturation into a musically useful effect it is usually combined with some sort of filtering and dynamics modulation. 
+
+The mode control chooses from a selection of clipping functions of varying character. Even-order harmonics can be added with the bias setting. Towards the maximum, sound will start to get scratchy and eventually starve away. 
+
+The plugin is 8x oversampled with 64-tap polyphase filters, effectively suppressing aliasing noise for most musical applications. Changes to the bias control induce short-lived energy at DC in the output. In order to reduce the computational load incurred when evaluating transcendental functions at eight times the nominal sample rate, these are approximated roughly, using Chebyshev polynomials whose coefficients depend on the amplitude's floating point representation exponent. 
+
+source: http://quitte.de/dsp/caps.html#Saturate
+""";
+
     lv2:port [ a lv2:AudioPort,
                 lv2:InputPort;
             lv2:index 0;

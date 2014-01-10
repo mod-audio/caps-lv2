@@ -10,6 +10,14 @@
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+
+rdfs:comment """
+A sample-accurate metronome. Two simplistic modal synthesis models are available for the click: box is a small wooden box struck with a soft wooden mallet, stick a scratchy stick hit. In addition, there's also a very synthetic beep, and finally dirac, a very nasty single-sample pulse of 0 dB amplitude and little immediate musical use. 
+All click sounds are synthesised once when the plugin is loaded and then played back from memory. 
+
+source: http://quitte.de/dsp/caps.html#Click
+""";
+
     lv2:port [ a lv2:ControlPort,
                 lv2:InputPort;
             lv2:default 1;

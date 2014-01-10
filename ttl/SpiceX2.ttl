@@ -4,15 +4,23 @@
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
 @prefix mod: <http://portalmod.com/ns/modgui#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 <http://portalmod.com/plugins/caps/SpiceX2> a lv2:DynamicsPlugin,
         lv2:Plugin;
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+
+rdfs:comment """
+Stereo version of Spice. Bass compression is governed by the sum of both channels, as in CompressX2. Nevertheless, the amount of harmonic generation differing between the two channels can have subtle effects on the stereo image. 
+
+source: http://quitte.de/dsp/caps.html#Spice
+""";
+
     lv2:port [ a lv2:ControlPort,
                 lv2:InputPort;
-            units:unit units:Hz;
+            units:unit units:hz;
             lv2:default 225.0;
             lv2:index 0;
             lv2:maximum 800.0;
@@ -38,7 +46,7 @@
             lv2:symbol "logain" ],
         [ a lv2:ControlPort,
                 lv2:InputPort;
-            units:unit units:Hz;
+            units:unit units:hz;
             lv2:default 1350.0;
             lv2:index 3;
             lv2:maximum 5000.0;

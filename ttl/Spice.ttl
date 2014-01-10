@@ -4,12 +4,24 @@
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
 @prefix mod: <http://portalmod.com/ns/modgui#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 <http://portalmod.com/plugins/caps/Spice> a lv2:DynamicsPlugin,
         lv2:Plugin;
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+
+rdfs:comment """
+This effect plugin is useful when more bass register definition or more treble presence is called for and generic equalisation does not work without noticeably raising the signal or noise level. A common application is refreshing of material that has been subjected to low-quality analog transmission. 
+
+Bass and treble portions of the signal are isolated using two 24 dB/octave Linkwitz-Riley crossover networks[lr76] to ensure a flat frequency response at zero effect intensity (controlled through the .gain settings). After compression, a polynomial waveshaper synthesises the first three overtones of the bass register. This enhances the perception of the fundamental frequency, being the difference tone of these harmonics. Treble band processing applies analog-style saturation with only simplistic antialiasing. Synthesised harmonic content is shaped through bandpass and highpass filters and mixed back into the crossover sum signal. 
+
+A stereo version is available as SpiceX2. 
+
+source: http://quitte.de/dsp/caps.html#Spice
+""";
+
     lv2:port [ a lv2:AudioPort,
                 lv2:InputPort;
             lv2:index 0;

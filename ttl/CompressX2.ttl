@@ -11,6 +11,13 @@
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+    
+rdfs:comment """
+This stereo version of Compress applies uniform compression to both channels in proportion to their combined power. 
+
+source: http://quitte.de/dsp/caps.html#Compress
+""";
+
     lv2:port [ a lv2:AudioPort,
                 lv2:InputPort;
             lv2:index 8;

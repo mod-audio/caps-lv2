@@ -10,6 +10,23 @@
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+
+rdfs:comment """
+This plugin turns the oscillating state of a fractal attractor into an audio stream. The result is something that most would without much hesitation classify as noise. 
+
+The Lorenz attractor is one of the earliest models of deterministic chaos discovered deriving from the Navier-Stokes equationswp. 
+
+The Rössler system is similar but contains only one non-linearity. 
+
+The x, y and z controls set the amplitude of the respective variables of the attractor state in the output audio signal. 
+
+The attractor state variables are scaled and translated to stay mostly within the [-1,1] range and not contain a DC offset. Nevertheless, due to the unpredictable nature of the systems, peak limits cannot be guaranteed.  In addition, some energy near DC may be produced; therefore a configurable high-pass filter is part of the circuit. It can be turned off by setting the hp parameter to zero. 
+
+The output signal varies with the sample rate. 
+
+source: http://quitte.de/dsp/caps.html#Fractals
+""";
+
     lv2:port [ a lv2:ControlPort,
                 lv2:InputPort;
             lv2:default 0.250;

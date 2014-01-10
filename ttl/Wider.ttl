@@ -2,12 +2,24 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
 @prefix mod: <http://portalmod.com/ns/modgui#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 <http://portalmod.com/plugins/caps/Wider> a lv2:SpatialPlugin,
         lv2:Plugin;
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+
+rdfs:comment """
+In addition to provoding a basic panorama control, a perception of stereo width is created using complementary filters on the two output channels. 
+
+The output channels always sum to a flat frequency response. 
+
+The design of this plugin owes to the Orban 245F Stereo Synthesizer.
+
+source: http://quitte.de/dsp/caps.html#Wider
+""";
+
     lv2:port [ a lv2:AudioPort,
                 lv2:InputPort;
             lv2:index 0;
