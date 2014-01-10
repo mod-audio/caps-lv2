@@ -267,7 +267,7 @@ CabinetIV::switch_model (int m)
 	bank.set_b (2, CabIVModels[m].b2);
 	bank.reset();
 
-	fir.set_kernel (CabIVModels[m].fir, sizeof(CabIVModels[m].fir)/sizeof(float));
+	fir.set_kernel (CabIVModels[m].fir);
 	fir.reset();
 }
 
