@@ -148,7 +148,7 @@ class FIR4f
 			}
 		#endif
 
-		void set_kernel (float * f, int n = N*4)
+		void set_kernel (float * f, int n = N)
 			{
 				float * c = (float *) data();
 				int i = 0;
