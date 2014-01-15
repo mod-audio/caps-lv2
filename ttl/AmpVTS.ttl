@@ -59,7 +59,7 @@ a lv2:ControlPort,
     lv2:default 0.750;
     lv2:index 10;
     lv2:maximum 1;
-    lv2:minimum 0;
+    lv2:minimum 0.1;
     lv2:name "Low cut";
     lv2:symbol "low_cut" 
 ],
