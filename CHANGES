@@ -1,9 +1,34 @@
+0.9.17
+	* multiple inclusion header guards changed to comply with ISO/IEC 9899:2011
+	* PlateX2 fixed to read correct port for damping parameter
+		(reported by James Morris)
+	* uninstall removes rdf
+	* DSP::FIR4f::set_kernel size overflow in default parameter fixed
+		(reported and isolated by Ricardo Crudo)
+	* AmpVTS "lowcut" filter changed from 2- to 1-pole
+	* "HK 20" tonestack renamed to "AK 20"
+	* AmpVTS lowcut mapping changed, default lowered
+	* AmpVTS highpass 1 cutoff raised 
+	* lowpass filter added to Noisegate's opening peak detector
+	* Noisegate not NoiseGate
+	* Click normal addition limited to idle loop
+	* NoiseGate logic loop bug fixed, hysteresis added
+	* documentation polish
+
+0.9.16
+	* NoiseGate simplified, sped up, gain lowpassed, click bug eliminated
+	* Sin smoothened, defaults updated
+	* PhaserII defaults updated
+	* Fractal defaults updated
+	* documentation polish
+
 0.9.15
 	* no-vector-arithmetic compilation fixed 
 
 0.9.14
 	* AutoFilter x/y parameter eliminated
 	* Fractal hp changed to be configurable, attractors recalibrated
+	* DSP::Lorenz instantly initialises to useful state
 	* documentation polish
 
 0.9.13

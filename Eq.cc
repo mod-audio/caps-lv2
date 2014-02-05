@@ -1,11 +1,11 @@
 /*
 	Eq.cc
 	
-	Copyright 2002-7 Tim Goetze <tim@quitte.de>
+	Copyright 2002-14 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
-	10-band octave-spread equaliser.
+	Various equaliser plugins.
 
 */
 /*

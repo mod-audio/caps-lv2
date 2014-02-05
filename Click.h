@@ -1,7 +1,7 @@
 /*
 	Click.h
 	
-	Copyright 2004-11 Tim Goetze <tim@quitte.de>
+	Copyright 2004-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _CLICK_H_
-#define _CLICK_H_
+#ifndef CLICK_H
+#define CLICK_H
 
 #include "dsp/OnePole.h"
 #include "dsp/BiQuad.h"
@@ -101,4 +101,4 @@ class CEO
 		static PortInfo port_info [];
 };
 
-#endif /* _CLICK_H_ */
+#endif /* CLICK_H */

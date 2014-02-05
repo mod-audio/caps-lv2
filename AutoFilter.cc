@@ -92,7 +92,7 @@ AutoFilter::subsubcycle (uint frames, SVF & svf, Over & over)
 	float range = getport(6);
 	float env = getport(7);
 
-	lorenz.set_rate (3e-05*fs * .6*sq(getport(8)));
+	lorenz.set_rate (3e-06 *fs* sq(getport(8)));
 	float x=.9, z=.1;;
 
 	sample_t * s = ports[9];
@@ -199,12 +199,12 @@ AutoFilter::port_info [] =
 		"{0:'low pass',1:'band pass',}" },
 	{ "filter", CTRL_IN | GROUP, {DEFAULT_1 | INTEGER, 0, 4}, 
 		"{0:'breathy',1:'fat A',2:'fat B',3:'fat C',4:'fat D'}", }, 
-	{ "gain (dB)", CTRL_IN, {DEFAULT_LOW, 0, 24} }, 
+	{ "gain (dB)", CTRL_IN, {DEFAULT_MID, 0, 24} }, 
 	/* 4 */
 	{ "f (Hz)", CTRL_IN | GROUP, {LOG | DEFAULT_HIGH, 20, 3000} }, 
 	{ "Q", CTRL_IN, {DEFAULT_0, 0, 1} }, 
 	/* 6 */
-	{ "range", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} }, 
+	{ "range", CTRL_IN | GROUP, {DEFAULT_MID, 0, 1} }, 
 	{ "lfo/env", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
 	{ "rate", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
 	/* 9 */

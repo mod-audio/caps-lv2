@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _WHITE_H_
-#define _WHITE_H_
+#ifndef WHITE_H
+#define WHITE_H
 
 #include "dsp/White.h"
 #include "dsp/OnePole.h"
@@ -53,4 +53,4 @@ class White
 		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
-#endif /* _WHITE_H_ */
+#endif /* WHITE_H */

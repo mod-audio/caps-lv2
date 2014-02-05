@@ -1,8 +1,8 @@
 /*
 	Descriptor.h
-
+	
 	Copyright 2004-13 Tim Goetze <tim@quitte.de>
-
+	
 	http://quitte.de/dsp/
 
 	Creating a LADSPA_Descriptor for a CAPS plugin via a C++ template,
@@ -12,7 +12,7 @@
 	Descriptor<P> expects P to declare some common methods, like init(),
 	activate() etc, plus a static port_info[] and LADSPA_Data * ports[]
 	and adding_gain.  (P should derive from Plugin, too.)
-
+ 
 */
 /*
 	This program is free software; you can redistribute it and/or
@@ -31,8 +31,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DESCRIPTOR_H_
-#define _DESCRIPTOR_H_
+#ifndef DESCRIPTOR_H
+#define DESCRIPTOR_H
 
 #ifdef __SSE__
 #include <xmmintrin.h>
@@ -43,6 +43,7 @@
 
 #include <lv2.h>
 
+/* not used */
 inline void
 processor_specific_denormal_measures()
 {
@@ -92,11 +93,11 @@ class Descriptor
 		Descriptor (uint id) { UniqueID = id; setup(); }
 		Descriptor (const char *uri) { URI = uri; setup(); }
 
-		void setup();
-		/* setup() is in the plugin's .cc implementation file because it needs
+		void setup(); 
+		/* setup() is in the plugin's .cc implementation file because it needs 
 		 * access to the port_info implementation, instantiating the following
 		 * function: */
-		void autogen()
+		void autogen() 
 			{
 				Properties = HARD_RT;
 				PortCount = (sizeof (T::port_info) / sizeof (PortInfo));
@@ -121,7 +122,7 @@ class Descriptor
 					if (desc[i] & INPUT)
 						ranges[i].HintDescriptor |= BOUNDED;
 				}
-
+				
 				/* Descriptor vtable */
 				LADSPA_Descriptor::instantiate = _instantiate;
 				LADSPA_Descriptor::connect_port = _connect_port;
@@ -142,7 +143,7 @@ class Descriptor
 
 		static LADSPA_Handle _instantiate (
 				const struct _LADSPA_Descriptor * d, ulong fs)
-			{
+			{ 
 				T * plugin = new T();
 
 				LADSPA_PortRangeHint * ranges = ((Descriptor *) d)->ranges;
@@ -161,9 +162,9 @@ class Descriptor
 
 				return plugin;
 			}
-
+		
 		static void _connect_port (LADSPA_Handle h, ulong i, LADSPA_Data * p)
-			{
+			{ 
 				((T *) h)->ports[i] = p;
 			}
 
@@ -171,15 +172,12 @@ class Descriptor
 			{
 				T * plugin = (T *) h;
 
-				/* We don't reset the processor flags later, it's true. */
-				processor_specific_denormal_measures();
-
 				plugin->first_run = 1;
 
-				/* since none of the plugins do any RT-critical work in
+				/* since none of the plugins do any RT-critical work in 
 				 * activate(), it's safe to defer the actual call into
 				 * the first run() after the host called activate().
-				 *
+				 * 
 				 * It's the simplest way to prevent a parameter smoothing sweep
 				 * in the first audio block after activation.
 				 *
@@ -193,12 +191,11 @@ class Descriptor
 
 		static void _run (LADSPA_Handle h, ulong n)
 			{
+				if (!n) return;
+
 				T * plugin = (T *) h;
 
-				/* We don't reset the processor flags later, it's true. */
-				processor_specific_denormal_measures();
-
-				/* If this is the first audio block after activation,
+				/* If this is the first audio block after activation, 
 				 * initialize the plugin from the current set of parameters. */
 				if (plugin->first_run)
 				{
@@ -209,15 +206,14 @@ class Descriptor
 				plugin->run (n);
 				plugin->normal = -plugin->normal;
 			}
-
+		
 		static void _run_adding (LADSPA_Handle h, ulong n)
 			{
+				if (!n) return;
+
 				T * plugin = (T *) h;
 
-				/* We don't reset the processor flags later, it's true. */
-				processor_specific_denormal_measures();
-
-				/* If this is the first audio block after activation,
+				/* If this is the first audio block after activation, 
 				 * initialize the plugin from the current set of parameters. */
 				if (plugin->first_run)
 				{
@@ -228,7 +224,7 @@ class Descriptor
 				plugin->run_adding (n);
 				plugin->normal = -plugin->normal;
 			}
-
+		
 		static void _set_run_adding_gain (LADSPA_Handle h, LADSPA_Data g)
 			{
 				T * plugin = (T *) h;
@@ -285,4 +281,4 @@ class Descriptor
 			}
 };
 
-#endif /* _DESCRIPTOR_H_ */
+#endif /* DESCRIPTOR_H */

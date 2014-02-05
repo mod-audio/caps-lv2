@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_EQ_H_
-#define _DSP_EQ_H_
+#ifndef DSP_EQ_H
+#define DSP_EQ_H
 
 namespace DSP {
 
@@ -129,4 +129,4 @@ class Eq
 
 } /* namespace DSP */
 
-#endif /* _DSP_EQ_H_ */
+#endif /* DSP_EQ_H */

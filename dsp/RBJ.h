@@ -23,8 +23,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_RBJ_H_
-#define _DSP_RBJ_H_
+#ifndef DSP_RBJ_H
+#define DSP_RBJ_H
 
 #include "BiQuad.h"
 
@@ -289,4 +289,4 @@ class HiShelve
 } /* ~namespace RBJ */
 } /* ~namespace DSP */
 
-#endif /* _DSP_RBJ_H_ */
+#endif /* DSP_RBJ_H */

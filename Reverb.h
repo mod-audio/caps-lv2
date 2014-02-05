@@ -44,8 +44,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _REVERB_H_
-#define _REVERB_H_
+#ifndef REVERB_H
+#define REVERB_H
 
 #include <stdio.h>
 
@@ -230,4 +230,4 @@ class PlateX2
 		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
-#endif /* _REVERB_H_ */
+#endif /* REVERB_H */

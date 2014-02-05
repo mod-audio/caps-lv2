@@ -110,7 +110,7 @@ Fractal::port_info [] =
 		"{0:'lorenz',1:'roessler'}" }, 
 	{ "x", CTRL_IN | GROUP, {DEFAULT_1, 0, 1} }, 
 	{ "y", CTRL_IN, {DEFAULT_0, 0, 1} }, 
-	{ "z", CTRL_IN, {DEFAULT_0, 0, 1} }, 
+	{ "z", CTRL_IN, {DEFAULT_MID, 0, 1} }, 
 	{ "hp", CTRL_IN | GROUP, {DEFAULT_MID, 0, 1} }, 
 	{ "volume", CTRL_IN, {DEFAULT_MID, MIN_GAIN, 1} }, 
 	{ "out", OUTPUT | AUDIO }

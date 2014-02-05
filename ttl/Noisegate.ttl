@@ -6,7 +6,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
 
-<http://portalmod.com/plugins/caps/NoiseGate> a lv2:UtilityPlugin,
+<http://portalmod.com/plugins/caps/Noisegate> a lv2:UtilityPlugin,
         lv2:Plugin;
     lv2:microVersion 16;
     lv2:minorVersion 9;
@@ -19,23 +19,23 @@ When the signal's instantaneous amplitude exceeds the opening threshold, the gat
 
 To cope with powerline hum as often present in signals from electric guitars, a notch filter can be activated by setting the mains frequency control to a non-zero value.  The filter will prevent this frequency from contributing to the signal power measurement. This allows a low closing threshold setting without mains hum keeping the gate open unduly.  The default mains setting is 50 Hz. 
 
-source: http://quitte.de/dsp/caps.html#NoiseGate
+source: http://quitte.de/dsp/caps.html#Noisegate
 """;
 
-    lv2:port 
+    lv2:port
         [
          a lv2:AudioPort,
             lv2:InputPort;
             lv2:index 0;
             lv2:name "in";
-            lv2:symbol "in" 
+            lv2:symbol "in"
         ],
         [
          a lv2:AudioPort,
             lv2:OutputPort;
             lv2:index 1;
             lv2:name "out";
-            lv2:symbol "out" 
+            lv2:symbol "out"
         ],
         [
          a lv2:ControlPort,
@@ -46,7 +46,7 @@ source: http://quitte.de/dsp/caps.html#NoiseGate
             lv2:maximum 0;
             lv2:minimum -60;
             lv2:name "Open";
-            lv2:symbol "open" 
+            lv2:symbol "open"
         ],
         [
          a lv2:ControlPort,
@@ -57,7 +57,7 @@ source: http://quitte.de/dsp/caps.html#NoiseGate
             lv2:maximum 3;
             lv2:minimum 0;
             lv2:name "Attack";
-            lv2:symbol "attack" 
+            lv2:symbol "attack"
         ],
         [
          a lv2:ControlPort,
@@ -68,7 +68,7 @@ source: http://quitte.de/dsp/caps.html#NoiseGate
             lv2:maximum 0;
             lv2:minimum -90;
             lv2:name "Close";
-            lv2:symbol "close" 
+            lv2:symbol "close"
         ],
         [
          a lv2:ControlPort,
@@ -87,11 +87,11 @@ source: http://quitte.de/dsp/caps.html#NoiseGate
                     rdf:value 60 ];
             lv2:symbol "mains" ];
 
-    mod:gui [ mod:iconTemplate <modgui/NoiseGate.html>;
+    mod:gui [ mod:iconTemplate <modgui/Noisegate.html>;
             mod:resourcesDirectory <modgui>;
-            mod:screenshot <modgui/NoiseGate.png>;
-            mod:templateData <modgui/NoiseGate.json>;
-            mod:thumbnail <modgui/NoiseGate-thumb.png> ];
+            mod:screenshot <modgui/Noisegate.png>;
+            mod:templateData <modgui/Noisegate.json>;
+            mod:thumbnail <modgui/Noisegate-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];
@@ -99,5 +99,5 @@ source: http://quitte.de/dsp/caps.html#NoiseGate
     doap:maintainer [ foaf:homepage <http://portalmod.com>;
             foaf:mbox <mailto:devel@portalmod.com>;
             foaf:name "MOD Team" ];
-    doap:name "C* NoiseGate - Attenuate noise resident in silence" .
+    doap:name "C* Noisegate - Attenuate noise resident in silence" .
 

@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _FRACTALS_H_
-#define _FRACTALS_H_
+#ifndef FRACTALS_H
+#define FRACTALS_H
 
 #include "dsp/Lorenz.h"
 #include "dsp/Roessler.h"
@@ -57,4 +57,4 @@ class Fractal
 		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
-#endif /* _FRACTALS_H_ */
+#endif /* FRACTALS_H */

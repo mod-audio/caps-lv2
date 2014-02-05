@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _TONESTACK_H_
-#define _TONESTACK_H_
+#ifndef TONESTACK_H
+#define TONESTACK_H
 
 #include "dsp/util.h"
 #include "dsp/windows.h"
@@ -59,4 +59,4 @@ class ToneStack
 		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
-#endif /* _TONESTACK_H_ */
+#endif /* TONESTACK_H */

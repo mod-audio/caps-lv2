@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_RMS_H_
-#define _DSP_RMS_H_
+#ifndef DSP_RMS_H
+#define DSP_RMS_H
 
 namespace DSP {
 
@@ -72,4 +72,4 @@ class RMS
 
 } /* namespace DSP */
 
-#endif /* _DSP_RMS_H_ */
+#endif /* DSP_RMS_H */

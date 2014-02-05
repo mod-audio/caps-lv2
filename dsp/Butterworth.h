@@ -24,8 +24,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_BUTTERWORTH_H_
-#define _DSP_BUTTERWORTH_H_
+#ifndef DSP_BUTTERWORTH_H
+#define DSP_BUTTERWORTH_H
 
 #include "BiQuad.h"
 
@@ -63,4 +63,4 @@ HP (float f, DSP::BiQuad<T> & bq)
 } /* ~namespace Butterworth */
 } /* ~namespace DSP */
 
-#endif /* _DSP_BUTTERWORTH_H_ */
+#endif /* DSP_BUTTERWORTH_H */

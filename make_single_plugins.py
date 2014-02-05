@@ -14,7 +14,7 @@ dsp_sources = ' '.join(glob.glob('dsp/*.cc'))
 
 # LADSPA_UID, EFFECT_NAME, FILES
 effects_info = [
-('2602',    'NoiseGate',        ['NoiseGate.cc']),
+('2602',    'Noisegate',        ['Noisegate.cc']),
 ('1772',    'Compress',         ['Compress.cc']),
 ('2598',    'CompressX2',       ['Compress.cc']),
 ('2589',    'ToneStack',        ['ToneStack.cc']),
@@ -61,7 +61,7 @@ interface_code = """
 #include "Pan.h"
 #include "Scape.h"
 #include "ToneStack.h"
-#include "NoiseGate.h"
+#include "Noisegate.h"
 
 #include "Descriptor.h"
 

@@ -5,7 +5,7 @@
 	
 	http://quitte.de/dsp/
 
-	Assortment of phaser units.
+	Phaser effect
 
 */
 /*
@@ -98,7 +98,7 @@ PhaserII::port_info [] =
 	{ "rate", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
 	{ "lfo", CTRL_IN, {DEFAULT_0 | INTEGER, 0, 1}, "{0:'sine',1:'fractal'}"}, 
 
-	{ "depth", CTRL_IN | GROUP, {DEFAULT_1, 0, 1} }, 
+	{ "depth", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} }, 
 	{ "spread", CTRL_IN, {DEFAULT_HIGH, 0, 1} }, 
 	{ "resonance", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
 
@@ -111,9 +111,9 @@ Descriptor<PhaserII>::setup()
 {
 	Label = "PhaserII";
 
-	Name = CAPS "PhaserII - Mono phaser with fractal modulation";
+	Name = CAPS "PhaserII - Mono phaser";
 	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2002-12";
+	Copyright = "2002-13";
 
 	/* fill port info and vtable */
 	autogen();

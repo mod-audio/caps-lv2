@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_LORENZ_H_
-#define _DSP_LORENZ_H_
+#ifndef DSP_LORENZ_H
+#define DSP_LORENZ_H
 
 namespace DSP {
 
@@ -92,4 +92,4 @@ class Lorenz
 
 } /* namespace DSP */
 
-#endif /*_DSP_LORENZ_H_ */
+#endif /*DSP_LORENZ_H */

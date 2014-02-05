@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _COMPRESS_H_
-#define _COMPRESS_H_
+#ifndef COMPRESS_H
+#define COMPRESS_H
 
 #include "dsp/util.h"
 #include "dsp/Compress.h"
@@ -145,4 +145,4 @@ class CompressX2
 		static PortInfo port_info [];
 };
 
-#endif /* _COMPRESS_H_ */
+#endif /* COMPRESS_H */

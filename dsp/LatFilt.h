@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_LatFilt_H_
-#define _DSP_LatFilt_H_
+#ifndef DSP_LATFILT_H
+#define DSP_LATFILT_H
 
 namespace DSP {
 
@@ -99,4 +99,4 @@ class LatFilt
 
 } /* namespace DSP */
 
-#endif /* _DSP_LatFilt_H_ */
+#endif /* DSP_LATFILT_H */

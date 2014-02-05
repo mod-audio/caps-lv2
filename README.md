@@ -1,7 +1,7 @@
-caps-lv2 0.9.16
+caps-lv2 0.9.17
 ===============
 
-LV2 port for the CAPS Audio Plugin Suite
+LV2 port for the [CAPS Audio Plugin Suite](http://quitte.de/dsp/caps.html)
 
 LV2 Port
 ========
@@ -10,7 +10,6 @@ The major changes to the original LADSPA caps were:
 
 - support to LV2_Descriptor in the Descriptor Class (Descriptor.h)
 - added LV2 descriptors in interface.cc
-- small changes in basics.h
 - small changes in Makefile
 
 So it's really easy to keep in track with new upstream releases

@@ -1,11 +1,11 @@
 /*
 	basics.h
-
+	
 	Copyright 2004-12 Tim Goetze <tim@quitte.de>
-
+	
 	http://quitte.de/dsp/
 
-	Common constants, typedefs, utility functions
+	Common constants, typedefs, utility functions 
 	and simplified LADSPA #defines.
 
 */
@@ -26,8 +26,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _BASICS_H_
-#define _BASICS_H_
+#ifndef BASICS_H
+#define BASICS_H
 
 #define _GNU_SOURCE 1
 #define _USE_GNU 1
@@ -157,7 +157,7 @@ frandom()
 }
 
 /* NB: also true if 0  */
-inline bool
+inline bool 
 is_denormal (float & f)
 {
 	int32 i = *((int32 *) &f);
@@ -165,17 +165,17 @@ is_denormal (float & f)
 }
 
 /* not used, check validity before using */
-inline bool
+inline bool 
 is_denormal (double & f)
 {
 	int64 i = *((int64 *) &f);
 	return ((i & 0x7fe0000000000000ll) == 0);
 }
 
-/* lovely algorithm from
+/* lovely algorithm from 
   http://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2Float
 */
-inline uint
+inline uint 
 next_power_of_2 (uint n)
 {
 	assert (n <= 0x40000000);
@@ -190,7 +190,7 @@ next_power_of_2 (uint n)
 	return ++n;
 }
 
-inline double
+inline double 
 db2lin (double db)
 {
 	return pow(10, db*.05);
@@ -213,7 +213,7 @@ lin2db (double lin)
 #define CAPS "C* "
 #define CAPS_URI "http://portalmod.com/plugins/caps/"
 
-class Plugin
+class Plugin 
 {
 	public:
 		float fs, over_fs; /* sample rate and 1/fs */
@@ -242,4 +242,4 @@ class Plugin
 			}
 };
 
-#endif /* _BASICS_H_ */
+#endif /* BASICS_H */

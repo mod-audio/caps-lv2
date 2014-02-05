@@ -1,7 +1,7 @@
 /*
-	NoiseGate.h
+	Noisegate.h
 	
-	Copyright 2011 Tim Goetze <tim@quitte.de>
+	Copyright 2011-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _NOISE_GATE_H_
-#define _NOISE_GATE_H_
+#ifndef NOISE_GATE_H
+#define NOISE_GATE_H
 
 #include "dsp/util.h"
 #include "dsp/BiQuad.h"
@@ -37,17 +37,30 @@
 #include "dsp/Delay.h"
 #include "dsp/OnePole.h"
 
-class NoiseGate
+class Noisegate
 : public Plugin
 {
 	public:
 		int N;
 		float over_N;
-		DSP::RMS<2048> rms;
+		DSP::RMS<8192> rms;
+		DSP::OnePoleLP<sample_t> lp;
+		DSP::Delay delay;
 		uint remain;
 		struct {
-			sample_t current, delta, quiet;
+			float current, delta, quiet;
+			DSP::OnePoleLP<sample_t> lp;
+			float get()
+				{
+					current += delta;
+					/* this filter needs no normal addition because its input is always 
+					 * at least the closed-gate gain (currently -60 dB) */
+					return lp.process(current);
+				}
 		} gain;
+		struct {
+			uint age, threshold;
+		} hysteresis;
 
 		float f_mains;
 		DSP::BiQuad<sample_t> humfilter[2];
@@ -64,13 +77,13 @@ class NoiseGate
 		inline void store (sample_t x)
 			{
 				sample_t y;
-				y = humfilter[0].process(x);
+				y = humfilter[0].process(x+normal);
 				y = humfilter[1].process(y);
-				rms.store (x - .3 * y);
+				rms.store (x - .3*y);
 			}
 
 		void run (uint n) { cycle<store_func> (n); }
 		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
-#endif /* _NOISE_GATE_H_ */
+#endif /* NOISE_GATE_H */

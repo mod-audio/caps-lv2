@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_V4F_FIR_H_
-#define _DSP_V4F_FIR_H_
+#ifndef DSP_V4F_FIR_H
+#define DSP_V4F_FIR_H
 
 #include "v4f.h"
 
@@ -167,5 +167,5 @@ class FIR4f
 
 } /* namespace DSP */
 
-#endif /* _DSP_V4F_FIR_H_ */
+#endif /* DSP_V4F_FIR_H */
 

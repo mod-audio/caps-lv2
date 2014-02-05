@@ -39,7 +39,7 @@
 const char *
 DSP::ToneStack::presetdict =
 		"{0:'basswoman', 1:'twin', 2:'wookie', 3:'DC 30', 4:'juice 800',"
-		"5:'stanford', 6:'HK 20', 7:'nihon ace', 8:'porky',"
+		"5:'stanford', 6:'AK 20', 7:'nihon ace', 8:'porky',"
 		"9:'5F6-A LT'}";
 
 DSP::TSParameters 

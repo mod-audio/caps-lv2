@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_COMPRESS_H_
-#define _DSP_COMPRESS_H_
+#ifndef DSP_COMPRESS_H
+#define DSP_COMPRESS_H
 
 #include "RMS.h"
 #include "OnePole.h"
@@ -196,4 +196,4 @@ class CompressPeak
 
 }; /* namespace DSP */
 
-#endif /* _DSP_COMPRESS_H_ */
+#endif /* DSP_COMPRESS_H */

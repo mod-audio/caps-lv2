@@ -14,7 +14,7 @@
 <http://portalmod.com/plugins/caps/Eq4p>				a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Eq4p.ttl>.
 <http://portalmod.com/plugins/caps/Fractal>				a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Fractal.ttl>.
 <http://portalmod.com/plugins/caps/Narrower>			a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Narrower.ttl>.
-<http://portalmod.com/plugins/caps/NoiseGate>			a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <NoiseGate.ttl>.
+<http://portalmod.com/plugins/caps/Noisegate>			a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Noisegate.ttl>.
 <http://portalmod.com/plugins/caps/PhaserII>			a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <PhaserII.ttl>.
 <http://portalmod.com/plugins/caps/Plate>				a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <Plate.ttl>.
 <http://portalmod.com/plugins/caps/PlateX2>				a lv2:Plugin; lv2:binary <caps.so>; rdfs:seeAlso <PlateX2.ttl>.

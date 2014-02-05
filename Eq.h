@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _EQ_H_
-#define _EQ_H_
+#ifndef EQ_H
+#define EQ_H
 
 #include "dsp/util.h"
 #include "dsp/Eq.h"
@@ -104,4 +104,4 @@ class Eq4p
 		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
-#endif /* _EQ_H_ */
+#endif /* EQ_H */

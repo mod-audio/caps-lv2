@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_WHITE_H_
-#define _DSP_WHITE_H_
+#ifndef DSP_WHITE_H
+#define DSP_WHITE_H
 
 namespace DSP {
 
@@ -75,4 +75,4 @@ class White
 
 } /* namespace DSP */
 
-#endif /* _DSP_WHITE_H_ */
+#endif /* DSP_WHITE_H */

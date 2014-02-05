@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _SATURATE_H_
-#define _SATURATE_H_
+#ifndef SATURATE_H
+#define SATURATE_H
 
 #include "dsp/util.h"
 #include "dsp/Oversampler.h"
@@ -139,4 +139,4 @@ class SpiceX2
 		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
-#endif /* _SATURATE_H_ */
+#endif /* SATURATE_H */

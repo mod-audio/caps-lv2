@@ -134,7 +134,7 @@ Compress::port_info [] =
 	{ "measure", CTRL_IN, {INTEGER | DEFAULT_0, 0, 1},
 		"{0:'peak',1:'rms'}" }, 
 	{ "mode", CTRL_IN | GROUP, {INTEGER | DEFAULT_1, 0, 3},
-		"{0:'linear',1:'saturating 2x',2:'saturating 4x',3:'saturating 4x128'}" }, 
+		"{0:'no limiting',1:'saturating 2x',2:'saturating 4x',3:'saturating 4x128'}" }, 
 	{ "threshold", CTRL_IN | GROUP, {DEFAULT_0, 0, 1} }, 
 	{ "strength", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
 	{ "attack", CTRL_IN | GROUP, {DEFAULT_0, 0, 1} }, 

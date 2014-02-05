@@ -71,8 +71,8 @@
 		output[i] = out;
 	}
 */
-#ifndef _DSP_SVF_H_
-#define _DSP_SVF_H_
+#ifndef DSP_SVF_H
+#define DSP_SVF_H
 
 namespace DSP {
 
@@ -312,4 +312,4 @@ class StackedSVF
 
 } /* namespace DSP */
 
-#endif /* _DSP_SVF_H_ */
+#endif /* DSP_SVF_H */

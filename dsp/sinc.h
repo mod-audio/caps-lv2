@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _SINC_H_
-#define _SINC_H_
+#ifndef DSP_SINC_H
+#define DSP_SINC_H
 
 #include "Sine.h"
 
@@ -55,4 +55,4 @@ sinc (double omega, sample_t * s, int n)
 
 }; /* namespace DSP */
 
-#endif /* _SINC_H_ */
+#endif /* DSP_SINC_H */

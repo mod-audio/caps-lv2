@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _COMPLEX_H_
-#define _COMPLEX_H_
+#ifndef COMPLEX_H
+#define COMPLEX_H
 
 namespace DSP {
 	
@@ -135,4 +135,4 @@ hypot (complex z)
 
 } /* namespace DSP */
 
-#endif /* _COMPLEX_H_ */
+#endif /* COMPLEX_H */

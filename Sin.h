@@ -1,7 +1,7 @@
 /*
 	Sin.h
 	
-	Copyright 2004-11 Tim Goetze <tim@quitte.de>
+	Copyright 2004-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _SIN_H_
-#define _SIN_H_
+#ifndef SIN_H
+#define SIN_H
 
 #include "dsp/Sine.h"
 
@@ -44,12 +44,11 @@ class Sin
 	public:
 		static PortInfo port_info [];
 
-		void init();
-		void activate() 
-			{ gain = getport(1); }
+		void init() {}
+		void activate(); 
 
 		void run (uint n) { cycle<store_func> (n); }
 		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
-#endif /* _SIN_H_ */
+#endif /* SIN_H */

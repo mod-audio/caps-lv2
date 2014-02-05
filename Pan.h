@@ -26,8 +26,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _PAN_H_
-#define _PAN_H_
+#ifndef PAN_H
+#define PAN_H
 
 #include "dsp/Delay.h"
 #include "dsp/BiQuad.h"
@@ -78,4 +78,4 @@ class Narrower
 
 };
 
-#endif /* _PAN_H_ */
+#endif /* PAN_H */

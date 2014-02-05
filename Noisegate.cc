@@ -1,5 +1,5 @@
 /*
-	NoiseGate.cc
+	Noisegate.cc
 	
 	Copyright 2011-13 Tim Goetze <tim@quitte.de>
 	
@@ -28,30 +28,37 @@
 #include "basics.h"
 #include <stdio.h>
 
-#include "NoiseGate.h"
+#include "Noisegate.h"
 #include "Descriptor.h"
 
 void
-NoiseGate::init()
+Noisegate::init()
 {
-	N = 882*fs/44100; /* 20 ms RMS accumulation when open */
+	N = 3*882*fs/44100; /* 60 ms RMS accumulation when open */
+	hysteresis.threshold = (uint) (.08*fs); /* opening for at least 80 ms */
 	over_N = 1./N;
 	gain.quiet = db2lin (-60);
+	gain.lp.set_f (80*over_fs);
+	lp.set_f (20*over_fs);
+	delay.init (fs*.001); /* 1 ms maximum lookahead */
 }
 
 void
-NoiseGate::activate()
+Noisegate::activate()
 {
 	rms.reset();
 	remain = 0;
+	hysteresis.age = 0;
 	gain.current = gain.quiet;
 	gain.delta = 0;
+	gain.lp.reset();
+	lp.reset();
 	f_mains = -1; /* make sure filters are updated when processing */
 }
 
-template <yield_func_t F>
+template <yield_func_t yield>
 void
-NoiseGate::cycle (uint frames)
+Noisegate::cycle (uint frames)
 {
 	sample_t * s = ports[0];
 	sample_t * d = ports[1]; 
@@ -78,52 +85,58 @@ NoiseGate::cycle (uint frames)
 		humfilter[1].reset();
 	}
 
+	bool opennow = false;
 	while (frames)
 	{
 		if (remain == 0)
 		{
 			remain = N;
-			if (gain.delta) /* just opened or closed */
+			if (opennow)
+			{
+				remain = (int) attack;
+				gain.delta = (1 - gain.current) / remain;
+				hysteresis.age = 0;
+				opennow = false;
+			}
+			else if (gain.delta > 0) 
+				gain.current = 1,
 				gain.delta = 0;
-			else if (rms.get() < close) /* otherwise, need to close? */
+			else if (gain.delta < 0) 
+				gain.delta = 0;
+			else if (rms.get() < close && hysteresis.age > hysteresis.threshold) 
 			{
 				//fprintf (stderr, "%.3f < %.3f\n", rms.get(), close);
-				gain.delta = (gain.quiet - gain.current) * over_N;
+				gain.delta = (gain.quiet - gain.current)*over_N;
 			}
 		}
 
 		uint i = 0;
 		uint n = min (frames, remain);
 		//fprintf (stderr, "%d %.3f (%.3f)\n", n, gain.current, gain.delta);
-		if (gain.delta) for (  ; i < n; ++i) /* opening or closing */
+		if (gain.delta > 0 || gain.current == 1) for (  ; i < n; ++i) /* opening or open */
 		{
 			register sample_t a = s[i];
-			store (a);
-			F (d, i, a * gain.current, adding_gain);
-			gain.current += gain.delta;
-		}
-		else if (gain.current == 1) for (  ; i < n; ++i) /* currently open */
-		{
-			register sample_t a = s[i];
-			store (a);
-			F (d, i, a, adding_gain);
-		}
-		else for (  ; i < n; ++i) /* currently closed */
-		{
-			register sample_t a = s[i];
+			lp.process(fabs(a+normal));
+			delay.put(a);
 			store(a);
-			if (fabs(a) < open)
-				F (d, i, a * gain.current, adding_gain);
+			yield (d, i, 0 ? lp.y1-open : a*gain.get(), adding_gain);
+		}
+		else for (  ; i < n; ++i) 
+		{
+			register sample_t a = s[i];
+			delay.put(a);
+			store(a);
+			if (lp.process(fabs(a+normal)) < open)
+				yield (d, i, 0 ? lp.y1-open : a*gain.get(), adding_gain);
 			else 
 			{
-				remain = (int) attack;
-				gain.delta = (1-gain.current) / remain;
-				/* correct for later subtraction of i */
-				remain += i;
+				opennow = true;
+				remain = i;
 				break;
 			}
 		}
 		
+		hysteresis.age += i;
 		s += i, d += i;
 		frames -= i;
 		remain -= i;
@@ -133,15 +146,15 @@ NoiseGate::cycle (uint frames)
 /* //////////////////////////////////////////////////////////////////////// */
 
 PortInfo
-NoiseGate::port_info [] = 
+Noisegate::port_info [] = 
 {
 	{ "in", INPUT | AUDIO },
 	{	"out", OUTPUT | AUDIO },
 
 	/* 2 */
-	{ "open (dB)", CTRL_IN, {DEFAULT_LOW, -60, 0} }, 
-	{ "attack (ms)", CTRL_IN, {DEFAULT_LOW, 0, 3} }, 
-	{ "close (dB)", CTRL_IN, {DEFAULT_LOW, -90, 0} }, 
+	{ "open (dB)", CTRL_IN, {DEFAULT_MIN, -60, 0} }, 
+	{ "attack (ms)", CTRL_IN, {DEFAULT_0, 0, 5} }, 
+	{ "close (dB)", CTRL_IN, {DEFAULT_MIN, -90, 0} }, 
 
 	/* mains */
 	{ "mains (Hz)", CTRL_IN|GROUP, {INTEGER|DEFAULT_MID, 0, 100},
@@ -149,11 +162,11 @@ NoiseGate::port_info [] =
 };
 
 template <> void
-Descriptor<NoiseGate>::setup()
+Descriptor<Noisegate>::setup()
 {
-	Label = "NoiseGate";
+	Label = "Noisegate";
 
-	Name = CAPS "NoiseGate - Attenuate hum and noise";
+	Name = CAPS "Noisegate - Attenuate hum and noise";
 	Maker = "Tim Goetze <tim@quitte.de>";
 	Copyright = "2011-13";
 

@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_POLYNOMIALS_H_
-#define _DSP_POLYNOMIALS_H_
+#ifndef DSP_POLYNOMIALS_H
+#define DSP_POLYNOMIALS_H
 
 namespace DSP {
 namespace Polynomial {
@@ -48,4 +48,4 @@ extern float tanh (float x);
 }; /* namespace DSP */
 
 
-#endif /* _DSP_POLYNOMIALS_H_ */
+#endif /* DSP_POLYNOMIALS_H */

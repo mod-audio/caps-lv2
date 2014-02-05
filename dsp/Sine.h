@@ -26,8 +26,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_SINE_H_
-#define _DSP_SINE_H_
+#ifndef DSP_SINE_H
+#define DSP_SINE_H
 
 namespace DSP {
 	
@@ -113,4 +113,4 @@ class DampedSine
 
 } /* namespace DSP */
 
-#endif /* _DSP_SINE_H_ */
+#endif /* DSP_SINE_H */

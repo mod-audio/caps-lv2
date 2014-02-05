@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_BI_QUAD_H_
-#define _DSP_BI_QUAD_H_
+#ifndef DSP_BI_QUAD_H
+#define DSP_BI_QUAD_H
 
 #include "complex.h"
 
@@ -208,4 +208,4 @@ class BiQuad
 
 } /* namespace DSP */
 
-#endif /* _DSP_BI_QUAD_H_ */
+#endif /* DSP_BI_QUAD_H */

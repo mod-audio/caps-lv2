@@ -33,8 +33,8 @@
 */
 
 
-#ifndef _DSP_FP_TRUNCATE_MODE_H_
-#define _DSP_FP_TRUNCATE_MODE_H_
+#ifndef DSP_FP_TRUNCATE_MODE_H
+#define DSP_FP_TRUNCATE_MODE_H
 
 #ifdef __i386__
 	#define fstcw(i) \
@@ -84,4 +84,4 @@ class FPTruncateMode
 
 } /* namespace DSP */
 
-#endif /* _DSP_FP_TRUNCATE_MODE_H_ */
+#endif /* DSP_FP_TRUNCATE_MODE_H */

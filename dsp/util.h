@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_UTIL_H_
-#define _DSP_UTIL_H_
+#ifndef DSP_UTIL_H
+#define DSP_UTIL_H
 
 namespace DSP {
 
@@ -66,4 +66,4 @@ isprime (int v)
 
 } /* namespace DSP */
 
-#endif /* _DSP_UTIL_H_ */
+#endif /* DSP_UTIL_H */

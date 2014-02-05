@@ -430,7 +430,6 @@ SpiceX2::cycle (uint frames)
 				a = chan[c].split[1].low(x);
 				b = chan[c].split[1].high(x);
 				x = b;
-				//x = cheby.calculate(x)-dc;
 				x *= hi.gain;
 				x = DSP::Polynomial::atan(x);
 				x = chan[c].shape[1].process (x);
@@ -467,7 +466,7 @@ Descriptor<SpiceX2>::setup()
 {
 	Label = "SpiceX2";
 
-	Name = CAPS "SpiceX2 - Not an exciter";
+	Name = CAPS "SpiceX2 - Not an exciter either";
 	Maker = "Tim Goetze <tim@quitte.de>";
 	Copyright = "2012-2013";
 

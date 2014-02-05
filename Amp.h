@@ -1,7 +1,7 @@
 /*
 	Amp.h
 	
-	Copyright 2002-12 Tim Goetze <tim@quitte.de>
+	Copyright 2002-14 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _AMP_H_
-#define _AMP_H_
+#ifndef AMP_H
+#define AMP_H
 
 #include "dsp/util.h"
 #include "dsp/OnePole.h"
@@ -50,8 +50,8 @@ class AmpVTS
 		DSP::Oversampler<4,32> over4;
 		DSP::Oversampler<8,64> over8;
 
-		DSP::BiQuad<sample_t> hp, lp, biaslp;
-		DSP::OnePoleHP<sample_t> dc1, dc2; /* dc blockers */
+		DSP::BiQuad<sample_t> lp, biaslp;
+		DSP::OnePoleHP<sample_t> hp1, dc1, dc2; /* dc blockers */
 
 		int model;
 		DSP::ToneStack tonestack;
@@ -74,4 +74,4 @@ class AmpVTS
 		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
-#endif /* _AMP_H_ */
+#endif /* AMP_H */

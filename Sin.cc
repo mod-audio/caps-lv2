@@ -1,7 +1,7 @@
 /*
 	Sin.cc
 	
-	Copyright 2002-7 Tim Goetze <tim@quitte.de>
+	Copyright 2002-13 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -31,28 +31,42 @@
 #include "Descriptor.h"
 
 void
-Sin::init()
-{
-	sin.set_f (f = .005, fs, 0);
-	gain = 0;
+Sin::activate()
+{ 
+	gain = getport(1); 
+	f = getport(0);
+	sin.set_f (f, fs, 0);
 }
 
 template <yield_func_t F>
 void
 Sin::cycle (uint frames)
 {
-	if (f != *ports[0])
-		sin.set_f (f = getport(0), fs, sin.get_phase());
-
-	double g = (gain == *ports[1]) ? 
-		1 : pow (getport(1) / gain, 1. / (double) frames);
-
 	sample_t * d = ports[2];
+	double g = getport(1);
+	g = (g == gain ? 1 : pow (g/gain, 1./(double) frames));
 
-	for (uint i = 0; i < frames; ++i)
+	float ff = getport(0);
+	if (ff == f)
 	{
-		F (d, i, gain * sin.get(), adding_gain);
-		gain *= g;
+		for (uint i = 0; i < frames; ++i)
+		{
+			F (d, i, gain * sin.get(), adding_gain);
+			gain *= g;
+		}
+	}
+	else /* crossfade old and new frequency */
+	{
+		sample_t g0=1, g1=0, dg=1./frames;
+		DSP::Sine sin0 = sin;
+		sin.set_f (f = ff, fs, sin.get_phase());
+		for (uint i = 0; i < frames; ++i)
+		{
+			sample_t x = g0*sin0.get() + g1*sin.get();
+			g0 -= dg, g1 += dg;
+			F (d, i, gain * x, adding_gain);
+			gain *= g;
+		}
 	}
 
 	gain = getport(1);
@@ -63,19 +77,9 @@ Sin::cycle (uint frames)
 PortInfo
 Sin::port_info [] =
 {
-	{
-		"f (Hz)",
-		INPUT | CONTROL,
-		{LOG | DEFAULT_100, 0.0001, 20000}
-	}, {
-		"volume",
-		INPUT | CONTROL,
-		{DEFAULT_MID, MIN_GAIN, 1}
-	}, {
-		"out",
-		OUTPUT | AUDIO,
-		{0}
-	}
+	{ "f (Hz)", CTRL_IN, {LOG | DEFAULT_440, 0.0001, 20000} }, 
+	{ "volume", CTRL_IN, {DEFAULT_MID, MIN_GAIN, 1}	}, 
+	{ "out", OUTPUT | AUDIO, {0} }
 };
 
 template <> void
@@ -85,7 +89,7 @@ Descriptor<Sin>::setup()
 
 	Name = CAPS "Sin - Sine wave generator";
 	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2004-7";
+	Copyright = "2004-13";
 
 	/* fill port info and vtable */
 	autogen();

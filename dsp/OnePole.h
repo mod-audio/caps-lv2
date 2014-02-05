@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _ONE_POLE_H_
-#define _ONE_POLE_H_
+#ifndef ONE_POLE_H
+#define ONE_POLE_H
 
 namespace DSP {
 	
@@ -115,4 +115,4 @@ class OnePoleHP
 
 } /* namespace DSP */
 
-#endif /* _ONE_POLE_H_ */
+#endif /* ONE_POLE_H */

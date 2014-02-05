@@ -72,7 +72,7 @@ ClickStub<Waves>::cycle (uint frames)
 			for (uint i = 0; i < n; ++i)
 			{
 				double x = gain * wave[w].data[played+i];
-				x = lp.process (x + normal);
+				x = lp.process (x);
 				F (d, i, x, adding_gain);
 			}
 
@@ -82,8 +82,8 @@ ClickStub<Waves>::cycle (uint frames)
 		{
 			for (uint i = 0; i < n; ++i)
 				F (d, i, lp.process (normal), adding_gain);
+			normal = -normal;
 		}
-		normal = -normal;
 
 		period -= n;
 		frames -= n;

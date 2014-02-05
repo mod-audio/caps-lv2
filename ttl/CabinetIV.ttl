@@ -21,9 +21,6 @@ The filter banks implemented are 64 2nd order IIR and one 128-tap FIR in paralle
  
 Despite the complexity, computational load is very modest thanks to vector arithmetic if a hardware implementation is available – if not, however, the load will be easily an order of magnitude higher, and possibly found to be prohibitive on less powerful hardware.
 
-
-TESTTO
-
 source: http://quitte.de/dsp/caps.html#CabinetIV
 """;
 

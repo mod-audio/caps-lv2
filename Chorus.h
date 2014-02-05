@@ -23,8 +23,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _CHORUS_H_
-#define _CHORUS_H_
+#ifndef CHORUS_H
+#define CHORUS_H
 
 #include "dsp/Sine.h"
 #include "dsp/Roessler.h"
@@ -153,4 +153,4 @@ class ChorusII
 };
 
 #endif
-#endif /* _CHORUS_H_ */
+#endif /* CHORUS_H */

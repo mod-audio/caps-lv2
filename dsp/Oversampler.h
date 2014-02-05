@@ -27,8 +27,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_OVERSAMPLER_H_
-#define _DSP_OVERSAMPLER_H_
+#ifndef DSP_OVERSAMPLER_H
+#define DSP_OVERSAMPLER_H
 
 #include "FIR.h"
 #include "sinc.h"
@@ -108,4 +108,4 @@ class Oversampler
 
 }; /* namespace DSP */
 
-#endif /* _DSP_OVERSAMPLER_H_ */
+#endif /* DSP_OVERSAMPLER_H */

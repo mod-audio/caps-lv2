@@ -23,8 +23,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _SCAPE_H_
-#define _SCAPE_H_
+#ifndef SCAPE_H
+#define SCAPE_H
 
 #include "dsp/Sine.h"
 #include "dsp/Roessler.h"
@@ -64,4 +64,4 @@ class Scape
 		void run_adding (int n) { cycle<adding_func> (n); }
 };
 
-#endif /* _SCAPE_H_ */
+#endif /* SCAPE_H */

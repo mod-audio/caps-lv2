@@ -29,8 +29,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_DELAY_H_
-#define _DSP_DELAY_H_
+#ifndef DSP_DELAY_H
+#define DSP_DELAY_H
 
 #include "util.h"
 #include "FPTruncateMode.h"
@@ -147,4 +147,4 @@ class MovingAverage
 
 }; /* namespace DSP */
 
-#endif /* _DSP_DELAY_H_ */
+#endif /* DSP_DELAY_H */

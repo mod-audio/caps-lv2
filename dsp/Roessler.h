@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_ROESSLER_H_
-#define _DSP_ROESSLER_H_
+#ifndef DSP_ROESSLER_H
+#define DSP_ROESSLER_H
 
 namespace DSP {
 
@@ -93,4 +93,4 @@ class Roessler
 
 } /* namespace DSP */
 
-#endif /* _DSP_ROESSLER_H_ */
+#endif /* DSP_ROESSLER_H */

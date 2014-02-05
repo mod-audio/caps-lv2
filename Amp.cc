@@ -1,7 +1,7 @@
 /*
 	Amp.cc
 	
-	Copyright 2003-13 Tim Goetze <tim@quitte.de>
+	Copyright 2003-14 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -44,13 +44,13 @@ AmpVTS::init()
 void
 AmpVTS::activate()
 {
-	hp.reset();
+	hp1.reset();
 	lp.reset();
 
 	remain = 0;
 	compress.init (fs);
 	compress.set_threshold(0);
-	compress.set_release(0);
+	compress.set_release(.0);
 
 	dc2.reset();
 
@@ -68,7 +68,7 @@ AmpVTS::setratio (int r)
 		return;
 
 	ratio = r;
-	dc1.set_f (25./(ratio*fs)); 
+	dc1.set_f (72./(ratio*fs)); 
 	dc1.reset();
 
 	over2.reset();
@@ -106,24 +106,24 @@ AmpVTS::subcycle (uint frames, Over & over)
 		tonestack.setmodel (model = m);
 	tonestack.updatecoefs (getport(5),getport(6),getport(7));
 
-	compress.set_attack (.25*getport(8));
-	
 	float x=getport(1), y=getport(3); /* = gain,powa :: shorthand for gain calc */
 	float bright = .59*getport(2)*(1-x*.81);
-	DSP::RBJ::LP ((2000*pow(10,bright))/(over.Ratio*fs), .7, lp);
+	DSP::RBJ::LP ((2000*pow(10,bright))/(over.Ratio*fs), .7, lp); 
 
 	float gain = x*x;
 	float powa = .9*gain + (1-.9*gain)*y; /* ramp up powa with gain */
-	float squash = .01+.21*getport(9)*(1 - powa*gain);
 
-	float bias = .22*powa;
+	compress.set_attack (.25*getport(8));
+	float squash = .01 + .21*getport(9)*(1 - powa*gain);
+
+	float bias = .62*powa;
 
 	/* roughly correcting for loudness increase */
 	float makeup = (.086-.06*y)/(11.6+exp((12.1-5*y)*(.81-.08*y-x)))+0.00032+.0026*y;
-	makeup = 0 ? 1 : .0006/makeup;
+	makeup = 0 ? 1 : .0006/makeup; /* debug switch for makeup */
 
-	float lowcut = .1 + 342*getport(10); 
-	DSP::RBJ::HP (lowcut*over_fs, .7, hp);
+	float lowcut = .1 + 392*getport(10); 
+	hp1.set_f (1.5*lowcut*over_fs); 
 
 	gain = pow (200, gain) * -tsgain[model];
 	powa = pow (125, powa);
@@ -145,7 +145,7 @@ AmpVTS::subcycle (uint frames, Over & over)
 			sample_t a = s[i];
 			sample_t b = biaslp.process (bias*compress.power.current - .00002);
 
-			a = hp.process (a);
+			a = hp1.process(a);
 			a *= gain * compress.get();
 			a = tonestack.process (a + normal);
 			a += .5*b;
@@ -205,7 +205,7 @@ AmpVTS::port_info [] =
 	{ "squash", CTRL_IN, {DEFAULT_MID, 0, 1} },
 
 	/* 10 */
-	{ "lowcut", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} },
+	{ "lowcut", CTRL_IN | GROUP, {DEFAULT_MID, 0, 1} },
 
 	{ "in", INPUT | AUDIO }, 
 	{	"out", OUTPUT | AUDIO }, 
@@ -218,7 +218,7 @@ Descriptor<AmpVTS>::setup()
 
 	Name = CAPS "AmpVTS - Idealised guitar amplification";
 	Maker = "Tim Goetze <tim@quitte.de>, David Yeh <dtyeh@ccrma.stanford.edu>";
-	Copyright = "2002-13";
+	Copyright = "2002-14";
 
 	/* fill port info and vtable */
 	autogen();

@@ -27,8 +27,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef __V4F_H__
-#define __V4F_H__
+#ifndef DSP_V4F_H
+#define DSP_V4F_H
 
 #ifdef __SSE__
 #include <xmmintrin.h>
@@ -164,4 +164,4 @@ class Sin4f
 			}
 };
 
-#endif /* __V4F_H__ */
+#endif /* DSP_V4F_H */

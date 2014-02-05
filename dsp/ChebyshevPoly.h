@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_CHEBYSHEV_POLY_H_
-#define _DSP_CHEBYSHEV_POLY_H_
+#ifndef DSP_CHEBYSHEV_POLY_H
+#define DSP_CHEBYSHEV_POLY_H
 
 namespace DSP {
 
@@ -93,5 +93,5 @@ class ChebPoly
 
 }; /* namespace DSP */
 
-#endif /* _DSP_CHEBYSHEV_POLY_H_ */
+#endif /* DSP_CHEBYSHEV_POLY_H */
 

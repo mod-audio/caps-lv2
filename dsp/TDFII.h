@@ -27,8 +27,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_TDFII_H_
-#define _DSP_TDFII_H_
+#ifndef DSP_TDFII_H
+#define DSP_TDFII_H
 
 namespace DSP {
 
@@ -77,4 +77,4 @@ class TDFII
 
 } /* namespace DSP */
 
-#endif /* _DSP_TDFII_H_ */
+#endif /* DSP_TDFII_H */

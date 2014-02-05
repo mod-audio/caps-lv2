@@ -400,7 +400,7 @@ PlateX2::cycle (uint frames)
 
 	sample_t decay = .749*getport(3);
 
-	double damp = exp (-M_PI * (.0005+.9995*getport(3)));
+	double damp = exp (-M_PI * (.0005+.9995*getport(4)));
 	tank.damping[0].set (damp);
 	tank.damping[1].set (damp);
 

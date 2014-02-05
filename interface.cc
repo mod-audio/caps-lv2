@@ -1,7 +1,7 @@
 /*
   interface.cc
 
-	Copyright 2004-12 Tim Goetze <tim@quitte.de>
+	Copyright 2004-13 Tim Goetze <tim@quitte.de>
 
 	http://quitte.de/dsp/
 
@@ -48,11 +48,11 @@
 #include "Pan.h"
 #include "Scape.h"
 #include "ToneStack.h"
-#include "NoiseGate.h"
+#include "Noisegate.h"
 
 #include "Descriptor.h"
 
-#define N 35 
+#define N 35
 
 static DescriptorStub * descriptors [N+1];
 static DescriptorStub * lv2_descriptors [N+1];
@@ -76,9 +76,10 @@ __attribute__ ((constructor))
 void caps_so_init()
 {
 	DescriptorStub ** d = descriptors;
+	/* make sure uninitialised array members are safe to pass to the host */
 	memset (d, 0, sizeof (descriptors));
 
-	*d++ = new Descriptor<NoiseGate>(2602);
+	*d++ = new Descriptor<Noisegate>(2602);
 	*d++ = new Descriptor<Compress>(1772);
 	*d++ = new Descriptor<CompressX2>(2598);
 
@@ -112,13 +113,14 @@ void caps_so_init()
 
 	*d++ = new Descriptor<Click>(1769);
 	*d++ = new Descriptor<CEO>(1770);
+
 	assert (d - descriptors <= N);
 
 	/* LV2 */
 	d = lv2_descriptors;
 	memset (d, 0, sizeof (lv2_descriptors));
 
-	*d++ = new Descriptor<NoiseGate>(CAPS_URI "NoiseGate");
+	*d++ = new Descriptor<Noisegate>(CAPS_URI "Noisegate");
 	*d++ = new Descriptor<Compress>(CAPS_URI "Compress");
 	*d++ = new Descriptor<CompressX2>(CAPS_URI "CompressX2");
 
@@ -165,6 +167,5 @@ void caps_so_fini()
 	d = lv2_descriptors;
 	while (*d) delete *d++;
 }
-
 
 }; /* extern "C" */

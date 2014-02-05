@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef __DSP_WINDOWS_H__ 
-#define __DSP_WINDOWS_H__
+#ifndef DSP_WINDOWS_H 
+#define DSP_WINDOWS_H
 
 namespace DSP {
 	
@@ -169,4 +169,4 @@ kaiser (sample_t * s, int n, double beta, double step = 1)
 
 }; /* namespace DSP */
 
-#endif /* __DSP_WINDOWS_H__ */
+#endif /* DSP_WINDOWS_H */

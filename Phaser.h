@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _PHASER_H_
-#define _PHASER_H_
+#ifndef PHASER_H
+#define PHASER_H
 
 #include "dsp/Sine.h"
 #include "dsp/Roessler.h"
@@ -102,4 +102,4 @@ class PhaserII
 		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
-#endif /* _PHASER_H_ */
+#endif /* PHASER_H */

@@ -13,12 +13,12 @@ if OSX:
 	ARCH += ("-arch","i386","-arch","x86_64")
 	import ctypes as C
 	libc = C.CDLL("libc.dylib")
-def osx_query(k):
-	size = C.c_uint(0)
-	libc.sysctlbyname(k,None,C.byref(size),None,0)
-	buf = C.create_string_buffer(size.value)
-	libc.sysctlbyname(k,buf,C.byref(size),None,0)
-	return buf.value
+	def osx_query(k):
+		size = C.c_uint(0)
+		libc.sysctlbyname(k,None,C.byref(size),None,0)
+		buf = C.create_string_buffer(size.value)
+		libc.sysctlbyname(k,buf,C.byref(size),None,0)
+		return buf.value
 
 def we_have_sse():
 	if OSX: return osx_query("hw.optional.sse2")
@@ -39,8 +39,6 @@ def store():
 	os.system ("make clean")
 
 if __name__ == '__main__':
-	if we_have_sse():
-		CFLAGS += ('-msse', '-mfpmath=sse')
-	if we_have_ssse3():
-		CFLAGS += ('-msse3',)
+	if we_have_sse(): CFLAGS += ('-msse', '-mfpmath=sse')
+	if we_have_ssse3(): CFLAGS += ('-msse3',)
 	store()

@@ -33,8 +33,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _FIR_H_
-#define _FIR_H_
+#ifndef FIR_H
+#define FIR_H
 
 #include "util.h"
 
@@ -252,4 +252,4 @@ class FIRn
 
 }; /* namespace DSP */
 
-#endif /* _FIR_H_ */
+#endif /* FIR_H */

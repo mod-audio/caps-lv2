@@ -34,8 +34,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _CABINET_H_
-#define _CABINET_H_
+#ifndef CABINET_H
+#define CABINET_H
 
 #include "dsp/util.h"
 #include "dsp/BiQuad.h"
@@ -164,4 +164,4 @@ class CabinetIV
 		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
-#endif /* _CABINET_H_ */
+#endif /* CABINET_H */

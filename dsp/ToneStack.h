@@ -27,8 +27,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_TONESTACK_H_
-#define _DSP_TONESTACK_H_
+#ifndef DSP_TONESTACK_H
+#define DSP_TONESTACK_H
 
 #include "util.h"
 #include "windows.h"
@@ -244,4 +244,4 @@ class ToneStackLT
 
 } /* namespace DSP */
 
-#endif /* _DSP_TONESTACK_H_ */
+#endif /* DSP_TONESTACK_H */

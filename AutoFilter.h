@@ -26,8 +26,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _AUTO_FILTER_H_
-#define _AUTO_FILTER_H_
+#ifndef AUTO_FILTER_H
+#define AUTO_FILTER_H
 
 #include "dsp/SVF.h"
 
@@ -133,4 +133,4 @@ class AutoFilter
 		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
-#endif /* _AUTO_FILTER_H_ */
+#endif /* AUTO_FILTER_H */
