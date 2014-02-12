@@ -42,32 +42,26 @@ class OnePoleLP
 				y1 = 0.;
 			}
 
-		inline void reset()
-			{
-				y1 = 0.;
-			}
-
-		inline void set_f (T fc)
-			{
-				set (1 - exp(-2*M_PI*fc));
-			}
-
-		inline void set (T d)
-			{
-				a0 = d;
-				b1 = 1 - d;
-			}
-
-		inline T process (T x)
-			{
-				return y1 = a0*x + b1*y1;
-			}
+		sample_t last() {return y1;}
+		inline void reset() { y1 = 0.; }
 		
 		inline void decay (T d)
 			{
 				a0 *= d;
 				b1 = 1. - a0;
 			}
+
+		inline void set_f (T fc) 
+			{ 
+				set (1 - exp(-2*M_PI*fc)); 
+			}
+		inline void set (T d)
+			{
+				a0 = d;
+				b1 = 1 - d;
+			}
+
+		inline T process (T x) { return y1 = a0*x + b1*y1; }
 };
 
 template <class T>
@@ -79,8 +73,10 @@ class OnePoleHP
 		OnePoleHP (T d = 1.)
 			{
 				set (d);
-				x1 = y1 = 0.;
+				reset();
 			}
+
+		sample_t last() {return y1;}
 
 		void set_f (T f)
 			{

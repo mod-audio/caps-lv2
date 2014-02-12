@@ -44,8 +44,6 @@ class Noisegate
 		int N;
 		float over_N;
 		DSP::RMS<8192> rms;
-		DSP::OnePoleLP<sample_t> lp;
-		DSP::Delay delay;
 		uint remain;
 		struct {
 			float current, delta, quiet;
@@ -74,13 +72,7 @@ class Noisegate
 		void init();
 		void activate();
 
-		inline void store (sample_t x)
-			{
-				sample_t y;
-				y = humfilter[0].process(x+normal);
-				y = humfilter[1].process(y);
-				rms.store (x - .3*y);
-			}
+		void process (sample_t x); /* pre- and humfilter, store to rms */
 
 		void run (uint n) { cycle<store_func> (n); }
 		void run_adding (uint n) { cycle<adding_func> (n); }

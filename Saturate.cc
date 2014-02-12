@@ -207,7 +207,7 @@ Descriptor<Saturate>::setup()
 {
 	Label = "Saturate";
 
-	Name = CAPS "Saturate - Various overdrive models, 8x oversampled";
+	Name = CAPS "Saturate - Various static nonlinearities, 8x oversampled";
 	Maker = "Tim Goetze <tim@quitte.de>";
 	Copyright = "2003-12";
 

@@ -1,7 +1,7 @@
 /*
 	Eq.h
 	
-	Copyright 2004-13 Tim Goetze <tim@quitte.de>
+	Copyright 2004-14 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -69,7 +69,7 @@ class Eq
 				int i = 0;
 
 				for (i = 0; i < Bands && f < fs / 2; ++i, f *= 2)
-					init_band (i, 2 * f * M_PI / fs, Q);
+					init_band (i, 2*f*M_PI/fs, Q);
 				/* just in case, zero the remaining coefficients */
 				for (  ; i < Bands; ++i)
 					zero_band (i);
@@ -79,9 +79,9 @@ class Eq
 
 		void init_band (int i, double theta, double Q)
 			{
-				b[i] = (Q - theta * .5) / (2 * Q + theta);
-				a[i] = (.5 - b[i]) / 2;
-				c[i] = (.5 + b[i]) * cos (theta);
+				b[i] = (Q - .5*theta)/(2*Q + theta);
+				a[i] = (.5 - b[i])/2;
+				c[i] = (.5 + b[i])*cos(theta);
 				/* fprintf (stderr, "%02d %f %f %f\n", i, a[i], b[i], c[i]); */
 				gain[i] = 1;
 				gf[i] = 1;
@@ -107,7 +107,7 @@ class Eq
 
 				for (int i = 0; i < Bands; ++i)
 				{
-					y2[i] = normal + 2 * (a[i] * x_x2 + c[i] * y1[i] - b[i] * y2[i]);
+					y2[i] = normal + 2*(a[i]*x_x2 + c[i]*y1[i] - b[i]*y2[i]);
 					r += gain[i] * y2[i];
 					gain[i] *= gf[i];
 				}

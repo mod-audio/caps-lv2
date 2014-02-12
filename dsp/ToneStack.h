@@ -4,7 +4,7 @@
 	Copyright 2006
 		David Yeh <dtyeh@ccrma.stanford.edu> (implementation)
 
-	Copyright 2006-13
+	Copyright 2006-14
 		Tim Goetze <tim@quitte.de> (cosmetics)
 
 	Tone Stack emulation.
@@ -43,9 +43,6 @@ typedef struct {
 	double C1, C2, C3;
 } TSParameters;
 
-#define TS_N_PRESETS (sizeof (DSP::ToneStack::presets) / \
-				sizeof (DSP::TSParameters))
-
 class ToneStack 
 {
   private:
@@ -66,7 +63,6 @@ class ToneStack
 		/* in ../ToneStack.cc */
 		static const char * presetdict; 
 		static TSParameters presets[]; 
-		static int n_presets;
 
 		ToneStack() 
 			{

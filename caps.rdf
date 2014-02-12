@@ -137,7 +137,7 @@
 	<ladspa:SimulatorPlugin 
 			rdf:about='http://quitte.de/dsp/caps.html#ToneStack'> 
 		<ladspa:hasPort>
-			<ladspa:InputControlPort rdf:about="&ladspa;2589.1" 
+			<ladspa:InputControlPort rdf:about="&ladspa;2589.0" 
 					ladspa:hasLabel="model">
 				<ladspa:hasScale><ladspa:Scale> 
 						<ladspa:hasPoint><ladspa:Point 

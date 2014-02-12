@@ -52,9 +52,8 @@ AmpVTS::activate()
 	compress.set_threshold(0);
 	compress.set_release(.0);
 
-	dc2.reset();
-
 	/* dc1 is reset in setratio() */
+	dc2.reset();
 
 	model = -1;
 	ratio = -1;
@@ -108,13 +107,13 @@ AmpVTS::subcycle (uint frames, Over & over)
 
 	float x=getport(1), y=getport(3); /* = gain,powa :: shorthand for gain calc */
 	float bright = .59*getport(2)*(1-x*.81);
-	DSP::RBJ::LP ((2000*pow(10,bright))/(over.Ratio*fs), .7, lp); 
+	DSP::RBJ::LP ((2000*pow(10,bright))/(over.Ratio*fs), .8, lp); 
 
 	float gain = x*x;
 	float powa = .9*gain + (1-.9*gain)*y; /* ramp up powa with gain */
 
-	compress.set_attack (.25*getport(8));
-	float squash = .01 + .21*getport(9)*(1 - powa*gain);
+	compress.set_attack (.5*getport(8));
+	float squash = .0 + .8*getport(9)*(1 - .4*powa*gain);
 
 	float bias = .62*powa;
 
@@ -146,29 +145,29 @@ AmpVTS::subcycle (uint frames, Over & over)
 			sample_t b = biaslp.process (bias*compress.power.current - .00002);
 
 			a = hp1.process(a);
-			a *= gain * compress.get();
-			a = tonestack.process (a + normal);
+			a *= gain*compress.get();
+			a = tonestack.process(a + normal);
 			a += .5*b;
 
-			a = over.upsample (a);
-			a = preamp (a);
-			a = dc1.process (a);
-			a = lp.process (a);
-			a = poweramp (powa*a - b);
-			a = over.downsample (a);
+			a = over.upsample(a);
+			a = preamp(a);
+			a = dc1.process(a);
+			a = lp.process(a);
+			a = poweramp(powa*a - b);
+			a = over.downsample(a);
 
-			for (int o = 1; o < over.Ratio; ++o)
+			for (int o=1; o < over.Ratio; ++o)
 			{
-				sample_t a = over.uppad (o);
-				a = preamp (a);
-				a = dc1.process (a);
-				a = lp.process (a);
-				a = poweramp (powa*a - b);
-				over.downstore (a);
+				sample_t a = over.uppad(o);
+				a = preamp(a);
+				a = dc1.process(a);
+				a = lp.process(a);
+				a = poweramp(powa*a - b);
+				over.downstore(a);
 			}
 
-			a = dc2.process (a+normal);
-			compress.store (a);
+			a = dc2.process(a+normal);
+			compress.store(a);
 
 			a *= makeup;
 
@@ -201,8 +200,8 @@ AmpVTS::port_info [] =
 	{ "treble", CTRL_IN, {DEFAULT_HIGH, 0, 1} }, 
 
 	/* 8 */
-	{ "attack", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} },
-	{ "squash", CTRL_IN, {DEFAULT_MID, 0, 1} },
+	{ "attack", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} },
+	{ "squash", CTRL_IN, {DEFAULT_LOW, 0, 1} },
 
 	/* 10 */
 	{ "lowcut", CTRL_IN | GROUP, {DEFAULT_MID, 0, 1} },

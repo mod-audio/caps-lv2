@@ -1,5 +1,22 @@
+0.9.20
+	* ToneStack ports rearranged (to "control before audio" policy)
+	* ToneStack LT model selection fixed
+
+0.9.19
+	* Noisegate partially rewritten, defaults adjusted
+	* Noisegate bug causing spurious gain fluctuations in closed state eliminated
+	* AmpVTS compression controls adjusted
+	* influence of total gain on compression in AmpVTS reduced
+	* documentation polish
+
+0.9.18
+	* restored ToneStack presets to list all again
+	* AmpVTS 'bright' filter given slight resonance
+	* AmpVTS compression control range widened
+
 0.9.17
 	* multiple inclusion header guards changed to comply with ISO/IEC 9899:2011
+		(at the insistence of Markus Elfring)
 	* PlateX2 fixed to read correct port for damping parameter
 		(reported by James Morris)
 	* uninstall removes rdf

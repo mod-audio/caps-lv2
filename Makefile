@@ -1,4 +1,6 @@
-PREFIX = /usr/local
+VERSION = 0.9.20
+
+PREFIX = /usr
 DESTDIR = 
 
 CC = g++
@@ -14,7 +16,6 @@ STRIP = strip
 CFLAGS += $(OPTS) $(_CFLAGS)
 LDFLAGS += $(_LDFLAGS) $(CFLAGS)
 
-VERSION = 0.9.17
 PLUG = caps
 
 SOURCES = $(wildcard *.cc) $(wildcard dsp/*.cc)
@@ -46,7 +47,9 @@ run: all
 	@#~/cream/gdb-python bin/eqtest.py
 	@#~/cream/gdb-python bin/fractalstest.py
 	@#python bin/sinsweep.py
-	@python -i ~/reve/bin/noisegate.py
+	@#python -i ~/reve/bin/noisegate.py
+	@#python ~/bin/rack.py
+	@python ~/reve/bin/hum.py
 
 rdf: $(PLUG).rdf
 $(PLUG).rdf: all tools/make-rdf.py

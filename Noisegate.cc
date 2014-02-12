@@ -35,12 +35,10 @@ void
 Noisegate::init()
 {
 	N = 3*882*fs/44100; /* 60 ms RMS accumulation when open */
-	hysteresis.threshold = (uint) (.08*fs); /* opening for at least 80 ms */
 	over_N = 1./N;
+	hysteresis.threshold = (uint) (.08*fs); /* opening for at least 80 ms */
 	gain.quiet = db2lin (-60);
-	gain.lp.set_f (80*over_fs);
-	lp.set_f (20*over_fs);
-	delay.init (fs*.001); /* 1 ms maximum lookahead */
+	gain.lp.set_f (120*over_fs);
 }
 
 void
@@ -52,8 +50,17 @@ Noisegate::activate()
 	gain.current = gain.quiet;
 	gain.delta = 0;
 	gain.lp.reset();
-	lp.reset();
 	f_mains = -1; /* make sure filters are updated when processing */
+}
+
+void 
+Noisegate::process (sample_t x)
+{
+	x += normal;
+	normal = -normal;
+	sample_t y = humfilter[0].process(x);
+	y = humfilter[1].process(y);
+	rms.store (x - .3*y);
 }
 
 template <yield_func_t yield>
@@ -62,12 +69,13 @@ Noisegate::cycle (uint frames)
 {
 	sample_t * s = ports[0];
 	sample_t * d = ports[1]; 
+	static int frame = 0;
 
-	float open = db2lin (getport (2));
-	float attack = max (.005*N*getport(3), 2); 
-	float close = db2lin (getport (4));
+	float open = db2lin(getport(2)-10);
+	float attack = max(.005*N*getport(3), 2); /* in samples */
+	float close = db2lin(getport(4));
 
-	float f = getport (5);
+	float f = getport(5);
 	if (f != f_mains)
 	{
 		f_mains = f;
@@ -94,40 +102,38 @@ Noisegate::cycle (uint frames)
 			if (opennow)
 			{
 				remain = (int) attack;
-				gain.delta = (1 - gain.current) / remain;
+				gain.delta = (1 - gain.current)/remain;
 				hysteresis.age = 0;
 				opennow = false;
 			}
-			else if (gain.delta > 0) 
+			else if (gain.delta > 0)
 				gain.current = 1,
 				gain.delta = 0;
 			else if (gain.delta < 0) 
 				gain.delta = 0;
-			else if (rms.get() < close && hysteresis.age > hysteresis.threshold) 
+			else if (gain.current > gain.quiet+.001 && rms.get() < close && hysteresis.age > hysteresis.threshold) 
 			{
 				//fprintf (stderr, "%.3f < %.3f\n", rms.get(), close);
 				gain.delta = (gain.quiet - gain.current)*over_N;
 			}
 		}
 
+		#define OUT (gain.current+0*gain.get())
 		uint i = 0;
 		uint n = min (frames, remain);
 		//fprintf (stderr, "%d %.3f (%.3f)\n", n, gain.current, gain.delta);
 		if (gain.delta > 0 || gain.current == 1) for (  ; i < n; ++i) /* opening or open */
 		{
-			register sample_t a = s[i];
-			lp.process(fabs(a+normal));
-			delay.put(a);
-			store(a);
-			yield (d, i, 0 ? lp.y1-open : a*gain.get(), adding_gain);
+			sample_t a = s[i];
+			process(a);
+			yield (d, i, 0 ? OUT : a*gain.get(), adding_gain);
 		}
-		else for (  ; i < n; ++i) 
+		else for (  ; i < n; ++i) /* closed */
 		{
-			register sample_t a = s[i];
-			delay.put(a);
-			store(a);
-			if (lp.process(fabs(a+normal)) < open)
-				yield (d, i, 0 ? lp.y1-open : a*gain.get(), adding_gain);
+			sample_t a = s[i];
+			process(a);
+			if (fabs(a) < open)
+				yield (d, i, 0 ? OUT : a*gain.get(), adding_gain);
 			else 
 			{
 				opennow = true;
@@ -140,6 +146,7 @@ Noisegate::cycle (uint frames)
 		s += i, d += i;
 		frames -= i;
 		remain -= i;
+		frame += i;
 	}
 }
 
@@ -152,9 +159,9 @@ Noisegate::port_info [] =
 	{	"out", OUTPUT | AUDIO },
 
 	/* 2 */
-	{ "open (dB)", CTRL_IN, {DEFAULT_MIN, -60, 0} }, 
+	{ "open (dB)", CTRL_IN, {DEFAULT_LOW, -60, 0} }, 
 	{ "attack (ms)", CTRL_IN, {DEFAULT_0, 0, 5} }, 
-	{ "close (dB)", CTRL_IN, {DEFAULT_MIN, -90, 0} }, 
+	{ "close (dB)", CTRL_IN, {DEFAULT_LOW, -80, 0} }, 
 
 	/* mains */
 	{ "mains (Hz)", CTRL_IN|GROUP, {INTEGER|DEFAULT_MID, 0, 100},
@@ -166,7 +173,7 @@ Descriptor<Noisegate>::setup()
 {
 	Label = "Noisegate";
 
-	Name = CAPS "Noisegate - Attenuate hum and noise";
+	Name = CAPS "Noisegate - Attenuating hum and noise";
 	Maker = "Tim Goetze <tim@quitte.de>";
 	Copyright = "2011-13";
 

@@ -77,8 +77,6 @@ DSP::ToneStack::presets[] = {
 	#undef pF
 };
 
-int DSP::ToneStack::n_presets = TS_N_PRESETS;
-
 void
 ToneStack::activate()
 { 
@@ -89,12 +87,8 @@ template <yield_func_t F>
 void
 ToneStack::cycle (uint frames)
 {
-	enum {LTModel = TS_N_PRESETS};
-
-	sample_t * s = ports[0];
-	sample_t * d = ports[5];
-
-	int m = getport(1);
+	static int LTModel = port_info[0].range.UpperBound;
+	int m = getport(0);
 	
 	if (m != model)
 	{
@@ -105,7 +99,10 @@ ToneStack::cycle (uint frames)
 			tonestack.setmodel (model);
 	}
 
-	float bass = getport(2), mid = getport(3), treble = getport(4);
+	sample_t * s = ports[4];
+	sample_t * d = ports[5];
+
+	float bass = getport(1), mid = getport(2), treble = getport(3);
 
 	if (model == LTModel) 
 	{
@@ -131,12 +128,11 @@ ToneStack::cycle (uint frames)
 PortInfo
 ToneStack::port_info [] = 
 {
-	{ "in", INPUT | AUDIO, {BOUNDED, -1, 1} }, 
-	{ "model", CTRL_IN, {DEFAULT_0 | INTEGER, 0, TS_N_PRESETS 
-		/* last is lattice filter implementation */ }, DSP::ToneStack::presetdict }, 
+	{ "model", CTRL_IN, {DEFAULT_0 | INTEGER, 0, 8+1}, DSP::ToneStack::presetdict }, 
 	{ "bass", CTRL_IN | GROUP, {DEFAULT_MID, 0, 1} }, 
 	{ "mid", CTRL_IN, {DEFAULT_MID, 0, 1} }, 
 	{ "treble", CTRL_IN, {DEFAULT_MID, 0, 1} }, 
+	{ "in", INPUT | AUDIO, {BOUNDED, -1, 1} }, 
 	{ "out", OUTPUT | AUDIO }
 };
 
