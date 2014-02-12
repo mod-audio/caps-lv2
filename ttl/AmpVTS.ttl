@@ -154,7 +154,7 @@ a lv2:ControlPort,
         [ rdfs:label "stanford";
             rdf:value 5 
         ],
-        [ rdfs:label "HK 20";
+        [ rdfs:label "AK 20";
             rdf:value 6 
         ],
         [ rdfs:label "nihon ace";

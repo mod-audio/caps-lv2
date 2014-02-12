@@ -49,7 +49,7 @@ source: http://quitte.de/dsp/caps.html#ToneStack
                     rdf:value 4 ],
                 [ rdfs:label "Stanford";
                     rdf:value 5 ],
-                [ rdfs:label "HK 20";
+                [ rdfs:label "AK 20";
                     rdf:value 6 ],
                 [ rdfs:label "Nihon Ace";
                     rdf:value 7 ],
