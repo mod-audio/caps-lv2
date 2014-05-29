@@ -102,7 +102,7 @@ ToneStack::cycle (uint frames)
 	sample_t * s = ports[4];
 	sample_t * d = ports[5];
 
-	float bass = getport(1), mid = getport(2), treble = getport(3);
+	float bass=getport(1), mid=getport(2), treble=getport(3);
 
 	if (model == LTModel) 
 	{
@@ -113,7 +113,9 @@ ToneStack::cycle (uint frames)
 			a = tonestacklt.process (a + normal);
 			F (d, i, a, adding_gain);
 		}
-	} else {
+	} 
+	else 
+	{
 		tonestack.updatecoefs (bass, mid, treble);
 		for (uint i = 0; i < frames; ++i) 
 		{

@@ -49,7 +49,7 @@ adjust_gain (int i, double g)
 	return g * adjust[i];
 }
 
-#define Eq10Q 0.707
+#define Eq10Q 1.2
 
 void
 Eq10::init()
@@ -299,6 +299,7 @@ Eq4p::updatestate()
 		BiQuad_ab c; 
 
 		f *= over_fs;
+		/* Zoelzer shelve: H(s) = (A*s^2 + s*(sqrt(A)/Q) + 1) / (s^2 + s/Q + 1) */
 		/* maxima: solve([a/(1-b*0)=.5,a/(1-b)=50,a/(1-b*x)=.707],[a,b,x]); */
 		Q = .5/(1-.99*Q);
 		if (mode < 0)

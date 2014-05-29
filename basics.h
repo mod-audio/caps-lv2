@@ -202,7 +202,9 @@ lin2db (double lin)
 	return 20*log10(lin);
 }
 
-#ifdef __i386__
+#if defined (__i386__)
+	#define TRAP asm ("int $3;")
+#elif defined (__amd64__)
 	#define TRAP asm ("int $3;")
 #else
 	#define TRAP

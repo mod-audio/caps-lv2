@@ -188,7 +188,7 @@ Click::initparfilt()
 	{
 		if (i < m) /* simplistic noise excitation signal */
 			x = .5 * white.get() * (m-i)*mi;
-		x = v4f_sum (bank.process_no_a1(mk_v4f(x)));
+		x = v4f_sum (bank.process_no_a1(v4f(x)));
 		x = hp.process(x);
 		click[i] = (int16) (x * 32767.);
 		x = 0;

@@ -80,7 +80,7 @@ class Eq
 		void init_band (int i, double theta, double Q)
 			{
 				b[i] = (Q - .5*theta)/(2*Q + theta);
-				a[i] = (.5 - b[i])/2;
+				a[i] = (.5 - b[i])*.5;
 				c[i] = (.5 + b[i])*cos(theta);
 				/* fprintf (stderr, "%02d %f %f %f\n", i, a[i], b[i], c[i]); */
 				gain[i] = 1;
@@ -93,7 +93,7 @@ class Eq
 			}
 
 		/* per-band recursion:
-		 * 	y = 2 * (a * (x - x[-2]) + c * y[-1] - b * y[-2]) 
+		 * 	y = 2*(a*(x - x[-2]) + c*y[-1] - b*y[-2]) 
 		 */
 		eq_sample process (eq_sample s)
 			{

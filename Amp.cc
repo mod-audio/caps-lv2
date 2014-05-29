@@ -101,30 +101,29 @@ void
 AmpVTS::subcycle (uint frames, Over & over)
 {
 	int m = getport(4);
-	if (m != model)
-		tonestack.setmodel (model = m);
+	if (m != model) tonestack.setmodel (model = m);
 	tonestack.updatecoefs (getport(5),getport(6),getport(7));
 
 	float x=getport(1), y=getport(3); /* = gain,powa :: shorthand for gain calc */
-	float bright = .59*getport(2)*(1-x*.81);
-	DSP::RBJ::LP ((2000*pow(10,bright))/(over.Ratio*fs), .8, lp); 
+	float bright = getport(2)*(1-x*.5);
+	DSP::RBJ::LP ((500+6500*bright*bright)/(over.Ratio*fs), .7, lp); 
 
 	float gain = x*x;
-	float powa = .9*gain + (1-.9*gain)*y; /* ramp up powa with gain */
+	float powa = .2*gain + (1-.2*gain)*y; /* ramp up powa with gain */
 
-	compress.set_attack (.5*getport(8));
-	float squash = .0 + .8*getport(9)*(1 - .4*powa*gain);
+	compress.set_attack (.6*(1-.5*x)*getport(8));
+	float squash = .0 + .8*getport(9)*(1 - .2*powa*gain);
 
 	float bias = .62*powa;
 
-	/* roughly correcting for loudness increase */
+	/* roughly correcting for loudness increase TODO: revise */
 	float makeup = (.086-.06*y)/(11.6+exp((12.1-5*y)*(.81-.08*y-x)))+0.00032+.0026*y;
 	makeup = 0 ? 1 : .0006/makeup; /* debug switch for makeup */
 
 	float lowcut = .1 + 392*getport(10); 
 	hp1.set_f (1.5*lowcut*over_fs); 
 
-	gain = pow (200, gain) * -tsgain[model];
+	gain = pow (200, x) * -tsgain[model];
 	powa = pow (125, powa);
 
 	sample_t * s = ports[11];
@@ -189,7 +188,7 @@ AmpVTS::port_info [] =
 
 	/* 1 */
 	{ "gain", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} }, 
-	{ "bright", CTRL_IN, {DEFAULT_MID, 0, 1} }, 
+	{ "bright", CTRL_IN, {DEFAULT_HIGH, 0, 1} }, 
 	{ "power", CTRL_IN, {DEFAULT_MID, 0, 1} },
 	
 	/* 4 */

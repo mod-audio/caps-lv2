@@ -26,8 +26,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef AUTO_FILTER_H
-#define AUTO_FILTER_H
+#ifndef _AUTO_FILTER_H_
+#define _AUTO_FILTER_H_
 
 #include "dsp/SVF.h"
 
@@ -37,54 +37,7 @@
 #include "dsp/RMS.h"
 #include "dsp/BiQuad.h"
 #include "dsp/OnePole.h"
-#include "dsp/Oversampler.h"
 
-#include "dsp/polynomials.h"
-
-/* g++ does not want StackedSVF::process to be called with a template parameter
- * from within AutoFilter::subsubcycle so we hardcode it here and while we do,
- * we use the opportunity to diversify things a bit */
-struct SVF1
-: public DSP::StackedSVF <1, DSP::SVFI<2> >
-{
-	double gainfactor() { return 1.3; }
-	sample_t process_clip (sample_t x, double g)
-		{ return process<DSP::Polynomial::atan> (x,g); }
-};
-
-struct SVF2
-: public DSP::StackedSVF <2, DSP::SVFII>
-{
-	double gainfactor() { return 1; }
-	sample_t process_clip (sample_t x, double g)
-		{ return process<DSP::Polynomial::atan1> (x,g); }
-};
-
-struct SVF3
-: public DSP::StackedSVF <2, DSP::SVFII>
-{
-	double gainfactor() { return .4; }
-	sample_t process_clip (sample_t x, double g)
-		{ return process<DSP::Polynomial::tanh> (x,g); }
-};
-
-struct SVF4
-: public DSP::StackedSVF <3, DSP::SVFII>
-{
-	double gainfactor() { return .9; }
-	sample_t process_clip (sample_t x, double g)
-		{ return process<DSP::Polynomial::atan1> (x,g); }
-};
-
-struct SVF5
-: public DSP::StackedSVF <4, DSP::SVFII>
-{
-	double gainfactor() { return .9; }
-	sample_t process_clip (sample_t x, double g)
-		{ return process<DSP::Polynomial::atan1> (x,g); }
-};
-
-/* nn, newport, duet */
 class AutoFilter
 : public Plugin
 {
@@ -93,35 +46,17 @@ class AutoFilter
 
 		sample_t f, Q;
 
-		SVF1 svf1;
-		SVF2 svf2;
-		SVF3 svf3;
-		SVF4 svf4;
-		SVF5 svf5;
+		DSP::StackedSVF< 1, DSP::SVFI<2> > svf1;
+		DSP::StackedSVF< 2, DSP::SVFII > svf2;
 
 		DSP::Lorenz lorenz;
 
 		/* rms calculation and smoothing */
 		DSP::OnePoleHP<sample_t> hp;
-		DSP::RMS<256> rms;
-		struct {
-			DSP::BiQuad<sample_t> env;
-			DSP::OnePoleLP<sample_t> lfo;
-		} smooth;
+		DSP::RMS<128> rms;
+		DSP::BiQuad<sample_t> smoothenv; 
 
-		struct {
-			DSP::NoOversampler one;
-			DSP::Oversampler<2,32> two;
-			DSP::Oversampler<4,64> four;
-			DSP::Oversampler<8,64> eight;
-		} oversampler;
-
-		template <yield_func_t F>
-				void cycle (uint frames);
-		template <yield_func_t F, class SVF>
-				void subcycle (uint frames, SVF &);
-		template <yield_func_t F, class SVF, class Over>
-				void subsubcycle (uint frames, SVF & svf, Over & over);
+		template <yield_func_t F> void one_cycle (uint frames);
 
 	public:
 		static PortInfo port_info [];
@@ -129,8 +64,8 @@ class AutoFilter
 		void init();
 		void activate();
 
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
+		void run (uint n) { one_cycle<store_func> (n); }
+		void run_adding (uint n) { one_cycle<adding_func> (n); }
 };
 
-#endif /* AUTO_FILTER_H */
+#endif /* _AUTO_FILTER_H_ */

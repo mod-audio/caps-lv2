@@ -1,5 +1,20 @@
+0.9.23
+	* ChorusI hp filter denormal protection added
+
+0.9.22
+	* ChorusI blend behaviour changed
+	* ChorusI parameters adjusted
+	* ChorusI hp filter before delay added
+	* AutoFilter parameters adjusted
+	* AutoFilter 'range' port becomes 'depth'
+
+0.9.21
+	* Eq10 Q increased
+	* AmpVTS bright/compression/gain mappings adjusted
+	* AutoFilter reverted to 0.9.1 version with adjusted parameters
+
 0.9.20
-	* ToneStack ports rearranged (to "control before audio" policy)
+	* ToneStack ports rearranged (following "control before audio" convention)
 	* ToneStack LT model selection fixed
 
 0.9.19
@@ -10,7 +25,7 @@
 	* documentation polish
 
 0.9.18
-	* restored ToneStack presets to list all again
+	* restored ToneStack presets to present the full list
 	* AmpVTS 'bright' filter given slight resonance
 	* AmpVTS compression control range widened
 

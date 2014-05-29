@@ -1,4 +1,4 @@
-caps-lv2 0.9.20
+caps-lv2 0.9.23
 ===============
 
 LV2 port for the [CAPS Audio Plugin Suite](http://quitte.de/dsp/caps.html)
@@ -23,18 +23,18 @@ Compile and Install
 
 The default LV2 path installation is /usr/local/lv2/caps.lv2/
 
-LV2 and LADSPA are hosted in same shared object, so when you install you will have both versions
+LV2 and LADSPA are hosted in same shared object, so when you install it you will have both versions
 
 Alternatively you can install the plugins in single format, in other words, one shared object per plugin.
 To do this run:
 
-    ./make_single_plugins
+    ./make_single_plugins.py
 
-    sudo ./make_single_plugins install
+    sudo ./make_single_plugins.py install
 
 This will install all plugins, if you want install specific plugins, you can do in this way:
 
-    sudo ./make_single_plugins install AmpVTS ToneStack
+    sudo ./make_single_plugins.py install AmpVTS ToneStack
 
 
 CAPS Plugins Documentation

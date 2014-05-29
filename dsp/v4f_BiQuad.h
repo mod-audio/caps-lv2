@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef _DSP_V4F_BI_QUAD_H_
-#define _DSP_V4F_BI_QUAD_H_
+#ifndef DSP_V4F_BI_QUAD_H
+#define DSP_V4F_BI_QUAD_H
 
 #include "v4f.h"
 
@@ -615,7 +615,7 @@ class Resonator4fBank
 
 				a[3+h2] = r; /* y[h2] */
 
-				static v4f_t scale2nd = mk_v4f(.1);
+				static v4f_t scale2nd = v4f(.1);
 				s = r;
 				r *= scale2nd;
 				r *= r;
@@ -643,4 +643,4 @@ class Resonator4fBank
 
 } /* namespace DSP */
 
-#endif /* _DSP_V4F_BI_QUAD_H_ */
+#endif /* DSP_V4F_BI_QUAD_H */

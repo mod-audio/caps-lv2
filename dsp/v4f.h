@@ -34,13 +34,16 @@
 #include <xmmintrin.h>
 #endif
 
+/* caution, gcc apparently doesnt always honour the alignment: segfault */
 typedef float v4f_t __attribute__ ((vector_size (16), aligned(16))); 
 
 inline v4f_t v4f (float x) 
 	{ v4f_t v = {x,x,x,x}; return v; }
-
 inline v4f_t v4f (float x0, float x1, float x2, float x3) 
 	{ v4f_t v = {x0,x1,x2,x3}; return v; }
+inline v4f_t v4f (float *x)
+	{ v4f_t v = {x[0],x[1],x[2],x[3]}; return v; }
+
 
 #define v4fa(x) ((float *) &x)
 
@@ -57,8 +60,6 @@ inline v4f_t v4f_shuffle(v4f_t x, int s3, int s2, int s1, int s0)
 	return y;
 }
 #endif
-
-#define mk_v4f(s) ((v4f_t) {s,s,s,s})
 
 inline float v4f_sum (v4f_t v)
 {
@@ -92,7 +93,7 @@ class V4fArray
 {
 	private:
 		/* sufficient space to align actual array to 16-byte boundary */
-		char _data [(N+1) * sizeof (v4f_t)];
+		char _data [(N+1) * sizeof(v4f_t)];
 
 	public:
 		v4f_t * v;
@@ -104,6 +105,8 @@ class V4fArray
 			}
 
 		void reset() { memset (_data, 0, sizeof (_data)); }
+
+		v4f_t & operator [] (int i) {return v[i];}
 };
 
 class V4fData

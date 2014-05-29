@@ -1,4 +1,4 @@
-VERSION = 0.9.20
+VERSION = 0.9.23
 
 PREFIX = /usr
 DESTDIR = 
@@ -48,8 +48,8 @@ run: all
 	@#~/cream/gdb-python bin/fractalstest.py
 	@#python bin/sinsweep.py
 	@#python -i ~/reve/bin/noisegate.py
-	@#python ~/bin/rack.py
-	@python ~/reve/bin/hum.py
+	@rack.py AutoFilter ChorusI AmpVTS CabinetIV Plate
+	@#python ~/reve/bin/hum.py
 
 rdf: $(PLUG).rdf
 $(PLUG).rdf: all tools/make-rdf.py

@@ -41,9 +41,7 @@ class ChorusI
 		DSP::OnePoleHP<sample_t> hp;
 		float time, width, rate;
 
-		struct {
-			DSP::Sine sine;
-		} lfo;
+		struct { DSP::Sine sine; } lfo;
 
 		DSP::Delay delay;
 

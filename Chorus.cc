@@ -37,6 +37,8 @@ ChorusI::activate()
 	time = 0;
 	width = 0;
 	delay.reset();
+	hp.reset();
+	hp.set_f(250*over_fs);
 }
 
 void
@@ -77,17 +79,19 @@ ChorusI::one_cycle (int frames)
 
 	for (int i = 0; i < frames; ++i)
 	{
-		sample_t x = s[i];
+		sample_t x=s[i], y=x;
+
+		x = hp.process(x+normal);
 
 		int ti;
 		fistp (t, ti);
-		x -= fb*delay[ti];
+		y -= fb*delay[ti];
 
-		delay.put (x + normal);
+		delay.put (y + normal);
 
-		x = blend*x + ff*delay.get_cubic (t + w*lfo.sine.get());
+		y += blend*x + ff*delay.get_cubic (t + w*lfo.sine.get());
 
-		F (d, i, x, adding_gain);
+		F (d, i, y, adding_gain);
 
 		t += dt;
 		w += dw;
@@ -102,9 +106,9 @@ ChorusI::port_info [] =
 	{ "t (ms)", CTRL_IN, {LOG | DEFAULT_MID, 2.5, 40} }, 
 	{ "width (ms)", CTRL_IN, {DEFAULT_LOW, .5, 10} }, 
 
-	{ "rate (Hz)", CTRL_IN | GROUP, {DEFAULT_LOW, 0.001, 5} }, 
+	{ "rate (Hz)", CTRL_IN | GROUP, {LOG | DEFAULT_LOW, 0.01, 2.8} }, 
 
-	{ "blend", CTRL_IN | GROUP, {DEFAULT_1, 0, 1} }, 
+	{ "blend", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} }, 
 	{ "feedforward", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
 	{ "feedback", CTRL_IN, {DEFAULT_0, 0, 1} }, 
 
