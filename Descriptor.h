@@ -34,29 +34,7 @@
 #ifndef DESCRIPTOR_H
 #define DESCRIPTOR_H
 
-#ifdef __SSE__
-#include <xmmintrin.h>
-#endif
-#ifdef __SSE3__
-#include <pmmintrin.h>
-#endif
-
 #include <lv2.h>
-
-/* not used */
-inline void
-processor_specific_denormal_measures()
-{
-	#ifdef __SSE3__
-	/* this one works reliably on a 6600 Core2 */
-	_MM_SET_DENORMALS_ZERO_MODE (_MM_DENORMALS_ZERO_ON);
-	#endif
-
-	#ifdef __SSE__
-	/* this one doesn't ... */
-	_MM_SET_FLUSH_ZERO_MODE (_MM_FLUSH_ZERO_ON);
-	#endif
-}
 
 /* common stub for Descriptor makes it possible to delete() without special-
  * casing for every plugin class.
