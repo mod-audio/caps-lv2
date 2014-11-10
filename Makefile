@@ -76,10 +76,10 @@ install: all install-lv2
 
 install-lv2: all
 	@$(STRIP) $(PLUG).so > /dev/null
-	install -d $(LV2DEST)
-	install -m 644 $(PLUG).so $(LV2DEST)
-	install -m 644 $(TTL) $(LV2DEST)
-	cp -r ttl/modgui/ $(LV2DEST)
+	install -d $(DESTDIR)$(LV2DEST)
+	install -m 644 $(PLUG).so $(DESTDIR)$(LV2DEST)
+	install -m 644 $(TTL) $(DESTDIR)$(LV2DEST)
+	cp -r ttl/modgui/ $(DESTDIR)$(LV2DEST)
 
 fake-install: all
 	-rm $(DESTDIR)$(DEST)/$(PLUG).so
