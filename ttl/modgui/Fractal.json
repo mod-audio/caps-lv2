@@ -1,0 +1,35 @@
+{
+    "author": "CAPS", 
+    "color": "green", 
+    "controls": [
+        {
+            "name": "Rate", 
+            "symbol": "rate"
+        }, 
+        {
+            "name": "Mode", 
+            "symbol": "mode"
+        }, 
+        {
+            "name": "x", 
+            "symbol": "x"
+        }, 
+        {
+            "name": "y", 
+            "symbol": "y"
+        }, 
+        {
+            "name": "z", 
+            "symbol": "z"
+        }, 
+        {
+            "name": "hp", 
+            "symbol": "hp"
+        }, 
+        {
+            "name": "volume", 
+            "symbol": "volume"
+        }
+    ], 
+    "label": "Fractal"
+}

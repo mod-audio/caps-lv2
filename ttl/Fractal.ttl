@@ -94,11 +94,14 @@ source: http://quitte.de/dsp/caps.html#Fractals
             lv2:index 7;
             lv2:name "out";
             lv2:symbol "out" ];
-    mod:gui [ mod:iconTemplate <modgui/Fractal.html>;
-            mod:resourcesDirectory <modgui>;
-            mod:screenshot <modgui/Fractal.png>;
-            mod:templateData <modgui/Fractal.json>;
-            mod:thumbnail <modgui/Fractal-thumb.png> ];
+    mod:gui [
+        a mod:Gui;
+        mod:resourcesDirectory <modgui>;
+        mod:iconTemplate <modgui/Fractal.html>;
+        mod:templateData <modgui/Fractal.json>;
+        mod:screenshot <modgui/Fractal.png>;
+        mod:thumbnail <modgui/Fractal-thumb.png>;
+    ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];
