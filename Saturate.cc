@@ -94,7 +94,7 @@ void
 Saturate::init()
 {
 	hp.set_f (40*over_fs);
-	gain.linear = db2lin(-144); /* fade in */
+	gain.linear = 1;
 }
 
 void
@@ -105,15 +105,15 @@ Saturate::activate()
 	bias = 0;
 }
 
-/* templated for waveshaping and sample store function */
-template <clip_func_t C, yield_func_t F>
+/* templated for waveshaping function */
+template <clip_func_t C>
 void
 Saturate::subcycle (uint frames)
 {
-	sample_t * s = ports[0];
-	sample_t * d = ports[1];
+	sample_t * s = ports[3];
+	sample_t * d = ports[4];
 
-	/* apply inverse gain after saturation for an approximation of
+	/* apply inverse gain after saturation for a rough approximation of
 	 * constant loudness */
 	sample_t 
 		ig  = .07 + .8/gain.linear, /* loop gain */
@@ -131,8 +131,7 @@ Saturate::subcycle (uint frames)
 		for (int o=1; o < over.Ratio; ++o)
 			over.downstore (C (over.uppad (o)));
 
-		x = ig*hp.process(x);
-		F (d, i, x, adding_gain);
+		d[i] = ig*hp.process(x);
 
 		ig += igd;
 		gain.linear += gain.delta;
@@ -148,12 +147,11 @@ static const char * SaturateModes =
 static float preamp[] = 
 {0.998, 1.195, 1.142, 0.998, -1.092, -1.092, -0.446, -0.165, -0.696, 1.250, 1.195, 1};
 
-template <yield_func_t F>
 void
 Saturate::cycle (uint frames)
 {
-	int mode = (int) getport(2);
-	double g = getport(3);
+	int mode = (int) getport(0);
+	double g = getport(1);
 
 	if (!mode || mode == 11)
 		g = 0;
@@ -161,33 +159,33 @@ Saturate::cycle (uint frames)
 	g = preamp[mode] * db2lin(g);
 	gain.delta = (g-gain.linear) / frames;
 
-	bias = .5*getport(4);
+	bias = .5*getport(2);
 	bias = bias*bias;
 
 	if (mode == 1) 
-		subcycle<DSP::Polynomial::atan,F> (frames);
+		subcycle<DSP::Polynomial::atan> (frames);
 	else if (mode == 2) 
-		subcycle<DSP::Polynomial::atan15,F> (frames);
+		subcycle<DSP::Polynomial::atan15> (frames);
 	else if (mode == 3) 
-		subcycle<_hardclip,F> (frames);
+		subcycle<_hardclip> (frames);
 	else if (mode == 4) 
-		subcycle<DSP::Polynomial::one5,F> (frames);
+		subcycle<DSP::Polynomial::one5> (frames);
 	else if (mode == 5) 
-		subcycle<DSP::Polynomial::one53,F> (frames);
+		subcycle<DSP::Polynomial::one53> (frames);
 	else if (mode == 6) 
-		subcycle<DSP::Polynomial::clip3,F> (frames);
+		subcycle<DSP::Polynomial::clip3> (frames);
 	else if (mode == 7) 
-		subcycle<DSP::Polynomial::clip9,F> (frames);
+		subcycle<DSP::Polynomial::clip9> (frames);
 	else if (mode == 8) 
-		subcycle<DSP::Polynomial::sin1,F> (frames);
+		subcycle<DSP::Polynomial::sin1> (frames);
 	else if (mode == 9) 
-		subcycle<DSP::Polynomial::power_clip_7,F> (frames);
+		subcycle<DSP::Polynomial::power_clip_7> (frames);
 	else if (mode == 10) 
-		subcycle<DSP::Polynomial::tanh,F> (frames);
+		subcycle<DSP::Polynomial::tanh> (frames);
 	else if (mode == 11) 
-		subcycle<fabsf,F> (frames);
+		subcycle<fabsf> (frames);
 	else 
-		subcycle<_noclip,F> (frames);
+		subcycle<_noclip> (frames);
 }
 
 /* //////////////////////////////////////////////////////////////////////// */
@@ -195,11 +193,12 @@ Saturate::cycle (uint frames)
 PortInfo
 Saturate::port_info [] = 
 {
-	{ "in", INPUT | AUDIO }, 
-	{ "out", OUTPUT | AUDIO }, 
 	{ "mode", CTRL_IN, {INTEGER | DEFAULT_1, 0, 11}, SaturateModes }, 
 	{ "gain (dB)", CTRL_IN | GROUP, {DEFAULT_0, -24, 72} }, 
-	{ "bias", CTRL_IN, {DEFAULT_0, 0, 1} } 
+	{ "bias", CTRL_IN, {DEFAULT_0, 0, 1} },
+
+	{ "in", INPUT | AUDIO }, 
+	{ "out", OUTPUT | AUDIO }
 };
 
 template <> void
@@ -222,8 +221,8 @@ Descriptor<Saturate>::setup()
 void
 Spice::init()
 {
-	float amp[] = {0,0,1,.3,.01};
-	cheby.setup (amp);
+	float amps[] = {0,0,1,.3,.01};
+	cheby.calculate (amps);
 }
 
 void
@@ -242,13 +241,12 @@ Spice::activate()
 	compress.set_release(0);
 }
 
-template <yield_func_t F>
 void
 Spice::cycle (uint frames)
 {
 	struct { float f, squash, gain; } 
-			lo = {getport(2)*over_fs, getport(3), getport(4)},
-			hi = {getport(5)*over_fs, 0, getport(6)};
+			lo = {getport(0)*over_fs, getport(1), getport(2)},
+			hi = {getport(3)*over_fs, 0, getport(4)};
 
 	if (split[0].f != lo.f)
 	{
@@ -264,10 +262,10 @@ Spice::cycle (uint frames)
 	lo.gain = pow (24,lo.gain) - 1;
 	hi.gain = pow (8,hi.gain) - 1;
 
-	sample_t dc = cheby.calculate(0);
+	sample_t dc = cheby.process(0);
 
-	sample_t * s = ports[0];
-	sample_t * d = ports[1];
+	sample_t * s = ports[5];
+	sample_t * d = ports[6];
 
 	while (frames)
 	{
@@ -289,7 +287,7 @@ Spice::cycle (uint frames)
 			x = a;
 			x *= compress.get();
 			x *= lo.gain;
-			x = cheby.calculate(x)-dc;
+			x = cheby.process(x)-dc;
 			x = shape[0].process(x);
 			compress.store (x);
 			c = x;
@@ -299,12 +297,12 @@ Spice::cycle (uint frames)
 			a = split[1].low(x);
 			b = split[1].high(x);
 			x = b;
-			x = cheby.calculate(x)-dc;
+			x = cheby.process(x)-dc;
 			x *= hi.gain;
 			x = shape[1].process (x);
 			x = x+a+b+c;
 
-			F (d, i, x, adding_gain);
+			d[i] = x;
 		}
 
 		s+=n, d+=n;
@@ -317,13 +315,14 @@ Spice::cycle (uint frames)
 PortInfo
 Spice::port_info [] = 
 {
-	{ "in", INPUT | AUDIO }, 
-	{ "out", OUTPUT | AUDIO }, 
 	{	"lo.f (Hz)",   CTRL_IN,	{LOG | DEFAULT_MID, 50, 400}}, 
 	{	"lo.compress", CTRL_IN,	{DEFAULT_MID, 0, 1}}, 
 	{	"lo.gain",     CTRL_IN,	{DEFAULT_LOW, 0, 1}}, 
 	{	"hi.f (Hz)",   CTRL_IN | GROUP,	{LOG | DEFAULT_MID, 400, 5000}}, 
 	{	"hi.gain",     CTRL_IN,	{DEFAULT_LOW, 0, 1}}, 
+
+	{ "in", INPUT | AUDIO }, 
+	{ "out", OUTPUT | AUDIO }, 
 };
 
 template <> void
@@ -345,7 +344,7 @@ void
 SpiceX2::init()
 {
 	float amp[] = {0,0,1,.3,.01};
-	cheby.setup (amp);
+	cheby.calculate (amp);
 }
 
 void
@@ -365,7 +364,6 @@ SpiceX2::activate()
 	compress.set_release(0);
 }
 
-template <yield_func_t F>
 void
 SpiceX2::cycle (uint frames)
 {
@@ -393,7 +391,7 @@ SpiceX2::cycle (uint frames)
 	lo.gain = pow (24,lo.gain) - 1;
 	hi.gain = pow (8,hi.gain) - 1;
 
-	sample_t dc = cheby.calculate(0);
+	sample_t dc = cheby.process(0);
 
 	sample_t * s[2] = {ports[5],ports[6]};
 	sample_t * d[2] = {ports[7],ports[8]};
@@ -421,7 +419,7 @@ SpiceX2::cycle (uint frames)
 				x = a;
 				x *= comp;
 				x *= lo.gain;
-				x = cheby.calculate(x)-dc;
+				x = cheby.process(x)-dc;
 				x = chan[c].shape[0].process(x);
 				bass[c] = x;
 
@@ -434,7 +432,8 @@ SpiceX2::cycle (uint frames)
 				x = DSP::Polynomial::atan(x);
 				x = chan[c].shape[1].process (x);
 				x = x+a+b+bass[c];
-				F (d[c], i, x, adding_gain);
+
+				d[c][i] = x;
 			}
 			compress.store (bass[0],bass[1]);
 		}
@@ -455,6 +454,7 @@ SpiceX2::port_info [] =
 	{	"lo.gain",     CTRL_IN,	{DEFAULT_LOW, 0, 1}}, 
 	{	"hi.f (Hz)",   CTRL_IN | GROUP,	{LOG | DEFAULT_LOW, 400, 5000}}, 
 	{	"hi.gain",     CTRL_IN,	{DEFAULT_LOW, 0, 1}}, 
+
 	{ "in:l", INPUT | AUDIO }, 
 	{ "in:r", INPUT | AUDIO }, 
 	{ "out:l", OUTPUT | AUDIO }, 

@@ -4,7 +4,7 @@
 	Copyright 
 		2012 Tim Goetze <tim@quitte.de>
 
-	Butterworth LP/HP BiQuad setup.
+	Butterworth LP/HP IIR2 setup.
 
 */
 /*
@@ -27,14 +27,14 @@
 #ifndef DSP_BUTTERWORTH_H
 #define DSP_BUTTERWORTH_H
 
-#include "BiQuad.h"
+#include "IIR2.h"
 
 namespace DSP { 
 namespace Butterworth {
 
 template <class T>
 void 
-LP (float f, DSP::BiQuad<T> & bq)
+LP (float f, DSP::IIR2<T> & bq)
 {
 	double w,g,h,n;
 
@@ -42,7 +42,7 @@ LP (float f, DSP::BiQuad<T> & bq)
 	g = 1.4142135623730951*w; 
 	h = w*w;
 
-	n = 1/(1+g+h);
+	n = 1/(1 + g + h);
 
 	bq.a[0] = bq.a[2] = n*h;
 	bq.a[1] = 2*bq.a[0];
@@ -53,11 +53,11 @@ LP (float f, DSP::BiQuad<T> & bq)
 
 template <class T>
 void 
-HP (float f, DSP::BiQuad<T> & bq)
+HP (float f, DSP::IIR2<T> & bq)
 {
 	LP(f,bq);
 	bq.a[1] = -bq.a[1];
-	bq.scale (f, 0.7071067811865476); /* costly operation */
+	bq.scale(f, 0.7071067811865476); /* costly operation */
 }
 
 } /* ~namespace Butterworth */

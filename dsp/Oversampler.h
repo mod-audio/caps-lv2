@@ -52,9 +52,7 @@ template <int Oversample, int FIRSize>
 class Oversampler
 {
 	public:
-		enum {
-			Ratio = Oversample,
-		};
+		enum { Ratio = Oversample };
 		/* antialias filters */
 		struct {
 			DSP::FIRUpsampler<FIRSize, Oversample> up;
@@ -106,6 +104,6 @@ class Oversampler
 			{ fir.down.store(x); }
 };
 
-}; /* namespace DSP */
+} /* namespace DSP */
 
 #endif /* DSP_OVERSAMPLER_H */

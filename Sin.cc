@@ -38,7 +38,6 @@ Sin::activate()
 	sin.set_f (f, fs, 0);
 }
 
-template <yield_func_t F>
 void
 Sin::cycle (uint frames)
 {
@@ -51,7 +50,7 @@ Sin::cycle (uint frames)
 	{
 		for (uint i = 0; i < frames; ++i)
 		{
-			F (d, i, gain * sin.get(), adding_gain);
+			d[i] = gain*sin.get();
 			gain *= g;
 		}
 	}
@@ -64,7 +63,7 @@ Sin::cycle (uint frames)
 		{
 			sample_t x = g0*sin0.get() + g1*sin.get();
 			g0 -= dg, g1 += dg;
-			F (d, i, gain * x, adding_gain);
+			d[i] = gain*x;
 			gain *= g;
 		}
 	}
@@ -79,6 +78,7 @@ Sin::port_info [] =
 {
 	{ "f (Hz)", CTRL_IN, {LOG | DEFAULT_440, 0.0001, 20000} }, 
 	{ "volume", CTRL_IN, {DEFAULT_MID, MIN_GAIN, 1}	}, 
+
 	{ "out", OUTPUT | AUDIO, {0} }
 };
 

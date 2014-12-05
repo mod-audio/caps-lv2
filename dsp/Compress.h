@@ -1,7 +1,7 @@
 /*
 	dsp/Compress.h
 	
-	Copyright 2011-13 Tim Goetze <tim@quitte.de>
+	Copyright 2011-14 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -29,7 +29,7 @@
 #define DSP_COMPRESS_H
 
 #include "RMS.h"
-#include "OnePole.h"
+#include "IIR1.h"
 #include "util.h"
 
 namespace DSP {
@@ -42,9 +42,9 @@ class Compress
 		float threshold, attack, release;
 
 		struct {
-			sample_t current, target, direct;
+			sample_t current, target, direct, state;
 			sample_t step;
-			DSP::OnePoleLP<sample_t> lp;
+			DSP::LP1<sample_t> lp;
 		} gain;
 
 		void init (float fs)
@@ -56,31 +56,32 @@ class Compress
 				blocksize *= 4;
 				over_block = 1./blocksize;
 
-				set_threshold (0);
-				set_attack (0);
-				set_release (1);
-				set_directgain (1);
+				set_threshold(0);
+				set_attack(0);
+				set_release(1);
+				set_directgain(1);
 
 				gain.current = gain.target = gain.direct;
+				gain.state = 1;
 				gain.step = 0;
 
-				gain.lp.set (.05);
+				gain.lp.set (.4);
 				/* prevent immediate drop from 0 sample in filter history */
 				gain.lp.y1 = gain.current; 
 			}
 
 		void set_threshold (float t) { threshold = pow2 (t); }
-		void set_directgain (float d) { gain.direct = 4 * d; }
+		void set_directgain (float d) { gain.direct = 4*d; }
 
 		void set_attack (float a) 
 			{ 
-				attack = pow2 (2 * a);
-				attack = (.001 + attack) * over_block;
+				attack = pow2 (2*a);
+				attack = (.001 + attack)*over_block;
 			}
 		void set_release (float r) 
 			{ 
-				release = pow2 (2 * r);
-				release = (.001 + release) * over_block;
+				release = pow2 (2*r);
+				release = (.001 + release)*over_block;
 			}
 
 		void start_block (sample_t powa, float strength)
@@ -89,15 +90,15 @@ class Compress
 					gain.target = gain.direct;
 				else
 				{
-					sample_t t = pow5 (1 - (powa - threshold));
-					t = max (.00001, t);
-					gain.target = pow (4, (1 - strength) + strength * t);
+					sample_t t = pow5(1 - (powa - threshold));
+					t = max(.00001, t);
+					gain.target = pow(4, (1 - strength) + strength*t);
 				}
 
 				if (gain.target < gain.current) 
-					gain.step = -min (attack, (gain.current - gain.target) * over_block);
+					gain.step = -min (attack, (gain.current - gain.target)*over_block);
 				else if (gain.target > gain.current) 
-					gain.step = min (release, (gain.target - gain.current) * over_block);
+					gain.step = min (release, (gain.target - gain.current)*over_block);
 				else
 					gain.step = 0;
 			}
@@ -105,8 +106,8 @@ class Compress
 		inline sample_t get()
 			{
 				gain.current += gain.step;
-				gain.current = gain.lp.process (gain.current - 1e-20);
-				return .0625 * pow2 (gain.current); /* 4*4 * 0.0625 = 1 */
+				gain.current = gain.lp.process(gain.current - 1e-20);
+				return gain.state = .0625*pow2(gain.current); /* 4*4 * 0.0625 = 1 */
 			}
 };
 
@@ -116,7 +117,7 @@ class CompressRMS
 	public:
 		struct {
 			DSP::RMS<32> rms;
-			DSP::OnePoleLP<sample_t> lp;
+			DSP::LP1<sample_t> lp;
 			sample_t current;
 		} power;
 
@@ -155,7 +156,7 @@ class CompressPeak
 {
 	public:
 		struct {
-			DSP::OnePoleLP<sample_t> lp;
+			DSP::LP1<sample_t> lp;
 			sample_t current;
 		} peak;
 
@@ -194,6 +195,6 @@ class CompressPeak
 			}
 };
 
-}; /* namespace DSP */
+} /* namespace DSP */
 
 #endif /* DSP_COMPRESS_H */

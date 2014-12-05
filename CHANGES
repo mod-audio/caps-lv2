@@ -1,3 +1,28 @@
+0.9.24
+	* documentation updates including switch to 48k for all spectra
+	* "twin" and "stanford" tonestack models swap places
+	* ChorusI feedback changed to interpolation, softens zipper noise on t changes
+	* use vestigial FPTruncateMode only on pre-SSE2 hardware
+	* 4x128 oversampling option removed from Compress plugins
+	* state port displaying current gain reduction on Compress plugins
+	* _latency port for parallel Eq
+	* Saturate fade-in bug eliminated
+	* Noisegate hysteresis interval lengthened
+	* Click sounds "stick" brightened and "beep" shortened
+	* run_adding() removed, reducing binary size by 30 % and compile time similarly
+	* JVRev tail modified, low-passed
+	* all ports reordered to consistent ctrl i/o audio i/o order
+	* Eq4p crossfade reimplemented as equal-power squared cosine, smoother now
+	* EqFA4p added
+	* non-SSE v4f_shuffle surrogate fixed 
+	  (fixes Eq4p on ARM, reported by Jens Dreske)
+	* dropped 44.1 kHz ToneStackLT
+	* OnePole header renamed IIR1, filters renamed LP1 and HP1
+	* BiQuad header and filter renamed IIR2, SIMD *4f filters renamed *v4
+	* CabinetIII (less demanding loudspeaker emulation resurrected again)
+	* ChorusI port ranges and defaults adjusted
+	* Compress parameter mappings and defaults adjusted
+
 0.9.23
 	* ChorusI hp filter denormal protection added
 

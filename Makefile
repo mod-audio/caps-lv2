@@ -1,4 +1,4 @@
-VERSION = 0.9.23
+VERSION = 0.9.24
 
 PREFIX = /usr
 DESTDIR = 
@@ -7,6 +7,9 @@ CC = g++
 
 OPTS = -O3 -ffast-math -funroll-loops -Wall -fPIC -DPIC
 #OPTS = -g -DDEBUG 
+
+CAPS_URI=\"http://portalmod.com/plugins/caps/\"
+OPTS += -DCAPS_URI=${CAPS_URI}
 
 _LDFLAGS = -shared 
 STRIP = strip
@@ -48,8 +51,10 @@ run: all
 	@#~/cream/gdb-python bin/fractalstest.py
 	@#python bin/sinsweep.py
 	@#python -i ~/reve/bin/noisegate.py
-	@rack.py AutoFilter ChorusI AmpVTS CabinetIV Plate
+	@#rack.py Noisegate AmpVI Plate
 	@#python ~/reve/bin/hum.py
+	@python bin/cabtest.py
+	@#cd ~/reve && python bin/cabmake.py
 
 rdf: $(PLUG).rdf
 $(PLUG).rdf: all tools/make-rdf.py
@@ -103,7 +108,6 @@ version.h:
 	@VERSION=$(VERSION) python tools/make-version.h.py
 
 dist: all $(PLUG).rdf version.h
-	-rm doc/*.html 
 	tools/make-dist.py caps $(VERSION) $(CFLAGS)
 
 depend: $(SOURCES) $(HEADERS)

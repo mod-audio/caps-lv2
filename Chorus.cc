@@ -49,9 +49,8 @@ ChorusI::setrate (float r)
 	lfo.sine.set_f (rate, fs, lfo.sine.get_phase());
 }
 
-template <yield_func_t F>
 void
-ChorusI::one_cycle (int frames)
+ChorusI::cycle (uint frames)
 {
 	float one_over_n = 1/(float)frames;
 	float ms = fs*.001;
@@ -77,21 +76,19 @@ ChorusI::one_cycle (int frames)
 
 	DSP::FPTruncateMode truncate;
 
-	for (int i = 0; i < frames; ++i)
+	for (uint i = 0; i < frames; ++i)
 	{
 		sample_t x=s[i], y=x;
 
 		x = hp.process(x+normal);
 
-		int ti;
-		fistp (t, ti);
-		y -= fb*delay[ti];
+		y -= fb*delay.get_linear(t);
 
 		delay.put (y + normal);
 
 		y += blend*x + ff*delay.get_cubic (t + w*lfo.sine.get());
 
-		F (d, i, y, adding_gain);
+		d[i] = y;
 
 		t += dt;
 		w += dw;
@@ -106,11 +103,11 @@ ChorusI::port_info [] =
 	{ "t (ms)", CTRL_IN, {LOG | DEFAULT_MID, 2.5, 40} }, 
 	{ "width (ms)", CTRL_IN, {DEFAULT_LOW, .5, 10} }, 
 
-	{ "rate (Hz)", CTRL_IN | GROUP, {LOG | DEFAULT_LOW, 0.01, 2.8} }, 
+	{ "rate (Hz)", CTRL_IN | GROUP, {LOG | DEFAULT_LOW, 0.02, 5} }, 
 
 	{ "blend", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} }, 
 	{ "feedforward", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
-	{ "feedback", CTRL_IN, {DEFAULT_0, 0, 1} }, 
+	{ "feedback", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
 
 	{ "in", INPUT | AUDIO }, 
 	{ "out", OUTPUT | AUDIO }

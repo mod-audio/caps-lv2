@@ -1,6 +1,6 @@
 /* 4089 samples peak 0.96000 */
-#ifndef __PROFIT_H__
-#define __PROFIT_H__
+#ifndef CAPS_PROFIT_H
+#define CAPS_PROFIT_H
 short profit[] = {
 	159, 144, 124, 106, 84, 66, 34, 7,
 	0, -26, -30, -47, -59, -78, -83, -83,
@@ -515,4 +515,4 @@ short profit[] = {
 	-34, -21, -29, -39, -39, -32, -23, -13,
 	-4, 
 	0,0,0,0, };
-#endif /* __PROFIT_H__ */
+#endif /* CAPS_PROFIT_H */

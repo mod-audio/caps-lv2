@@ -35,8 +35,8 @@
 #include "dsp/Roessler.h"
 
 #include "dsp/RMS.h"
-#include "dsp/BiQuad.h"
-#include "dsp/OnePole.h"
+#include "dsp/IIR2.h"
+#include "dsp/IIR1.h"
 
 class AutoFilter
 : public Plugin
@@ -52,20 +52,17 @@ class AutoFilter
 		DSP::Lorenz lorenz;
 
 		/* rms calculation and smoothing */
-		DSP::OnePoleHP<sample_t> hp;
+		DSP::HP1<sample_t> hp;
 		DSP::RMS<128> rms;
-		DSP::BiQuad<sample_t> smoothenv; 
+		DSP::IIR2<sample_t> smoothenv; 
 
-		template <yield_func_t F> void one_cycle (uint frames);
+		void cycle (uint frames);
 
 	public:
 		static PortInfo port_info [];
 
 		void init();
 		void activate();
-
-		void run (uint n) { one_cycle<store_func> (n); }
-		void run_adding (uint n) { one_cycle<adding_func> (n); }
 };
 
 #endif /* _AUTO_FILTER_H_ */

@@ -30,10 +30,10 @@
 
 #include "dsp/util.h"
 #include "dsp/Eq.h"
-#include "dsp/BiQuad.h"
+#include "dsp/IIR2.h"
 #include "dsp/RBJ.h"
 #include "dsp/v4f.h"
-#include "dsp/v4f_BiQuad.h"
+#include "dsp/v4f_IIR2.h"
 
 /* octave-band variants, mono and stereo */
 class Eq10
@@ -46,17 +46,13 @@ class Eq10
 		int block;
 			enum { BlockSize = 64 };
 
-		template <yield_func_t F>
-			void cycle (uint frames);
+		void cycle (uint frames);
 
 	public:
 		static PortInfo port_info [];
 
 		void init();
 		void activate();
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 class Eq10X2
@@ -66,17 +62,13 @@ class Eq10X2
 		sample_t gain[10];
 		DSP::Eq<10> eq[2];
 
-		template <yield_func_t F>
-			void cycle (uint frames);
+		void cycle (uint frames);
 
 	public:
 		static PortInfo port_info [];
 
 		void init();
 		void activate();
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 /* 4-way parametric, parallel implementation */
@@ -86,22 +78,40 @@ class Eq4p
 	public:
 		struct {sample_t mode,gain,f,Q;} state[4]; /* parameters */
 
-		DSP::BiQuad4f filter[2];
+		DSP::IIR2v4 filter[2];
 
 		bool xfade;
 		void updatestate();
 
-		template <yield_func_t F>
-			void cycle (uint frames);
+		void cycle (uint frames);
 
 	public:
 		static PortInfo port_info [];
 
 		void init();
 		void activate();
+};
 
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
+/* 4-way parametric, parallel implementation */
+class EqFA4p
+: public Plugin
+{
+	public:
+		struct {sample_t mode,gain,f,bw;} state[4]; /* parameters */
+
+		DSP::MREqv4 filter[2];
+
+		bool xfade;
+		void updatestate();
+		sample_t gain;
+
+		void cycle (uint frames);
+
+	public:
+		static PortInfo port_info [];
+
+		void init();
+		void activate();
 };
 
 #endif /* EQ_H */

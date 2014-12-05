@@ -250,6 +250,6 @@ class FIRn
 			}
 };
 
-}; /* namespace DSP */
+} /* namespace DSP */
 
 #endif /* FIR_H */

@@ -32,8 +32,8 @@
 #include "dsp/Oversampler.h"
 #include "dsp/RMS.h"
 #include "dsp/Compress.h"
-#include "dsp/OnePole.h"
-#include "dsp/BiQuad.h"
+#include "dsp/IIR1.h"
+#include "dsp/IIR2.h"
 #include "dsp/Butterworth.h"
 #include "dsp/Delay.h"
 #include "dsp/ChebyshevPoly.h"
@@ -47,30 +47,25 @@ class Saturate
 		} gain;
 		float bias;
 
-		DSP::OnePoleHP<sample_t> hp;
+		DSP::HP1<sample_t> hp;
 
+		/* use <128,1024> for cleaner output */
 		DSP::Oversampler<8,64> over;
 
-		template <yield_func_t F>
-				void cycle (uint frames);
-		template <clip_func_t C, yield_func_t F>
-				void subcycle (uint frames);
+		void cycle (uint frames);
+		template <clip_func_t C> void subcycle (uint frames);
 
 	public:
 		static PortInfo port_info[];
 
 		void init();
-
 		void activate();
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 /* stacked Butterworth crossover (Linkwitz-Riley) */
 struct Splitter
 {
-	DSP::BiQuad<sample_t> lp[2], hp[2];
+	DSP::IIR2<sample_t> lp[2], hp[2];
 	float f;
 
 	void reset()
@@ -94,23 +89,19 @@ class Spice
 {
 	public:
 		Splitter split[2];
-		DSP::BiQuad<sample_t> shape[2];
+		DSP::IIR2<sample_t> shape[2];
 		DSP::ChebPoly<5> cheby; 
 
 		uint remain;
 		DSP::CompressPeak compress;
 
-		template <yield_func_t F>
-				void cycle (uint frames);
+		void cycle (uint frames);
 
 	public:
 		static PortInfo port_info[];
 
 		void init();
 		void activate();
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 class SpiceX2
@@ -119,24 +110,20 @@ class SpiceX2
 	public:
 		struct {
 			Splitter split[2];
-			DSP::BiQuad<sample_t> shape[2];
+			DSP::IIR2<sample_t> shape[2];
 		} chan[2];
 		DSP::ChebPoly<5> cheby; 
 
 		uint remain;
 		DSP::CompressPeak compress;
 
-		template <yield_func_t F>
-				void cycle (uint frames);
+		void cycle (uint frames);
 
 	public:
 		static PortInfo port_info[];
 
 		void init();
 		void activate();
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 #endif /* SATURATE_H */

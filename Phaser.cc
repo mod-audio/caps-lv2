@@ -32,7 +32,6 @@
 
 #define FBSCALE .9 /* feedback scale from 0..1 parameter range */
 
-template <yield_func_t F>
 void
 PhaserII::cycle (uint frames)
 {
@@ -80,7 +79,7 @@ PhaserII::cycle (uint frames)
 			
 			y0 = y;
 
-			F (dst, i, x + y*depth, adding_gain);
+			dst[i] = x + y*depth;
 		}
 
 		s += n;

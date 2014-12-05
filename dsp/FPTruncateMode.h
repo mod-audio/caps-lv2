@@ -36,7 +36,7 @@
 #ifndef DSP_FP_TRUNCATE_MODE_H
 #define DSP_FP_TRUNCATE_MODE_H
 
-#ifdef __i386__
+#if defined(__i386__) && !defined(__SSE2__)
 	#define fstcw(i) \
 		__asm__ __volatile__ ("fstcw %0" : "=m" (i))
 

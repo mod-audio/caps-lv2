@@ -1,11 +1,11 @@
 /*
-	dsp/BiQuad.h
+	dsp/IIR2.h
 	
-	Copyright 2003-11 Tim Goetze <tim@quitte.de>
+	Copyright 2003-14 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
-	Bi-quad IIR filter implementations.
+	2nd order IIR filter implementation
 
 */
 /*
@@ -25,15 +25,15 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef DSP_BI_QUAD_H
-#define DSP_BI_QUAD_H
+#ifndef DSP_IIR2_H
+#define DSP_IIR2_H
 
 #include "complex.h"
 
 namespace DSP {
 
 template <class T>
-class BiQuad
+class IIR2
 {
 	public:
 		/* coefficients */
@@ -43,7 +43,7 @@ class BiQuad
 		int h;
 		T x[2], y[2];
 
-		BiQuad()
+		IIR2()
 			{
 				b = a + 2;
 				unity();
@@ -80,7 +80,7 @@ class BiQuad
 		void dump()
 			{
 				#ifdef DEBUG
-				fprintf (stderr, "BiQuad a[]=%.5f %.5f %.5f b[]=%.5f %.5f\n", 
+				fprintf (stderr, "IIR2 a[]=%.5f %.5f %.5f b[]=%.5f %.5f\n", 
 						a[0],a[1],a[2],b[1],b[2]);
 				#endif
 			}
@@ -122,7 +122,7 @@ class BiQuad
 				return r;
 			}
 
-		inline T process_no_a1 (T s)
+		inline T process_bp (T s)
 			{
 				register int z = h;
 
@@ -208,4 +208,4 @@ class BiQuad
 
 } /* namespace DSP */
 
-#endif /* DSP_BI_QUAD_H */
+#endif /* DSP_IIR2_H */

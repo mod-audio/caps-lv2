@@ -50,33 +50,28 @@ Wider::activate()
 inline void
 Wider::set_pan (sample_t p)
 {
-	if (pan == p) 
-		return;
+	if (pan == p) return;
 
 	pan = p;
-	
 	double phi = (pan + 1)*M_PI*.25;
-
-	gain_l = cos (phi);
-	gain_r = sin (phi);
+	gain_l = cos(phi);
+	gain_r = sin(phi);
 }
 
-template <yield_func_t F>
 void
 Wider::cycle (uint frames)
 {
-	sample_t * src = ports[0];
-
-	sample_t p = getport(1);
+	sample_t p = getport(0);
 	if (p != pan) set_pan (p);
 
-	sample_t width = getport(2); 
+	sample_t width = getport(1); 
 
 	/* need to limit width as pan increases in order to prevent
 	 * excessive phase cancellation */
 	width *= 1 - fabs (p);
 	width *= width;
 
+	sample_t * src = ports[2];
 	sample_t * dl = ports[3];
 	sample_t * dr = ports[4];
 
@@ -84,16 +79,16 @@ Wider::cycle (uint frames)
 	{
 		sample_t m = .707*src[i] + normal;
 		sample_t s = m;
-		s = ap[0].process (s);
-		s = ap[1].process (s);
-		s = ap[2].process (s);
+		s = ap[0].process(s);
+		s = ap[1].process(s);
+		s = ap[2].process(s);
 
 		s *= width;
 
 		sample_t l = m - s;
 		sample_t r = m + s;
-		F (dl, i, gain_l * l, adding_gain);
-		F (dr, i, gain_r * r, adding_gain);
+		dl[i] = gain_l*l;
+		dr[i] = gain_r*r;
 	}
 }
 
@@ -102,9 +97,10 @@ Wider::cycle (uint frames)
 PortInfo
 Wider::port_info [] =
 {
-	{ "in", INPUT | AUDIO }, 
 	{ "pan", INPUT | CONTROL, {DEFAULT_0, -1, 1} }, 
 	{ "width", INPUT | CONTROL, {DEFAULT_1, 0, 1} }, 
+
+	{ "in", INPUT | AUDIO }, 
 	{	"out.l", OUTPUT | AUDIO	}, 
 	{ "out.r", OUTPUT | AUDIO }
 };
@@ -124,16 +120,14 @@ Descriptor<Wider>::setup()
 
 /* //////////////////////////////////////////////////////////////////////// */
 
-template <yield_func_t F>
 void
 Narrower::cycle (uint frames)
 {
-	sample_t * sl = ports[0];
-	sample_t * sr = ports[1];
+	float mode = getport(0);
+	strength = getport(1);
 
-	float mode = getport(2);
-	strength = getport(3);
-
+	sample_t * sl = ports[2];
+	sample_t * sr = ports[3];
 	sample_t * dl = ports[4];
 	sample_t * dr = ports[5];
 
@@ -152,8 +146,8 @@ Narrower::cycle (uint frames)
 			xl = .5 * (m + s);
 			xr = .5 * (m - s);
 
-			F (dl, i, xl, adding_gain);
-			F (dr, i, xr, adding_gain);
+			dl[i] = xl;
+			dr[i] = xr;
 		}
 	}
 	else 
@@ -173,8 +167,8 @@ Narrower::cycle (uint frames)
 			xl += m;
 			xr += m;
 
-			F (dl, i, xl, adding_gain);
-			F (dr, i, xr, adding_gain);
+			dl[i] = xl;
+			dr[i] = xr;
 		}
 	}
 }
@@ -184,10 +178,12 @@ Narrower::cycle (uint frames)
 PortInfo
 Narrower::port_info [] =
 {
-	{ "in.l", INPUT | AUDIO }, { "in.r", INPUT | AUDIO }, 
 	{	"mode", INPUT | CONTROL, {INTEGER | DEFAULT_0, 0, 1}, 
 		"{0:'crossfeed mixing',1:'mid/side processing',}" }, 
 	{ "strength", INPUT | CONTROL | GROUP, {DEFAULT_LOW, 0, 1} }, 
+
+	{ "in.l", INPUT | AUDIO }, 
+	{ "in.r", INPUT | AUDIO }, 
 	{ "out.l", OUTPUT | AUDIO }, 
 	{	"out.r", OUTPUT | AUDIO	}
 };

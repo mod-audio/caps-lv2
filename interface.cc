@@ -1,8 +1,8 @@
 /*
   interface.cc
 
-	Copyright 2004-13 Tim Goetze <tim@quitte.de>
-
+	Copyright 2004-14 Tim Goetze <tim@quitte.de>
+	
 	http://quitte.de/dsp/
 
 	LADSPA descriptor factory, host interface.
@@ -25,7 +25,7 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 /*
-	LADSPA ID ranges 1761 - 1800 and 2581 - 2660
+	LADSPA ID ranges 1761 - 1800 and 2581 - 2660 
 	(2541 - 2580 donated to artemio@kdemail.net)
 */
 
@@ -47,32 +47,29 @@
 #include "Amp.h"
 #include "Pan.h"
 #include "Scape.h"
-#include "ToneStack.h"
-#include "Noisegate.h"
+#include "ToneStack.h" 
+#include "Noisegate.h" 
+#ifdef SUMMER
+#include "AmpVI.h"
+#endif
 
 #include "Descriptor.h"
 
-#define N 35
+#define N 35 
 
 static DescriptorStub * descriptors [N+1];
 static DescriptorStub * lv2_descriptors [N+1];
 
 extern "C" {
 
-const LADSPA_Descriptor *
-ladspa_descriptor (unsigned long i)
-{
-	return i < N ? descriptors[i] : 0;
-}
+const LADSPA_Descriptor * 
+ladspa_descriptor (unsigned long i) { return i < N ? descriptors[i] : 0; }
 
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor *
-lv2_descriptor(uint32_t i)
-{
-	return i < N ? lv2_descriptors[i] : 0;
-}
+lv2_descriptor(uint32_t i) { return i < N ? lv2_descriptors[i] : 0; }
 
-__attribute__ ((constructor))
+__attribute__ ((constructor)) 
 void caps_so_init()
 {
 	DescriptorStub ** d = descriptors;
@@ -85,8 +82,15 @@ void caps_so_init()
 
 	*d++ = new Descriptor<ToneStack>(2589);
 	*d++ = new Descriptor<AmpVTS>(2592);
+	#ifdef SUMMER
+	*d++ = new Descriptor<AmpVI>(1789);
+	#endif
+	*d++ = new Descriptor<CabinetIII>(2601);
 	*d++ = new Descriptor<CabinetIV>(2606);
 
+	#ifdef WITH_JVREV
+	*d++ = new Descriptor<JVRev>(1778);
+	#endif
 	*d++ = new Descriptor<Plate>(1779);
 	*d++ = new Descriptor<PlateX2>(1795);
 
@@ -103,6 +107,7 @@ void caps_so_init()
 	*d++ = new Descriptor<Eq10>(1773);
 	*d++ = new Descriptor<Eq10X2>(2594);
 	*d++ = new Descriptor<Eq4p>(2608);
+	*d++ = new Descriptor<EqFA4p>(2609);
 
 	*d++ = new Descriptor<Wider>(1788);
 	*d++ = new Descriptor<Narrower>(2595);
@@ -113,7 +118,7 @@ void caps_so_init()
 
 	*d++ = new Descriptor<Click>(1769);
 	*d++ = new Descriptor<CEO>(1770);
-
+	
 	assert (d - descriptors <= N);
 
 	/* LV2 */
@@ -126,8 +131,15 @@ void caps_so_init()
 
 	*d++ = new Descriptor<ToneStack>(CAPS_URI "ToneStack");
 	*d++ = new Descriptor<AmpVTS>(CAPS_URI "AmpVTS");
+	#ifdef SUMMER
+	*d++ = new Descriptor<AmpVI>(CAPS_URI "AmpVI");
+	#endif
+	*d++ = new Descriptor<CabinetIII>(CAPS_URI "CabinetIII");
 	*d++ = new Descriptor<CabinetIV>(CAPS_URI "CabinetIV");
 
+	#ifdef WITH_JVREV
+	*d++ = new Descriptor<JVRev>(CAPS_URI "JVRev");
+	#endif
 	*d++ = new Descriptor<Plate>(CAPS_URI "Plate");
 	*d++ = new Descriptor<PlateX2>(CAPS_URI "PlateX2");
 
@@ -144,6 +156,7 @@ void caps_so_init()
 	*d++ = new Descriptor<Eq10>(CAPS_URI "Eq10");
 	*d++ = new Descriptor<Eq10X2>(CAPS_URI "Eq10X2");
 	*d++ = new Descriptor<Eq4p>(CAPS_URI "Eq4p");
+	*d++ = new Descriptor<EqFA4p>(CAPS_URI "EqFA4p");
 
 	*d++ = new Descriptor<Wider>(CAPS_URI "Wider");
 	*d++ = new Descriptor<Narrower>(CAPS_URI "Narrower");
@@ -158,7 +171,7 @@ void caps_so_init()
 	assert (d - lv2_descriptors <= N);
 }
 
-__attribute__ ((destructor))
+__attribute__ ((destructor)) 
 void caps_so_fini()
 {
 	DescriptorStub ** d = descriptors;

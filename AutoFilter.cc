@@ -66,9 +66,8 @@ AutoFilter::activate()
 	smoothenv.reset();
 }
 
-template <yield_func_t F>
 void
-AutoFilter::one_cycle (uint frames)
+AutoFilter::cycle (uint frames)
 {
 	div_t qr = div (frames, blocksize);
 	int blocks = qr.quot;
@@ -126,14 +125,14 @@ AutoFilter::one_cycle (uint frames)
 			svf1.set_f_Q (fmod, Q);
 			double g = 1.8;
 			for (uint i = 0; i < n; ++i)
-				F (d, i, svf1.process<DSP::Polynomial::tanh>(s[i]+normal,g), adding_gain);
+				d[i] = svf1.process<DSP::Polynomial::tanh>(s[i]+normal,g);
 		}
 		else if (svf == 2)
 		{
 			svf2.set_f_Q (fmod, Q);
 			double g = .84*(1-Q) + .21;
 			for (uint i = 0; i < n; ++i)
-				F (d, i, svf2.process<DSP::Polynomial::tanh>(s[i]+normal,g), adding_gain);
+				d[i] = svf2.process<DSP::Polynomial::tanh>(s[i]+normal,g);
 		}
 
 		s += n;
@@ -155,13 +154,14 @@ AutoFilter::port_info [] =
 	{ "filter", CTRL_IN | GROUP, {DEFAULT_1 | INTEGER, 0, 1}, 
 		"{0:'breathy',1:'fat'}", }, 
 	/* 2 */
-	{ "f (Hz)", CTRL_IN | GROUP, {LOG | DEFAULT_HIGH, 20, 2801} }, 
+	{ "f (Hz)", CTRL_IN | GROUP, {LOG | DEFAULT_HIGH, 20, 3400} }, 
 	{ "Q", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
 	/* 4 */
 	{ "depth", CTRL_IN | GROUP, {DEFAULT_1, 0, 1} }, 
 	{ "lfo/env", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
 	{ "rate", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} }, 
 	{ "x/z", CTRL_IN, {DEFAULT_1, 0, 1} }, 
+
 	/* 8 */
 	{ "in", AUDIO_IN}, 
 	{	"out", AUDIO_OUT}

@@ -53,6 +53,6 @@ sinc (double omega, sample_t * s, int n)
 	}
 }
 
-}; /* namespace DSP */
+} /* namespace DSP */
 
 #endif /* DSP_SINC_H */

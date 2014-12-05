@@ -3,6 +3,7 @@
 	
 	Copyright 2006-7
 		David Yeh <dtyeh@ccrma.stanford.edu> (implementation)
+	2006-14
 		Tim Goetze <tim@quitte.de> (cosmetics)
 
 	transposed Direct Form II digital filter.
@@ -32,18 +33,18 @@
 
 namespace DSP {
 
-/* Order is the highest power of s in the transfer function */
-template <int Order>
+/* N is the highest power of s in the transfer function */
+template <int N>
 class TDFII
 {
 	public:
-		double a[Order + 1];
-		double b[Order + 1];
-		double h[Order + 1];
+		double a[N+1];
+		double b[N+1];
+		double h[N+1];
 	
 		void reset() 
 			{
-				for (int i = 0; i <= Order; ++i)
+				for (int i = 0; i <= N; ++i)
 					h[i] = 0;   // zero state
 			}
 
@@ -55,8 +56,9 @@ class TDFII
 
 		void clear() 
 			{
-				for (int i=0; i<= Order; i++) 
-						a[i] = b[i] = 1;
+				for (int i=0; i<= N; i++) 
+					a[i] = b[i] = 0;
+				b[0] = 1;
 			}
 
 		/* per-band recursion:
@@ -64,12 +66,12 @@ class TDFII
 		 */
 		sample_t process (sample_t s)
 			{
-				double y = h[0] + b[0] * s;
+				double y = h[0] + b[0]*s;
 
-				for (int i = 1; i < Order; ++i) 
-						h[i - 1] = h[i] + b[i] * s - a[i] * y;
+				for (int i=1; i<N; ++i) 
+						h[i-1] = h[i] + b[i]*s - a[i]*y;
 
-				h[Order - 1] = b[Order] * s - a[Order] * y;
+				h[N-1] = b[N]*s - a[N]*y;
 
 				return (sample_t) y;
 			}

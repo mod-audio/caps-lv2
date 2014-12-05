@@ -1,15 +1,12 @@
 /*
 	Cabinet.h
 	
-	Copyright 2002-13 Tim Goetze <tim@quitte.de>
+	Copyright 2002-14 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
-	CabinetII - 32nd order IIR filters modeled after existing impulse responses
-	for 44.1 / 48 / 88.2 / 96 kHz sample rates, switched at runtime.
-
 	CabinetIV - IIR/FIR combination filters for cabinet emulation, following
-	Bank's parfilt approach, see
+	Bank's parfilt approach (warped Prony), see
 
 		Balázs Bank, 
 		"Direct Design of Parallel Second-Order Filters for Instrument Body Modeling",
@@ -38,53 +35,41 @@
 #define CABINET_H
 
 #include "dsp/util.h"
-#include "dsp/BiQuad.h"
 #include "dsp/Oversampler.h"
 #include "dsp/v4f.h"
 #include "dsp/v4f_FIR.h"
-#include "dsp/v4f_BiQuad.h"
+#include "dsp/v4f_IIR2.h"
 
 typedef double cabinet_float;
 
 typedef struct {
-	int n;
+	sample_t gain;
 	cabinet_float a[32], b[32];
-	float gain;
 } Model32;
 
-/* Second version with 32nd order filters precalculated for
- * 44.1 / 48 / 88.2 / 96 kHz sample rates */
-
-class CabinetII
+class CabinetIII
 : public Plugin
 {
 	public:
 		sample_t gain;
 
-		static Model32 models44100 [];
-		static Model32 models48000 [];
-		static Model32 models88200 [];
-		static Model32 models96000 [];
+		static Model32 allmodels[];
 
 		Model32 * models;
 		int model;
 		void switch_model (int m);
 
-		int n, h;
+		int h;
 		cabinet_float * a, * b;
 		cabinet_float x[32], y[32];
 		
-		template <yield_func_t F>
-			void cycle (uint frames);
+		void cycle (uint frames);
 
 	public:
 		static PortInfo port_info [];
 
 		void init();
 		void activate();
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 /* /////////////////////////////////////////////////////////////////////// */
@@ -95,36 +80,6 @@ class ParModel {
 		float gain;
 		float a1[4*N], a2[4*N], b1[4*N], b2[4*N];
 		float fir[FIR];
-};
-
-class CabinetIII
-: public Plugin
-{
-	public:
-		enum { 
-			N = 128/4, /* number of bands/4 */
-			FIR = 128 /* FIR filter taps */
-		}; 
-
-		int model;
-		static ParModel<N,FIR> models [];
-		void switch_model (int m);
-
-		sample_t gain;
-		DSP::BiQuad4fBank<N> bank;
-		DSP::FIR4f<FIR> fir;
-
-		template <yield_func_t F>
-				void cycle (uint frames);
-
-	public:
-		static PortInfo port_info [];
-
-		void init();
-		void activate();
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 class CabinetIV
@@ -144,24 +99,19 @@ class CabinetIV
 			N = 64/4, /* number of bands/4 */
 			FIR = 128 /* FIR filter taps */
 		}; 
-		DSP::BiQuad4fBank<N> bank;
-		DSP::FIR4f<FIR> fir;
+		DSP::IIR2v4Bank<N> bank;
+		DSP::FIRv4<FIR> fir;
 
 		double gain;
 
-		template <yield_func_t F>
-				void cycle (uint frames);
-		template <yield_func_t F, class O, int Ratio>
-				void cycle (uint frames, O & Over);
+		void cycle (uint frames);
+		template <class O, int Ratio> void subcycle (uint frames, O & Over);
 
 	public:
 		static PortInfo port_info [];
 
 		void init();
 		void activate();
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 #endif /* CABINET_H */

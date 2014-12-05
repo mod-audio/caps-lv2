@@ -75,18 +75,14 @@ AmpVTS::setratio (int r)
 	over8.reset();
 }
 
-template <yield_func_t yield>
 void
 AmpVTS::cycle (uint frames)
 {
 	int r = 2 << (int) getport(0);
 	setratio(r);
-	if (r == 8)
-		subcycle<yield> (frames, over8);
-	else if (r == 4)
-		subcycle<yield> (frames, over4);
-	else
-		subcycle<yield> (frames, over2);
+	if (r == 8) subcycle (frames, over8);
+	else if (r == 4) subcycle (frames, over4);
+	else subcycle (frames, over2);
 }
 
 /* saturating function selection */
@@ -96,7 +92,7 @@ AmpVTS::cycle (uint frames)
 /* rough correction for tonestack model gain differences */
 static float tsgain[] = {.639, 1.290, .534, 1.008, .542, .936, .605, 1.146, .211};
 
-template <yield_func_t yield, class Over>
+template <class Over>
 void
 AmpVTS::subcycle (uint frames, Over & over)
 {
@@ -170,7 +166,7 @@ AmpVTS::subcycle (uint frames, Over & over)
 
 			a *= makeup;
 
-			yield (d, i, a, adding_gain);
+			d[i] = a;
 		}
 
 		s+=n;d+=n;

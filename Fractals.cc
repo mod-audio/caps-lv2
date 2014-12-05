@@ -47,18 +47,15 @@ Fractal::activate()
 	hp.reset();
 }
 
-template <yield_func_t F>
 void
 Fractal::cycle (uint frames)
 {
 	float mode = getport(1);
-	if (mode < .5)
-		subcycle<F,0> (frames);
-	else
-		subcycle<F,1> (frames);
+	if (mode < .5) subcycle<0> (frames);
+	else subcycle<1> (frames);
 }
 
-template <yield_func_t yield, int Mode>
+template <int Mode>
 void
 Fractal::subcycle (uint frames)
 {
@@ -93,7 +90,7 @@ Fractal::subcycle (uint frames)
 		}
 
 		x = hp.process (x + normal);
-		yield (d, i, gain*x, adding_gain);
+		d[i] = gain*x;
 		gain *= g;
 	}
 
@@ -113,6 +110,7 @@ Fractal::port_info [] =
 	{ "z", CTRL_IN, {DEFAULT_MID, 0, 1} }, 
 	{ "hp", CTRL_IN | GROUP, {DEFAULT_MID, 0, 1} }, 
 	{ "volume", CTRL_IN, {DEFAULT_MID, MIN_GAIN, 1} }, 
+
 	{ "out", OUTPUT | AUDIO }
 };
 

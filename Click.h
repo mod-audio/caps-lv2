@@ -28,8 +28,8 @@
 #ifndef CLICK_H
 #define CLICK_H
 
-#include "dsp/OnePole.h"
-#include "dsp/BiQuad.h"
+#include "dsp/IIR1.h"
+#include "dsp/IIR2.h"
 #include "dsp/util.h"
 
 template <int Waves>
@@ -44,13 +44,12 @@ class ClickStub
 			uint N; /* number of samples in wave */
 		} wave[Waves];
 
-		DSP::OnePoleLP<sample_t> lp;
+		DSP::LP1<sample_t> lp;
 
 		uint period; /* frames remaining in period */
 		uint played; /* frames played from sample */
 
-		template <yield_func_t F>
-				void cycle (uint frames);
+		void cycle (uint frames);
 
 		ClickStub() 
 			{
@@ -72,9 +71,6 @@ class ClickStub
 				period = 0;
 				bpm = -1;
 			}
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 class Click

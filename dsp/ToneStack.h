@@ -33,8 +33,6 @@
 #include "util.h"
 #include "windows.h"
 #include "TDFII.h"
-#include "LatFilt.h"
-#include "tonestack/tables.h"
 
 namespace DSP {
 
@@ -167,69 +165,6 @@ class ToneStack
 				for (int i=0; i<=3; ++i)
 					filter.b[i] = dcoef_b[i] * a0i;
 			} 
-
-		/* actually do the DFII filtering, one sample at a time */
-		inline sample_t process (sample_t x)
-			{
-				return filter.process (x);
-			}
-};
-
-/* /////////////////////////////////////////////////////////////////////// */
-
-/* 
-	hardcode this, known size memory blocks
-	extern double* KS;    // 25 x 25 x 3
-	extern double* VS;    // 25 x 25 x 25 x 4
-	extern double KS[NSTEPS][NSTEPS][TSORDER]; //[bass][mid][coefs]
-	extern double VS[NSTEPS][NSTEPS][NSTEPS][TSORDER+1]; //[bass][mid][treb][coefs]
- */
-
-class ToneStackLT 
-{
-  private:
-		enum { Order = 3, Steps = 25 };
-
-		// digital coefficients
-		double *kcoef;
-		double *vcoef;
-		double af [Order + 1];
-		double bf [Order + 1];
-
-		double fs;
-		LatFilt<Order> filter;
-
-	public:
-		ToneStackLT() 
-			{ }
-
-		void init (double _fs)
-			{ }
-
-		void reset()
-			{
-				filter.reset();
-			}
-	
-		void updatecoefs (double b, double m, double t)
-			{
-				b = min (Steps-1, max (b * (Steps-1), 0));
-				m = min (Steps-1, max (m * (Steps-1), 0));
-				t = min (Steps-1, max (t * (Steps-1), 0));
-
-				int bi = (int) b;
-				int mi = (int) m;
-				int ti = (int) t;
-
-				kcoef = DSP::ToneStackKS +  (mi * Steps + bi) * Order;
-				vcoef = DSP::ToneStackVS + ((mi * Steps + bi) * Steps + ti) * (Order + 1);
-				
-				for (int i = 0; i < Order; ++i) 
-						filter.set_ki (kcoef[i], i);
-						
-				for (int i = 0; i < Order + 1; ++i) 
-						filter.set_vi (vcoef[i], i);
-			}
 
 		/* actually do the DFII filtering, one sample at a time */
 		inline sample_t process (sample_t x)

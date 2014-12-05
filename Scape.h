@@ -30,8 +30,8 @@
 #include "dsp/Roessler.h"
 #include "dsp/Lorenz.h"
 #include "dsp/Delay.h"
-#include "dsp/OnePole.h"
-#include "dsp/BiQuad.h"
+#include "dsp/IIR1.h"
+#include "dsp/IIR2.h"
 #include "dsp/RBJ.h"
 #include "dsp/SVF.h"
 
@@ -44,24 +44,20 @@ class Scape
 
 		struct {
 			DSP::Lorenz lorenz;
-			DSP::OnePoleLP<sample_t> lp;
+			DSP::LP1<sample_t> lp;
 		} lfo[2];
 
 		DSP::Delay delay;
 		DSP::SVFI<1> svf[4];
-		DSP::OnePoleHP<float> hipass[4];
+		DSP::HP1<float> hipass[4];
 
-		template <yield_func_t>
-			void cycle (int frames);
+		void cycle (uint frames);
 	
 	public:
 		static PortInfo port_info [];
 
 		void init();
 		void activate();
-
-		void run (int n) { cycle<store_func> (n); }
-		void run_adding (int n) { cycle<adding_func> (n); }
 };
 
 #endif /* SCAPE_H */

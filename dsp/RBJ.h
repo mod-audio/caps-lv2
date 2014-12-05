@@ -26,7 +26,7 @@
 #ifndef DSP_RBJ_H
 #define DSP_RBJ_H
 
-#include "BiQuad.h"
+#include "IIR2.h"
 
 namespace DSP { 
 namespace RBJ {

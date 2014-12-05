@@ -58,9 +58,9 @@ typedef __uint32_t		uint32;
 typedef __int64_t			int64;
 typedef __uint64_t		uint64;
 
-#define MIN_GAIN .000001 /* -120 dB */
+#define MIN_GAIN 1e-6 /* -120 dB */
 /* smallest non-denormal 32 bit IEEE float is 1.18e-38 */
-#define NOISE_FLOOR .00000000000005 /* -266 dB */
+#define NOISE_FLOOR 1e-20 /* -400 dB */
 
 #define HARD_RT  LADSPA_PROPERTY_HARD_RT_CAPABLE
 
@@ -111,35 +111,9 @@ typedef unsigned long ulong;
 /* prototype that takes a sample and yields a sample */
 typedef sample_t (*clip_func_t) (sample_t);
 
-/* flavours for sample store functions run() and run_adding() */
-typedef void (*yield_func_t) (sample_t *, uint, sample_t, sample_t);
-
-inline void
-store_func (sample_t * s, uint i, sample_t x, sample_t gain)
-{
-	s[i] = x;
-}
-
-inline void
-adding_func (sample_t * s, uint i, sample_t x, sample_t gain)
-{
-	s[i] += gain * x;
-}
-
 #ifndef max
-
-template <class X, class Y>
-X min (X x, Y y)
-{
-	return x < y ? x : (X) y;
-}
-
-template <class X, class Y>
-X max (X x, Y y)
-{
-	return x > y ? x : (X) y;
-}
-
+template <class X, class Y> X min (X x, Y y) { return x < (X)y ? x : (X)y; }
+template <class X, class Y> X max (X x, Y y) { return x > (X)y ? x : (X)y; }
 #endif /* ! max */
 
 template <class T>
@@ -150,11 +124,7 @@ T clamp (T value, T lower, T upper)
 	return value;
 }
 
-static inline float
-frandom()
-{
-	return (float) random() / (float) RAND_MAX;
-}
+static inline float frandom() { return (float) random() / (float) RAND_MAX; }
 
 /* NB: also true if 0  */
 inline bool 
@@ -190,21 +160,10 @@ next_power_of_2 (uint n)
 	return ++n;
 }
 
-inline double 
-db2lin (double db)
-{
-	return pow(10, db*.05);
-}
+inline double db2lin (double db) { return pow(10, .05*db); }
+inline double lin2db (double lin) { return 20*log10(lin); }
 
-inline double
-lin2db (double lin)
-{
-	return 20*log10(lin);
-}
-
-#if defined (__i386__)
-	#define TRAP asm ("int $3;")
-#elif defined (__amd64__)
+#if defined(__i386__) || defined(__amd64__)
 	#define TRAP asm ("int $3;")
 #else
 	#define TRAP
@@ -213,7 +172,6 @@ lin2db (double lin)
 /* //////////////////////////////////////////////////////////////////////// */
 
 #define CAPS "C* "
-#define CAPS_URI "http://portalmod.com/plugins/caps/"
 
 class Plugin 
 {

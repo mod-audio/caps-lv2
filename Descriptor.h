@@ -67,6 +67,7 @@ class DescriptorStub
 	public:
 		DescriptorStub()
 			{
+				memset(this,0,sizeof(*this));
 				PortCount = 0;
 				URI = 0;
 			}
@@ -108,7 +109,7 @@ class Descriptor
 				const char ** names = new const char * [PortCount];
 				PortNames = names;
 
-				LADSPA_PortDescriptor * desc = new LADSPA_PortDescriptor [PortCount];
+				LADSPA_PortDescriptor * desc = new LADSPA_PortDescriptor[PortCount];
 				PortDescriptors = desc;
 
 				ranges = new LADSPA_PortRangeHint [PortCount];
@@ -128,8 +129,6 @@ class Descriptor
 				LADSPA_Descriptor::connect_port = _connect_port;
 				LADSPA_Descriptor::activate = _activate;
 				LADSPA_Descriptor::run = _run;
-				LADSPA_Descriptor::run_adding = _run_adding;
-				LADSPA_Descriptor::set_run_adding_gain = _set_run_adding_gain;
 				LADSPA_Descriptor::deactivate = 0;
 				LADSPA_Descriptor::cleanup = _cleanup;
 
@@ -170,7 +169,7 @@ class Descriptor
 
 		static void _activate (LADSPA_Handle h)
 			{
-				T * plugin = (T *) h;
+				Plugin * plugin = (Plugin *) h;
 
 				plugin->first_run = 1;
 
@@ -203,38 +202,13 @@ class Descriptor
 					plugin->first_run = 0;
 				}
 
-				plugin->run (n);
+				plugin->cycle (n);
 				plugin->normal = -plugin->normal;
 			}
 		
-		static void _run_adding (LADSPA_Handle h, ulong n)
-			{
-				if (!n) return;
-
-				T * plugin = (T *) h;
-
-				/* If this is the first audio block after activation, 
-				 * initialize the plugin from the current set of parameters. */
-				if (plugin->first_run)
-				{
-					plugin->activate();
-					plugin->first_run = 0;
-				}
-
-				plugin->run_adding (n);
-				plugin->normal = -plugin->normal;
-			}
-		
-		static void _set_run_adding_gain (LADSPA_Handle h, LADSPA_Data g)
-			{
-				T * plugin = (T *) h;
-
-				plugin->adding_gain = g;
-			}
-
 		static void _cleanup (LADSPA_Handle h)
 			{
-				T * plugin = (T *) h;
+				Plugin * plugin = (Plugin *) h;
 
 				delete [] plugin->ports;
 				delete plugin;

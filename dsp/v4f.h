@@ -56,8 +56,8 @@ inline v4f_t v4f_shuffle(v4f_t x, int s3, int s2, int s1, int s0)
 {
 	v4f_t y=x; 
 	float*px=(float*)&x; float*py=(float*)&y; 
-	px[3]=py[s0];px[2]=py[s1];px[1]=py[s2];px[0]=py[s3];
-	return y;
+	px[3]=py[s0]; px[2]=py[s1]; px[1]=py[s2]; px[0]=py[s3];
+	return x;
 }
 #endif
 

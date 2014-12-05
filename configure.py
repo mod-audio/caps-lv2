@@ -4,10 +4,10 @@ import os
 CFLAGS = []
 ARCH = []
 
-def we_think_so_different_dude():
+def dude_we_think_so_different():
 	try: return 'Darwin' == os.popen ('uname -s').read().strip()
 	except: return 0
-OSX = we_think_so_different_dude()
+OSX = dude_we_think_so_different()
 if OSX:
 	OSX_LDFLAGS = "-bundle -undefined suppress -flat_namespace"
 	ARCH += ("-arch","i386","-arch","x86_64")

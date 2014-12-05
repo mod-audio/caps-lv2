@@ -30,7 +30,7 @@
 #define PAN_H
 
 #include "dsp/Delay.h"
-#include "dsp/BiQuad.h"
+#include "dsp/IIR2.h"
 
 class Wider
 : public Plugin
@@ -40,10 +40,9 @@ class Wider
 
 		sample_t gain_l, gain_r;
 
-		DSP::BiQuad<sample_t> ap[3];
+		DSP::IIR2<sample_t> ap[3];
 
-		template <yield_func_t F>
-				void cycle (uint frames);
+		void cycle (uint frames);
 
 		inline void set_pan (sample_t);
 
@@ -52,9 +51,6 @@ class Wider
 
 		void init();
 		void activate();
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 /* stereo width reduction */
@@ -64,18 +60,13 @@ class Narrower
 	public:
 		sample_t strength;
 
-		template <yield_func_t F>
-			void cycle (uint frames);
+		void cycle (uint frames);
 
 	public:
 		static PortInfo port_info [];
 
 		void init() {}
 		void activate() {}
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
-
 };
 
 #endif /* PAN_H */

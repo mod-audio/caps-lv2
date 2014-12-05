@@ -29,8 +29,8 @@
 #define AMP_H
 
 #include "dsp/util.h"
-#include "dsp/OnePole.h"
-#include "dsp/BiQuad.h"
+#include "dsp/IIR1.h"
+#include "dsp/IIR2.h"
 
 #include "dsp/Oversampler.h"
 
@@ -50,8 +50,8 @@ class AmpVTS
 		DSP::Oversampler<4,32> over4;
 		DSP::Oversampler<8,64> over8;
 
-		DSP::BiQuad<sample_t> lp, biaslp;
-		DSP::OnePoleHP<sample_t> hp1, dc1, dc2; /* dc blockers */
+		DSP::IIR2<sample_t> lp, biaslp;
+		DSP::HP1<sample_t> hp1, dc1, dc2; /* dc blockers */
 
 		int model;
 		DSP::ToneStack tonestack;
@@ -61,17 +61,14 @@ class AmpVTS
 
 		void setratio (int r);
 
-		template <yield_func_t F> void cycle (uint frames);
-		template <yield_func_t F, class Over> void subcycle (uint frames, Over & over);
+		void cycle (uint frames);
+		template <class Over> void subcycle (uint frames, Over & over);
 
 	public:
 		static PortInfo port_info[];
 
 		void init();
 		void activate();
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 #endif /* AMP_H */

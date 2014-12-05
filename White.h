@@ -29,7 +29,7 @@
 #define WHITE_H
 
 #include "dsp/White.h"
-#include "dsp/OnePole.h"
+#include "dsp/IIR1.h"
 
 class White
 : public Plugin
@@ -38,19 +38,15 @@ class White
 		sample_t gain;
 
 		DSP::White white, cream;
-		DSP::OnePoleHP<sample_t> hp;
+		DSP::HP1<sample_t> hp;
 
-		template <yield_func_t F>
-			void cycle (uint frames);
+		void cycle (uint frames);
 
 	public:
 		static PortInfo port_info [];
 
 		void init() {}
 		void activate();
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 #endif /* WHITE_H */

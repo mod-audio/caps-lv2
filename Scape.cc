@@ -78,24 +78,22 @@ pick_f (float range, float tune)
 }
 
 
-template <yield_func_t F>
 void
-Scape::cycle (int frames)
+Scape::cycle (uint frames)
 {
-	sample_t * s = ports[0];
-
 	/* delay times */
-	double t1 = fs * 60. / getport(1);
-	int div = (int) getport(2);
+	double t1 = fs * 60. / getport(0);
+	int div = (int) getport(1);
 	double t2 = t1 * dividers[div];
 
-	fb = .94*getport(3);
+	fb = .94*getport(2);
 
-	double dry = getport(4);
+	double dry = getport(3);
 	dry = dry * dry;
-	double blend = getport(5);
-	float tune = getport(6);
+	double blend = getport(4);
+	float tune = getport(5);
 
+	sample_t * s = ports[6];
 	sample_t * dl = ports[7];
 	sample_t * dr = ports[8];
 
@@ -118,8 +116,8 @@ Scape::cycle (int frames)
 			svf[2].set_f_Q (pick_f(.9,tune)*over_fs, .5*f);
 		}
 		
-		int n = min ((int) period, frames);
-		for (int i=0; i < n; ++i)
+		uint n = min((uint) period, frames);
+		for (uint i=0; i < n; ++i)
 		{
 			sample_t x = s[i] + normal;
 
@@ -141,8 +139,8 @@ Scape::cycle (int frames)
 			x2r = fabs (lfo[1].lp.process(lfo[1].lorenz.get()));
 			x2l = 1 - x2r;
 
-			F (dl, i, x + blend * (x1 * x1l + x2 * x2l), adding_gain);
-			F (dr, i, x + blend * (x2 * x2r + x1 * x1r), adding_gain);
+			dl[i] = x + blend*(x1*x1l + x2*x2l);
+			dr[i] = x + blend*(x1*x1r + x2*x2r);
 		}
 
 		frames -= n;
@@ -158,7 +156,6 @@ Scape::cycle (int frames)
 PortInfo
 Scape::port_info [] =
 {
-	{ "in", AUDIO_IN }, 
 	{ "bpm", CTRL_IN, {DEFAULT_MID, 30, 164} }, 
 	{	"divider", CTRL_IN, {INTEGER | DEFAULT_MID, 2, 4}, 
 		"{2:'eighths',3:'triplets',4:'sixteenths'}" }, 
@@ -166,6 +163,8 @@ Scape::port_info [] =
 	{ "dry", CTRL_IN | GROUP, {DEFAULT_MID, 0, 1} }, 
 	{ "blend", CTRL_IN, {DEFAULT_1, 0, 1} }, 
 	{ "tune (Hz)", CTRL_IN | GROUP, {DEFAULT_440, 415, 467} }, 
+
+	{ "in", AUDIO_IN }, 
 	{ "out.l", AUDIO_OUT }, 
 	{ "out.r", AUDIO_OUT }
 };

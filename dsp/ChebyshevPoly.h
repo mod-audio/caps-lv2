@@ -36,7 +36,7 @@ class ChebPoly
 	public:
 		float c[N];
 
-		double calculate (sample_t x)
+		double process (sample_t x)
 			{
 				int n = N-1;
 				double y = c[n];
@@ -50,9 +50,10 @@ class ChebPoly
 
 		/* Showing results for cheap pc
 		 * Search instead for chebpc
-		 * right on, googlebots.
+		 *
+		 * right on, googlebots!
 		 */
-		void setup (float * amplitudes)
+		void calculate (float * amplitudes)
 			{
 				float sv, dd[N], a[N];
 				

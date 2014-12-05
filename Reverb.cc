@@ -48,27 +48,18 @@
 #include "Reverb.h"
 #include "Descriptor.h"
 
-int 
-JVRev::default_length[9] = {
-#if 1 /* slightly modified, tg */
-	1777, 1847, 1993, 2137, 389, 127, 43, 211, 209
-#else
-	4799, 4999, 5399, 5801, 1051, 337, 113, 573, 487
-#endif
-};
+int JVRev_length[9] = { 4199, 4999, 5399, 5801, 1051, 337, 113, 573, 487 };
 
 void
 JVRev::init()
 {
-	memcpy (length, default_length, sizeof (length));
-
-	double s = 1.5*fs/44100.;
+	double s = fs/44100.;
 
 	for (int i = 0; i < 9; ++i)
 	{
-		int v = (int) (s * length[i]);
+		int v = (int) (s * JVRev_length[i]);
 		v |= 1;
-		while (!DSP::isprime (v))
+		while (!DSP::isprime(v))
 			v += 2;
 		length[i] = v;
 	}
@@ -91,10 +82,10 @@ JVRev::set_t60 (sample_t t)
 {
 	t60 = t;
 
-	t = max (.00001, t);
+	t = max(.00001, t);
 	t = -3/(t*fs);
 
-	for (int i = 0; i < 4; ++i)
+	for (int i=0; i<4; ++i)
 		comb[i].c = pow (10, t*length[i]);
 }
 
@@ -102,35 +93,36 @@ void
 JVRev::activate()
 {
 	bandwidth.reset();
+	tone.reset();
 
-	for (int i = 0; i < 3; ++i)
+	for (int i=0; i<3; ++i)
 		allpass[i].reset();
 	
-	for (int i = 0; i < 4; ++i)
+	for (int i=0; i<4; ++i)
 		comb[i].reset();
 
 	left.reset();
 	right.reset();
 
-	set_t60 (getport(1));
+	set_t60(getport(1));
+	tone.set_f(1800*over_fs);
 }
 
-template <yield_func_t F>
 void
 JVRev::cycle (uint frames)
 {
-	sample_t * s = ports[0];
+	sample_t bw = .005 + .994*getport(0);
+	bandwidth.set(exp(-M_PI*(1. - bw)));
 
-	sample_t bw = .005 + .994*getport(1);
-	bandwidth.set (exp (-M_PI * (1. - bw)));
+	if (t60 != *ports[1])
+		set_t60(getport(1));
 
-	if (t60 != *ports[2])
-		set_t60 (getport(2));
-
-	double wet = getport(3);
+	double wet = getport(2);
 	wet = .38*wet*wet;
 	double dry = 1 - wet;
 	
+	sample_t * s = ports[3];
+
 	sample_t * dl = ports[4];
 	sample_t * dr = ports[5];
 
@@ -142,19 +134,21 @@ JVRev::cycle (uint frames)
 		x *= dry;
 
 		/* diffusors */
-		a = allpass[0].process (a, -apc);
-		a = allpass[1].process (a, -apc);
-		a = allpass[2].process (a, -apc);
+		a = allpass[0].process(a,-apc);
+		a = allpass[1].process(a,-apc);
+		a = allpass[2].process(a,-apc);
 
 		/* tank */
 		sample_t t = 0;
 		a -= normal;
 
-		for (int j = 0; j < 4; ++j)
-			t += comb[j].process (a);
+		for (int j=0; j<4; ++j)
+			t += comb[j].process(a);
 
-		F (dl, i, x + wet * left.putget(t), adding_gain);
-		F (dr, i, x + wet * right.putget(t), adding_gain);
+		t = tone.process(t);
+
+		dl[i] = x + wet*left.putget(t);
+		dr[i] = x + wet*right.putget(t);
 	}
 }
 
@@ -163,11 +157,13 @@ JVRev::cycle (uint frames)
 PortInfo
 JVRev::port_info [] =
 {
-	{ "in", INPUT | AUDIO }, 
 	{ "bandwidth", INPUT | CONTROL, {DEFAULT_MID, 0, 1} }, 
 	{ "t60 (s)", INPUT | CONTROL | GROUP, {DEFAULT_MID, 0, 5.6} }, 
 	{ "blend", INPUT | CONTROL, {DEFAULT_LOW, 0, 1} }, 
-	{ "out.l", OUTPUT | AUDIO }, { "out.r", OUTPUT | AUDIO }
+
+	{ "in", INPUT | AUDIO }, 
+	{ "out.l", OUTPUT | AUDIO }, 
+	{ "out.r", OUTPUT | AUDIO }
 };
 
 template <> void
@@ -296,24 +292,23 @@ PlateStub::process (sample_t x, sample_t decay, sample_t * _xl, sample_t * _xr)
 
 /* //////////////////////////////////////////////////////////////////////// */
 
-template <yield_func_t F>
 void
 Plate::cycle (uint frames)
 {
-	sample_t * s = ports[0];
-
-	sample_t bw = .005 + .994*getport(1);
+	sample_t bw = .005 + .994*getport(0);
 	input.bandwidth.set (exp (-M_PI * (1. - bw)));
 
-	sample_t decay = .749*getport(2);
+	sample_t decay = .749*getport(1);
 
-	double damp = exp (-M_PI * (.0005+.9995*getport(3)));
+	double damp = exp (-M_PI * (.0005+.9995*getport(2)));
 	tank.damping[0].set (damp);
 	tank.damping[1].set (damp);
 
-	sample_t blend = getport(4);
+	sample_t blend = getport(3);
 	blend = pow (blend, 1.6); /* linear is not a good choice for this pot */
 	sample_t dry = 1 - blend;
+
+	sample_t * s = ports[4];
 
 	sample_t * dl = ports[5];
 	sample_t * dr = ports[6];
@@ -332,8 +327,8 @@ Plate::cycle (uint frames)
 
 		x = dry * s[i];
 
-		F (dl, i, x + blend * xl, adding_gain);
-		F (dr, i, x + blend * xr, adding_gain);
+		dl[i] = x + blend*xl;
+		dr[i] = x + blend*xr;
 	}
 }
 
@@ -342,35 +337,14 @@ Plate::cycle (uint frames)
 PortInfo
 Plate::port_info [] =
 {
-	{
-		"in",
-		INPUT | AUDIO,
-		{BOUNDED, -1, 1}
-	}, {
-		"bandwidth",
-		INPUT | CONTROL,
-		{DEFAULT_HIGH, 0, 1} /* .9995 */
-	}, {
-		"tail",
-		INPUT | CONTROL | GROUP,
-		{DEFAULT_MID, 0, 1} /* .5 */
-	}, {
-		"damping",
-		INPUT | CONTROL,
-		{DEFAULT_LOW, 0, 1} /* .0005 */
-	}, {
-		"blend",
-		INPUT | CONTROL | GROUP,
-		{DEFAULT_LOW, 0, 1}
-	}, {
-		"out.l",
-		OUTPUT | AUDIO,
-		{0}
-	}, {
-		"out.r",
-		OUTPUT | AUDIO,
-		{0}
-	}
+	{"bandwidth", INPUT | CONTROL, {DEFAULT_HIGH, 0, 1} /* .9995 */ }, 
+	{"tail", INPUT | CONTROL | GROUP, {DEFAULT_MID, 0, 1} /* .5 */ }, 
+	{"damping", INPUT | CONTROL, {DEFAULT_LOW, 0, 1} /* .0005 */ }, 
+	{"blend", INPUT | CONTROL | GROUP, {DEFAULT_LOW, 0, 1} }, 
+
+	{"in", INPUT | AUDIO},
+	{"out.l", OUTPUT | AUDIO}, 
+	{"out.r",	OUTPUT | AUDIO}
 };
 
 template <> void
@@ -388,26 +362,24 @@ Descriptor<Plate>::setup()
 
 /* //////////////////////////////////////////////////////////////////////// */
 
-template <yield_func_t F>
 void
 PlateX2::cycle (uint frames)
 {
-	sample_t * sl = ports[0];
-	sample_t * sr = ports[1];
-
-	sample_t bw = .005 + .994*getport(2);
+	sample_t bw = .005 + .994*getport(0);
 	input.bandwidth.set (exp (-M_PI * (1. - bw)));
 
-	sample_t decay = .749*getport(3);
+	sample_t decay = .749*getport(1);
 
-	double damp = exp (-M_PI * (.0005+.9995*getport(4)));
+	double damp = exp (-M_PI * (.0005+.9995*getport(2)));
 	tank.damping[0].set (damp);
 	tank.damping[1].set (damp);
 
-	sample_t blend = getport(5);
+	sample_t blend = getport(3);
 	blend = pow (blend, 1.53); 
 	sample_t dry = 1 - blend;
 
+	sample_t * sl = ports[4];
+	sample_t * sr = ports[5];
 	sample_t * dl = ports[6];
 	sample_t * dr = ports[7];
 
@@ -422,11 +394,8 @@ PlateX2::cycle (uint frames)
 		sample_t xl, xr;
 		PlateStub::process (x, decay, &xl, &xr);
 
-		xl = blend * xl + dry * sl[i];
-		xr = blend * xr + dry * sr[i];
-
-		F (dl, i, xl, adding_gain);
-		F (dr, i, xr, adding_gain);
+		dl[i] = blend*xl + dry*sl[i];
+		dr[i] = blend*xr + dry*sr[i];
 	}
 }
 
@@ -435,39 +404,15 @@ PlateX2::cycle (uint frames)
 PortInfo
 PlateX2::port_info [] =
 {
-	{
-		"in.l",
-		INPUT | AUDIO,
-		{BOUNDED, -1, 1}
-	}, {
-		"in.r",
-		INPUT | AUDIO,
-		{BOUNDED, -1, 1}
-	}, {
-		"bandwidth",
-		INPUT | CONTROL,
-		{DEFAULT_HIGH, 0.005, .999} /* .9995 */
-	}, {
-		"tail",
-		INPUT | CONTROL | GROUP,
-		{DEFAULT_MID, 0, 1} /* .5 */
-	}, {
-		"damping",
-		INPUT | CONTROL,
-		{DEFAULT_LOW, .0005, 1} /* .0005 */
-	}, {
-		"blend",
-		INPUT | CONTROL | GROUP,
-		{DEFAULT_LOW, 0, 1}
-	}, {
-		"out.l",
-		OUTPUT | AUDIO,
-		{0}
-	}, {
-		"out.r",
-		OUTPUT | AUDIO,
-		{0}
-	}
+	{"bandwidth", INPUT | CONTROL, {DEFAULT_HIGH, 0, 1} /* .9995 */ }, 
+	{"tail", INPUT | CONTROL | GROUP, {DEFAULT_MID, 0, 1} /* .5 */ }, 
+	{"damping", INPUT | CONTROL, {DEFAULT_LOW, 0, 1} /* .0005 */ }, 
+	{"blend", INPUT | CONTROL | GROUP, {DEFAULT_LOW, 0, 1} }, 
+
+	{"in.l", INPUT | AUDIO},
+	{"in.r", INPUT | AUDIO},
+	{"out.l", OUTPUT | AUDIO}, 
+	{"out.r",	OUTPUT | AUDIO}
 };
 
 template <> void

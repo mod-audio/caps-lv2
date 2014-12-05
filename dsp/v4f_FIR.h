@@ -34,23 +34,23 @@ namespace DSP {
 
 /* template parameter is number of taps and must be a power of two */
 template <int N>
-class FIR4f
+class FIRv4
 {
 	public:
 		enum { 
 			/* data is laid out
 
-				{c[0-3] c[4-7] ... c[N-4 - N-1]}
+				{c[0-3] c[4-7] ... c[N-4 - N-1]}  = filter kernel
 
-				{x[0-3] x[4-7] ... x[N-4 - N-1]}
-				{x[1-4] x[5-8] ... x[N-3 - N]}
-				{x[2-5] x[6-9] ... x[N-2 - N+1]}
-				{x[3-6] x[7-10] ... x[N-1 - N+2]}
+				{x[0-3] x[4-7] ... x[N-4 - N-1]}  = input history
+				{x[1-4] x[5-8] ... x[N-3 - N]}    =   "      "    offset by one sample
+				{x[2-5] x[6-9] ... x[N-2 - N+1]}  =   "      "      "     " two samples
+				{x[3-6] x[7-10] ... x[N-1 - N+2]} =   "      "      "     " three  "
 
-			Thus, the history is stored fourfold to avoid unaligned accesses.  
+			Past input samples are stored fourfold in order to avoid unaligned accesses.  
 			Storing the current sample into the four correct locations
 			is a bit of a convoluted process.  However, the simpler alternative 
-			of processing four consecutive samples at a time occupies just as much 
+			of processing four consecutive samples at a time occupies exactly as much 
 			memory and introduces an undesirable three-sample delay.
 
 			*/
@@ -61,7 +61,7 @@ class FIR4f
 		int h;
 
 	public:
-		FIR4f()
+		FIRv4()
 			{
 				h = 0;
 				reset();

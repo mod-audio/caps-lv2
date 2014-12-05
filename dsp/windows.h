@@ -167,6 +167,19 @@ kaiser (sample_t * s, int n, double beta, double step = 1)
 	}
 }
 
-}; /* namespace DSP */
+template <window_sample_func_t F>
+void
+xfade (sample_t * s, int n, int dir) /* dir [-1,1] */
+{
+	DSP::Sine cos(.5*M_PI/n, 0);
+	if (dir > 0)
+		for (int i=0; i<n; ++i)
+			s[i] *= cos.get();
+	else
+		for (int i=n; --i>=0; )
+			s[i] *= cos.get();
+}
+
+} /* namespace DSP */
 
 #endif /* DSP_WINDOWS_H */

@@ -1,11 +1,11 @@
 /*
-	dsp/v4f_BiQuad.h
+	dsp/v4f_IIR2.h
 	
-	Copyright 2003-13 Tim Goetze <tim@quitte.de>
+	Copyright 2003-14 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
-	Bi-quad IIR filters, SIMD 
+	2nd-order IIR filters, SIMD 
 
 */
 /*
@@ -25,8 +25,8 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef DSP_V4F_BI_QUAD_H
-#define DSP_V4F_BI_QUAD_H
+#ifndef DSP_V4F_IIR2_H
+#define DSP_V4F_IIR2_H
 
 #include "v4f.h"
 
@@ -36,12 +36,12 @@ namespace DSP {
 inline float pow10f(float f) {return pow(10,f);}
 #endif
 
-class RBJ4f
+class RBJv4
 {
 	public:
 		v4f_t sin, cos, alpha;
 		
-		RBJ4f (v4f_t f, v4f_t Q)
+		RBJv4 (v4f_t f, v4f_t Q)
 			{
 				v4f_t w = v4f_2pi * f;
 
@@ -53,7 +53,7 @@ class RBJ4f
 };
 
 /* four parallel filters */
-class BiQuad4f
+class IIR2v4
 {
 	public:
 		/* sufficient space to align a,b,x,y[] into */
@@ -63,7 +63,7 @@ class BiQuad4f
 
 		int h; /* history index */
 
-		BiQuad4f()
+		IIR2v4()
 			{
 				h = 0;
 				_data = (v4f_t *) (((uint64)__data + 16) & ~15ll);
@@ -72,7 +72,7 @@ class BiQuad4f
 			}
 		
 		/* needed to make sure copy has properly aligned storage */
-		void operator = (BiQuad4f & b)
+		void operator = (IIR2v4 & b)
 			{
 				h = b.h;
 				memcpy (data(), b.data(), 9 * sizeof (v4f_t));
@@ -108,7 +108,7 @@ class BiQuad4f
 		/* RBJ prototypes */
 		void set_bp (v4f_t f, v4f_t Q)
 			{
-				RBJ4f p (f, Q);
+				RBJv4 p (f, Q);
 				v4f_t a[3], b[3];
 
 				b[0] = Q * p.alpha;
@@ -124,7 +124,7 @@ class BiQuad4f
 
 		void set_lp (v4f_t f, v4f_t Q)
 			{
-				RBJ4f p (f, Q);
+				RBJv4 p (f, Q);
 				v4f_t a[3], b[3];
 
 				b[1] = v4f_1 - p.cos;
@@ -144,7 +144,7 @@ class BiQuad4f
 				A *= gain;
 				A = v4f_map<pow10f> (A);
 
-				RBJ4f p (f, Q);
+				RBJv4 p (f, Q);
 
 				v4f_t atA = p.alpha * A;
 				v4f_t aoA = p.alpha / A;
@@ -243,7 +243,7 @@ class BiQuad4f
 			{
 				v4f_t *a = data();
 				v4f_t s = a[7+h]; /* y[-1] = last output */
-				s = v4f_shuffle (s, 3,0,1,2); 
+				s = v4f_shuffle (s, 0,0,1,2); /* keep first sample -> no-op on non-SSE chips */ 
 				v4fa(s)[0] = x;
 				s = process(s);
 				return v4fa(s)[3];
@@ -260,11 +260,11 @@ class BiQuad4f
 				for (int j=1; j<3; ++j)
 					((float *) &(b[j]))[i] = cb[j];
 			}
-}; /* class BiQuad4f */
+}; /* class IIR2v4 */
 
 /* N*4 parallel filters */
 template <uint N>
-class BiQuad4fBank
+class IIR2v4Bank
 {
 	public:
 		enum { DataSize = (2 + 7*N) * sizeof (v4f_t) };
@@ -275,7 +275,7 @@ class BiQuad4fBank
 		inline v4f_t * data() {return _data;}
 		int h1; /* history index */
 
-		BiQuad4fBank()
+		IIR2v4Bank()
 			{
 				_data = (v4f_t*) (((uint64) __data + 16) & ~15ll);
 				memset (data(), 0, DataSize);
@@ -328,10 +328,10 @@ class BiQuad4fBank
 				{
 					register v4f_t r = s * a[0];
 					
-					r += a[1] * x[h1];
+					r +=   a[1] * x[h1];
 					r += a[2+1] * a[5+h1]; /* b[1] * y[h1] */
 
-					r += a[2] * x[h2];
+					r +=   a[2] * x[h2];
 					r += a[2+2] * a[5+h2]; /* b[2] * y[h2] */
 
 					a[5+h2] = r; /* y[h2] */
@@ -355,10 +355,10 @@ class BiQuad4fBank
 				{
 					register v4f_t r;
 					
-					r = a[1] * x[h1];
+					r =    a[1] * x[h1];
 					r += a[2+1] * a[5+h1]; /* b[1] * y[h1] */
 
-					r += a[2] * x[h2];
+					r +=   a[2] * x[h2];
 					r += a[2+2] * a[5+h2]; /* b[2] * y[h2] */
 
 					a[5+h2] = r; /* y[h2] */
@@ -371,7 +371,7 @@ class BiQuad4fBank
 				return acc;
 			}
 
-		inline v4f_t process_no_a1 (v4f_t s, uint n = N)
+		inline v4f_t process_bp (v4f_t s, uint n = N)
 			{
 				v4f_t *x = data(), *a = x + 2; 
 
@@ -404,7 +404,7 @@ class BiQuad4fBank
 				v4f_t * a = data() + 2; 
 				for (uint i = 0; i < N; ++i, a += 7)
 				{
-					RBJ4f p (f[i], Q[i]);
+					RBJv4 p (f[i], Q[i]);
 					v4f_t ha[3], hb[3];
 
 					hb[0] = Q[i] * p.alpha;
@@ -431,7 +431,7 @@ class BiQuad4fBank
 					A *= gain[i];
 					A = v4f_map<pow10f> (A);
 
-					RBJ4f p (f[i], Q[i]);
+					RBJv4 p (f[i], Q[i]);
 
 					v4f_t atA = p.alpha * A;
 					v4f_t aoA = p.alpha / A;
@@ -498,10 +498,8 @@ class BiQuad4fBank
 				int base = i >> 2; i &= 3;
 				v4f_t *a = data()+2+base, *b = a+2;
 				/* assign */
-				for (int j=0; j<3; ++j)
-					((float *) &(a[j]))[i] = ca[j];
-				for (int j=1; j<3; ++j)
-					((float *) &(b[j]))[i] = cb[j];
+				for (int j=0; j<3; ++j) ((float *) &(a[j]))[i] = ca[j];
+				for (int j=1; j<3; ++j) ((float *) &(b[j]))[i] = cb[j];
 			}
 
 };
@@ -641,6 +639,106 @@ class Resonator4fBank
 		#endif
 };
 
+/* four parallel Mitra-Regalia eq filters */
+class MREqv4
+{
+	public:
+		/* sufficient space to align a,b,x,y[] into */
+		char __data [10 * sizeof (v4f_t)];
+		v4f_t * _data;
+		inline v4f_t * data() { return _data; }
+
+		MREqv4()
+			{
+				_data = (v4f_t *) (((uint64)__data + 16) & ~15ll);
+				unity();
+				reset();
+			}
+		
+		/* needed to make sure copy has properly aligned storage */
+		void operator = (MREqv4 & b)
+			{ memcpy (data(), b.data(), 9 * sizeof (v4f_t)); }
+
+		void unity()
+			{
+				v4f_t *a = data();
+				a[0] = v4f_0;
+			}
+
+		void reset()
+			{
+				v4f_t *z = data() + 3;
+				z[0] = z[1] = z[2] = v4f_0;
+			}
+
+		/* untested */
+		void set (v4f_t f, v4f_t bw, v4f_t gain)
+			{
+				v4f_t *a = data(), *s = a + 1;
+
+				s[0] = -v4f_map<cosf>(v4f_2pi*f);
+        a[0] = v4f_half*(gain - v4f_1);
+				bw *= v4f(7,7,7,7)*f / v4f_map<sqrtf>(gain);
+				s[1] = (v4f_1 - bw) / (v4f_1 + bw);
+			}
+
+		void set (int i, float f, float bw, float gain)
+			{
+				float *a = (float*) data(), *s0 = (float*) (data() + 1), *s1 = (float*) (data() + 2);
+
+				s0[i] = -cosf(2*M_PI*f);
+				a[i] = .5*(gain - 1);
+				bw *= 7*f / sqrtf(gain);
+				s1[i] = (1-bw) / (1+bw);
+			}
+		void unity(int i)
+			{
+				float *a = (float*) data(), *s0 = (float*) (data() + 1), *s1 = (float*) (data() + 2);
+				s0[i] = s1[i] = a[i] = 0;
+			}
+
+		inline v4f_t _process (v4f_t x)
+			{
+				v4f_t *a = data(), *s = a + 1, *z = a + 3;
+
+				v4f_t y = x - s[1]*z[1];
+				x -= a[0]*(z[1] + s[1]*y - x);
+				y -= s[0]*z[0];
+				z[2] = x;
+				z[1] = z[0] + s[0]*y;
+				z[0] = y;
+				return x;
+			}
+
+		inline v4f_t process (v4f_t x)
+			{
+				v4f_t *a = data();
+
+				v4f_t y = x - a[2]*a[4];
+				x -= a[0]*(a[4] + a[2]*y - x);
+				y -= a[1]*a[3];
+				a[5] = x;
+				a[4] = a[3] + a[1]*y;
+				a[3] = y;
+				return x;
+			}
+
+		/* using the parallel structure as four filters in series */
+		inline float seriesprocess (float a)
+			{
+				v4f_t *c = data();
+				v4f_t x = v4f_shuffle (c[5], 0,0,1,2); /* shift last output right, keep first: no-op */
+				v4fa(x)[0] = a;
+				v4f_t y = x - c[2]*c[4];
+				x -= c[0]*(c[4] + c[2]*y - x);
+				y -= c[1]*c[3];
+				c[5] = x;
+				c[4] = c[3] + c[1]*y;
+				c[3] = y;
+				return v4fa(x)[3];
+			}
+}; /* class IIR2v4 */
+
 } /* namespace DSP */
 
-#endif /* DSP_V4F_BI_QUAD_H */
+#endif /* DSP_V4F_IIR2_H */

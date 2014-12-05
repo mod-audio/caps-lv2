@@ -31,7 +31,7 @@
 #include "dsp/Sine.h"
 #include "dsp/Roessler.h"
 #include "dsp/Delay.h"
-#include "dsp/OnePole.h"
+#include "dsp/IIR1.h"
 
 class PhaserAP
 {
@@ -60,7 +60,7 @@ class PhaserII
 		struct {
 			DSP::Sine sine;
 			DSP::Roessler roessler;
-			DSP::OnePoleLP<sample_t> lp;
+			DSP::LP1<sample_t> lp;
 		} lfo;
 
 		sample_t rate;
@@ -70,8 +70,7 @@ class PhaserII
 			double bottom, range;
 		} delay;
 
-		template <yield_func_t>
-			void cycle (uint frames);
+		void cycle (uint frames);
 	
 		uint blocksize, remain;
 
@@ -97,9 +96,6 @@ class PhaserII
 				delay.bottom = 400*over_fs;
 				delay.range = 2200*over_fs;
 			}
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 #endif /* PHASER_H */

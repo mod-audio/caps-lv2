@@ -36,7 +36,7 @@ Noisegate::init()
 {
 	N = 3*882*fs/44100; /* 60 ms RMS accumulation when open */
 	over_N = 1./N;
-	hysteresis.threshold = (uint) (.08*fs); /* opening for at least 80 ms */
+	hysteresis.threshold = (uint) (.130*fs); /* opening for at least 130 ms */
 	gain.quiet = db2lin (-60);
 	gain.lp.set_f (120*over_fs);
 }
@@ -63,19 +63,16 @@ Noisegate::process (sample_t x)
 	rms.store (x - .3*y);
 }
 
-template <yield_func_t yield>
 void
 Noisegate::cycle (uint frames)
 {
-	sample_t * s = ports[0];
-	sample_t * d = ports[1]; 
 	static int frame = 0;
 
-	float open = db2lin(getport(2)-10);
-	float attack = max(.005*N*getport(3), 2); /* in samples */
-	float close = db2lin(getport(4));
+	float open = db2lin(getport(0)-10);
+	float attack = max(.005*N*getport(1), 2); /* in samples */
+	float close = db2lin(getport(2));
 
-	float f = getport(5);
+	float f = getport(3);
 	if (f != f_mains)
 	{
 		f_mains = f;
@@ -93,6 +90,8 @@ Noisegate::cycle (uint frames)
 		humfilter[1].reset();
 	}
 
+	sample_t * s = ports[4];
+	sample_t * d = ports[5]; 
 	bool opennow = false;
 	while (frames)
 	{
@@ -126,14 +125,14 @@ Noisegate::cycle (uint frames)
 		{
 			sample_t a = s[i];
 			process(a);
-			yield (d, i, 0 ? OUT : a*gain.get(), adding_gain);
+			d[i] = a*gain.get();
 		}
 		else for (  ; i < n; ++i) /* closed */
 		{
 			sample_t a = s[i];
 			process(a);
 			if (fabs(a) < open)
-				yield (d, i, 0 ? OUT : a*gain.get(), adding_gain);
+				d[i] = a*gain.get();
 			else 
 			{
 				opennow = true;
@@ -155,10 +154,6 @@ Noisegate::cycle (uint frames)
 PortInfo
 Noisegate::port_info [] = 
 {
-	{ "in", INPUT | AUDIO },
-	{	"out", OUTPUT | AUDIO },
-
-	/* 2 */
 	{ "open (dB)", CTRL_IN, {DEFAULT_LOW, -60, 0} }, 
 	{ "attack (ms)", CTRL_IN, {DEFAULT_0, 0, 5} }, 
 	{ "close (dB)", CTRL_IN, {DEFAULT_LOW, -80, 0} }, 
@@ -166,6 +161,9 @@ Noisegate::port_info [] =
 	/* mains */
 	{ "mains (Hz)", CTRL_IN|GROUP, {INTEGER|DEFAULT_MID, 0, 100},
 		"{0:'off',50:'global',60:'imperial'}"}, 
+
+	{ "in", INPUT | AUDIO },
+	{	"out", OUTPUT | AUDIO }
 };
 
 template <> void

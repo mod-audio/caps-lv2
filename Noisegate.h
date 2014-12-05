@@ -29,13 +29,12 @@
 #define NOISE_GATE_H
 
 #include "dsp/util.h"
-#include "dsp/BiQuad.h"
+#include "dsp/IIR2.h"
 
-#include "dsp/BiQuad.h"
 #include "dsp/RBJ.h"
 #include "dsp/RMS.h"
 #include "dsp/Delay.h"
-#include "dsp/OnePole.h"
+#include "dsp/IIR1.h"
 
 class Noisegate
 : public Plugin
@@ -47,7 +46,7 @@ class Noisegate
 		uint remain;
 		struct {
 			float current, delta, quiet;
-			DSP::OnePoleLP<sample_t> lp;
+			DSP::LP1<sample_t> lp;
 			float get()
 				{
 					current += delta;
@@ -61,10 +60,9 @@ class Noisegate
 		} hysteresis;
 
 		float f_mains;
-		DSP::BiQuad<sample_t> humfilter[2];
+		DSP::IIR2<sample_t> humfilter[2];
 
-		template <yield_func_t F>
-			void cycle (uint frames);
+		void cycle (uint frames);
 
 	public:
 		static PortInfo port_info[];
@@ -73,9 +71,6 @@ class Noisegate
 		void activate();
 
 		void process (sample_t x); /* pre- and humfilter, store to rms */
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 #endif /* NOISE_GATE_H */

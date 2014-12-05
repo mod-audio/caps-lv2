@@ -68,7 +68,7 @@ class Eq
 				double f = 31.25;
 				int i = 0;
 
-				for (i = 0; i < Bands && f < fs / 2; ++i, f *= 2)
+				for (i = 0; i < Bands && f < .48*fs; ++i, f *= 2)
 					init_band (i, 2*f*M_PI/fs, Q);
 				/* just in case, zero the remaining coefficients */
 				for (  ; i < Bands; ++i)
@@ -87,10 +87,7 @@ class Eq
 				gf[i] = 1;
 			}
 
-		void zero_band (int i)
-			{
-				a[i] = b[i] = c[i] = 0;
-			}
+		void zero_band (int i) { a[i] = b[i] = c[i] = 0; }
 
 		/* per-band recursion:
 		 * 	y = 2*(a*(x - x[-2]) + c*y[-1] - b*y[-2]) 

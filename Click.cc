@@ -1,7 +1,7 @@
 /*
 	Click.cc
 	
-	Copyright 2002-13 Tim Goetze <tim@quitte.de>
+	Copyright 2002-14 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -41,7 +41,6 @@ ClickStub<Waves>::initwave (int i, int16 * _wave, uint _N)
 }
 
 template <int Waves>
-template <yield_func_t F>
 void
 ClickStub<Waves>::cycle (uint frames)
 {
@@ -73,7 +72,7 @@ ClickStub<Waves>::cycle (uint frames)
 			{
 				double x = gain * wave[w].data[played+i];
 				x = lp.process (x);
-				F (d, i, x, adding_gain);
+				d[i] = x;
 			}
 
 			played += n;
@@ -81,8 +80,7 @@ ClickStub<Waves>::cycle (uint frames)
 		else 
 		{
 			for (uint i = 0; i < n; ++i)
-				F (d, i, lp.process (normal), adding_gain);
-			normal = -normal;
+				d[i] = lp.process(normal);
 		}
 
 		period -= n;
@@ -109,12 +107,12 @@ Click::initsimple()
 		{5117, 0.091},
 	};
 
-	DSP::OnePoleLP<sample_t> lp1;
+	DSP::LP1<sample_t> lp1;
 	lp1.set_f (800*over_fs);
-	DSP::BiQuad<sample_t> lp;
+	DSP::IIR2<sample_t> lp;
 	DSP::RBJ::LP (8000*over_fs, .2, lp);
 
-	DSP::BiQuad<sample_t> peaks[Peaks];
+	DSP::IIR2<sample_t> peaks[Peaks];
 	for (int i = 0; i < Peaks; ++i)
 	{
 		/* tune to g' = 784 Hz */
@@ -123,10 +121,10 @@ Click::initsimple()
 		DSP::RBJ::BP (f, 22*g, peaks[i]);
 	}
 
-	DSP::BiQuad<sample_t> bp;
+	DSP::IIR2<sample_t> bp;
 	DSP::RBJ::BP (150*over_fs, 3.8, bp);
 
-	DSP::BiQuad<sample_t> post;
+	DSP::IIR2<sample_t> post;
 	DSP::RBJ::PeakingEQ (1000*over_fs, 1.8, 24, post);
 
 	int n = (int) (fs * 2800. / 44100.);
@@ -143,7 +141,7 @@ Click::initsimple()
 		x = lp.process (x);
 		double a = x;
 		for (int j = 0; j < Peaks; ++j)
-			a += peaks[j].process_no_a1 (x);
+			a += peaks[j].process_bp (x);
 		a = post.process (a);
 		/* add some ring-modulated noisz */
 		a += a*bp.process(white.get());
@@ -161,7 +159,7 @@ Click::initsimple()
 void
 Click::initparfilt()
 {
-	DSP::BiQuad4fBank<128> bank;
+	DSP::IIR2v4Bank<128> bank;
 
 	ParModel<128,1> * model;
 	if (fs > 120000) model = &waves_click_wav_176000;
@@ -177,8 +175,8 @@ Click::initparfilt()
 	int n = (int) (fs*2800/44100);
 	int16 * click = new int16 [n];
 
-	DSP::BiQuad<sample_t> hp;
-	DSP::RBJ::HP (1220*over_fs, .707, hp);
+	DSP::IIR2<sample_t> hp;
+	DSP::RBJ::HP (1520*over_fs, .7, hp);
 
 	DSP::White white;
 	int m = 3;
@@ -188,7 +186,7 @@ Click::initparfilt()
 	{
 		if (i < m) /* simplistic noise excitation signal */
 			x = .5 * white.get() * (m-i)*mi;
-		x = v4f_sum (bank.process_no_a1(v4f(x)));
+		x = v4f_sum (bank.process_bp(v4f(x)));
 		x = hp.process(x);
 		click[i] = (int16) (x * 32767.);
 		x = 0;
@@ -203,11 +201,11 @@ Click::initsine()
 	float f = 2*784;
 	DSP::Sine sin (2*M_PI*f*over_fs);
 
-	int n = (int) (20*fs/f);
+	int n = (int) (12*fs/f);
 	int m = 6*n/4;
 	int16 * click = new int16 [m];
 
-	DSP::BiQuad<sample_t> lp;
+	DSP::IIR2<sample_t> lp;
 	DSP::RBJ::BP (f*over_fs,2.5,lp);
 
 	float a = .4 * 32767;
@@ -241,7 +239,7 @@ Descriptor<Click>::setup()
 
 	Name = CAPS "Click - Metronome";
 	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2004-13";
+	Copyright = "2004-14";
 
 	/* fill port info and vtable */
 	autogen();
@@ -257,6 +255,7 @@ Click::port_info [] =
 	{ "bpm", CTRL_IN | GROUP, {DEFAULT_LOW, 4, 240} }, 
 	{	"volume", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} }, 
 	{	"damping", CTRL_IN, {DEFAULT_HIGH, 0, 1} }, 
+
 	{ "out", OUTPUT | AUDIO}
 };
 
@@ -268,6 +267,7 @@ CEO::port_info [] =
 	{ "ppm", CTRL_IN, {DEFAULT_LOW, 30, 232} }, 
 	{	"volume", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1}}, 
 	{	"damping", CTRL_IN, {DEFAULT_0, 0, 1} }, 
+
 	{ "out", OUTPUT | AUDIO, {0} }
 };
 
@@ -283,7 +283,7 @@ CEO::init()
 	int n = (int) (s*m);
 	int16 * wave = new int16 [n];
 
-	DSP::BiQuad<sample_t> lp;
+	DSP::IIR2<sample_t> lp;
 	/* suppress aliasing with an additional lowpass; also slight gain at 3 kHz */
 	DSP::RBJ::LP (3000*over_fs,1.5,lp);
 	#if 1 /* linear */

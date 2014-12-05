@@ -50,7 +50,7 @@
 #include <stdio.h>
 
 #include "dsp/Delay.h"
-#include "dsp/OnePole.h"
+#include "dsp/IIR1.h"
 #include "dsp/Sine.h"
 #include "dsp/util.h"
 
@@ -59,13 +59,12 @@ class Lattice
 : public DSP::Delay
 {
 	public:
-		inline sample_t 
-		process (sample_t x, double d)
+		sample_t process (sample_t x, double d)
 			{
 				sample_t y = get();
-				x -= d * y;
-				put (x);
-				return d * x + y;
+				x -= d*y;
+				put(x);
+				return d*x + y;
 			}
 };
 
@@ -76,11 +75,10 @@ class JVComb
 	public:
 		float c;
 		
-		inline sample_t 
-		process (sample_t x)
+		sample_t process (sample_t x)
 			{
-				x += c * get();
-				put (x);
+				x += c*get();
+				put(x);
 				return x;
 			}
 };
@@ -89,22 +87,20 @@ class JVRev
 : public Plugin
 {
 	public:
-		DSP::OnePoleLP<sample_t> bandwidth;
+		DSP::LP1<sample_t> bandwidth, tone;
 
-		static int default_length[9];
 		sample_t t60;
 
-		Lattice allpass [3];
+		int length[9];
+
+		Lattice allpass[3];
 		JVComb comb[4];
 
 		DSP::Delay left, right;
 		
 		double apc;
 		
-		template <yield_func_t F>
 		void cycle (uint frames);
-
-		int length [9];
 
 		void set_t60 (sample_t t);
 
@@ -113,9 +109,6 @@ class JVRev
 
 		void init();
 		void activate();
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 /* /////////////////////////////////////////////////////////////////////// */
@@ -159,7 +152,7 @@ class PlateStub
 		sample_t indiff1, indiff2, dediff1, dediff2;
 		
 		struct {
-			DSP::OnePoleLP<sample_t> bandwidth;
+			DSP::LP1<sample_t> bandwidth;
 			Lattice lattice[4];
 		} input;
 
@@ -167,7 +160,7 @@ class PlateStub
 			ModLattice mlattice[2];
 			Lattice lattice[2];
 			DSP::Delay delay[4];
-			DSP::OnePoleLP<sample_t> damping[2];
+			DSP::LP1<sample_t> damping[2];
 			int taps[12];
 		} tank;
 
@@ -204,14 +197,10 @@ class Plate
 : public PlateStub
 {
 	public:
-		template <yield_func_t F>
-			void cycle (uint frames);
+		void cycle (uint frames);
 
 	public:
 		static PortInfo port_info [];
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 /* /////////////////////////////////////////////////////////////////////// */
@@ -220,14 +209,10 @@ class PlateX2
 : public PlateStub
 {
 	public:
-		template <yield_func_t F>
-			void cycle (uint frames);
+		void cycle (uint frames);
 
 	public:
 		static PortInfo port_info [];
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 #endif /* REVERB_H */

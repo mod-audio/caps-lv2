@@ -1,11 +1,11 @@
 /*
 	dsp/OnePole.h
 	
-	Copyright 2003-13 Tim Goetze <tim@quitte.de>
+	Copyright 2003-14 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
-	one pole (or one zero, or one zero, one pole) hi- and lo-pass filters.
+	first-order IIR hi- and lo-pass filters.
 
 */
 /*
@@ -25,18 +25,18 @@
 	02111-1307, USA or point your web browser to http://www.gnu.org.
 */
 
-#ifndef ONE_POLE_H
-#define ONE_POLE_H
+#ifndef IIR1_H
+#define IIR1_H
 
 namespace DSP {
 	
 template <class T>
-class OnePoleLP
+class LP1
 {
 	public:
 		T a0, b1, y1;
 
-		OnePoleLP (double d = 1.)
+		LP1 (double d = 1.)
 			{
 				set (d);
 				y1 = 0.;
@@ -65,12 +65,12 @@ class OnePoleLP
 };
 
 template <class T>
-class OnePoleHP
+class HP1
 {
 	public:
 		T a0, a1, b1, x1, y1;
 
-		OnePoleHP (T d = 1.)
+		HP1 (T d = 1.)
 			{
 				set (d);
 				reset();
@@ -111,4 +111,4 @@ class OnePoleHP
 
 } /* namespace DSP */
 
-#endif /* ONE_POLE_H */
+#endif /* IIR1 */

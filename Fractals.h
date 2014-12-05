@@ -30,7 +30,7 @@
 
 #include "dsp/Lorenz.h"
 #include "dsp/Roessler.h"
-#include "dsp/OnePole.h"
+#include "dsp/IIR1.h"
 
 class Fractal
 : public Plugin
@@ -40,21 +40,16 @@ class Fractal
 
 		DSP::Lorenz lorenz;
 		DSP::Roessler roessler;
-		DSP::OnePoleHP<sample_t> hp; /* dc removal */
+		DSP::HP1<sample_t> hp; /* dc removal */
 
-		template <yield_func_t F>
-				void cycle (uint frames);
-		template <yield_func_t F, int Mode>
-				void subcycle (uint frames);
+		void cycle (uint frames);
+		template <int Mode> void subcycle (uint frames);
 
 	public:
 		static PortInfo port_info [];
 
 		void init();
 		void activate();
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 #endif /* FRACTALS_H */

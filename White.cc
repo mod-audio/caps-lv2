@@ -39,7 +39,6 @@ White::activate()
 	hp.set_f (.48);
 }
 
-template <yield_func_t F>
 void
 White::cycle (uint frames)
 {
@@ -52,7 +51,7 @@ White::cycle (uint frames)
 	{
 		sample_t x = .4*white.get();
 		x += hp.process(cream.get());
-		F (d, i, gain * x, adding_gain);
+		d[i] = gain*x;
 		gain *= g;
 	}
 

@@ -3,6 +3,7 @@
 	
 	Copyright 2006-7
 		David Yeh <dtyeh@ccrma.stanford.edu> 
+	2006-14
 		Tim Goetze <tim@quitte.de> (cosmetics)
 	
 	Tone Stack emulation.
@@ -35,28 +36,18 @@
 class ToneStack 
 : public Plugin
 {
-	private:
+	public:
 		int model;
 
 		DSP::ToneStack tonestack;
-		DSP::ToneStackLT tonestacklt;
 
-		template <yield_func_t F>
-			void cycle (uint frames);
+		void cycle (uint frames);
 
 	public:
 		static PortInfo port_info [];
 
-		void init()
-			{ 
-				tonestack.init (fs);
-				tonestacklt.init (fs);
-			}
-
+		void init() { tonestack.init(fs); }
 		void activate();
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 #endif /* TONESTACK_H */

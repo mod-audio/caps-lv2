@@ -61,11 +61,11 @@ class CompSaturate
 				s = 1/s;
 
 				/* scale kernels for unity gain */
-				for (uint i = 0; i < FIRSize; ++i)
+				for (uint i=0; i<FIRSize; ++i)
 					down.c[i] *= s;
 
 				s *= Over;
-				for (uint i = 0; i < FIRSize; ++i)
+				for (uint i=0; i<FIRSize; ++i)
 					up.c[i] *= s;
 			}
 
@@ -103,14 +103,12 @@ class CompressStub
 		struct {
 			CompSat2 two; 
 			CompSat4 four; 
-			CompSat8 eight;
 		} saturate [Channels];
 
-		template <yield_func_t F>
-				void cycle (uint frames);
-		template <yield_func_t F, class Comp>
+		void cycle (uint frames);
+		template <class Comp>
 				void subcycle (uint frames, Comp & comp);
-		template <yield_func_t F, class Comp, class Sat>
+		template <class Comp, class Sat>
 				void subsubcycle (uint frames, Comp & comp, Sat & satl, Sat & satr);
 
 	public:
@@ -122,13 +120,9 @@ class CompressStub
 				{
 					saturate[i].two.init(fs); 
 					saturate[i].four.init(fs); 
-					saturate[i].eight.init(fs); 
 				}
 			}
 		void activate();
-
-		void run (uint n) { cycle<store_func> (n); }
-		void run_adding (uint n) { cycle<adding_func> (n); }
 };
 
 class Compress
