@@ -138,6 +138,7 @@ class Descriptor
 				LV2_Descriptor::run = _run_lv2;
 				LV2_Descriptor::deactivate = 0;
 				LV2_Descriptor::cleanup = _cleanup_lv2;
+				LV2_Descriptor::extension_data = 0;
 			}
 
 		static LADSPA_Handle _instantiate (
