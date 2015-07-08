@@ -8,7 +8,7 @@ CC = g++
 OPTS = -O3 -ffast-math -funroll-loops -Wall -fPIC -DPIC
 #OPTS = -g -DDEBUG 
 
-CAPS_URI=\"http://portalmod.com/plugins/caps/\"
+CAPS_URI=\"http://moddevices.com/plugins/caps/\"
 OPTS += -DCAPS_URI=${CAPS_URI}
 
 _LDFLAGS = -shared 

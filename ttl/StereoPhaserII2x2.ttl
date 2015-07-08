@@ -6,7 +6,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
 
-<http://portalmod.com/plugins/caps/StereoPhaserII2x2> a lv2:Plugin, lv2:PhaserPlugin;
+<http://moddevices.com/plugins/caps/StereoPhaserII2x2> a lv2:Plugin, lv2:PhaserPlugin;
     doap:name  "C* StereoPhaserII 2x2 - Stereo phaser modulated by a Lorenz fractal";
     doap:developer [
         foaf:name "Tim Goetze";
@@ -15,8 +15,8 @@
         ];
     doap:maintainer [
         foaf:name "MOD Team";
-        foaf:homepage <http://portalmod.com>;
-        foaf:mbox <mailto:devel@portalmod.com>;
+        foaf:homepage <http://moddevices.com>;
+        foaf:mbox <mailto:devel@moddevices.com>;
         ];
     doap:license <http://usefulinc.com/doap/licenses/gpl>;
     lv2:optionalFeature lv2:hardRtCapable;

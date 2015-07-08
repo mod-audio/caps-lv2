@@ -122,7 +122,7 @@ manifest_mod = """
 @prefix lv2: <http://lv2plug.in/ns/lv2core#>.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 
-<http://portalmod.com/plugins/caps/__EFFECT__> a lv2:Plugin; lv2:binary <__EFFECT__.so>; rdfs:seeAlso <__EFFECT__.ttl>.
+<http://moddevices.com/plugins/caps/__EFFECT__> a lv2:Plugin; lv2:binary <__EFFECT__.so>; rdfs:seeAlso <__EFFECT__.ttl>.
 """
 
 # comment the below line to use the caps URI
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     if manifest == manifest_mod:
         f = open('./basics.h', 'r')
         basics = f.read()
-        basics = basics.replace('#define CAPS_URI "http://quitte.de/dsp/caps.html#"', '#define CAPS_URI "http://portalmod.com/plugins/caps/"')
+        basics = basics.replace('#define CAPS_URI "http://quitte.de/dsp/caps.html#"', '#define CAPS_URI "http://moddevices.com/plugins/caps/"')
         f = open('./basics.h', 'w')
         f.write(basics);
         f.close()

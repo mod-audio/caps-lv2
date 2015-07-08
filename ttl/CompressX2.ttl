@@ -1,12 +1,12 @@
 @prefix doap: <http://usefulinc.com/ns/doap#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix mod: <http://portalmod.com/ns/modgui#> .
+@prefix mod: <http://moddevices.com/ns/modgui#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
 
-<http://portalmod.com/plugins/caps/CompressX2> a lv2:CompressorPlugin,
+<http://moddevices.com/plugins/caps/CompressX2> a lv2:CompressorPlugin,
         lv2:Plugin;
     lv2:microVersion 16;
     lv2:minorVersion 9;
@@ -116,8 +116,8 @@ source: http://quitte.de/dsp/caps.html#Compress
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];
     doap:license <http://usefulinc.com/doap/licenses/gpl>;
-    doap:maintainer [ foaf:homepage <http://portalmod.com>;
-            foaf:mbox <mailto:devel@portalmod.com>;
+    doap:maintainer [ foaf:homepage <http://moddevices.com>;
+            foaf:mbox <mailto:devel@moddevices.com>;
             foaf:name "MOD Team" ];
     doap:name "C* CompressX2 - Stereo compressor" .
 

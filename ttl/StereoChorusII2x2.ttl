@@ -8,7 +8,7 @@
 @prefix epp: <http://lv2plug.in/ns/ext/port-props/#>.
 @prefix pprops: <http://lv2plug.in/ns/ext/port-props#> .
 
-<http://portalmod.com/plugins/caps/StereoChorusII2x2> a lv2:Plugin, lv2:ChorusPlugin;
+<http://moddevices.com/plugins/caps/StereoChorusII2x2> a lv2:Plugin, lv2:ChorusPlugin;
     doap:name  "C* StereoChorusII 2x2 - Stereo 2x2 chorus/flanger modulated by a fractal";
     doap:developer [
         foaf:name "Tim Goetze";
@@ -17,8 +17,8 @@
         ];
     doap:maintainer [
         foaf:name "MOD Team";
-        foaf:homepage <http://portalmod.com>;
-        foaf:mbox <mailto:devel@portalmod.com>;
+        foaf:homepage <http://moddevices.com>;
+        foaf:mbox <mailto:devel@moddevices.com>;
         ];
     doap:license <http://usefulinc.com/doap/licenses/gpl>;
     lv2:optionalFeature lv2:hardRtCapable;

@@ -8,7 +8,7 @@
 @prefix epp: <http://lv2plug.in/ns/ext/port-props/#>.
 @prefix pprops: <http://lv2plug.in/ns/ext/port-props#> .
 
-<http://portalmod.com/plugins/caps/Dirac> a lv2:Plugin, lv2:GeneratorPlugin;
+<http://moddevices.com/plugins/caps/Dirac> a lv2:Plugin, lv2:GeneratorPlugin;
     doap:name  "C* Dirac - One-sample impulse generator";
     doap:developer [
         foaf:name "Tim Goetze";
@@ -17,8 +17,8 @@
         ];
     doap:maintainer [
         foaf:name "MOD Team";
-        foaf:homepage <http://portalmod.com>;
-        foaf:mbox <mailto:devel@portalmod.com>;
+        foaf:homepage <http://moddevices.com>;
+        foaf:mbox <mailto:devel@moddevices.com>;
         ];
     doap:license <http://usefulinc.com/doap/licenses/gpl>;
     lv2:optionalFeature lv2:hardRtCapable;
