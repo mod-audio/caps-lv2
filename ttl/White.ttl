@@ -32,6 +32,7 @@ source: http://quitte.de/dsp/caps.html#White
     mod:gui [ mod:iconTemplate <modgui/White.html>;
             mod:resourcesDirectory <modgui>;
             mod:screenshot <modgui/White.png>;
+            mod:stylesheet <modgui/_common.css>;
             mod:templateData <modgui/White.json>;
             mod:thumbnail <modgui/White-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;

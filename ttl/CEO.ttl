@@ -49,6 +49,7 @@ source: http://quitte.de/dsp/caps.html#CEO
             lv2:symbol "out" ];
     mod:gui [ mod:iconTemplate <modgui/CEO.html>;
             mod:resourcesDirectory <modgui>;
+            mod:stylesheet <modgui/_common.css>;
             mod:screenshot <modgui/CEO.png>;
             mod:templateData <modgui/CEO.json>;
             mod:thumbnail <modgui/CEO-thumb.png> ];

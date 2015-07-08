@@ -186,6 +186,7 @@ a lv2:ControlPort,
 ];
 mod:gui [ mod:iconTemplate <modgui/AmpVTS.html>;
         mod:resourcesDirectory <modgui>;
+        mod:stylesheet <modgui/_common.css>;
         mod:screenshot <modgui/AmpVTS.png>;
         mod:templateData <modgui/AmpVTS.json>;
         mod:thumbnail <modgui/AmpVTS-thumb.png> ];

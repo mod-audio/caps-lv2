@@ -86,6 +86,7 @@ source: http://quitte.de/dsp/caps.html#Saturate
     mod:gui [ mod:iconTemplate <modgui/Saturate.html>;
             mod:resourcesDirectory <modgui>;
             mod:screenshot <modgui/Saturate.png>;
+            mod:stylesheet <modgui/_common.css>;
             mod:templateData <modgui/Saturate.json>;
             mod:thumbnail <modgui/Saturate-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;

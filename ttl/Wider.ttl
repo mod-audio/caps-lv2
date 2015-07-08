@@ -55,6 +55,7 @@ source: http://quitte.de/dsp/caps.html#Wider
             mod:resourcesDirectory <modgui>;
             mod:iconTemplate <modgui/Wider.html>;
             mod:templateData <modgui/Wider.json>;
+            mod:stylesheet <modgui/_common.css>;
             mod:screenshot <modgui/Wider.png>;
             mod:thumbnail <modgui/Wider-thumb.png>;];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;

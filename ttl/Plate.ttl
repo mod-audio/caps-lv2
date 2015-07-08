@@ -68,6 +68,7 @@ source: http://quitte.de/dsp/caps.html#Plate
     mod:gui [ mod:iconTemplate <modgui/Plate.html>;
             mod:resourcesDirectory <modgui>;
             mod:screenshot <modgui/Plate.png>;
+            mod:stylesheet <modgui/_common.css>;
             mod:templateData <modgui/Plate.json>;
             mod:thumbnail <modgui/Plate-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;

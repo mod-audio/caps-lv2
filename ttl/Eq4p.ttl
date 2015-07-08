@@ -217,6 +217,7 @@ source: http://quitte.de/dsp/caps.html#Eq4p
             lv2:symbol "b_freq" ];
     mod:gui [ mod:iconTemplate <modgui/Eq4p.html>;
             mod:resourcesDirectory <modgui>;
+            mod:stylesheet <modgui/_common.css>;
             mod:screenshot <modgui/Eq4p.png>;
             mod:templateData <modgui/Eq4p.json>;
             mod:thumbnail <modgui/Eq4p-thumb.png> ];

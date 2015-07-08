@@ -90,6 +90,7 @@ source: http://quitte.de/dsp/caps.html#Noisegate
     mod:gui [ mod:iconTemplate <modgui/Noisegate.html>;
             mod:resourcesDirectory <modgui>;
             mod:screenshot <modgui/Noisegate.png>;
+            mod:stylesheet <modgui/_common.css>;
             mod:templateData <modgui/Noisegate.json>;
             mod:thumbnail <modgui/Noisegate-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;

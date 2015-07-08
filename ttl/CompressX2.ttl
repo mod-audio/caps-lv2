@@ -109,6 +109,7 @@ source: http://quitte.de/dsp/caps.html#Compress
             lv2:symbol "in_l" ];
     mod:gui [ mod:iconTemplate <modgui/CompressX2.html>;
             mod:resourcesDirectory <modgui>;
+            mod:stylesheet <modgui/_common.css>;
             mod:screenshot <modgui/CompressX2.png>;
             mod:templateData <modgui/CompressX2.json>;
             mod:thumbnail <modgui/CompressX2-thumb.png> ];

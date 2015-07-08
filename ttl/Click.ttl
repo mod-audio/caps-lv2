@@ -66,6 +66,7 @@ source: http://quitte.de/dsp/caps.html#Click
             lv2:symbol "out" ];
     mod:gui [ mod:iconTemplate <modgui/Click.html>;
             mod:resourcesDirectory <modgui>;
+            mod:stylesheet <modgui/_common.css>;
             mod:screenshot <modgui/Click.png>;
             mod:templateData <modgui/Click.json>;
             mod:thumbnail <modgui/Click-thumb.png> ];

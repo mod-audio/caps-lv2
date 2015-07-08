@@ -117,6 +117,7 @@ source: http://quitte.de/dsp/caps.html#AutoFilter
             lv2:symbol "Q" ];
     mod:gui [ mod:iconTemplate <modgui/AutoFilter.html>;
             mod:resourcesDirectory <modgui>;
+            mod:stylesheet <modgui/_common.css>;
             mod:screenshot <modgui/AutoFilter.png>;
             mod:templateData <modgui/AutoFilter.json>;
             mod:thumbnail <modgui/AutoFilter-thumb.png> ];

@@ -46,6 +46,7 @@ source: http://quitte.de/dsp/caps.html#Sin
     mod:gui [ mod:iconTemplate <modgui/Sin.html>;
             mod:resourcesDirectory <modgui>;
             mod:screenshot <modgui/Sin.png>;
+            mod:stylesheet <modgui/_common.css>;
             mod:templateData <modgui/Sin.json>;
             mod:thumbnail <modgui/Sin-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;

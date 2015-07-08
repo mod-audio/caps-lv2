@@ -84,6 +84,7 @@ source: http://quitte.de/dsp/caps.html#ChorusI
             lv2:symbol "out" ];
     mod:gui [ mod:iconTemplate <modgui/ChorusI.html>;
             mod:resourcesDirectory <modgui>;
+            mod:stylesheet <modgui/_common.css>;
             mod:screenshot <modgui/ChorusI.png>;
             mod:templateData <modgui/ChorusI.json>;
             mod:thumbnail <modgui/ChorusI-thumb.png> ];

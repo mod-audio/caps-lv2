@@ -64,6 +64,7 @@ source: http://quitte.de/dsp/caps.html#Narrower
     mod:gui [ mod:iconTemplate <modgui/Narrower.html>;
             mod:resourcesDirectory <modgui>;
             mod:screenshot <modgui/Narrower.png>;
+            mod:stylesheet <modgui/_common.css>;
             mod:templateData <modgui/Narrower.json>;
             mod:thumbnail <modgui/Narrower-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;

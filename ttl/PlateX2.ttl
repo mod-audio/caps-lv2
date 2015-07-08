@@ -71,6 +71,7 @@ source: http://quitte.de/dsp/caps.html#Plate
     mod:gui [ mod:iconTemplate <modgui/PlateX2.html>;
             mod:resourcesDirectory <modgui>;
             mod:screenshot <modgui/PlateX2.png>;
+            mod:stylesheet <modgui/_common.css>;
             mod:templateData <modgui/PlateX2.json>;
             mod:thumbnail <modgui/PlateX2-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;

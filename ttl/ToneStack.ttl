@@ -90,6 +90,7 @@ source: http://quitte.de/dsp/caps.html#ToneStack
     mod:gui [ mod:iconTemplate <modgui/ToneStack.html>;
             mod:resourcesDirectory <modgui>;
             mod:screenshot <modgui/ToneStack.png>;
+            mod:stylesheet <modgui/_common.css>;
             mod:templateData <modgui/ToneStack.json>;
             mod:thumbnail <modgui/ToneStack-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;

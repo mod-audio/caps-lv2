@@ -85,6 +85,7 @@ source: http://quitte.de/dsp/caps.html#Spice
     mod:gui [ mod:iconTemplate <modgui/SpiceX2.html>;
             mod:resourcesDirectory <modgui>;
             mod:screenshot <modgui/SpiceX2.png>;
+            mod:stylesheet <modgui/_common.css>;
             mod:templateData <modgui/SpiceX2.json>;
             mod:thumbnail <modgui/SpiceX2-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;

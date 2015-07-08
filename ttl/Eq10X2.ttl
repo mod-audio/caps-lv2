@@ -118,6 +118,7 @@ source: http://quitte.de/dsp/caps.html#Eq10
             lv2:symbol "band2khz" ];
     mod:gui [ mod:iconTemplate <modgui/Eq10X2.html>;
             mod:resourcesDirectory <modgui>;
+            mod:stylesheet <modgui/_common.css>;
             mod:screenshot <modgui/Eq10X2.png>;
             mod:templateData <modgui/Eq10X2.json>;
             mod:thumbnail <modgui/Eq10X2-thumb.png> ];

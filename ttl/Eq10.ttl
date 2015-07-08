@@ -110,6 +110,7 @@ source: http://quitte.de/dsp/caps.html#Eq10
             lv2:symbol "band4khz" ];
     mod:gui [ mod:iconTemplate <modgui/Eq10.html>;
             mod:resourcesDirectory <modgui>;
+            mod:stylesheet <modgui/_common.css>;
             mod:screenshot <modgui/Eq10.png>;
             mod:templateData <modgui/Eq10.json>;
             mod:thumbnail <modgui/Eq10-thumb.png> ];

@@ -97,6 +97,7 @@ source: http://quitte.de/dsp/caps.html#Scape
     mod:gui [ mod:iconTemplate <modgui/Scape.html>;
             mod:resourcesDirectory <modgui>;
             mod:screenshot <modgui/Scape.png>;
+            mod:stylesheet <modgui/_common.css>;
             mod:templateData <modgui/Scape.json>;
             mod:thumbnail <modgui/Scape-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;

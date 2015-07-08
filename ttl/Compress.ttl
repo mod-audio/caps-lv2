@@ -107,6 +107,7 @@ source: http://quitte.de/dsp/caps.html#Compress
             lv2:symbol "gain" ];
     mod:gui [ mod:iconTemplate <modgui/Compress.html>;
             mod:resourcesDirectory <modgui>;
+            mod:stylesheet <modgui/_common.css>;
             mod:screenshot <modgui/Compress.png>;
             mod:templateData <modgui/Compress.json>;
             mod:thumbnail <modgui/Compress-thumb.png> ];

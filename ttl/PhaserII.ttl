@@ -78,6 +78,7 @@ source: http://quitte.de/dsp/caps.html#PhaserII
     mod:gui [ mod:iconTemplate <modgui/PhaserII.html>;
             mod:resourcesDirectory <modgui>;
             mod:screenshot <modgui/PhaserII.png>;
+            mod:stylesheet <modgui/_common.css>;
             mod:templateData <modgui/PhaserII.json>;
             mod:thumbnail <modgui/PhaserII-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;

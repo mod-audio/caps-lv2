@@ -105,6 +105,7 @@ source: http://quitte.de/dsp/caps.html#CabinetIV
             lv2:symbol "out" ];
     mod:gui [ mod:iconTemplate <modgui/CabinetIV.html>;
             mod:resourcesDirectory <modgui>;
+            mod:stylesheet <modgui/_common.css>;
             mod:screenshot <modgui/CabinetIV.png>;
             mod:templateData <modgui/CabinetIV.json>;
             mod:thumbnail <modgui/CabinetIV-thumb.png> ];

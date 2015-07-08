@@ -99,6 +99,7 @@ source: http://quitte.de/dsp/caps.html#Fractals
         mod:resourcesDirectory <modgui>;
         mod:iconTemplate <modgui/Fractal.html>;
         mod:templateData <modgui/Fractal.json>;
+            mod:stylesheet <modgui/_common.css>;
         mod:screenshot <modgui/Fractal.png>;
         mod:thumbnail <modgui/Fractal-thumb.png>;
     ];
