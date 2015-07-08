@@ -2,7 +2,7 @@
 @prefix epp: <http://lv2plug.in/ns/ext/port-props/#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix mod: <http://moddevices.com/ns/modgui#> .
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
 @prefix pprops: <http://lv2plug.in/ns/ext/port-props#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -43,12 +43,12 @@ source: http://quitte.de/dsp/caps.html#Sin
             lv2:index 2;
             lv2:name "out";
             lv2:symbol "out" ];
-    mod:gui [ mod:iconTemplate <modgui/Sin.html>;
-            mod:resourcesDirectory <modgui>;
-            mod:screenshot <modgui/Sin.png>;
-            mod:stylesheet <modgui/_common.css>;
-            mod:templateData <modgui/Sin.json>;
-            mod:thumbnail <modgui/Sin-thumb.png> ];
+    modgui:gui [ modgui:iconTemplate <modgui/Sin.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:screenshot <modgui/Sin.png>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:templateData <modgui/Sin.json>;
+            modgui:thumbnail <modgui/Sin-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

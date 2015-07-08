@@ -1,7 +1,7 @@
 @prefix doap: <http://usefulinc.com/ns/doap#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix mod: <http://moddevices.com/ns/modgui#> .
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
@@ -107,12 +107,12 @@ source: http://quitte.de/dsp/caps.html#Compress
             lv2:index 7;
             lv2:name "in left";
             lv2:symbol "in_l" ];
-    mod:gui [ mod:iconTemplate <modgui/CompressX2.html>;
-            mod:resourcesDirectory <modgui>;
-            mod:stylesheet <modgui/_common.css>;
-            mod:screenshot <modgui/CompressX2.png>;
-            mod:templateData <modgui/CompressX2.json>;
-            mod:thumbnail <modgui/CompressX2-thumb.png> ];
+    modgui:gui [ modgui:iconTemplate <modgui/CompressX2.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:screenshot <modgui/CompressX2.png>;
+            modgui:templateData <modgui/CompressX2.json>;
+            modgui:thumbnail <modgui/CompressX2-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

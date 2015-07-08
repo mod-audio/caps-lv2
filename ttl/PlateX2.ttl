@@ -1,7 +1,7 @@
 @prefix doap: <http://usefulinc.com/ns/doap#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix mod: <http://moddevices.com/ns/modgui#> .
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 <http://moddevices.com/plugins/caps/PlateX2> a lv2:Plugin,
@@ -68,12 +68,12 @@ source: http://quitte.de/dsp/caps.html#Plate
             lv2:index 7;
             lv2:name "out:r";
             lv2:symbol "outr" ];
-    mod:gui [ mod:iconTemplate <modgui/PlateX2.html>;
-            mod:resourcesDirectory <modgui>;
-            mod:screenshot <modgui/PlateX2.png>;
-            mod:stylesheet <modgui/_common.css>;
-            mod:templateData <modgui/PlateX2.json>;
-            mod:thumbnail <modgui/PlateX2-thumb.png> ];
+    modgui:gui [ modgui:iconTemplate <modgui/PlateX2.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:screenshot <modgui/PlateX2.png>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:templateData <modgui/PlateX2.json>;
+            modgui:thumbnail <modgui/PlateX2-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

@@ -2,7 +2,7 @@
 @prefix epp: <http://lv2plug.in/ns/ext/port-props/#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix mod: <http://moddevices.com/ns/modgui#> .
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
@@ -215,12 +215,12 @@ source: http://quitte.de/dsp/caps.html#Eq4p
             lv2:name "b.freq";
             lv2:portProperty epp:logarithmic;
             lv2:symbol "b_freq" ];
-    mod:gui [ mod:iconTemplate <modgui/Eq4p.html>;
-            mod:resourcesDirectory <modgui>;
-            mod:stylesheet <modgui/_common.css>;
-            mod:screenshot <modgui/Eq4p.png>;
-            mod:templateData <modgui/Eq4p.json>;
-            mod:thumbnail <modgui/Eq4p-thumb.png> ];
+    modgui:gui [ modgui:iconTemplate <modgui/Eq4p.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:screenshot <modgui/Eq4p.png>;
+            modgui:templateData <modgui/Eq4p.json>;
+            modgui:thumbnail <modgui/Eq4p-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

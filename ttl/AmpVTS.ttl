@@ -1,7 +1,7 @@
 @prefix doap: <http://usefulinc.com/ns/doap#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix mod: <http://moddevices.com/ns/modgui#> .
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -184,12 +184,12 @@ a lv2:ControlPort,
     lv2:name "Mid";
     lv2:symbol "mid" 
 ];
-mod:gui [ mod:iconTemplate <modgui/AmpVTS.html>;
-        mod:resourcesDirectory <modgui>;
-        mod:stylesheet <modgui/_common.css>;
-        mod:screenshot <modgui/AmpVTS.png>;
-        mod:templateData <modgui/AmpVTS.json>;
-        mod:thumbnail <modgui/AmpVTS-thumb.png> ];
+modgui:gui [ modgui:iconTemplate <modgui/AmpVTS.html>;
+        modgui:resourcesDirectory <modgui>;
+        modgui:stylesheet <modgui/_common.css>;
+        modgui:screenshot <modgui/AmpVTS.png>;
+        modgui:templateData <modgui/AmpVTS.json>;
+        modgui:thumbnail <modgui/AmpVTS-thumb.png> ];
 doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
         foaf:mbox <mailto:tim@quitte.de>;
         foaf:name "Tim Goetze" ];

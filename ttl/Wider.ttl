@@ -1,7 +1,7 @@
 @prefix doap: <http://usefulinc.com/ns/doap#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix mod: <http://moddevices.com/ns/modgui#> .
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 <http://moddevices.com/plugins/caps/Wider> a lv2:SpatialPlugin,
@@ -51,13 +51,13 @@ source: http://quitte.de/dsp/caps.html#Wider
             lv2:index 4;
             lv2:name "out:r";
             lv2:symbol "outr" ];
-    mod:gui [a mod:Gui;
-            mod:resourcesDirectory <modgui>;
-            mod:iconTemplate <modgui/Wider.html>;
-            mod:templateData <modgui/Wider.json>;
-            mod:stylesheet <modgui/_common.css>;
-            mod:screenshot <modgui/Wider.png>;
-            mod:thumbnail <modgui/Wider-thumb.png>;];
+    modgui:gui [a modgui:Gui;
+            modgui:resourcesDirectory <modgui>;
+            modgui:iconTemplate <modgui/Wider.html>;
+            modgui:templateData <modgui/Wider.json>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:screenshot <modgui/Wider.png>;
+            modgui:thumbnail <modgui/Wider-thumb.png>;];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

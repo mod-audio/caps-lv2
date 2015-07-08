@@ -1,7 +1,7 @@
 @prefix doap: <http://usefulinc.com/ns/doap#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix mod: <http://moddevices.com/ns/modgui#> .
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -75,12 +75,12 @@ source: http://quitte.de/dsp/caps.html#PhaserII
             lv2:index 6;
             lv2:name "out";
             lv2:symbol "out" ];
-    mod:gui [ mod:iconTemplate <modgui/PhaserII.html>;
-            mod:resourcesDirectory <modgui>;
-            mod:screenshot <modgui/PhaserII.png>;
-            mod:stylesheet <modgui/_common.css>;
-            mod:templateData <modgui/PhaserII.json>;
-            mod:thumbnail <modgui/PhaserII-thumb.png> ];
+    modgui:gui [ modgui:iconTemplate <modgui/PhaserII.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:screenshot <modgui/PhaserII.png>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:templateData <modgui/PhaserII.json>;
+            modgui:thumbnail <modgui/PhaserII-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

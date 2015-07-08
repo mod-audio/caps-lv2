@@ -1,7 +1,7 @@
 @prefix doap: <http://usefulinc.com/ns/doap#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix mod: <http://moddevices.com/ns/modgui#> .
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 <http://moddevices.com/plugins/caps/White> a lv2:GeneratorPlugin,
@@ -29,12 +29,12 @@ source: http://quitte.de/dsp/caps.html#White
             lv2:index 1;
             lv2:name "out";
             lv2:symbol "out" ];
-    mod:gui [ mod:iconTemplate <modgui/White.html>;
-            mod:resourcesDirectory <modgui>;
-            mod:screenshot <modgui/White.png>;
-            mod:stylesheet <modgui/_common.css>;
-            mod:templateData <modgui/White.json>;
-            mod:thumbnail <modgui/White-thumb.png> ];
+    modgui:gui [ modgui:iconTemplate <modgui/White.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:screenshot <modgui/White.png>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:templateData <modgui/White.json>;
+            modgui:thumbnail <modgui/White-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

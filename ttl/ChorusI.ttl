@@ -2,7 +2,7 @@
 @prefix epp: <http://lv2plug.in/ns/ext/port-props/#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix mod: <http://moddevices.com/ns/modgui#> .
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -82,12 +82,12 @@ source: http://quitte.de/dsp/caps.html#ChorusI
             lv2:index 7;
             lv2:name "out";
             lv2:symbol "out" ];
-    mod:gui [ mod:iconTemplate <modgui/ChorusI.html>;
-            mod:resourcesDirectory <modgui>;
-            mod:stylesheet <modgui/_common.css>;
-            mod:screenshot <modgui/ChorusI.png>;
-            mod:templateData <modgui/ChorusI.json>;
-            mod:thumbnail <modgui/ChorusI-thumb.png> ];
+    modgui:gui [ modgui:iconTemplate <modgui/ChorusI.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:screenshot <modgui/ChorusI.png>;
+            modgui:templateData <modgui/ChorusI.json>;
+            modgui:thumbnail <modgui/ChorusI-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

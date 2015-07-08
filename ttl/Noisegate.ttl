@@ -1,7 +1,7 @@
 @prefix doap: <http://usefulinc.com/ns/doap#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix mod: <http://moddevices.com/ns/modgui#> .
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
@@ -87,12 +87,12 @@ source: http://quitte.de/dsp/caps.html#Noisegate
                     rdf:value 60 ];
             lv2:symbol "mains" ];
 
-    mod:gui [ mod:iconTemplate <modgui/Noisegate.html>;
-            mod:resourcesDirectory <modgui>;
-            mod:screenshot <modgui/Noisegate.png>;
-            mod:stylesheet <modgui/_common.css>;
-            mod:templateData <modgui/Noisegate.json>;
-            mod:thumbnail <modgui/Noisegate-thumb.png> ];
+    modgui:gui [ modgui:iconTemplate <modgui/Noisegate.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:screenshot <modgui/Noisegate.png>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:templateData <modgui/Noisegate.json>;
+            modgui:thumbnail <modgui/Noisegate-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];
