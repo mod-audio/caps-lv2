@@ -7,6 +7,7 @@
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
 @prefix epp: <http://lv2plug.in/ns/ext/port-props/#>.
 @prefix pprops: <http://lv2plug.in/ns/ext/port-props#> .
+@prefix mod: <http://moddevices.com/ns/mod#> .
 
 <http://moddevices.com/plugins/caps/Dirac> a lv2:Plugin, lv2:GeneratorPlugin;
     doap:name  "C* Dirac - One-sample impulse generator";
@@ -24,6 +25,8 @@
     lv2:optionalFeature lv2:hardRtCapable;
     lv2:minorVersion 9;
     lv2:microVersion 16;
+    mod:brand "CAPS";
+    mod:label "Dirac";
     lv2:port
     [
         a lv2:ControlPort, lv2:InputPort;

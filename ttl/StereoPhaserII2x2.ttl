@@ -5,6 +5,7 @@
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix mod: <http://moddevices.com/ns/mod#> .
 
 <http://moddevices.com/plugins/caps/StereoPhaserII2x2> a lv2:Plugin, lv2:PhaserPlugin;
     doap:name  "C* StereoPhaserII 2x2 - Stereo phaser modulated by a Lorenz fractal";
@@ -22,6 +23,8 @@
     lv2:optionalFeature lv2:hardRtCapable;
     lv2:minorVersion 9;
     lv2:microVersion 16;
+    mod:brand "CAPS";
+    mod:label "StereoPhaserII 2x2";
 
 
 

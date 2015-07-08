@@ -3,12 +3,15 @@
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix mod: <http://moddevices.com/ns/mod#> .
 
 <http://moddevices.com/plugins/caps/White> a lv2:GeneratorPlugin,
         lv2:Plugin;
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+    mod:brand "CAPS";
+    mod:label "White";
 
 rdfs:comment """
 Mostly white pseudonoise, mixed and filtered from the output of two Dattorro multibit generators.

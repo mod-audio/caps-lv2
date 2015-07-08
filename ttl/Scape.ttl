@@ -6,12 +6,15 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
 @prefix time: <http://lv2plug.in/ns/ext/time/#>.
+@prefix mod: <http://moddevices.com/ns/mod#> .
 
 <http://moddevices.com/plugins/caps/Scape> a lv2:DelayPlugin,
         lv2:Plugin;
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+    mod:brand "CAPS";
+    mod:label "Scape";
    
 rdfs:comment """
 A stereo delay with resonant filters and fractally modulated panning. 

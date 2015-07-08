@@ -4,12 +4,15 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix mod: <http://moddevices.com/ns/mod#> .
 
 <http://moddevices.com/plugins/caps/AmpVTS> a lv2:Plugin,
         lv2:SimulatorPlugin;
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+    mod:brand "CAPS";
+    mod:label "AmpVTS";
 
 rdfs:comment """
 Tracing the stages of a typical tube amplifier circuit, this plugin aims to recreate those features of traditional guitar amplification electronics that have proved musically useful, and to provide them with the most musical rather than the most authentic ranges of adjustment and character.  CabinetIV provides matching recreations of loudspeaker cabinets. 

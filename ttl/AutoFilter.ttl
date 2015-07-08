@@ -7,12 +7,15 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix mod: <http://moddevices.com/ns/mod#> .
 
 <http://moddevices.com/plugins/caps/AutoFilter> a lv2:FilterPlugin,
         lv2:Plugin;
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+    mod:brand "CAPS";
+    mod:label "AutoFilter";
 
 rdfs:comment """
 A versatile selection of filters of varying character in band and lowpass configuration. The cutoff frequency can be modulated by both the input signal envelope and by a fractal oscillator. The default settings provide some sort of an automatic wah effect. 

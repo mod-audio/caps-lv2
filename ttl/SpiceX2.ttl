@@ -5,12 +5,15 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix mod: <http://moddevices.com/ns/mod#> .
 
 <http://moddevices.com/plugins/caps/SpiceX2> a lv2:DynamicsPlugin,
         lv2:Plugin;
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+    mod:brand "CAPS";
+    mod:label "SpiceX2";
 
 rdfs:comment """
 Stereo version of Spice. Bass compression is governed by the sum of both channels, as in CompressX2. Nevertheless, the amount of harmonic generation differing between the two channels can have subtle effects on the stereo image. 

@@ -3,12 +3,15 @@
 @prefix lv2: <http://lv2plug.in/ns/lv2core#> .
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix mod: <http://moddevices.com/ns/mod#> .
 
 <http://moddevices.com/plugins/caps/Plate> a lv2:Plugin,
         lv2:ReverbPlugin;
     lv2:microVersion 16;
     lv2:minorVersion 9;
     lv2:optionalFeature lv2:hardRtCapable;
+    mod:brand "CAPS";
+    mod:label "Plate";
 
 rdfs:comment """
 This reverb processor is an adaptation of the design discussed in [dat97a]. Tuned for a soft attack and smooth ambience, it consists of a network of twelve delay lines of varying length. At its heart, two of these are modulated very subtly, in a chorus-like fashion. 
