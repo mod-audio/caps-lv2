@@ -1,23 +1,22 @@
 VERSION = 0.9.24
 
 PREFIX = /usr
-DESTDIR = 
+DESTDIR =
 
-CC = g++
+CXX ?= g++
+STRIP ?= strip
 
-OPTS = -O3 -ffast-math -funroll-loops -Wall -fPIC -DPIC
+OPTS = -O2 -Wall -fPIC -DPIC
+# OPTS = -O3 -ffast-math -funroll-loops -Wall -fPIC -DPIC
 #OPTS = -g -DDEBUG 
 
 CAPS_URI=\"http://moddevices.com/plugins/caps/\"
 OPTS += -DCAPS_URI=${CAPS_URI}
 
-_LDFLAGS = -shared 
-STRIP = strip
-
 -include defines.make
 
-CFLAGS += $(OPTS) $(_CFLAGS)
-LDFLAGS += $(_LDFLAGS) $(CFLAGS)
+CXXFLAGS += $(OPTS)
+LDFLAGS += -shared -Wl,--no-undefined
 
 PLUG = caps
 
@@ -61,13 +60,13 @@ $(PLUG).rdf: all tools/make-rdf.py
 	python tools/make-rdf.py > $(PLUG).rdf
 
 $(PLUG).so: $(OBJECTS)
-	$(CC) $(ARCH) $(LDFLAGS) -o $@ $(OBJECTS)
+	$(CXX) $(ARCH) $(LDFLAGS) -o $@ $(OBJECTS)
 
 .cc.s: 
-	$(CC) $(ARCH) $(CFLAGS) -S $<
+	$(CXX) $(ARCH) $(CXXFLAGS) -S $<
 
-.cc.o: depend 
-	$(CC) $(ARCH) $(CFLAGS) -o $@ -c $<
+.cc.o: depend
+	$(CXX) $(ARCH) $(CXXFLAGS) -o $@ -c $<
 
 tags: $(SOURCES) $(HEADERS)
 	@-if [ -x /usr/bin/ctags ]; then ctags $(SOURCES) $(HEADERS) >/dev/null 2>&1 ; fi
