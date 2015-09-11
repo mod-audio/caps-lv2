@@ -71,14 +71,7 @@ $(PLUG).so: $(OBJECTS)
 tags: $(SOURCES) $(HEADERS)
 	@-if [ -x /usr/bin/ctags ]; then ctags $(SOURCES) $(HEADERS) >/dev/null 2>&1 ; fi
 
-install: all install-lv2
-	@$(STRIP) $(PLUG).so > /dev/null
-	install -d $(DESTDIR)$(DEST)
-	install -m 644 $(PLUG).so $(DESTDIR)$(DEST)
-	install -d $(DESTDIR)$(RDFDEST)
-	install -m 644 $(PLUG).rdf $(DESTDIR)$(RDFDEST)
-
-install-lv2: all
+install: all
 	@$(STRIP) $(PLUG).so > /dev/null
 	install -d $(DESTDIR)$(LV2DEST)
 	install -m 644 $(PLUG).so $(DESTDIR)$(LV2DEST)
