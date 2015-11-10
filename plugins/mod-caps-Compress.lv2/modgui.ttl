@@ -11,36 +11,28 @@
         modgui:brand "CAPS" ;
         modgui:label "Mono Compress" ;
         modgui:model "boxy" ;
-        modgui:panel "7-knobs" ;
+        modgui:panel "1-select-4-knobs" ;
         modgui:color "red" ;
         modgui:knob "black" ;
         modgui:port [
             lv2:index 0 ;
-            lv2:symbol "measure" ;
-            lv2:name "Measure" ;
-        ] , [
-            lv2:index 1 ;
             lv2:symbol "mode" ;
             lv2:name "Mode" ;
         ] , [
-            lv2:index 2 ;
+            lv2:index 1 ;
             lv2:symbol "threshold" ;
             lv2:name "Thresh." ;
         ] , [
-            lv2:index 3 ;
+            lv2:index 2 ;
             lv2:symbol "strength" ;
             lv2:name "Strength" ;
         ] , [
-            lv2:index 4 ;
+            lv2:index 3 ;
             lv2:symbol "attack" ;
             lv2:name "Attack" ;
         ] , [
-            lv2:index 5 ;
+            lv2:index 4 ;
             lv2:symbol "release" ;
             lv2:name "release" ;
-        ] , [
-            lv2:index 6 ;
-            lv2:symbol "gain" ;
-            lv2:name "gain" ;
         ] ;
     ] .

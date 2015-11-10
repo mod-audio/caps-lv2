@@ -159,10 +159,13 @@
 /* = KNOBS
 ================================================ */
 .mod-pedal-boxy{{{cns}}} .mod-control-group {
-    margin:20px;
+    margin:20px !important;
     position:relative;
     text-align:center;
     z-index:30;
+}
+.mod-pedal-boxy{{{cns}}} .top {
+    margin-top:0px !important;
 }
 
 .mod-pedal-boxy{{{cns}}} .mod-control-group .mod-knob {
@@ -190,16 +193,17 @@
 .mod-pedal-boxy{{{cns}}}.mod-one-knob .mod-control-group .mod-knob .mod-knob-image {
     background-image:url(/resources/knobs/boxy/boxy.png{{{ns}}});
     background-repeat:no-repeat;
-    background-size:auto 110px;
-    height:110px;
-    width:110px;
+    background-size:auto 98px;
+    height:98px;
+    width:98px;
     margin:0 auto;
 }
 .mod-pedal-boxy{{{cns}}}.mod-one-knob .mod-control-group .mod-knob > span.mod-knob-title {
     font-size:15px;
+    height:15px;
 }
 .mod-pedal-boxy{{{cns}}}.mod-one-knob .mod-control-group .mod-knob {
-    height:125px;
+    height:115px;
 }
 
 /* TWO KNOBS */
@@ -261,8 +265,13 @@
     z-index:35;
 }
 
-.mod-pedal-boxy{{{cns}}}.mod-three-knobs .mod-enumerated-group {
+.mod-pedal-boxy{{{cns}}}.mod-three-knobs .mod-enumerated-group,
+.mod-pedal-boxy{{{cns}}}.mod-four-knobs .mod-enumerated-group {
     margin-bottom:5px !important;
+}
+
+.mod-pedal-boxy{{{cns}}}.mod-four-knobs .mod-enumerated-group {
+    width:250px;
 }
 
 .mod-pedal-boxy{{{cns}}} .mod-enumerated {
@@ -1054,7 +1063,6 @@
 {
     border-color:black;
 }
-
 /* STYLES FOR THE BOXY KNOB */
 
 
