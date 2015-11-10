@@ -36,7 +36,7 @@ lv2:port
     lv2:name "Measure";
     lv2:symbol "measure";
     lv2:portProperty lv2:enumeration, lv2:integer;
-    lv2:scalePoint;
+    lv2:scalePoint
     [
         rdfs:label "peak";
         rdf:value 0;
