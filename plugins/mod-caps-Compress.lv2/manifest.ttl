@@ -1,0 +1,10 @@
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix lv2:  <http://lv2plug.in/ns/lv2core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://moddevices.com/plugins/caps/Compress>
+    a lv2:Plugin ;
+    dct:replaces <urn:ladspa:1772> ;
+    lv2:binary <Compress.so> ;
+    rdfs:seeAlso <Compress.ttl> ,
+                 <modgui.ttl> .

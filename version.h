@@ -1,1 +1,1 @@
-short CAPS_version[3] = {0, 9, 3};
+short CAPS_version[3] = {0, 9, 24};

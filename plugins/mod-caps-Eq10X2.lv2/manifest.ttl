@@ -1,0 +1,10 @@
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix lv2:  <http://lv2plug.in/ns/lv2core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://moddevices.com/plugins/caps/Eq10X2>
+    a lv2:Plugin ;
+    dct:replaces <urn:ladspa:2594> ;
+    lv2:binary <Eq10X2.so> ;
+    rdfs:seeAlso <Eq10X2.ttl> ,
+                 <modgui.ttl> .

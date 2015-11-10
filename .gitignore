@@ -1,6 +1,7 @@
 # Object files
 *.o
 *.pyc
+*.s
 
 # Libraries
 *.lib
@@ -18,7 +19,6 @@
 *.app
 
 # Temporary
+.depend
 .tmp
 depend
-
-

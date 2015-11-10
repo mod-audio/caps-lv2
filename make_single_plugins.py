@@ -2,16 +2,6 @@
 
 import os, sys, glob
 
-TMP_DIR = '.tmp'
-os.system('mkdir -p ' + TMP_DIR)
-os.system('cp -ruf ./dsp ' + TMP_DIR)
-os.system('cp -ruf ./waves ' + TMP_DIR)
-os.system('cp -ruf ./*.h ' + TMP_DIR)
-os.system('cp -ruf ./*.cc ' + TMP_DIR)
-os.system('cp -ruf ./Makefile ' + TMP_DIR)
-
-dsp_sources = ' '.join(glob.glob('dsp/*.cc'))
-
 # LADSPA_UID, EFFECT_NAME, FILES
 effects_info = [
 ('2602',    'Noisegate',        ['Noisegate.cc']),
@@ -67,142 +57,51 @@ interface_code = """
 
 #include "Descriptor.h"
 
-#define N 1
-
-static DescriptorStub * descriptors [N+1];
-static DescriptorStub * lv2_descriptors [N+1];
-
-extern "C" {
-const LADSPA_Descriptor *
-ladspa_descriptor (unsigned long i)
-{
-    return i < N ? descriptors[i] : 0;
-}
+static const Descriptor<__EFFECT__> lv2_descriptor(CAPS_URI "__EFFECT__");
 
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor *
 lv2_descriptor(uint32_t i)
 {
-    return i < N ? lv2_descriptors[i] : 0;
+    return i == 0 ? &lv2_descriptor : 0;
 }
-
-__attribute__ ((constructor))
-void caps_so_init()
-{
-    DescriptorStub ** d = descriptors;
-    memset (d, 0, sizeof (descriptors));
-    *d++ = new Descriptor<__EFFECT__>(__LADSPA_UID__);
-    assert (d - descriptors <= N);
-
-    /* LV2 */
-    d = lv2_descriptors;
-    memset (d, 0, sizeof (lv2_descriptors));
-    *d++ = new Descriptor<__EFFECT__>(CAPS_URI "__EFFECT__");
-    assert (d - lv2_descriptors <= N);
-}
-
-__attribute__ ((destructor))
-void caps_so_fini()
-{
-    DescriptorStub ** d = descriptors;
-    while (*d) delete *d++;
-
-    d = lv2_descriptors;
-    while (*d) delete *d++;
-}
-}; /* extern "C" */
 """
 
-manifest = """
-@prefix lv2: <http://lv2plug.in/ns/lv2core#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+manifest = """\
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix lv2:  <http://lv2plug.in/ns/lv2core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-<http://quitte.de/dsp/caps.html#__EFFECT__> a lv2:Plugin; lv2:binary <__EFFECT__.so>; rdfs:seeAlso <__EFFECT__.ttl>.
+<http://moddevices.com/plugins/caps/__EFFECT__>
+    a lv2:Plugin ;
+    dct:replaces <urn:ladspa:__LADSPA_UID__> ;
+    lv2:binary <__EFFECT__.so> ;
+    rdfs:seeAlso <__EFFECT__.ttl> ,
+                 <modgui.ttl> .
 """
-
-manifest_mod = """
-@prefix lv2: <http://lv2plug.in/ns/lv2core#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-
-<http://moddevices.com/plugins/caps/__EFFECT__> a lv2:Plugin; lv2:binary <__EFFECT__.so>; rdfs:seeAlso <__EFFECT__.ttl>.
-"""
-
-# comment the below line to use the caps URI
-manifest = manifest_mod
 
 if __name__ == "__main__":
-    os.chdir(TMP_DIR)
-
-    if manifest == manifest_mod:
-        f = open('./basics.h', 'r')
-        basics = f.read()
-        basics = basics.replace('#define CAPS_URI "http://quitte.de/dsp/caps.html#"', '#define CAPS_URI "http://moddevices.com/plugins/caps/"')
-        f = open('./basics.h', 'w')
-        f.write(basics);
-        f.close()
+    with open("Makefile.single", 'r') as fh:
+        makefile_single = fh.read()
 
     def get_source(fx_name):
         for fx in effects_info:
             if fx_name == fx[1]:
                 return ' '.join(fx[2])
 
-    if len(sys.argv) == 1:
-        for fx in effects_info:
-            ladspa_uid = fx[0]
-            effect_name = fx[1]
-            files = ' '.join(fx[2])
+    for ladspa_uid, effect_name, sources in effects_info:
+        sources.append("dsp/polynomials.cc")
+        sources = "../../%s" % (" ../../".join(sources))
+        bundlepath = "plugins/mod-caps-%s.lv2" % effect_name
 
-            # composes the interface code
-            interface = interface_code
-            interface = interface.replace('__LADSPA_UID__', ladspa_uid)
-            interface = interface.replace('__EFFECT__', effect_name)
+        # Create dir
+        if not os.path.exists(bundlepath):
+            os.mkdir(bundlepath)
 
-            # create the interface file
-            f = open('interface.cc', 'w')
-            f.writelines(interface)
-            f.close()
+        # Create manifest.ttl
+        with open(os.path.join(bundlepath, "manifest.ttl"), 'w') as fh:
+            fh.write(manifest.replace("__LADSPA_UID__", ladspa_uid).replace("__EFFECT__", effect_name))
 
-            # sources and plugin name
-            sources = ' SOURCES=\"interface.cc ' + dsp_sources + ' ' + files + '\"'
-            plugin_name = ' PLUG=' + effect_name
-
-            # run make
-            os.system('make' + sources + plugin_name)
-    else:
-        fx_names = []
-        for effect in effects_info:
-            fx_names.append(effect[1])
-
-        sys.argv.pop(0)
-        effects_in_args = list(set(fx_names) & set(sys.argv))
-        args = list(set(sys.argv) - set(effects_in_args))
-
-        if 'install' in args or 'install-lv2' in args:
-            if effects_in_args == []: effects_in_args = fx_names
-
-            for fx in effects_in_args:
-                # create a fake rdf file to avoid error on make install
-                os.system('touch ' + fx + '.rdf')
-                rdf_dest = ' RDFDEST=/tmp/rdf'
-
-                # ttl files
-                os.system('rm -rf ./ttl')
-                os.system('mkdir ./ttl')
-                os.system('cp ../ttl/' + fx + '.ttl ./ttl')
-
-                # modgui
-                os.system('mkdir -p ./ttl/modgui/')
-                os.system('cp ../ttl/modgui/' + fx + '.* ./ttl/modgui/')
-
-                f = open('./ttl/manifest.ttl', 'w')
-                f.write(manifest.replace('__EFFECT__', fx))
-                f.close()
-
-                sources = ' SOURCES=\"\" HEADERS=\"\" '
-                plugin_name = ' PLUG=' + fx
-                bundle_name = ' LV2BUNDLE=caps-' + fx + '.lv2'
-
-                os.system('make ' + ' '.join(args) + sources + plugin_name + bundle_name + rdf_dest)
-
-        elif 'clean' in args:
-            os.system('make ' + ' '.join(args) + ' PLUG=*')
+        # Create Makefile
+        with open(os.path.join(bundlepath, "Makefile"), 'w') as fh:
+            fh.write(makefile_single.replace("__EFFECT__", effect_name).replace("__SOURCES__", sources))

@@ -172,6 +172,7 @@ inline double lin2db (double lin) { return 20*log10(lin); }
 /* //////////////////////////////////////////////////////////////////////// */
 
 #define CAPS "C* "
+#define CAPS_URI "http://moddevices.com/plugins/caps/"
 
 class Plugin 
 {
