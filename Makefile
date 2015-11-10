@@ -8,12 +8,10 @@ STRIP ?= strip
 
 OPTS = -O2 -Wall -fPIC -DPIC
 # OPTS = -O3 -ffast-math -funroll-loops -Wall -fPIC -DPIC
-#OPTS = -g -DDEBUG 
+#OPTS = -g -DDEBUG
 
 CAPS_URI=\"http://moddevices.com/plugins/caps/\"
 OPTS += -DCAPS_URI=${CAPS_URI}
-
--include defines.make
 
 CXXFLAGS += $(OPTS)
 LDFLAGS += -shared -Wl,--no-undefined
@@ -21,9 +19,9 @@ LDFLAGS += -shared -Wl,--no-undefined
 PLUG = caps
 
 SOURCES = $(wildcard *.cc) $(wildcard dsp/*.cc)
-OBJECTS	= $(SOURCES:.cc=.o) 
+OBJECTS = $(SOURCES:.cc=.o)
 HEADERS = $(wildcard *.h) $(wildcard dsp/*.h) $(wildcard util/*.h) $(wildcard dsp/tonestack/*.h)
-TTL		= ttl/*.ttl
+TTL     = ttl/*.ttl
 
 DEST = $(PREFIX)/lib/ladspa
 RDFDEST = $(PREFIX)/share/ladspa/rdf
@@ -89,8 +87,6 @@ rdf-install:
 	install -m 644 $(PLUG).rdf $(DESTDIR)$(RDFDEST)
 
 uninstall:
-	-rm -rf $(DESTDIR)$(DEST)/$(PLUG).so
-	-rm -rf $(DESTDIR)$(RDFDEST)/$(PLUG).rdf
 	-rm -rf $(LV2DEST)
 
 clean:
