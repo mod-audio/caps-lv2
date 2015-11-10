@@ -1,0 +1,10 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/Noisegate>
+    modgui:gui [ modgui:iconTemplate <modgui/Noisegate.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:screenshot <modgui/Noisegate.png>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:templateData <modgui/Noisegate.json>;
+            modgui:thumbnail <modgui/Noisegate-thumb.png> ].

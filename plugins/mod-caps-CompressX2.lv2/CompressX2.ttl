@@ -110,12 +110,6 @@ source: http://quitte.de/dsp/caps.html#Compress
             lv2:index 7;
             lv2:name "in left";
             lv2:symbol "in_l" ];
-    modgui:gui [ modgui:iconTemplate <modgui/CompressX2.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:screenshot <modgui/CompressX2.png>;
-            modgui:templateData <modgui/CompressX2.json>;
-            modgui:thumbnail <modgui/CompressX2-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

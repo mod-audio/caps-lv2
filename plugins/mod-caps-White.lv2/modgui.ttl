@@ -1,0 +1,10 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/White>
+    modgui:gui [ modgui:iconTemplate <modgui/White.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:screenshot <modgui/White.png>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:templateData <modgui/White.json>;
+            modgui:thumbnail <modgui/White-thumb.png> ].

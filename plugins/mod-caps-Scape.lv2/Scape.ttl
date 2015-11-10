@@ -97,12 +97,6 @@ source: http://quitte.de/dsp/caps.html#Scape
             lv2:index 7;
             lv2:name "out:l";
             lv2:symbol "outl" ];
-    modgui:gui [ modgui:iconTemplate <modgui/Scape.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:screenshot <modgui/Scape.png>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:templateData <modgui/Scape.json>;
-            modgui:thumbnail <modgui/Scape-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

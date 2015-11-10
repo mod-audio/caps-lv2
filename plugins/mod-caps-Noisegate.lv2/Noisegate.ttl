@@ -90,12 +90,6 @@ source: http://quitte.de/dsp/caps.html#Noisegate
                     rdf:value 60 ];
             lv2:symbol "mains" ];
 
-    modgui:gui [ modgui:iconTemplate <modgui/Noisegate.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:screenshot <modgui/Noisegate.png>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:templateData <modgui/Noisegate.json>;
-            modgui:thumbnail <modgui/Noisegate-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

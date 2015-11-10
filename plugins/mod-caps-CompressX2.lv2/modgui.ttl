@@ -1,0 +1,10 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/CompressX2>
+    modgui:gui [ modgui:iconTemplate <modgui/CompressX2.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:screenshot <modgui/CompressX2.png>;
+            modgui:templateData <modgui/CompressX2.json>;
+            modgui:thumbnail <modgui/CompressX2-thumb.png> ].

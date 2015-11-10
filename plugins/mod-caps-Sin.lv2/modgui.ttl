@@ -1,0 +1,10 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/Sin>
+    modgui:gui [ modgui:iconTemplate <modgui/Sin.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:screenshot <modgui/Sin.png>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:templateData <modgui/Sin.json>;
+            modgui:thumbnail <modgui/Sin-thumb.png> ].

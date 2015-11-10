@@ -50,12 +50,6 @@ source: http://quitte.de/dsp/caps.html#CEO
             lv2:index 3;
             lv2:name "out";
             lv2:symbol "out" ];
-    modgui:gui [ modgui:iconTemplate <modgui/CEO.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:screenshot <modgui/CEO.png>;
-            modgui:templateData <modgui/CEO.json>;
-            modgui:thumbnail <modgui/CEO-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

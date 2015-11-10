@@ -54,13 +54,6 @@ source: http://quitte.de/dsp/caps.html#Wider
             lv2:index 4;
             lv2:name "out:r";
             lv2:symbol "outr" ];
-    modgui:gui [a modgui:Gui;
-            modgui:resourcesDirectory <modgui>;
-            modgui:iconTemplate <modgui/Wider.html>;
-            modgui:templateData <modgui/Wider.json>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:screenshot <modgui/Wider.png>;
-            modgui:thumbnail <modgui/Wider-thumb.png>;];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

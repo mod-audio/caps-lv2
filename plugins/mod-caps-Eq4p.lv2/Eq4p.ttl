@@ -218,12 +218,6 @@ source: http://quitte.de/dsp/caps.html#Eq4p
             lv2:name "b.freq";
             lv2:portProperty epp:logarithmic;
             lv2:symbol "b_freq" ];
-    modgui:gui [ modgui:iconTemplate <modgui/Eq4p.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:screenshot <modgui/Eq4p.png>;
-            modgui:templateData <modgui/Eq4p.json>;
-            modgui:thumbnail <modgui/Eq4p-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

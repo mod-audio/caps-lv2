@@ -1,0 +1,10 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/Eq10>
+    modgui:gui [ modgui:iconTemplate <modgui/Eq10.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:screenshot <modgui/Eq10.png>;
+            modgui:templateData <modgui/Eq10.json>;
+            modgui:thumbnail <modgui/Eq10-thumb.png> ].

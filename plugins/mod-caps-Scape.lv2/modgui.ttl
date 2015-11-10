@@ -1,0 +1,10 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/Scape>
+    modgui:gui [ modgui:iconTemplate <modgui/Scape.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:screenshot <modgui/Scape.png>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:templateData <modgui/Scape.json>;
+            modgui:thumbnail <modgui/Scape-thumb.png> ].

@@ -1,0 +1,10 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/PlateX2>
+    modgui:gui [ modgui:iconTemplate <modgui/PlateX2.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:screenshot <modgui/PlateX2.png>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:templateData <modgui/PlateX2.json>;
+            modgui:thumbnail <modgui/PlateX2-thumb.png> ].

@@ -1,0 +1,10 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/CEO>
+    modgui:gui [ modgui:iconTemplate <modgui/CEO.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:screenshot <modgui/CEO.png>;
+            modgui:templateData <modgui/CEO.json>;
+            modgui:thumbnail <modgui/CEO-thumb.png> ].

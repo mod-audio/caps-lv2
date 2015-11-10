@@ -1,0 +1,10 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/Spice>
+    modgui:gui [ modgui:iconTemplate <modgui/Spice.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:screenshot <modgui/Spice.png>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:templateData <modgui/Spice.json>;
+            modgui:thumbnail <modgui/Spice-thumb.png> ].

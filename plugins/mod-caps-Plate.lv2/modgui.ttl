@@ -1,0 +1,10 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/Plate>
+    modgui:gui [ modgui:iconTemplate <modgui/Plate.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:screenshot <modgui/Plate.png>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:templateData <modgui/Plate.json>;
+            modgui:thumbnail <modgui/Plate-thumb.png> ].

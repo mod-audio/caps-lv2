@@ -1,0 +1,10 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/PhaserII>
+    modgui:gui [ modgui:iconTemplate <modgui/PhaserII.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:screenshot <modgui/PhaserII.png>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:templateData <modgui/PhaserII.json>;
+            modgui:thumbnail <modgui/PhaserII-thumb.png> ].

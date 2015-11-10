@@ -106,12 +106,6 @@ source: http://quitte.de/dsp/caps.html#CabinetIV
             lv2:index 3;
             lv2:name "out";
             lv2:symbol "out" ];
-    modgui:gui [ modgui:iconTemplate <modgui/CabinetIV.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:screenshot <modgui/CabinetIV.png>;
-            modgui:templateData <modgui/CabinetIV.json>;
-            modgui:thumbnail <modgui/CabinetIV-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

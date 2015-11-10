@@ -64,12 +64,6 @@ source: http://quitte.de/dsp/caps.html#Narrower
             lv2:index 5;
             lv2:name "out right";
             lv2:symbol "outr" ];
-    modgui:gui [ modgui:iconTemplate <modgui/Narrower.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:screenshot <modgui/Narrower.png>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:templateData <modgui/Narrower.json>;
-            modgui:thumbnail <modgui/Narrower-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

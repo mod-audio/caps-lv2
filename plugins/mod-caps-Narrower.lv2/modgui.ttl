@@ -1,0 +1,10 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/Narrower>
+    modgui:gui [ modgui:iconTemplate <modgui/Narrower.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:screenshot <modgui/Narrower.png>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:templateData <modgui/Narrower.json>;
+            modgui:thumbnail <modgui/Narrower-thumb.png> ].

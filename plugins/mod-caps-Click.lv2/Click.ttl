@@ -67,12 +67,6 @@ source: http://quitte.de/dsp/caps.html#Click
             lv2:index 4;
             lv2:name "out";
             lv2:symbol "out" ];
-    modgui:gui [ modgui:iconTemplate <modgui/Click.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:screenshot <modgui/Click.png>;
-            modgui:templateData <modgui/Click.json>;
-            modgui:thumbnail <modgui/Click-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

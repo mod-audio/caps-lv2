@@ -111,12 +111,6 @@ source: http://quitte.de/dsp/caps.html#Eq10
             lv2:minimum -48;
             lv2:name "4 kHz";
             lv2:symbol "band4khz" ];
-    modgui:gui [ modgui:iconTemplate <modgui/Eq10.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:screenshot <modgui/Eq10.png>;
-            modgui:templateData <modgui/Eq10.json>;
-            modgui:thumbnail <modgui/Eq10-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

@@ -108,12 +108,6 @@ source: http://quitte.de/dsp/caps.html#Compress
             lv2:minimum -12;
             lv2:name "gain";
             lv2:symbol "gain" ];
-    modgui:gui [ modgui:iconTemplate <modgui/Compress.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:screenshot <modgui/Compress.png>;
-            modgui:templateData <modgui/Compress.json>;
-            modgui:thumbnail <modgui/Compress-thumb.png> ];
     doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
             foaf:mbox <mailto:tim@quitte.de>;
             foaf:name "Tim Goetze" ];

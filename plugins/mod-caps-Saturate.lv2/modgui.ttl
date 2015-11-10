@@ -1,0 +1,10 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/Saturate>
+    modgui:gui [ modgui:iconTemplate <modgui/Saturate.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:screenshot <modgui/Saturate.png>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:templateData <modgui/Saturate.json>;
+            modgui:thumbnail <modgui/Saturate-thumb.png> ].

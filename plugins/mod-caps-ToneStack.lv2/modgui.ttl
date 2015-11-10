@@ -1,0 +1,10 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/ToneStack>
+    modgui:gui [ modgui:iconTemplate <modgui/ToneStack.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:screenshot <modgui/ToneStack.png>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:templateData <modgui/ToneStack.json>;
+            modgui:thumbnail <modgui/ToneStack-thumb.png> ].

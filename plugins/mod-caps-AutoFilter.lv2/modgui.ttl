@@ -1,0 +1,10 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/AutoFilter>
+    modgui:gui [ modgui:iconTemplate <modgui/AutoFilter.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:screenshot <modgui/AutoFilter.png>;
+            modgui:templateData <modgui/AutoFilter.json>;
+            modgui:thumbnail <modgui/AutoFilter-thumb.png> ].

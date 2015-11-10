@@ -1,0 +1,10 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/CabinetIV>
+    modgui:gui [ modgui:iconTemplate <modgui/CabinetIV.html>;
+            modgui:resourcesDirectory <modgui>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:screenshot <modgui/CabinetIV.png>;
+            modgui:templateData <modgui/CabinetIV.json>;
+            modgui:thumbnail <modgui/CabinetIV-thumb.png> ].

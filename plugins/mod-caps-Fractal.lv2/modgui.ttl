@@ -1,0 +1,13 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/Fractal>
+    modgui:gui [
+        a modgui:Gui;
+        modgui:resourcesDirectory <modgui>;
+        modgui:iconTemplate <modgui/Fractal.html>;
+        modgui:templateData <modgui/Fractal.json>;
+            modgui:stylesheet <modgui/_common.css>;
+        modgui:screenshot <modgui/Fractal.png>;
+        modgui:thumbnail <modgui/Fractal-thumb.png>;
+    ].

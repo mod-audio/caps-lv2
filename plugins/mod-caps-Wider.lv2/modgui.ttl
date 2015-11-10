@@ -1,0 +1,11 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+
+
+<http://moddevices.com/plugins/caps/Wider>
+    modgui:gui [a modgui:Gui;
+            modgui:resourcesDirectory <modgui>;
+            modgui:iconTemplate <modgui/Wider.html>;
+            modgui:templateData <modgui/Wider.json>;
+            modgui:stylesheet <modgui/_common.css>;
+            modgui:screenshot <modgui/Wider.png>;
+            modgui:thumbnail <modgui/Wider-thumb.png>;].

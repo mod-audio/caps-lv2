@@ -187,12 +187,6 @@ a lv2:ControlPort,
     lv2:name "Mid";
     lv2:symbol "mid" 
 ];
-modgui:gui [ modgui:iconTemplate <modgui/AmpVTS.html>;
-        modgui:resourcesDirectory <modgui>;
-        modgui:stylesheet <modgui/_common.css>;
-        modgui:screenshot <modgui/AmpVTS.png>;
-        modgui:templateData <modgui/AmpVTS.json>;
-        modgui:thumbnail <modgui/AmpVTS-thumb.png> ];
 doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
         foaf:mbox <mailto:tim@quitte.de>;
         foaf:name "Tim Goetze" ];
