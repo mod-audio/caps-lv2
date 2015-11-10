@@ -1,119 +1,159 @@
-@prefix doap: <http://usefulinc.com/ns/doap#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix modgui: <http://moddevices.com/ns/modgui#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix units: <http://lv2plug.in/ns/extensions/units#> .
-@prefix mod: <http://moddevices.com/ns/mod#> .
+@prefix doap:  <http://usefulinc.com/ns/doap#>.
+@prefix foaf:  <http://xmlns.com/foaf/0.1/>.
+@prefix lv2:   <http://lv2plug.in/ns/lv2core#>.
+@prefix mod:   <http://moddevices.com/ns/mod#>.
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix units: <http://lv2plug.in/ns/extensions/units#>.
 
-<http://moddevices.com/plugins/caps/Compress> a lv2:CompressorPlugin,
-        lv2:Plugin;
-    lv2:microVersion 16;
-    lv2:minorVersion 9;
-    lv2:optionalFeature lv2:hardRtCapable;
-    mod:brand "CAPS";
-    mod:label "Compress";
+<http://moddevices.com/plugins/caps/Compress>
+a lv2:CompressorPlugin, lv2:Plugin;
+lv2:microVersion 24;
+lv2:minorVersion 9;
+lv2:optionalFeature lv2:hardRtCapable;
+mod:brand "CAPS";
+mod:label "Compress";
 
 rdfs:comment """
-This compressor has been designed primarily to create natural-sounding sustain for the electric guitar without sacrificing its brightly percussive character. However, it appears to apply well to a variety of other sound sources, and with CompressX2 a stereo version is available as well. 
+This compressor has been designed primarily to create natural-sounding sustain for the electric guitar without sacrificing its brightly percussive character. However, it appears to apply well to a variety of other sound sources, and with CompressX2 a stereo version is available as well.
 
-To be able produce strong compression and still maintain a natural sound, the design catches (attack-phase) power spikes with a soft saturation circuit, converting them into additional harmonic content and enforcing a strict limit on the output level. Saturating operation is the default setting of the mode control. Three anti-aliasing options are available, 2x oversampling with 32-tap filters and 4x with 64 and 128 taps. 
+To be able produce strong compression and still maintain a natural sound, the design catches (attack-phase) power spikes with a soft saturation circuit, converting them into additional harmonic content and enforcing a strict limit on the output level. Saturating operation is the default setting of the mode control. Three anti-aliasing options are available, 2x oversampling with 32-tap filters and 4x with 64 and 128 taps.
 
-The measure control select which indicator of loudness to base calculations on: peak – instantaneous amplitude – measurement allows the unit to react very quickly, while rms – root mean square power – is of a gentler kind. 
+The measure control select which indicator of loudness to base calculations on: peak – instantaneous amplitude – measurement allows the unit to react very quickly, while rms – root mean square power – is of a gentler kind.
 
-Compression amount is controlled through the strength knob, from 0 effectively disabling the effect, up to a maximum ratio of 16:1. The attack and release controls map higher values to slower reactions. 
+Compression amount is controlled through the strength knob, from 0 effectively disabling the effect, up to a maximum ratio of 16:1. The attack and release controls map higher values to slower reactions.
 
 source: http://quitte.de/dsp/caps.html#Compress
 """;
 
-    lv2:port [ a lv2:AudioPort,
-                lv2:InputPort;
-            lv2:index 7;
-            lv2:name "in";
-            lv2:symbol "in" ],
-        [ a lv2:AudioPort,
-                lv2:OutputPort;
-            lv2:index 8;
-            lv2:name "out";
-            lv2:symbol "out" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0;
-            lv2:index 0;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "Measure";
-            lv2:portProperty lv2:integer;
-            lv2:scalePoint [ rdfs:label "peak";
-                    rdf:value 0 ],
-                [ rdfs:label "rms";
-                    rdf:value 1 ];
-            lv2:symbol "measure" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 1;
-            lv2:index 1;
-            lv2:maximum 3;
-            lv2:minimum 0;
-            lv2:name "Mode";
-            lv2:portProperty lv2:integer;
-            lv2:scalePoint [ rdfs:label "linear";
-                    rdf:value 0 ],
-                [ rdfs:label "saturating 2x";
-                    rdf:value 1 ],
-                [ rdfs:label "saturating 4x";
-                    rdf:value 2 ],
-                [ rdfs:label "saturating 4x128";
-                    rdf:value 3 ];
-            lv2:symbol "mode" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0;
-            lv2:index 2;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "Threshold";
-            lv2:symbol "threshold" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.250;
-            lv2:index 3;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "Strenght";
-            lv2:symbol "strenght" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0;
-            lv2:index 4;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "Attack";
-            lv2:symbol "attack" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.250;
-            lv2:index 5;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "release";
-            lv2:symbol "release" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            units:unit units:db;
-            lv2:default 0;
-            lv2:index 6;
-            lv2:maximum 24;
-            lv2:minimum -12;
-            lv2:name "gain";
-            lv2:symbol "gain" ];
-    doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
-            foaf:mbox <mailto:tim@quitte.de>;
-            foaf:name "Tim Goetze" ];
-    doap:license <http://usefulinc.com/doap/licenses/gpl>;
-    doap:maintainer [ foaf:homepage <http://moddevices.com>;
-            foaf:mbox <mailto:devel@moddevices.com>;
-            foaf:name "MOD Team" ];
-    doap:name "C* Compress - Mono compressor" .
+lv2:port
+[
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 0;
+    lv2:default 0;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "Measure";
+    lv2:symbol "measure";
+    lv2:portProperty lv2:enumeration, lv2:integer;
+    lv2:scalePoint;
+    [
+        rdfs:label "peak";
+        rdf:value 0;
+    ],
+    [
+        rdfs:label "rms";
+        rdf:value 1;
+    ];
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 1;
+    lv2:default 1;
+    lv2:maximum 3;
+    lv2:minimum 0;
+    lv2:name "Mode";
+    lv2:symbol "mode";
+    lv2:portProperty lv2:enumeration, lv2:integer;
+    lv2:scalePoint
+    [
+        rdfs:label "linear";
+        rdf:value 0;
+    ],
+    [
+        rdfs:label "saturating 2x";
+        rdf:value 1;
+    ],
+    [
+        rdfs:label "saturating 4x";
+        rdf:value 2;
+    ],
+    [
+        rdfs:label "saturating 4x128";
+        rdf:value 3;
+    ];
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 2;
+    lv2:default 0.5;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
+    lv2:name "Threshold";
+    lv2:symbol "threshold";
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:default 0.25;
+    lv2:index 3;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
+    lv2:name "Strength";
+    lv2:symbol "strength";
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 4;
+    lv2:default 0.75;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
+    lv2:name "Attack";
+    lv2:symbol "attack";
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 5;
+    lv2:default 0.5;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
+    lv2:name "release";
+    lv2:symbol "release";
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 6;
+    lv2:default 0.0;
+    lv2:maximum 18.0;
+    lv2:minimum -12.0;
+    lv2:name "Gain";
+    lv2:symbol "gain";
+    units:unit units:db;
+],
+[
+    a lv2:ControlPort, lv2:OutputPort;
+    lv2:index 7;
+    lv2:default 0.0;
+    lv2:maximum 0.0;
+    lv2:minimum -144.0;
+    lv2:name "State";
+    lv2:symbol "state";
+    units:unit units:db;
+],
+[
+    a lv2:AudioPort, lv2:InputPort;
+    lv2:index 8;
+    lv2:name "in";
+    lv2:symbol "in";
+],
+[
+    a lv2:AudioPort, lv2:OutputPort;
+    lv2:index 9;
+    lv2:name "out";
+    lv2:symbol "out";
+];
 
+doap:license <http://usefulinc.com/doap/licenses/gpl>;
+
+doap:developer [
+    foaf:homepage <http://quitte.de/dsp/caps.html>;
+    foaf:mbox <mailto:tim@quitte.de>;
+    foaf:name "Tim Goetze"
+];
+
+doap:maintainer [
+    foaf:homepage <http://moddevices.com>;
+    foaf:mbox <mailto:devel@moddevices.com>;
+    foaf:name "MOD Team"
+];
+
+doap:name "C* Compress - Mono compressor" .
