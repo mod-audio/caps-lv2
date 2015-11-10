@@ -14,10 +14,10 @@ OPTS = -O2 -Wall -fPIC -DPIC
 LDFLAGS += -Wl,--strip-all
 endif
 
-CXXFLAGS += $(OPTS)
+CXXFLAGS += $(OPTS) -I../..
 LDFLAGS += -shared -Wl,--no-undefined
 
-SOURCES = ../../Eq.cc ../../dsp/polynomials.cc
+SOURCES = ../../Eq.cc ../../dsp/polynomials.cc interface.cc
 OBJECTS = $(SOURCES:.cc=.o)
 
 PLUG   = Eq4p
@@ -36,10 +36,10 @@ $(PLUG).so: $(OBJECTS)
 	$(CXX) $(OBJECTS) $(LDFLAGS) -o $@
 
 .cc.s:
-	$(CXX) $^ $(CXXFLAGS) -S
+	$(CXX) $< $(CXXFLAGS) -S
 
 .cc.o: .depend
-	$(CXX) $^ $(CXXFLAGS) -o $@ -c
+	$(CXX) $< $(CXXFLAGS) -o $@ -c
 
 install: all
 	install -d $(DESTDIR)$(LV2DEST)

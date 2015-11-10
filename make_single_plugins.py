@@ -57,12 +57,11 @@ interface_code = """
 
 #include "Descriptor.h"
 
-static const Descriptor<__EFFECT__> lv2_descriptor(CAPS_URI "__EFFECT__");
-
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor *
 lv2_descriptor(uint32_t i)
 {
+    static const Descriptor<__EFFECT__> lv2_descriptor(CAPS_URI "__EFFECT__");
     return i == 0 ? &lv2_descriptor : 0;
 }
 """
@@ -91,12 +90,17 @@ if __name__ == "__main__":
 
     for ladspa_uid, effect_name, sources in effects_info:
         sources.append("dsp/polynomials.cc")
-        sources = "../../%s" % (" ../../".join(sources))
+        sources  = "../../%s" % (" ../../".join(sources))
+        sources += " interface.cc"
         bundlepath = "plugins/mod-caps-%s.lv2" % effect_name
 
         # Create dir
         if not os.path.exists(bundlepath):
             os.mkdir(bundlepath)
+
+        # Create interface.cc
+        with open(os.path.join(bundlepath, "interface.cc"), 'w') as fh:
+            fh.write(interface_code.replace("__EFFECT__", effect_name))
 
         # Create manifest.ttl
         with open(os.path.join(bundlepath, "manifest.ttl"), 'w') as fh:
