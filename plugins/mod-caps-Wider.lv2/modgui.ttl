@@ -1,11 +1,26 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/Wider>
-    modgui:gui [a modgui:Gui;
-            modgui:resourcesDirectory <modgui>;
-            modgui:iconTemplate <modgui/Wider.html>;
-            modgui:templateData <modgui/Wider.json>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:screenshot <modgui/Wider.png>;
-            modgui:thumbnail <modgui/Wider-thumb.png>;].
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-wider-stereo-image-synthesis.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-wider-stereo-image-synthesis.css> ;
+        modgui:screenshot <modgui/screenshot-c-wider-stereo-image-synthesis.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-wider-stereo-image-synthesis.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "Wider" ;
+        modgui:model "boxy" ;
+        modgui:panel "2-knobs" ;
+        modgui:color "blue" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "pan" ;
+            lv2:name "Panning" ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "width" ;
+            lv2:name "Width" ;
+        ] ;
+    ] .

@@ -1,10 +1,30 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/CEO>
-    modgui:gui [ modgui:iconTemplate <modgui/CEO.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:screenshot <modgui/CEO.png>;
-            modgui:templateData <modgui/CEO.json>;
-            modgui:thumbnail <modgui/CEO-thumb.png> ].
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-ceo-chief-executive-oscillator.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-ceo-chief-executive-oscillator.css> ;
+        modgui:screenshot <modgui/screenshot-c-ceo-chief-executive-oscillator.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-ceo-chief-executive-oscillator.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "CEO" ;
+        modgui:model "boxy" ;
+        modgui:panel "3-knobs" ;
+        modgui:color "racing" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "ppm" ;
+            lv2:name "Profit" ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "volume" ;
+            lv2:name "Level" ;
+        ] , [
+            lv2:index 2 ;
+            lv2:symbol "damping" ;
+            lv2:name "Damping" ;
+        ] ;
+    ] .

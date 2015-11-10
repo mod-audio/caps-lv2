@@ -1,10 +1,34 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/PlateX2>
-    modgui:gui [ modgui:iconTemplate <modgui/PlateX2.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:screenshot <modgui/PlateX2.png>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:templateData <modgui/PlateX2.json>;
-            modgui:thumbnail <modgui/PlateX2-thumb.png> ].
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-platex2-stereo-inout-versatile-plate-reverb.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-platex2-stereo-inout-versatile-plate-reverb.css> ;
+        modgui:screenshot <modgui/screenshot-c-platex2-stereo-inout-versatile-plate-reverb.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-platex2-stereo-inout-versatile-plate-reverb.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "Stereo Plate Reverb" ;
+        modgui:model "boxy" ;
+        modgui:panel "4-knobs" ;
+        modgui:color "cyan" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "tail" ;
+            lv2:name "Decay" ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "bandwidth" ;
+            lv2:name "b.width" ;
+        ] , [
+            lv2:index 2 ;
+            lv2:symbol "damping" ;
+            lv2:name "damping" ;
+        ] , [
+            lv2:index 3 ;
+            lv2:symbol "blend" ;
+            lv2:name "Mix" ;
+        ] ;
+    ] .

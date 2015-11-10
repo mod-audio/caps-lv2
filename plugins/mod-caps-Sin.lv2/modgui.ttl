@@ -1,10 +1,26 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/Sin>
-    modgui:gui [ modgui:iconTemplate <modgui/Sin.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:screenshot <modgui/Sin.png>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:templateData <modgui/Sin.json>;
-            modgui:thumbnail <modgui/Sin-thumb.png> ].
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-sin-sine-wave-generator.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-sin-sine-wave-generator.css> ;
+        modgui:screenshot <modgui/screenshot-c-sin-sine-wave-generator.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-sin-sine-wave-generator.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "Sin" ;
+        modgui:model "boxy" ;
+        modgui:panel "2-knobs" ;
+        modgui:color "green" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "f" ;
+            lv2:name "Freq." ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "volume" ;
+            lv2:name "Level" ;
+        ] ;
+    ] .

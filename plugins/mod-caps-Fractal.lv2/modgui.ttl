@@ -1,13 +1,46 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/Fractal>
     modgui:gui [
-        a modgui:Gui;
-        modgui:resourcesDirectory <modgui>;
-        modgui:iconTemplate <modgui/Fractal.html>;
-        modgui:templateData <modgui/Fractal.json>;
-            modgui:stylesheet <modgui/_common.css>;
-        modgui:screenshot <modgui/Fractal.png>;
-        modgui:thumbnail <modgui/Fractal-thumb.png>;
-    ].
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-fractal-audio-stream-from-deterministic-chaos.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-fractal-audio-stream-from-deterministic-chaos.css> ;
+        modgui:screenshot <modgui/screenshot-c-fractal-audio-stream-from-deterministic-chaos.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-fractal-audio-stream-from-deterministic-chaos.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "Fractal" ;
+        modgui:model "boxy" ;
+        modgui:panel "7-knobs" ;
+        modgui:color "pink" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "rate" ;
+            lv2:name "Rate" ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "hp" ;
+            lv2:name "hp" ;
+        ] , [
+            lv2:index 2 ;
+            lv2:symbol "mode" ;
+            lv2:name "Mode" ;
+        ] , [
+            lv2:index 3 ;
+            lv2:symbol "volume" ;
+            lv2:name "level" ;
+        ] , [
+            lv2:index 4 ;
+            lv2:symbol "x" ;
+            lv2:name "x" ;
+        ] , [
+            lv2:index 5 ;
+            lv2:symbol "y" ;
+            lv2:name "y" ;
+        ] , [
+            lv2:index 6 ;
+            lv2:symbol "z" ;
+            lv2:name "z" ;
+        ] ;
+    ] .

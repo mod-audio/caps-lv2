@@ -1,10 +1,22 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/White>
-    modgui:gui [ modgui:iconTemplate <modgui/White.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:screenshot <modgui/White.png>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:templateData <modgui/White.json>;
-            modgui:thumbnail <modgui/White-thumb.png> ].
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-white-white-noise-generator.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-white-white-noise-generator.css> ;
+        modgui:screenshot <modgui/screenshot-c-white-white-noise-generator.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-white-white-noise-generator.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "White Noise" ;
+        modgui:model "boxy" ;
+        modgui:panel "1-knob" ;
+        modgui:color "white" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "volume" ;
+            lv2:name "Level" ;
+        ] ;
+    ] .

@@ -1,10 +1,46 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/Compress>
-    modgui:gui [ modgui:iconTemplate <modgui/Compress.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:screenshot <modgui/Compress.png>;
-            modgui:templateData <modgui/Compress.json>;
-            modgui:thumbnail <modgui/Compress-thumb.png> ].
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-compress-mono-compressor.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-compress-mono-compressor.css> ;
+        modgui:screenshot <modgui/screenshot-c-compress-mono-compressor.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-compress-mono-compressor.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "Mono Compress" ;
+        modgui:model "boxy" ;
+        modgui:panel "7-knobs" ;
+        modgui:color "red" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "measure" ;
+            lv2:name "Measure" ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "mode" ;
+            lv2:name "Mode" ;
+        ] , [
+            lv2:index 2 ;
+            lv2:symbol "threshold" ;
+            lv2:name "Thresh." ;
+        ] , [
+            lv2:index 3 ;
+            lv2:symbol "strenght" ;
+            lv2:name "Strength" ;
+        ] , [
+            lv2:index 4 ;
+            lv2:symbol "attack" ;
+            lv2:name "Attack" ;
+        ] , [
+            lv2:index 5 ;
+            lv2:symbol "release" ;
+            lv2:name "release" ;
+        ] , [
+            lv2:index 6 ;
+            lv2:symbol "gain" ;
+            lv2:name "gain" ;
+        ] ;
+    ] .

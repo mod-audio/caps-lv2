@@ -1,10 +1,34 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/Scape>
-    modgui:gui [ modgui:iconTemplate <modgui/Scape.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:screenshot <modgui/Scape.png>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:templateData <modgui/Scape.json>;
-            modgui:thumbnail <modgui/Scape-thumb.png> ].
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-scape-stereo-delay-filters.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-scape-stereo-delay-filters.css> ;
+        modgui:screenshot <modgui/screenshot-c-scape-stereo-delay-filters.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-scape-stereo-delay-filters.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "Scape" ;
+        modgui:model "boxy" ;
+        modgui:panel "4-knobs" ;
+        modgui:color "zinc" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "bpm" ;
+            lv2:name "Rate" ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "divider" ;
+            lv2:name "divider" ;
+        ] , [
+            lv2:index 2 ;
+            lv2:symbol "feedback" ;
+            lv2:name "feedback" ;
+        ] , [
+            lv2:index 3 ;
+            lv2:symbol "dry" ;
+            lv2:name "dry" ;
+        ] ;
+    ] .

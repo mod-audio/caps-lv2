@@ -1,10 +1,30 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/Noisegate>
-    modgui:gui [ modgui:iconTemplate <modgui/Noisegate.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:screenshot <modgui/Noisegate.png>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:templateData <modgui/Noisegate.json>;
-            modgui:thumbnail <modgui/Noisegate-thumb.png> ].
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-noisegate-attenuate-noise-resident-in-silence.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-noisegate-attenuate-noise-resident-in-silence.css> ;
+        modgui:screenshot <modgui/screenshot-c-noisegate-attenuate-noise-resident-in-silence.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-noisegate-attenuate-noise-resident-in-silence.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "Noise Gate" ;
+        modgui:model "boxy" ;
+        modgui:panel "3-knobs" ;
+        modgui:color "tribal2" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "open" ;
+            lv2:name "Open" ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "attack" ;
+            lv2:name "Attack" ;
+        ] , [
+            lv2:index 2 ;
+            lv2:symbol "close" ;
+            lv2:name "Close" ;
+        ] ;
+    ] .

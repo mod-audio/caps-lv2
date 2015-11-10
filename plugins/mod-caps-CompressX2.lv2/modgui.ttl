@@ -1,10 +1,46 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/CompressX2>
-    modgui:gui [ modgui:iconTemplate <modgui/CompressX2.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:screenshot <modgui/CompressX2.png>;
-            modgui:templateData <modgui/CompressX2.json>;
-            modgui:thumbnail <modgui/CompressX2-thumb.png> ].
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-compressx2-stereo-compressor.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-compressx2-stereo-compressor.css> ;
+        modgui:screenshot <modgui/screenshot-c-compressx2-stereo-compressor.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-compressx2-stereo-compressor.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "Stereo Compress" ;
+        modgui:model "boxy" ;
+        modgui:panel "7-knobs" ;
+        modgui:color "red" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "measure" ;
+            lv2:name "Measure" ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "mode" ;
+            lv2:name "Mode" ;
+        ] , [
+            lv2:index 2 ;
+            lv2:symbol "threshold" ;
+            lv2:name "Thresh." ;
+        ] , [
+            lv2:index 3 ;
+            lv2:symbol "strenght" ;
+            lv2:name "Strength" ;
+        ] , [
+            lv2:index 4 ;
+            lv2:symbol "attack" ;
+            lv2:name "Attack" ;
+        ] , [
+            lv2:index 5 ;
+            lv2:symbol "release" ;
+            lv2:name "release" ;
+        ] , [
+            lv2:index 6 ;
+            lv2:symbol "gain" ;
+            lv2:name "gain" ;
+        ] ;
+    ] .

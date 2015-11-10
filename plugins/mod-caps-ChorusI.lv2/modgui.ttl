@@ -1,10 +1,42 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/ChorusI>
-    modgui:gui [ modgui:iconTemplate <modgui/ChorusI.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:screenshot <modgui/ChorusI.png>;
-            modgui:templateData <modgui/ChorusI.json>;
-            modgui:thumbnail <modgui/ChorusI-thumb.png> ].
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-chorusi-mono-chorusflanger.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-chorusi-mono-chorusflanger.css> ;
+        modgui:screenshot <modgui/screenshot-c-chorusi-mono-chorusflanger.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-chorusi-mono-chorusflanger.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "Chorus I" ;
+        modgui:model "boxy" ;
+        modgui:panel "6-knobs" ;
+        modgui:color "darkblue" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "time" ;
+            lv2:name "time" ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "width" ;
+            lv2:name "width" ;
+        ] , [
+            lv2:index 2 ;
+            lv2:symbol "rate" ;
+            lv2:name "rate" ;
+        ] , [
+            lv2:index 3 ;
+            lv2:symbol "blend" ;
+            lv2:name "blend" ;
+        ] , [
+            lv2:index 4 ;
+            lv2:symbol "feedforward" ;
+            lv2:name "f.forw." ;
+        ] , [
+            lv2:index 5 ;
+            lv2:symbol "feedback" ;
+            lv2:name "f.back" ;
+        ] ;
+    ] .

@@ -1,10 +1,34 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/Click>
-    modgui:gui [ modgui:iconTemplate <modgui/Click.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:screenshot <modgui/Click.png>;
-            modgui:templateData <modgui/Click.json>;
-            modgui:thumbnail <modgui/Click-thumb.png> ].
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-click-metronome.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-click-metronome.css> ;
+        modgui:screenshot <modgui/screenshot-c-click-metronome.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-click-metronome.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "Click" ;
+        modgui:model "boxy" ;
+        modgui:panel "1-select-3-knobs" ;
+        modgui:color "wood1" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "model" ;
+            lv2:name "Model" ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "bpm" ;
+            lv2:name "rate" ;
+        ] , [
+            lv2:index 2 ;
+            lv2:symbol "damping" ;
+            lv2:name "damping" ;
+        ] , [
+            lv2:index 3 ;
+            lv2:symbol "volume" ;
+            lv2:name "level" ;
+        ] ;
+    ] .

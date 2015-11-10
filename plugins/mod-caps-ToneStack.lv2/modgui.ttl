@@ -1,10 +1,34 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/ToneStack>
-    modgui:gui [ modgui:iconTemplate <modgui/ToneStack.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:screenshot <modgui/ToneStack.png>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:templateData <modgui/ToneStack.json>;
-            modgui:thumbnail <modgui/ToneStack-thumb.png> ].
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-tonestack-tone-stack-emulation.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-tonestack-tone-stack-emulation.css> ;
+        modgui:screenshot <modgui/screenshot-c-tonestack-tone-stack-emulation.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-tonestack-tone-stack-emulation.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "ToneStack" ;
+        modgui:model "boxy" ;
+        modgui:panel "1-select-3-knobs" ;
+        modgui:color "brown" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "model" ;
+            lv2:name "model" ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "bass" ;
+            lv2:name "bass" ;
+        ] , [
+            lv2:index 2 ;
+            lv2:symbol "mid" ;
+            lv2:name "mid" ;
+        ] , [
+            lv2:index 3 ;
+            lv2:symbol "treble" ;
+            lv2:name "treble" ;
+        ] ;
+    ] .

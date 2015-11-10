@@ -1,10 +1,34 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/Plate>
-    modgui:gui [ modgui:iconTemplate <modgui/Plate.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:screenshot <modgui/Plate.png>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:templateData <modgui/Plate.json>;
-            modgui:thumbnail <modgui/Plate-thumb.png> ].
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-plate-versatile-plate-reverb.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-plate-versatile-plate-reverb.css> ;
+        modgui:screenshot <modgui/screenshot-c-plate-versatile-plate-reverb.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-plate-versatile-plate-reverb.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "Plate Reverb" ;
+        modgui:model "boxy" ;
+        modgui:panel "4-knobs" ;
+        modgui:color "cyan" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "tail" ;
+            lv2:name "Decay" ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "bandwidth" ;
+            lv2:name "b.width" ;
+        ] , [
+            lv2:index 2 ;
+            lv2:symbol "damping" ;
+            lv2:name "damping" ;
+        ] , [
+            lv2:index 3 ;
+            lv2:symbol "blend" ;
+            lv2:name "Mix" ;
+        ] ;
+    ] .

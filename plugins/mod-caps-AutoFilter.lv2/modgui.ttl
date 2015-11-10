@@ -1,10 +1,34 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/AutoFilter>
-    modgui:gui [ modgui:iconTemplate <modgui/AutoFilter.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:screenshot <modgui/AutoFilter.png>;
-            modgui:templateData <modgui/AutoFilter.json>;
-            modgui:thumbnail <modgui/AutoFilter-thumb.png> ].
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-autofilter.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-autofilter.css> ;
+        modgui:screenshot <modgui/screenshot-c-autofilter.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-autofilter.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "Auto Filter" ;
+        modgui:model "boxy" ;
+        modgui:panel "1-select-3-knobs" ;
+        modgui:color "yellow" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "filter" ;
+            lv2:name "Filter" ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "frequency" ;
+            lv2:name "Freq" ;
+        ] , [
+            lv2:index 2 ;
+            lv2:symbol "Q" ;
+            lv2:name "Q" ;
+        ] , [
+            lv2:index 3 ;
+            lv2:symbol "gain" ;
+            lv2:name "Level" ;
+        ] ;
+    ] .

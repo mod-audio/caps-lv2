@@ -1,10 +1,38 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/SpiceX2>
-    modgui:gui [ modgui:iconTemplate <modgui/SpiceX2.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:screenshot <modgui/SpiceX2.png>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:templateData <modgui/SpiceX2.json>;
-            modgui:thumbnail <modgui/SpiceX2-thumb.png> ].
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-spicex2.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-spicex2.css> ;
+        modgui:screenshot <modgui/screenshot-c-spicex2.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-spicex2.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "Stereo Spice" ;
+        modgui:model "boxy" ;
+        modgui:panel "5-knobs" ;
+        modgui:color "red" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "locomp" ;
+            lv2:name "Comp." ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "lof" ;
+            lv2:name "lo.freq" ;
+        ] , [
+            lv2:index 2 ;
+            lv2:symbol "logain" ;
+            lv2:name "lo.gain" ;
+        ] , [
+            lv2:index 3 ;
+            lv2:symbol "hif" ;
+            lv2:name "hi.freq" ;
+        ] , [
+            lv2:index 4 ;
+            lv2:symbol "higain" ;
+            lv2:name "hi.gain" ;
+        ] ;
+    ] .

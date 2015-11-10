@@ -1,10 +1,26 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/Narrower>
-    modgui:gui [ modgui:iconTemplate <modgui/Narrower.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:screenshot <modgui/Narrower.png>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:templateData <modgui/Narrower.json>;
-            modgui:thumbnail <modgui/Narrower-thumb.png> ].
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-narrower-stereo-image-width-reduction.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-narrower-stereo-image-width-reduction.css> ;
+        modgui:screenshot <modgui/screenshot-c-narrower-stereo-image-width-reduction.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-narrower-stereo-image-width-reduction.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "Narrower" ;
+        modgui:model "boxy" ;
+        modgui:panel "1-select-1-knob" ;
+        modgui:color "blue" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "mode" ;
+            lv2:name "Mode" ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "strength" ;
+            lv2:name "Strength" ;
+        ] ;
+    ] .

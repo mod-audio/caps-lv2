@@ -1,10 +1,26 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
 
 <http://moddevices.com/plugins/caps/CabinetIV>
-    modgui:gui [ modgui:iconTemplate <modgui/CabinetIV.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:screenshot <modgui/CabinetIV.png>;
-            modgui:templateData <modgui/CabinetIV.json>;
-            modgui:thumbnail <modgui/CabinetIV-thumb.png> ].
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-cabinetiv-idealised-loudspeaker-cabinet-emulation.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-cabinetiv-idealised-loudspeaker-cabinet-emulation.css> ;
+        modgui:screenshot <modgui/screenshot-c-cabinetiv-idealised-loudspeaker-cabinet-emulation.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-cabinetiv-idealised-loudspeaker-cabinet-emulation.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "Cabinet IV" ;
+        modgui:model "boxy" ;
+        modgui:panel "1-select-1-knob" ;
+        modgui:color "brown" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "model" ;
+            lv2:name "Model" ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "gain" ;
+            lv2:name "Gain" ;
+        ] ;
+    ] .
