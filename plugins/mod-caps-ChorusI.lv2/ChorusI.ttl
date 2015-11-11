@@ -22,74 +22,90 @@ Modifying the delay time t when feedback is active will cause audible 'zipper' n
 source: http://quitte.de/dsp/caps.html#ChorusI
 """;
 
-lv2:port [ a lv2:AudioPort,
-            lv2:InputPort;
+lv2:port
+[
+    a lv2:AudioPort, lv2:InputPort;
     lv2:index 0;
     lv2:name "in";
-    lv2:symbol "in" ],
-[ a lv2:ControlPort,
-        lv2:InputPort;
-    units:unit units:ms;
-    lv2:default 11.880;
+    lv2:symbol "in"
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
     lv2:index 1;
+    lv2:default 11.880;
     lv2:maximum 40;
     lv2:minimum 2.50;
-    lv2:name "time";
+    lv2:name "Time";
+    lv2:symbol "time";
     lv2:portProperty epp:logarithmic;
-    lv2:symbol "time" ],
-[ a lv2:ControlPort,
-        lv2:InputPort;
     units:unit units:ms;
-    lv2:default 1.0;
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
     lv2:index 2;
+    lv2:default 1.0;
     lv2:maximum 10;
     lv2:minimum 0.50;
-    lv2:name "width";
-    lv2:symbol "width" ],
-[ a lv2:ControlPort,
-        lv2:InputPort;
-    units:unit units:hz;
-    lv2:default 1.250;
+    lv2:name "Width";
+    lv2:symbol "width";
+    units:unit units:ms;
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
     lv2:index 3;
+    lv2:default 1.250;
     lv2:maximum 5;
     lv2:minimum 0;
-    lv2:name "rate";
-    lv2:symbol "rate" ],
-[ a lv2:ControlPort,
-        lv2:InputPort;
-    lv2:default 1.0;
+    lv2:name "Rate";
+    lv2:symbol "rate";
+    units:unit units:hz;
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
     lv2:index 4;
+    lv2:default 1.0;
     lv2:maximum 1;
     lv2:minimum 0;
-    lv2:name "blend";
-    lv2:symbol "blend" ],
-[ a lv2:ControlPort,
-        lv2:InputPort;
-    lv2:default 0.250;
+    lv2:name "Blend";
+    lv2:symbol "blend";
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
     lv2:index 5;
+    lv2:default 0.250;
     lv2:maximum 1;
     lv2:minimum 0;
-    lv2:name "feedforward";
-    lv2:symbol "feedforward" ],
-[ a lv2:ControlPort,
-        lv2:InputPort;
-    lv2:default 0.0;
+    lv2:name "Feed Forward";
+    lv2:symbol "feedforward";
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
     lv2:index 6;
+    lv2:default 0.0;
     lv2:maximum 1;
     lv2:minimum 0;
-    lv2:name "feedback";
-    lv2:symbol "feedback" ],
-[ a lv2:AudioPort,
-        lv2:OutputPort;
+    lv2:name "Feedback";
+    lv2:symbol "feedback";
+],
+[
+    a lv2:AudioPort, lv2:OutputPort;
     lv2:index 7;
     lv2:name "out";
-    lv2:symbol "out" ];
-doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
-        foaf:mbox <mailto:tim@quitte.de>;
-        foaf:name "Tim Goetze" ];
-doap:license <http://usefulinc.com/doap/licenses/gpl>;
-doap:maintainer [ foaf:homepage <http://moddevices.com>;
-        foaf:mbox <mailto:devel@moddevices.com>;
-        foaf:name "MOD Team" ];
-doap:name "C* ChorusI - Mono chorus/flanger" .
+    lv2:symbol "out";
+];
 
+doap:license <http://usefulinc.com/doap/licenses/gpl>;
+
+doap:developer [
+    foaf:homepage <http://quitte.de/dsp/caps.html>;
+    foaf:mbox <mailto:tim@quitte.de>;
+    foaf:name "Tim Goetze";
+];
+
+doap:maintainer [
+    foaf:homepage <http://moddevices.com>;
+    foaf:mbox <mailto:devel@moddevices.com>;
+    foaf:name "MOD Team";
+];
+
+doap:name "C* ChorusI - Mono chorus/flanger".
