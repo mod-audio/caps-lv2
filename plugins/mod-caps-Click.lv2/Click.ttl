@@ -25,26 +25,26 @@ lv2:port
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 0;
     lv2:default 1;
-    lv2:maximum 2;
+    lv2:maximum 3;
     lv2:minimum 0;
     lv2:name "Model";
     lv2:symbol "model";
     lv2:portProperty lv2:enumeration, lv2:integer;
     lv2:scalePoint
     [
-        rdfs:label "box";
+        rdfs:label "Box";
         rdf:value 0;
     ],
     [
-        rdfs:label "stick";
+        rdfs:label "Stick";
         rdf:value 1;
     ],
     [
-        rdfs:label "beep";
+        rdfs:label "Beep";
         rdf:value 2;
     ],
     [
-        rdfs:label "dirac";
+        rdfs:label "Dirac";
         rdf:value 3;
     ];
 ],
@@ -52,17 +52,17 @@ lv2:port
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 1;
     lv2:default 63.0;
-    lv2:maximum 240;
-    lv2:minimum 4;
-    lv2:name "bpm";
+    lv2:maximum 240.0;
+    lv2:minimum 4.0;
+    lv2:name "BPM";
     lv2:symbol "bpm";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 2;
     lv2:default 0.75;
-    lv2:maximum 1;
-    lv2:minimum 0;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
     lv2:name "Volume";
     lv2:symbol "volume";
 ],
@@ -70,16 +70,16 @@ lv2:port
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 3;
     lv2:default 0.75;
-    lv2:maximum 1;
-    lv2:minimum 0;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
     lv2:name "Damping";
     lv2:symbol "damping";
 ],
 [
     a lv2:AudioPort, lv2:OutputPort;
     lv2:index 4;
-    lv2:name "out";
-    lv2:symbol "out"
+    lv2:name "Out";
+    lv2:symbol "out";
 ];
 
 doap:license <http://usefulinc.com/doap/licenses/gpl>;
