@@ -15,50 +15,124 @@ lv2:minorVersion 9;
 mod:brand "CAPS";
 mod:label "CabinetIII";
 
+rdfs:comment """
+A loudspeaker cabinet emulation far less demanding than the recommended CabinetIV.  Implemented as two sets of 31st-order IIR filters precomputed (using Prony's method) for fs of 44.1 and 48 kHz.
+
+The appropriate filter set is selected at runtime.  The alt switch allows the selection of the same fiter model for the alternative sample rate; at 48 kHz the alternative will sound slightly darker, at 44.1 slightly brighter.  At other sample rates, the plugin will not sound very much like a guitar speaker cabinet.
+
+source: http://quitte.de/dsp/caps.html#CabinetIII
+""";
+
 lv2:port
 [
-    a lv2:AudioPort, lv2:InputPort;
-    lv2:index 0;
-    lv2:name "in";
-    lv2:symbol "in";
-],
-[
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 1;
+    lv2:index 0;
     lv2:default 1;
     lv2:minimum 0;
-    lv2:maximum 2;
+    lv2:maximum 16;
     lv2:name "Model";
     lv2:symbol "model";
     lv2:portProperty lv2:enumeration, lv2:integer;
     lv2:scalePoint
     [
-        rdfs:label "Wookie A";
+        rdfs:label "Off";
         rdf:value 0;
     ],
     [
-        rdfs:label "Wookie B";
+        rdfs:label "Twin";
         rdf:value 1;
     ],
     [
-        rdfs:label "Wookie C";
+        rdfs:label "Wookie";
         rdf:value 2;
+    ],
+    [
+        rdfs:label "Blue";
+        rdf:value 3;
+    ],
+    [
+        rdfs:label "Indigo";
+        rdf:value 4;
+    ],
+    [
+        rdfs:label "Supra";
+        rdf:value 5;
+    ],
+    [
+        rdfs:label "Tweedie";
+        rdf:value 6;
+    ],
+    [
+        rdfs:label "Basswoman";
+        rdf:value 7;
+    ],
+    [
+        rdfs:label "Martial";
+        rdf:value 8;
+    ],
+    [
+        rdfs:label "Poser";
+        rdf:value 9;
+    ],
+    [
+        rdfs:label "Cabby";
+        rdf:value 10;
+    ],
+    [
+        rdfs:label "Angel";
+        rdf:value 11;
+    ],
+    [
+        rdfs:label "Matched";
+        rdf:value 12;
+    ],
+    [
+        rdfs:label "Yellow";
+        rdf:value 13;
+    ],
+    [
+        rdfs:label "Piquey";
+        rdf:value 14;
+    ],
+    [
+        rdfs:label "Paladin";
+        rdf:value 15;
+    ],
+    [
+        rdfs:label "Turtle";
+        rdf:value 16;
     ];
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 1;
+    lv2:default 0;
+    lv2:minimum 0;
+    lv2:maximum 1;
+    lv2:name "Alt";
+    lv2:symbol "alt";
+    lv2:portProperty lv2:integer, lv2:toggled;
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 2;
     lv2:default 0.0;
     lv2:minimum -24.0;
-    lv2:maximum 12.0;
+    lv2:maximum 24.0;
     lv2:name "Gain";
     lv2:symbol "gain";
-    units:unit units:db ;
+    units:unit units:db;
+],
+[
+    a lv2:AudioPort, lv2:InputPort;
+    lv2:index 3;
+    lv2:name "In";
+    lv2:symbol "in";
 ],
 [
     a lv2:AudioPort, lv2:OutputPort;
-    lv2:index 3;
-    lv2:name "out";
+    lv2:index 4;
+    lv2:name "Out";
     lv2:symbol "out";
 ];
 

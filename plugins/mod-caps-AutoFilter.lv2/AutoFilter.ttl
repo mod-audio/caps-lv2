@@ -39,11 +39,11 @@ lv2:port
     lv2:portProperty lv2:enumeration, lv2:integer;
     lv2:scalePoint
     [
-        rdfs:label "low pass";
+        rdfs:label "Low-Pass";
         rdf:value 0;
     ],
     [
-        rdfs:label "band pass";
+        rdfs:label "Band-Pass";
         rdf:value 1;
     ];
 ],
@@ -51,7 +51,7 @@ lv2:port
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 1;
     lv2:default 1;
-    lv2:maximum 4;
+    lv2:maximum 1;
     lv2:minimum 0;
     lv2:name "Filter";
     lv2:symbol "filter";
@@ -69,19 +69,9 @@ lv2:port
 [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 2;
-    lv2:default 6;
-    lv2:maximum 24;
-    lv2:minimum 0;
-    lv2:name "Gain";
-    lv2:symbol "gain";
-    units:unit units:db;
-],
-[
-    a lv2:ControlPort, lv2:InputPort;
-    lv2:index 3;
-    lv2:default 968;
-    lv2:maximum 3743;
-    lv2:minimum 43;
+    lv2:default 2555.0;
+    lv2:maximum 3400.0;
+    lv2:minimum 20.0;
     lv2:name "Frequency";
     lv2:symbol "frequency";
     lv2:portProperty epp:logarithmic;
@@ -89,34 +79,34 @@ lv2:port
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 4;
-    lv2:default 0;
-    lv2:maximum 1;
-    lv2:minimum 0;
+    lv2:index 3;
+    lv2:default 0.25;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
     lv2:name "Q";
     lv2:symbol "Q";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 5;
-    lv2:default 1;
-    lv2:maximum 1;
-    lv2:minimum 0;
-    lv2:name "Range";
-    lv2:symbol "range";
+    lv2:index 4;
+    lv2:default 1.0;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
+    lv2:name "Depth";
+    lv2:symbol "depth";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 6;
+    lv2:index 5;
     lv2:default 0.25;
-    lv2:maximum 1;
-    lv2:minimum 0;
-    lv2:name "Low Frequency Oscillator/Envelope";
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
+    lv2:name "LFO/Envelope";
     lv2:symbol "lfoenv";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 7;
+    lv2:index 6;
     lv2:default 0.25;
     lv2:maximum 1.0;
     lv2:minimum 0.0;
@@ -124,15 +114,24 @@ lv2:port
     lv2:symbol "rate";
 ],
 [
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 7;
+    lv2:default 1.0;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
+    lv2:name "X/Z";
+    lv2:symbol "x_z";
+],
+[
     a lv2:AudioPort, lv2:InputPort;
     lv2:index 8;
-    lv2:name "in";
+    lv2:name "In";
     lv2:symbol "in";
 ],
 [
     a lv2:AudioPort, lv2:OutputPort;
     lv2:index 9;
-    lv2:name "out";
+    lv2:name "Out";
     lv2:symbol "out";
 ];
 

@@ -31,7 +31,6 @@ lv2:port
     lv2:maximum 2;
     lv2:minimum 0;
     lv2:name "Over";
-    lv2:shortname "Over";
     lv2:symbol "over";
     lv2:portProperty lv2:enumeration, lv2:integer;
     lv2:scalePoint
@@ -55,7 +54,6 @@ lv2:port
     lv2:maximum 1.0;
     lv2:minimum 0.0;
     lv2:name "Gain";
-    lv2:shortname "Gain";
     lv2:symbol "gain";
 ],
 [
@@ -65,7 +63,6 @@ lv2:port
     lv2:maximum 1.0;
     lv2:minimum 0.0;
     lv2:name "Bright";
-    lv2:shortname "Bright";
     lv2:symbol "bright";
 ],
 [
@@ -75,7 +72,6 @@ lv2:port
     lv2:maximum 1.0;
     lv2:minimum 0.0;
     lv2:name "Power";
-    lv2:shortname "Power";
     lv2:symbol "power";
 ],
 [
@@ -85,20 +81,19 @@ lv2:port
     lv2:maximum 8;
     lv2:minimum 0;
     lv2:name "Tonestack";
-    lv2:shortname "Tonestack";
     lv2:symbol "tonestack";
     lv2:portProperty lv2:enumeration, lv2:integer;
     lv2:scalePoint
     [
-        rdfs:label "basswoman";
+        rdfs:label "Basswoman";
         rdf:value 0;
     ],
     [
-        rdfs:label "stanford";
+        rdfs:label "Stanford";
         rdf:value 1;
     ],
     [
-        rdfs:label "wookie";
+        rdfs:label "Wookie";
         rdf:value 2;
     ],
     [
@@ -106,11 +101,11 @@ lv2:port
         rdf:value 3;
     ],
     [
-        rdfs:label "juice 800";
+        rdfs:label "Juice 800";
         rdf:value 4;
     ],
     [
-        rdfs:label "twin";
+        rdfs:label "Twin";
         rdf:value 5;
     ],
     [
@@ -118,11 +113,11 @@ lv2:port
         rdf:value 6;
     ],
     [
-        rdfs:label "nihon ace";
+        rdfs:label "Nihon Ace";
         rdf:value 7;
     ],
     [
-        rdfs:label "porky";
+        rdfs:label "Porky";
         rdf:value 8;
     ];
 ],
@@ -133,7 +128,6 @@ lv2:port
     lv2:maximum 1.0;
     lv2:minimum 0.0;
     lv2:name "Bass";
-    lv2:shortname "Bass";
     lv2:symbol "bass";
 ],
 [
@@ -143,10 +137,8 @@ lv2:port
     lv2:maximum 1.0;
     lv2:minimum 0.0;
     lv2:name "Mid";
-    lv2:shortname "Mid";
     lv2:symbol "mid";
 ],
-
 [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 7;
@@ -154,7 +146,6 @@ lv2:port
     lv2:maximum 1.0;
     lv2:minimum 0.0;
     lv2:name "Treble";
-    lv2:shortname "Treble";
     lv2:symbol "treble";
 ],
 [
@@ -164,17 +155,15 @@ lv2:port
     lv2:maximum 1.0;
     lv2:minimum 0.0;
     lv2:name "Attack";
-    lv2:shortname "Attack";
     lv2:symbol "attack";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 9;
-    lv2:default 0.5;
+    lv2:default 0.25;
     lv2:maximum 1.0;
     lv2:minimum 0.0;
     lv2:name "Squash";
-    lv2:shortname "Squash";
     lv2:symbol "squash";
 ],
 [
@@ -183,22 +172,21 @@ lv2:port
     lv2:default 0.5;
     lv2:maximum 1.0;
     lv2:minimum 0.1;
-    lv2:name "Low cut";
-    lv2:shortname "Low cut";
+    lv2:name "Low Cut";
     lv2:symbol "low_cut";
 ],
 [
     a lv2:AudioPort, lv2:InputPort;
     lv2:index 11;
     lv2:name "in";
-    lv2:shortname "in";
+    lv2:shortname "In";
     lv2:symbol "in";
 ],
 [
     a lv2:AudioPort, lv2:OutputPort;
     lv2:index 12;
     lv2:name "out";
-    lv2:shortname "out";
+    lv2:shortname "Out";
     lv2:symbol "out";
 ];
 
