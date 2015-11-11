@@ -50,11 +50,11 @@ lv2:port
     lv2:portProperty lv2:enumeration, lv2:integer;
     lv2:scalePoint
     [
-        rdfs:label "lorenz";
+        rdfs:label "Lorenz";
         rdf:value 0;
     ],
     [
-        rdfs:label "roessler";
+        rdfs:label "Roessler";
         rdf:value 1;
     ];
 ],
@@ -79,7 +79,7 @@ lv2:port
 [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 4;
-    lv2:default 0.0;
+    lv2:default 0.5;
     lv2:maximum 1.0;
     lv2:minimum 0.0;
     lv2:name "Z";
@@ -91,7 +91,7 @@ lv2:port
     lv2:default 0.5;
     lv2:maximum 1.0;
     lv2:minimum 0.0;
-    lv2:name "hp";
+    lv2:name "HP";
     lv2:symbol "hp";
 ],
 [
@@ -106,7 +106,7 @@ lv2:port
 [
     a lv2:AudioPort, lv2:OutputPort;
     lv2:index 7;
-    lv2:name "out";
+    lv2:name "Out";
     lv2:symbol "out";
 ];
 
