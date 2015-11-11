@@ -265,8 +265,13 @@
     z-index:35;
 }
 
-.mod-pedal-boxy{{{cns}}}.mod-three-knobs .mod-enumerated-group {
+.mod-pedal-boxy{{{cns}}}.mod-three-knobs .mod-enumerated-group,
+.mod-pedal-boxy{{{cns}}}.mod-four-knobs .mod-enumerated-group {
     margin-bottom:5px !important;
+}
+
+.mod-pedal-boxy{{{cns}}}.mod-four-knobs .mod-enumerated-group {
+    width:250px;
 }
 
 .mod-pedal-boxy{{{cns}}} .mod-enumerated {

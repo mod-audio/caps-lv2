@@ -21,7 +21,7 @@
         ] , [
             lv2:index 1 ;
             lv2:symbol "hp" ;
-            lv2:name "hp" ;
+            lv2:name "highpass" ;
         ] , [
             lv2:index 2 ;
             lv2:symbol "mode" ;

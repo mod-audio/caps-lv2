@@ -21,7 +21,7 @@
         ] , [
             lv2:index 1 ;
             lv2:symbol "bandwidth" ;
-            lv2:name "b.width" ;
+            lv2:name "lowpass" ;
         ] , [
             lv2:index 2 ;
             lv2:symbol "damping" ;

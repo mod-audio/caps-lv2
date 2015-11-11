@@ -20,12 +20,12 @@
             lv2:name "Mode" ;
         ] , [
             lv2:index 1 ;
-            lv2:symbol "threshold" ;
-            lv2:name "Thresh." ;
-        ] , [
-            lv2:index 2 ;
             lv2:symbol "strength" ;
             lv2:name "Strength" ;
+        ] , [
+            lv2:index 2 ;
+            lv2:symbol "threshold" ;
+            lv2:name "Thresh" ;
         ] , [
             lv2:index 3 ;
             lv2:symbol "attack" ;

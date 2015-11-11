@@ -25,7 +25,7 @@
         ] , [
             lv2:index 2 ;
             lv2:symbol "resonance" ;
-            lv2:name "reson." ;
+            lv2:name "reson" ;
         ] , [
             lv2:index 3 ;
             lv2:symbol "lfo" ;

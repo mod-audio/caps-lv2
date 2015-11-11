@@ -16,11 +16,11 @@
         modgui:knob "black" ;
         modgui:port [
             lv2:index 0 ;
-            lv2:symbol "pan" ;
-            lv2:name "Panning" ;
+            lv2:symbol "width" ;
+            lv2:name "width" ;
         ] , [
             lv2:index 1 ;
-            lv2:symbol "width" ;
-            lv2:name "Width" ;
+            lv2:symbol "pan" ;
+            lv2:name "panning" ;
         ] ;
     ] .

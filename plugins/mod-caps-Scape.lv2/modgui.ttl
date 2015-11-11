@@ -17,18 +17,18 @@
         modgui:port [
             lv2:index 0 ;
             lv2:symbol "bpm" ;
-            lv2:name "Rate" ;
+            lv2:name "Time" ;
         ] , [
             lv2:index 1 ;
             lv2:symbol "divider" ;
-            lv2:name "divider" ;
+            lv2:name "Division" ;
         ] , [
             lv2:index 2 ;
             lv2:symbol "feedback" ;
-            lv2:name "feedback" ;
+            lv2:name "Feedback" ;
         ] , [
             lv2:index 3 ;
-            lv2:symbol "dry" ;
-            lv2:name "dry" ;
+            lv2:symbol "blend" ;
+            lv2:name "Mix" ;
         ] ;
     ] .
