@@ -20,7 +20,7 @@
             lv2:name "Mode" ;
         ] , [
             lv2:index 1 ;
-            lv2:symbol "strenght" ;
+            lv2:symbol "strength" ;
             lv2:name "Strength" ;
         ] , [
             lv2:index 2 ;
