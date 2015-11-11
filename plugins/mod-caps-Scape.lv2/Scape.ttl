@@ -11,7 +11,7 @@
 a lv2:DelayPlugin, lv2:Plugin;
 lv2:microVersion 24;
 lv2:minorVersion 9;
-lv2:optionalFeature lv2:hardRtCapable;
+lv2:optionalFeature lv2:hardRTCapable;
 mod:brand "CAPS";
 mod:label "Scape";
 
