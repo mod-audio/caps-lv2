@@ -1,129 +1,127 @@
-@prefix doap: <http://usefulinc.com/ns/doap#> .
-@prefix epp: <http://lv2plug.in/ns/ext/port-props/#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix modgui: <http://moddevices.com/ns/modgui#> .
-@prefix pprops: <http://lv2plug.in/ns/ext/port-props#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix units: <http://lv2plug.in/ns/extensions/units#> .
-@prefix mod: <http://moddevices.com/ns/mod#> .
+@prefix doap:  <http://usefulinc.com/ns/doap#>.
+@prefix epp:   <http://lv2plug.in/ns/ext/port-props/#>.
+@prefix foaf:  <http://xmlns.com/foaf/0.1/>.
+@prefix lv2:   <http://lv2plug.in/ns/lv2core#>.
+@prefix mod:   <http://moddevices.com/ns/mod#>.
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix units: <http://lv2plug.in/ns/extensions/units#>.
 
-<http://moddevices.com/plugins/caps/AutoFilter> a lv2:FilterPlugin,
-        lv2:Plugin;
-    lv2:microVersion 16;
-    lv2:minorVersion 9;
-    lv2:optionalFeature lv2:hardRtCapable;
-    mod:brand "CAPS";
-    mod:label "AutoFilter";
+<http://moddevices.com/plugins/caps/AutoFilter>
+a lv2:FilterPlugin, lv2:Plugin;
+lv2:microVersion 24;
+lv2:minorVersion 9;
+lv2:optionalFeature lv2:hardRtCapable;
+mod:brand "CAPS";
+mod:label "AutoFilter";
 
 rdfs:comment """
-A versatile selection of filters of varying character in band and lowpass configuration. The cutoff frequency can be modulated by both the input signal envelope and by a fractal oscillator. The default settings provide some sort of an automatic wah effect. 
+A versatile selection of filters of varying character in band and lowpass configuration. The cutoff frequency can be modulated by both the input signal envelope and by a fractal oscillator. The default settings provide some sort of an automatic wah effect.
 
 The extent of filter modulation is set through the range parameter. The shape of the modulation is mixed from the attractor and the envelope according to the lfo/env balance.
 
-Filter stage gain can be used to add inter-stage saturation. To prevent this from causing audible aliasing, the plugin can be run in oversampled mode, at ratios selectable through the over control. 
+Filter stage gain can be used to add inter-stage saturation. To prevent this from causing audible aliasing, the plugin can be run in oversampled mode, at ratios selectable through the over control.
 
-At very high Q and f combined, the filter stability may become compromised. Computational load varies greatly with the over and filter settings. 
+At very high Q and f combined, the filter stability may become compromised. Computational load varies greatly with the over and filter settings.
 
 source: http://quitte.de/dsp/caps.html#AutoFilter
 """;
 
-    lv2:port [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 1;
-            lv2:index 5;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "Range";
-            lv2:symbol "range" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.250;
-            lv2:index 6;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "Low Frequency Oscillator/Envelope";
-            lv2:symbol "lfoenv" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.250;
-            lv2:index 7;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "Rate";
-            lv2:symbol "rate" ],
-        [ a lv2:AudioPort,
-                lv2:InputPort;
-            lv2:index 8;
-            lv2:name "in";
-            lv2:symbol "in" ],
-        [ a lv2:AudioPort,
-                lv2:OutputPort;
-            lv2:index 9;
-            lv2:name "out";
-            lv2:symbol "out" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 1;
-            lv2:index 0;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "Mode";
-            lv2:portProperty lv2:integer;
-            lv2:scalePoint [ rdfs:label "low pass";
-                    rdf:value 0 ],
-                [ rdfs:label "band pass";
-                    rdf:value 1 ];
-            lv2:symbol "mode" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 1;
-            lv2:index 1;
-            lv2:maximum 4;
-            lv2:minimum 0;
-            lv2:name "Filter";
-            lv2:portProperty lv2:enumeration,
-                lv2:integer;
-            lv2:scalePoint [ rdfs:label "breathy";
-                    rdf:value 0 ],
-                [ rdfs:label "fat";
-                    rdf:value 1 ];
-            lv2:symbol "filter" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            units:unit units:db;
-            lv2:default 6;
-            lv2:index 2;
-            lv2:maximum 24;
-            lv2:minimum 0;
-            lv2:name "Gain";
-            lv2:symbol "gain" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            units:unit units:hz;
-            lv2:default 968;
-            lv2:index 3;
-            lv2:maximum 3743;
-            lv2:minimum 43;
-            lv2:name "Frequency";
-            lv2:portProperty pprops:logarithmic,
-                epp:logarithmic;
-            lv2:symbol "frequency" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0;
-            lv2:index 4;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "Q";
-            lv2:symbol "Q" ];
-    doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
-            foaf:mbox <mailto:tim@quitte.de>;
-            foaf:name "Tim Goetze" ];
-    doap:license <http://usefulinc.com/doap/licenses/gpl>;
-    doap:maintainer [ foaf:homepage <http://moddevices.com>;
-            foaf:mbox <mailto:devel@moddevices.com>;
-            foaf:name "MOD Team" ];
-    doap:name "C* AutoFilter" .
+lv2:port [ a lv2:ControlPort,
+            lv2:InputPort;
+    lv2:default 1;
+    lv2:index 5;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "Range";
+    lv2:symbol "range" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 0.250;
+    lv2:index 6;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "Low Frequency Oscillator/Envelope";
+    lv2:symbol "lfoenv" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 0.250;
+    lv2:index 7;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "Rate";
+    lv2:symbol "rate" ],
+[ a lv2:AudioPort,
+        lv2:InputPort;
+    lv2:index 8;
+    lv2:name "in";
+    lv2:symbol "in" ],
+[ a lv2:AudioPort,
+        lv2:OutputPort;
+    lv2:index 9;
+    lv2:name "out";
+    lv2:symbol "out" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 1;
+    lv2:index 0;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "Mode";
+    lv2:portProperty lv2:integer;
+    lv2:scalePoint [ rdfs:label "low pass";
+            rdf:value 0 ],
+        [ rdfs:label "band pass";
+            rdf:value 1 ];
+    lv2:symbol "mode" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 1;
+    lv2:index 1;
+    lv2:maximum 4;
+    lv2:minimum 0;
+    lv2:name "Filter";
+    lv2:portProperty lv2:enumeration,
+        lv2:integer;
+    lv2:scalePoint [ rdfs:label "breathy";
+            rdf:value 0 ],
+        [ rdfs:label "fat";
+            rdf:value 1 ];
+    lv2:symbol "filter" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    units:unit units:db;
+    lv2:default 6;
+    lv2:index 2;
+    lv2:maximum 24;
+    lv2:minimum 0;
+    lv2:name "Gain";
+    lv2:symbol "gain" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    units:unit units:hz;
+    lv2:default 968;
+    lv2:index 3;
+    lv2:maximum 3743;
+    lv2:minimum 43;
+    lv2:name "Frequency";
+    lv2:portProperty pprops:logarithmic,
+        epp:logarithmic;
+    lv2:symbol "frequency" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 0;
+    lv2:index 4;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "Q";
+    lv2:symbol "Q" ];
+doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
+        foaf:mbox <mailto:tim@quitte.de>;
+        foaf:name "Tim Goetze" ];
+doap:license <http://usefulinc.com/doap/licenses/gpl>;
+doap:maintainer [ foaf:homepage <http://moddevices.com>;
+        foaf:mbox <mailto:devel@moddevices.com>;
+        foaf:name "MOD Team" ];
+doap:name "C* AutoFilter" .
 

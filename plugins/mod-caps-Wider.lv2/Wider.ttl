@@ -1,65 +1,77 @@
-@prefix doap: <http://usefulinc.com/ns/doap#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix modgui: <http://moddevices.com/ns/modgui#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix mod: <http://moddevices.com/ns/mod#> .
+@prefix doap: <http://usefulinc.com/ns/doap#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix lv2:  <http://lv2plug.in/ns/lv2core#>.
+@prefix mod:  <http://moddevices.com/ns/mod#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 
-<http://moddevices.com/plugins/caps/Wider> a lv2:SpatialPlugin,
-        lv2:Plugin;
-    lv2:microVersion 16;
-    lv2:minorVersion 9;
-    lv2:optionalFeature lv2:hardRtCapable;
-    mod:brand "CAPS";
-    mod:label "Wider";
+<http://moddevices.com/plugins/caps/Wider>
+a lv2:SpatialPlugin, lv2:Plugin;
+lv2:microVersion 24;
+lv2:minorVersion 9;
+lv2:optionalFeature lv2:hardRtCapable;
+mod:brand "CAPS";
+mod:label "Wider";
 
 rdfs:comment """
-In addition to provoding a basic panorama control, a perception of stereo width is created using complementary filters on the two output channels. 
+In addition to provoding a basic panorama control, a perception of stereo width is created using complementary filters on the two output channels.
 
-The output channels always sum to a flat frequency response. 
+The output channels always sum to a flat frequency response.
 
 The design of this plugin owes to the Orban 245F Stereo Synthesizer.
 
 source: http://quitte.de/dsp/caps.html#Wider
 """;
 
-    lv2:port [ a lv2:AudioPort,
-                lv2:InputPort;
-            lv2:index 0;
-            lv2:name "in";
-            lv2:symbol "in" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.0;
-            lv2:index 1;
-            lv2:maximum 1;
-            lv2:minimum -1;
-            lv2:name "pan";
-            lv2:symbol "pan" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.5;
-            lv2:index 2;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "width";
-            lv2:symbol "width" ],
-        [ a lv2:AudioPort,
-                lv2:OutputPort;
-            lv2:index 3;
-            lv2:name "out:l";
-            lv2:symbol "outl" ],
-        [ a lv2:AudioPort,
-                lv2:OutputPort;
-            lv2:index 4;
-            lv2:name "out:r";
-            lv2:symbol "outr" ];
-    doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
-            foaf:mbox <mailto:tim@quitte.de>;
-            foaf:name "Tim Goetze" ];
-    doap:license <http://usefulinc.com/doap/licenses/gpl>;
-    doap:maintainer [ foaf:homepage <http://moddevices.com>;
-            foaf:mbox <mailto:devel@moddevices.com>;
-            foaf:name "MOD Team" ];
-    doap:name "C* Wider - Stereo image Synthesis" .
+lv2:port
+[
+    a lv2:AudioPort, lv2:InputPort;
+    lv2:index 0;
+    lv2:name "in";
+    lv2:symbol "in"
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:default 0.0;
+    lv2:index 1;
+    lv2:maximum 1;
+    lv2:minimum -1;
+    lv2:name "pan";
+    lv2:symbol "pan";
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:default 0.5;
+    lv2:index 2;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "width";
+    lv2:symbol "width";
+],
+[
+    a lv2:AudioPort, lv2:OutputPort;
+    lv2:index 3;
+    lv2:name "out:l";
+    lv2:symbol "outl"
+],
+[
+    a lv2:AudioPort, lv2:OutputPort;
+    lv2:index 4;
+    lv2:name "out:r";
+    lv2:symbol "outr";
+];
 
+doap:license <http://usefulinc.com/doap/licenses/gpl>;
+
+doap:developer [
+    foaf:homepage <http://quitte.de/dsp/caps.html>;
+    foaf:mbox <mailto:tim@quitte.de>;
+    foaf:name "Tim Goetze";
+];
+
+doap:maintainer [
+    foaf:homepage <http://moddevices.com>;
+    foaf:mbox <mailto:devel@moddevices.com>;
+    foaf:name "MOD Team";
+];
+
+doap:name "C* Wider - Stereo image Synthesis".

@@ -1,121 +1,119 @@
-@prefix doap: <http://usefulinc.com/ns/doap#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix modgui: <http://moddevices.com/ns/modgui#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix units: <http://lv2plug.in/ns/extensions/units#> .
-@prefix mod: <http://moddevices.com/ns/mod#> .
+@prefix doap:  <http://usefulinc.com/ns/doap#>.
+@prefix foaf:  <http://xmlns.com/foaf/0.1/>.
+@prefix lv2:   <http://lv2plug.in/ns/lv2core#>.
+@prefix mod:   <http://moddevices.com/ns/mod#>.
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix units: <http://lv2plug.in/ns/extensions/units#>.
 
-<http://moddevices.com/plugins/caps/CompressX2> a lv2:CompressorPlugin,
-        lv2:Plugin;
-    lv2:microVersion 16;
-    lv2:minorVersion 9;
-    lv2:optionalFeature lv2:hardRtCapable;
-    mod:brand "CAPS";
-    mod:label "CompressX2";
-    
+<http://moddevices.com/plugins/caps/CompressX2>
+a lv2:CompressorPlugin, lv2:Plugin;
+lv2:microVersion 24;
+lv2:minorVersion 9;
+lv2:optionalFeature lv2:hardRtCapable;
+mod:brand "CAPS";
+mod:label "CompressX2";
+
 rdfs:comment """
-This stereo version of Compress applies uniform compression to both channels in proportion to their combined power. 
+This stereo version of Compress applies uniform compression to both channels in proportion to their combined power.
 
 source: http://quitte.de/dsp/caps.html#Compress
 """;
 
-    lv2:port [ a lv2:AudioPort,
-                lv2:InputPort;
-            lv2:index 8;
-            lv2:name "in right";
-            lv2:symbol "in_r" ],
-        [ a lv2:AudioPort,
-                lv2:OutputPort;
-            lv2:index 9;
-            lv2:name "out left";
-            lv2:symbol "out_l" ],
-        [ a lv2:AudioPort,
-                lv2:OutputPort;
-            lv2:index 10;
-            lv2:name "out right";
-            lv2:symbol "out_r" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 1;
-            lv2:index 0;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "Measure";
-            lv2:portProperty lv2:integer;
-            lv2:scalePoint [ rdfs:label "peak";
-                    rdf:value 0 ],
-                [ rdfs:label "rms";
-                    rdf:value 1 ];
-            lv2:symbol "measure" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 1;
-            lv2:index 1;
-            lv2:maximum 2;
-            lv2:minimum 0;
-            lv2:name "Mode";
-            lv2:portProperty lv2:integer;
-            lv2:scalePoint [ rdfs:label "linear";
-                    rdf:value 0 ],
-                [ rdfs:label "saturating";
-                    rdf:value 1 ],
-                [ rdfs:label "saturating 4x";
-                    rdf:value 2 ];
-            lv2:symbol "mode" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0;
-            lv2:index 2;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "Threshold";
-            lv2:symbol "threshold" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.250;
-            lv2:index 3;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "Strenght";
-            lv2:symbol "strenght" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.10;
-            lv2:index 4;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "Attack";
-            lv2:symbol "attack" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.50;
-            lv2:index 5;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "release";
-            lv2:symbol "release" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            units:unit units:db;
-            lv2:default 5;
-            lv2:index 6;
-            lv2:maximum 24;
-            lv2:minimum -12;
-            lv2:name "gain";
-            lv2:symbol "gain" ],
-        [ a lv2:AudioPort,
-                lv2:InputPort;
-            lv2:index 7;
-            lv2:name "in left";
-            lv2:symbol "in_l" ];
-    doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
-            foaf:mbox <mailto:tim@quitte.de>;
-            foaf:name "Tim Goetze" ];
-    doap:license <http://usefulinc.com/doap/licenses/gpl>;
-    doap:maintainer [ foaf:homepage <http://moddevices.com>;
-            foaf:mbox <mailto:devel@moddevices.com>;
-            foaf:name "MOD Team" ];
-    doap:name "C* CompressX2 - Stereo compressor" .
-
+lv2:port [ a lv2:AudioPort,
+            lv2:InputPort;
+    lv2:index 8;
+    lv2:name "in right";
+    lv2:symbol "in_r" ],
+[ a lv2:AudioPort,
+        lv2:OutputPort;
+    lv2:index 9;
+    lv2:name "out left";
+    lv2:symbol "out_l" ],
+[ a lv2:AudioPort,
+        lv2:OutputPort;
+    lv2:index 10;
+    lv2:name "out right";
+    lv2:symbol "out_r" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 1;
+    lv2:index 0;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "Measure";
+    lv2:portProperty lv2:integer;
+    lv2:scalePoint [ rdfs:label "peak";
+            rdf:value 0 ],
+        [ rdfs:label "rms";
+            rdf:value 1 ];
+    lv2:symbol "measure" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 1;
+    lv2:index 1;
+    lv2:maximum 2;
+    lv2:minimum 0;
+    lv2:name "Mode";
+    lv2:portProperty lv2:integer;
+    lv2:scalePoint [ rdfs:label "linear";
+            rdf:value 0 ],
+        [ rdfs:label "saturating";
+            rdf:value 1 ],
+        [ rdfs:label "saturating 4x";
+            rdf:value 2 ];
+    lv2:symbol "mode" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 0;
+    lv2:index 2;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "Threshold";
+    lv2:symbol "threshold" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 0.250;
+    lv2:index 3;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "Strenght";
+    lv2:symbol "strenght" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 0.10;
+    lv2:index 4;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "Attack";
+    lv2:symbol "attack" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 0.50;
+    lv2:index 5;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "release";
+    lv2:symbol "release" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    units:unit units:db;
+    lv2:default 5;
+    lv2:index 6;
+    lv2:maximum 24;
+    lv2:minimum -12;
+    lv2:name "gain";
+    lv2:symbol "gain" ],
+[ a lv2:AudioPort,
+        lv2:InputPort;
+    lv2:index 7;
+    lv2:name "in left";
+    lv2:symbol "in_l" ];
+doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
+        foaf:mbox <mailto:tim@quitte.de>;
+        foaf:name "Tim Goetze" ];
+doap:license <http://usefulinc.com/doap/licenses/gpl>;
+doap:maintainer [ foaf:homepage <http://moddevices.com>;
+        foaf:mbox <mailto:devel@moddevices.com>;
+        foaf:name "MOD Team" ];
+doap:name "C* CompressX2 - Stereo compressor" .

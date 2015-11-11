@@ -1,229 +1,227 @@
-@prefix doap: <http://usefulinc.com/ns/doap#> .
-@prefix epp: <http://lv2plug.in/ns/ext/port-props/#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix modgui: <http://moddevices.com/ns/modgui#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix units: <http://lv2plug.in/ns/extensions/units#> .
-@prefix mod: <http://moddevices.com/ns/mod#> .
+@prefix doap:  <http://usefulinc.com/ns/doap#>.
+@prefix epp:   <http://lv2plug.in/ns/ext/port-props/#>.
+@prefix foaf:  <http://xmlns.com/foaf/0.1/>.
+@prefix lv2:   <http://lv2plug.in/ns/lv2core#>.
+@prefix mod:   <http://moddevices.com/ns/mod#>.
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix units: <http://lv2plug.in/ns/extensions/units#>.
 
-<http://moddevices.com/plugins/caps/Eq4p> a lv2:EQPlugin,
-        lv2:Plugin;
-    lv2:microVersion 16;
-    lv2:minorVersion 9;
-    lv2:optionalFeature lv2:hardRtCapable;
-    mod:brand "CAPS";
-    mod:label "Eq4p";
-   
+<http://moddevices.com/plugins/caps/Eq4p>
+a lv2:EQPlugin, lv2:Plugin;
+lv2:microVersion 24;
+lv2:minorVersion 9;
+lv2:optionalFeature lv2:hardRtCapable;
+mod:brand "CAPS";
+mod:label "Eq4p";
+
 rdfs:comment """
-Four adjustable biquad filters in series, in a vector arithmetic implementation. The default setup is an identity filter with a mode configuration of lowshelve, band, band, hishelve, all at zero gain. 
+Four adjustable biquad filters in series, in a vector arithmetic implementation. The default setup is an identity filter with a mode configuration of lowshelve, band, band, hishelve, all at zero gain.
 
-The Q control value maps non-linearly to actual filter Q: a zero control value results in filter Q of ½, a value of 0.3 corresponds to a Butterworth-equivalent Q of ½√2, and the maximum control setting of 1 results in a filter Q of 50. 
+The Q control value maps non-linearly to actual filter Q: a zero control value results in filter Q of ½, a value of 0.3 corresponds to a Butterworth-equivalent Q of ½√2, and the maximum control setting of 1 results in a filter Q of 50.
 
-Parallelisation of the serial filter topology causes its response to lag by three samples. 
+Parallelisation of the serial filter topology causes its response to lag by three samples.
 
-Control response is smoothened by crossfading between two filter banks. 
+Control response is smoothened by crossfading between two filter banks.
 
 source: http://quitte.de/dsp/caps.html#Eq4p
 """;
 
-    lv2:port [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.50;
-            lv2:index 6;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "b.Q";
-            lv2:symbol "b_q" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            units:unit units:db;
-            lv2:default 0;
-            lv2:index 7;
-            lv2:maximum 24;
-            lv2:minimum -48;
-            lv2:name "b.gain";
-            lv2:symbol "b_gain" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 1;
-            lv2:index 8;
-            lv2:maximum 2;
-            lv2:minimum -1;
-            lv2:name "c.mode";
-            lv2:portProperty lv2:enumeration,
-                lv2:integer;
-            lv2:scalePoint [ rdfs:label "off";
-                    rdf:value -1 ],
-                [ rdfs:label "lowshelve";
-                    rdf:value 0 ],
-                [ rdfs:label "band";
-                    rdf:value 1 ],
-                [ rdfs:label "hishelve";
-                    rdf:value 2 ];
-            lv2:symbol "c_mode" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            units:unit units:hz;
-            lv2:default 529.150;
-            lv2:index 9;
-            lv2:maximum 14000;
-            lv2:minimum 20;
-            lv2:name "c.freq";
-            lv2:portProperty epp:logarithmic;
-            lv2:symbol "c_freq" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.250;
-            lv2:index 10;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "c.Q";
-            lv2:symbol "c_q" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            units:unit units:db;
-            lv2:default 0;
-            lv2:index 11;
-            lv2:maximum 24;
-            lv2:minimum -48;
-            lv2:name "c.gain";
-            lv2:symbol "c_gain" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 2;
-            lv2:index 12;
-            lv2:maximum 2;
-            lv2:minimum -1;
-            lv2:name "d.mode";
-            lv2:portProperty lv2:enumeration,
-                lv2:integer;
-            lv2:scalePoint [ rdfs:label "off";
-                    rdf:value -1 ],
-                [ rdfs:label "lowshelve";
-                    rdf:value 0 ],
-                [ rdfs:label "band";
-                    rdf:value 1 ],
-                [ rdfs:label "hishelve";
-                    rdf:value 2 ];
-            lv2:symbol "d_mode" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            units:unit units:hz;
-            lv2:default 2721.780;
-            lv2:index 13;
-            lv2:maximum 14000;
-            lv2:minimum 20;
-            lv2:name "d.freq";
-            lv2:portProperty epp:logarithmic;
-            lv2:symbol "d_freq" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.250;
-            lv2:index 14;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "d.Q";
-            lv2:symbol "d_q" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            units:unit units:db;
-            lv2:default 0;
-            lv2:index 15;
-            lv2:maximum 24;
-            lv2:minimum -48;
-            lv2:name "d.gain";
-            lv2:symbol "d_gain" ],
-        [ a lv2:AudioPort,
-                lv2:InputPort;
-            lv2:index 16;
-            lv2:name "in";
-            lv2:symbol "in" ],
-        [ a lv2:AudioPort,
-                lv2:OutputPort;
-            lv2:index 17;
-            lv2:name "out";
-            lv2:symbol "out" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0;
-            lv2:index 0;
-            lv2:maximum 2;
-            lv2:minimum -1;
-            lv2:name "a.mode";
-            lv2:portProperty lv2:enumeration,
-                lv2:integer;
-            lv2:scalePoint [ rdfs:label "off";
-                    rdf:value -1 ],
-                [ rdfs:label "lowshelve";
-                    rdf:value 0 ],
-                [ rdfs:label "band";
-                    rdf:value 1 ],
-                [ rdfs:label "hishelve";
-                    rdf:value 2 ];
-            lv2:symbol "a_mode" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            units:unit units:hz;
-            lv2:default 102.870;
-            lv2:index 1;
-            lv2:maximum 14000;
-            lv2:minimum 20;
-            lv2:name "a.freq";
-            lv2:portProperty epp:logarithmic;
-            lv2:symbol "a_freq" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.250;
-            lv2:index 2;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "a.Q";
-            lv2:symbol "a_q" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            units:unit units:db;
-            lv2:default 0;
-            lv2:index 3;
-            lv2:maximum 24;
-            lv2:minimum -48;
-            lv2:name "a.gain";
-            lv2:symbol "a_gain" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 1;
-            lv2:index 4;
-            lv2:maximum 2;
-            lv2:minimum -1;
-            lv2:name "b.mode";
-            lv2:portProperty lv2:enumeration,
-                lv2:integer;
-            lv2:scalePoint [ rdfs:label "off";
-                    rdf:value -1 ],
-                [ rdfs:label "lowshelve";
-                    rdf:value 0 ],
-                [ rdfs:label "band";
-                    rdf:value 1 ],
-                [ rdfs:label "hishelve";
-                    rdf:value 2 ];
-            lv2:symbol "b_mode" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            units:unit units:hz;
-            lv2:default 529.150;
-            lv2:index 5;
-            lv2:maximum 14000;
-            lv2:minimum 20;
-            lv2:name "b.freq";
-            lv2:portProperty epp:logarithmic;
-            lv2:symbol "b_freq" ];
-    doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
-            foaf:mbox <mailto:tim@quitte.de>;
-            foaf:name "Tim Goetze" ];
-    doap:license <http://usefulinc.com/doap/licenses/gpl>;
-    doap:maintainer [ foaf:homepage <http://moddevices.com>;
-            foaf:mbox <mailto:devel@moddevices.com>;
-            foaf:name "MOD Team" ];
-    doap:name "C* Eq4p - 4-band parametric equaliser" .
-
+lv2:port [ a lv2:ControlPort,
+            lv2:InputPort;
+    lv2:default 0.50;
+    lv2:index 6;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "b.Q";
+    lv2:symbol "b_q" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    units:unit units:db;
+    lv2:default 0;
+    lv2:index 7;
+    lv2:maximum 24;
+    lv2:minimum -48;
+    lv2:name "b.gain";
+    lv2:symbol "b_gain" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 1;
+    lv2:index 8;
+    lv2:maximum 2;
+    lv2:minimum -1;
+    lv2:name "c.mode";
+    lv2:portProperty lv2:enumeration,
+        lv2:integer;
+    lv2:scalePoint [ rdfs:label "off";
+            rdf:value -1 ],
+        [ rdfs:label "lowshelve";
+            rdf:value 0 ],
+        [ rdfs:label "band";
+            rdf:value 1 ],
+        [ rdfs:label "hishelve";
+            rdf:value 2 ];
+    lv2:symbol "c_mode" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    units:unit units:hz;
+    lv2:default 529.150;
+    lv2:index 9;
+    lv2:maximum 14000;
+    lv2:minimum 20;
+    lv2:name "c.freq";
+    lv2:portProperty epp:logarithmic;
+    lv2:symbol "c_freq" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 0.250;
+    lv2:index 10;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "c.Q";
+    lv2:symbol "c_q" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    units:unit units:db;
+    lv2:default 0;
+    lv2:index 11;
+    lv2:maximum 24;
+    lv2:minimum -48;
+    lv2:name "c.gain";
+    lv2:symbol "c_gain" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 2;
+    lv2:index 12;
+    lv2:maximum 2;
+    lv2:minimum -1;
+    lv2:name "d.mode";
+    lv2:portProperty lv2:enumeration,
+        lv2:integer;
+    lv2:scalePoint [ rdfs:label "off";
+            rdf:value -1 ],
+        [ rdfs:label "lowshelve";
+            rdf:value 0 ],
+        [ rdfs:label "band";
+            rdf:value 1 ],
+        [ rdfs:label "hishelve";
+            rdf:value 2 ];
+    lv2:symbol "d_mode" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    units:unit units:hz;
+    lv2:default 2721.780;
+    lv2:index 13;
+    lv2:maximum 14000;
+    lv2:minimum 20;
+    lv2:name "d.freq";
+    lv2:portProperty epp:logarithmic;
+    lv2:symbol "d_freq" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 0.250;
+    lv2:index 14;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "d.Q";
+    lv2:symbol "d_q" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    units:unit units:db;
+    lv2:default 0;
+    lv2:index 15;
+    lv2:maximum 24;
+    lv2:minimum -48;
+    lv2:name "d.gain";
+    lv2:symbol "d_gain" ],
+[ a lv2:AudioPort,
+        lv2:InputPort;
+    lv2:index 16;
+    lv2:name "in";
+    lv2:symbol "in" ],
+[ a lv2:AudioPort,
+        lv2:OutputPort;
+    lv2:index 17;
+    lv2:name "out";
+    lv2:symbol "out" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 0;
+    lv2:index 0;
+    lv2:maximum 2;
+    lv2:minimum -1;
+    lv2:name "a.mode";
+    lv2:portProperty lv2:enumeration,
+        lv2:integer;
+    lv2:scalePoint [ rdfs:label "off";
+            rdf:value -1 ],
+        [ rdfs:label "lowshelve";
+            rdf:value 0 ],
+        [ rdfs:label "band";
+            rdf:value 1 ],
+        [ rdfs:label "hishelve";
+            rdf:value 2 ];
+    lv2:symbol "a_mode" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    units:unit units:hz;
+    lv2:default 102.870;
+    lv2:index 1;
+    lv2:maximum 14000;
+    lv2:minimum 20;
+    lv2:name "a.freq";
+    lv2:portProperty epp:logarithmic;
+    lv2:symbol "a_freq" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 0.250;
+    lv2:index 2;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "a.Q";
+    lv2:symbol "a_q" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    units:unit units:db;
+    lv2:default 0;
+    lv2:index 3;
+    lv2:maximum 24;
+    lv2:minimum -48;
+    lv2:name "a.gain";
+    lv2:symbol "a_gain" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 1;
+    lv2:index 4;
+    lv2:maximum 2;
+    lv2:minimum -1;
+    lv2:name "b.mode";
+    lv2:portProperty lv2:enumeration,
+        lv2:integer;
+    lv2:scalePoint [ rdfs:label "off";
+            rdf:value -1 ],
+        [ rdfs:label "lowshelve";
+            rdf:value 0 ],
+        [ rdfs:label "band";
+            rdf:value 1 ],
+        [ rdfs:label "hishelve";
+            rdf:value 2 ];
+    lv2:symbol "b_mode" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    units:unit units:hz;
+    lv2:default 529.150;
+    lv2:index 5;
+    lv2:maximum 14000;
+    lv2:minimum 20;
+    lv2:name "b.freq";
+    lv2:portProperty epp:logarithmic;
+    lv2:symbol "b_freq" ];
+doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
+        foaf:mbox <mailto:tim@quitte.de>;
+        foaf:name "Tim Goetze" ];
+doap:license <http://usefulinc.com/doap/licenses/gpl>;
+doap:maintainer [ foaf:homepage <http://moddevices.com>;
+        foaf:mbox <mailto:devel@moddevices.com>;
+        foaf:name "MOD Team" ];
+doap:name "C* Eq4p - 4-band parametric equaliser" .

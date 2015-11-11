@@ -1,108 +1,106 @@
-@prefix doap: <http://usefulinc.com/ns/doap#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix modgui: <http://moddevices.com/ns/modgui#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix units: <http://lv2plug.in/ns/extensions/units#> .
-@prefix time: <http://lv2plug.in/ns/ext/time/#>.
-@prefix mod: <http://moddevices.com/ns/mod#> .
+@prefix doap:  <http://usefulinc.com/ns/doap#>.
+@prefix foaf:  <http://xmlns.com/foaf/0.1/>.
+@prefix lv2:   <http://lv2plug.in/ns/lv2core#>.
+@prefix mod:   <http://moddevices.com/ns/mod#>.
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix time:  <http://lv2plug.in/ns/ext/time#>.
+@prefix units: <http://lv2plug.in/ns/extensions/units#>.
 
-<http://moddevices.com/plugins/caps/Scape> a lv2:DelayPlugin,
-        lv2:Plugin;
-    lv2:microVersion 16;
-    lv2:minorVersion 9;
-    lv2:optionalFeature lv2:hardRtCapable;
-    mod:brand "CAPS";
-    mod:label "Scape";
-   
+<http://moddevices.com/plugins/caps/Scape>
+a lv2:DelayPlugin, lv2:Plugin;
+lv2:microVersion 24;
+lv2:minorVersion 9;
+lv2:optionalFeature lv2:hardRtCapable;
+mod:brand "CAPS";
+mod:label "Scape";
+
 rdfs:comment """
-A stereo delay with resonant filters and fractally modulated panning. 
+A stereo delay with resonant filters and fractally modulated panning.
 
-The delay times are set through the bpm control and the divider adjustment. Triplet and sixteenth settings create a dotted rhythm. With every beat, the filter resonance frequencies are retuned to random steps on an equal-tempered chromatic scale, to the reference set through the tune control. 
+The delay times are set through the bpm control and the divider adjustment. Triplet and sixteenth settings create a dotted rhythm. With every beat, the filter resonance frequencies are retuned to random steps on an equal-tempered chromatic scale, to the reference set through the tune control.
 
 source: http://quitte.de/dsp/caps.html#Scape
 """;
 
-    lv2:port [ a lv2:AudioPort,
-                lv2:OutputPort;
-            lv2:index 8;
-            lv2:name "out:r";
-            lv2:symbol "outr" ],
-        [ a lv2:AudioPort,
-                lv2:InputPort;
-            lv2:index 0;
-            lv2:name "in";
-            lv2:symbol "in" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:designation  time:beatsPerMinute;
-            units:unit units:bpm;
-            lv2:default 97;
-            lv2:index 1;
-            lv2:maximum 164;
-            lv2:minimum 30;
-            lv2:name "bpm";
-            lv2:symbol "bpm" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 2;
-            lv2:index 2;
-            lv2:maximum 4;
-            lv2:minimum 2;
-            lv2:name "divider";
-            lv2:portProperty lv2:enumeration,
-                lv2:integer;
-            lv2:scalePoint [ rdfs:label "eighths";
-                    rdf:value 2 ],
-                [ rdfs:label "triplets";
-                    rdf:value 3 ],
-                [ rdfs:label "sixteenths";
-                    rdf:value 4 ];
-            lv2:symbol "divider" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.750;
-            lv2:index 3;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "feedback";
-            lv2:symbol "feedback" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.50;
-            lv2:index 4;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "dry";
-            lv2:symbol "dry" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 1;
-            lv2:index 5;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "blend";
-            lv2:symbol "blend" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 440;
-            lv2:index 6;
-            lv2:maximum 467;
-            lv2:minimum 415;
-            lv2:name "tune";
-            lv2:symbol "tune" ],
-        [ a lv2:AudioPort,
-                lv2:OutputPort;
-            lv2:index 7;
-            lv2:name "out:l";
-            lv2:symbol "outl" ];
-    doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
-            foaf:mbox <mailto:tim@quitte.de>;
-            foaf:name "Tim Goetze" ];
-    doap:license <http://usefulinc.com/doap/licenses/gpl>;
-    doap:maintainer [ foaf:homepage <http://moddevices.com>;
-            foaf:mbox <mailto:devel@moddevices.com>;
-            foaf:name "MOD Team" ];
-    doap:name "C* Scape - Stereo delay + Filters" .
-
+lv2:port [ a lv2:AudioPort,
+        lv2:OutputPort;
+    lv2:index 8;
+    lv2:name "out:r";
+    lv2:symbol "outr" ],
+[ a lv2:AudioPort,
+        lv2:InputPort;
+    lv2:index 0;
+    lv2:name "in";
+    lv2:symbol "in" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:designation  time:beatsPerMinute;
+    units:unit units:bpm;
+    lv2:default 97;
+    lv2:index 1;
+    lv2:maximum 164;
+    lv2:minimum 30;
+    lv2:name "bpm";
+    lv2:symbol "bpm" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 2;
+    lv2:index 2;
+    lv2:maximum 4;
+    lv2:minimum 2;
+    lv2:name "divider";
+    lv2:portProperty lv2:enumeration,
+        lv2:integer;
+    lv2:scalePoint [ rdfs:label "eighths";
+            rdf:value 2 ],
+        [ rdfs:label "triplets";
+            rdf:value 3 ],
+        [ rdfs:label "sixteenths";
+            rdf:value 4 ];
+    lv2:symbol "divider" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 0.750;
+    lv2:index 3;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "feedback";
+    lv2:symbol "feedback" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 0.50;
+    lv2:index 4;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "dry";
+    lv2:symbol "dry" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 1;
+    lv2:index 5;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "blend";
+    lv2:symbol "blend" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 440;
+    lv2:index 6;
+    lv2:maximum 467;
+    lv2:minimum 415;
+    lv2:name "tune";
+    lv2:symbol "tune" ],
+[ a lv2:AudioPort,
+        lv2:OutputPort;
+    lv2:index 7;
+    lv2:name "out:l";
+    lv2:symbol "outl" ];
+doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
+    foaf:mbox <mailto:tim@quitte.de>;
+    foaf:name "Tim Goetze" ];
+doap:license <http://usefulinc.com/doap/licenses/gpl>;
+doap:maintainer [ foaf:homepage <http://moddevices.com>;
+    foaf:mbox <mailto:devel@moddevices.com>;
+    foaf:name "MOD Team" ];
+doap:name "C* Scape - Stereo delay + Filters" .

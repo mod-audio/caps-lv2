@@ -1,79 +1,77 @@
-@prefix doap: <http://usefulinc.com/ns/doap#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix modgui: <http://moddevices.com/ns/modgui#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix mod: <http://moddevices.com/ns/mod#> .
+@prefix doap: <http://usefulinc.com/ns/doap#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix lv2:  <http://lv2plug.in/ns/lv2core#>.
+@prefix mod:  <http://moddevices.com/ns/mod#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 
-<http://moddevices.com/plugins/caps/Plate> a lv2:Plugin,
-        lv2:ReverbPlugin;
-    lv2:microVersion 16;
-    lv2:minorVersion 9;
-    lv2:optionalFeature lv2:hardRtCapable;
-    mod:brand "CAPS";
-    mod:label "Plate";
+<http://moddevices.com/plugins/caps/Plate>
+a lv2:ReverbPlugin, lv2:Plugin;
+lv2:microVersion 24;
+lv2:minorVersion 9;
+lv2:optionalFeature lv2:hardRtCapable;
+mod:brand "CAPS";
+mod:label "Plate";
 
 rdfs:comment """
-This reverb processor is an adaptation of the design discussed in [dat97a]. Tuned for a soft attack and smooth ambience, it consists of a network of twelve delay lines of varying length. At its heart, two of these are modulated very subtly, in a chorus-like fashion. 
+This reverb processor is an adaptation of the design discussed in [dat97a]. Tuned for a soft attack and smooth ambience, it consists of a network of twelve delay lines of varying length. At its heart, two of these are modulated very subtly, in a chorus-like fashion.
 
-The bandwidth control reduces high-frequency content before it enters the 'tank', while damping controls how quickly the reverberating tail darkens. 
+The bandwidth control reduces high-frequency content before it enters the 'tank', while damping controls how quickly the reverberating tail darkens.
 
 source: http://quitte.de/dsp/caps.html#Plate
 """;
 
-    lv2:port [ a lv2:AudioPort,
-                lv2:InputPort;
-            lv2:index 0;
-            lv2:name "in";
-            lv2:symbol "in" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.99950;
-            lv2:index 1;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "bandwidth";
-            lv2:symbol "bandwidth" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.50;
-            lv2:index 2;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "tail";
-            lv2:symbol "tail" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.00050;
-            lv2:index 3;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "damping";
-            lv2:symbol "damping" ],
-        [ a lv2:ControlPort,
-                lv2:InputPort;
-            lv2:default 0.250;
-            lv2:index 4;
-            lv2:maximum 1;
-            lv2:minimum 0;
-            lv2:name "blend";
-            lv2:symbol "blend" ],
-        [ a lv2:AudioPort,
-                lv2:OutputPort;
-            lv2:index 5;
-            lv2:name "out:l";
-            lv2:symbol "outl" ],
-        [ a lv2:AudioPort,
-                lv2:OutputPort;
-            lv2:index 6;
-            lv2:name "out:r";
-            lv2:symbol "outr" ];
-    doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
-            foaf:mbox <mailto:tim@quitte.de>;
-            foaf:name "Tim Goetze" ];
-    doap:license <http://usefulinc.com/doap/licenses/gpl>;
-    doap:maintainer [ foaf:homepage <http://moddevices.com>;
-            foaf:mbox <mailto:devel@moddevices.com>;
-            foaf:name "MOD Team" ];
-    doap:name "C* Plate - Versatile plate reverb" .
-
+lv2:port [ a lv2:AudioPort,
+        lv2:InputPort;
+    lv2:index 0;
+    lv2:name "in";
+    lv2:symbol "in" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 0.99950;
+    lv2:index 1;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "bandwidth";
+    lv2:symbol "bandwidth" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 0.50;
+    lv2:index 2;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "tail";
+    lv2:symbol "tail" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 0.00050;
+    lv2:index 3;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "damping";
+    lv2:symbol "damping" ],
+[ a lv2:ControlPort,
+        lv2:InputPort;
+    lv2:default 0.250;
+    lv2:index 4;
+    lv2:maximum 1;
+    lv2:minimum 0;
+    lv2:name "blend";
+    lv2:symbol "blend" ],
+[ a lv2:AudioPort,
+        lv2:OutputPort;
+    lv2:index 5;
+    lv2:name "out:l";
+    lv2:symbol "outl" ],
+[ a lv2:AudioPort,
+        lv2:OutputPort;
+    lv2:index 6;
+    lv2:name "out:r";
+    lv2:symbol "outr" ];
+doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
+    foaf:mbox <mailto:tim@quitte.de>;
+    foaf:name "Tim Goetze" ];
+doap:license <http://usefulinc.com/doap/licenses/gpl>;
+doap:maintainer [ foaf:homepage <http://moddevices.com>;
+    foaf:mbox <mailto:devel@moddevices.com>;
+    foaf:name "MOD Team" ];
+doap:name "C* Plate - Versatile plate reverb" .

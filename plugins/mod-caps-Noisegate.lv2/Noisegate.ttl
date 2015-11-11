@@ -1,101 +1,100 @@
-@prefix doap: <http://usefulinc.com/ns/doap#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
-@prefix modgui: <http://moddevices.com/ns/modgui#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix units: <http://lv2plug.in/ns/extensions/units#> .
-@prefix mod: <http://moddevices.com/ns/mod#> .
+@prefix doap:  <http://usefulinc.com/ns/doap#>.
+@prefix foaf:  <http://xmlns.com/foaf/0.1/>.
+@prefix lv2:   <http://lv2plug.in/ns/lv2core#>.
+@prefix mod:   <http://moddevices.com/ns/mod#>.
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix units: <http://lv2plug.in/ns/extensions/units#>.
 
-<http://moddevices.com/plugins/caps/Noisegate> a lv2:UtilityPlugin,
-        lv2:Plugin;
-    lv2:microVersion 16;
-    lv2:minorVersion 9;
-    lv2:optionalFeature lv2:hardRtCapable;
-    mod:brand "CAPS";
-    mod:label "Noisegate";
+<http://moddevices.com/plugins/caps/Noisegate>
+a lv2:UtilityPlugin, lv2:Plugin;
+lv2:microVersion 24;
+lv2:minorVersion 9;
+lv2:optionalFeature lv2:hardRtCapable;
+mod:brand "CAPS";
+mod:label "Noisegate";
 
 rdfs:comment """
-This plugin aims to reduce undesirable background noise and hum in otherwise silent passages. 
+This plugin aims to reduce undesirable background noise and hum in otherwise silent passages.
 
-When the signal's instantaneous amplitude exceeds the opening threshold, the gate is opened. The time it takes until the gate is fully open can be set with the attack control. As soon as the signal's RMS power level drops below the closing threshold, the gate closes. This takes a fixed time of 20 ms; closed gate attenuation is 60 dB. 
+When the signal's instantaneous amplitude exceeds the opening threshold, the gate is opened. The time it takes until the gate is fully open can be set with the attack control. As soon as the signal's RMS power level drops below the closing threshold, the gate closes. This takes a fixed time of 20 ms; closed gate attenuation is 60 dB.
 
-To cope with powerline hum as often present in signals from electric guitars, a notch filter can be activated by setting the mains frequency control to a non-zero value.  The filter will prevent this frequency from contributing to the signal power measurement. This allows a low closing threshold setting without mains hum keeping the gate open unduly.  The default mains setting is 50 Hz. 
+To cope with powerline hum as often present in signals from electric guitars, a notch filter can be activated by setting the mains frequency control to a non-zero value.  The filter will prevent this frequency from contributing to the signal power measurement. This allows a low closing threshold setting without mains hum keeping the gate open unduly.  The default mains setting is 50 Hz.
 
 source: http://quitte.de/dsp/caps.html#Noisegate
 """;
 
-    lv2:port
-        [
-         a lv2:AudioPort,
-            lv2:InputPort;
-            lv2:index 0;
-            lv2:name "in";
-            lv2:symbol "in"
-        ],
-        [
-         a lv2:AudioPort,
-            lv2:OutputPort;
-            lv2:index 1;
-            lv2:name "out";
-            lv2:symbol "out"
-        ],
-        [
-         a lv2:ControlPort,
-            lv2:InputPort;
-            units:unit units:db;
-            lv2:default -45;
-            lv2:index 2;
-            lv2:maximum 0;
-            lv2:minimum -60;
-            lv2:name "Open";
-            lv2:symbol "open"
-        ],
-        [
-         a lv2:ControlPort,
-            lv2:InputPort;
-            units:unit units:ms;
-            lv2:default 0.750;
-            lv2:index 3;
-            lv2:maximum 3;
-            lv2:minimum 0;
-            lv2:name "Attack";
-            lv2:symbol "attack"
-        ],
-        [
-         a lv2:ControlPort,
-            lv2:InputPort;
-            units:unit units:db;
-            lv2:default -67.50;
-            lv2:index 4;
-            lv2:maximum 0;
-            lv2:minimum -90;
-            lv2:name "Close";
-            lv2:symbol "close"
-        ],
-        [
-         a lv2:ControlPort,
-            lv2:InputPort;
-            units:unit units:hz;
-            lv2:default 50;
-            lv2:index 5;
-            lv2:maximum 100;
-            lv2:minimum 0;
-            lv2:name "Mains";
-            lv2:scalePoint [ rdfs:label "off";
-                    rdf:value 0 ],
-                [ rdfs:label "global";
-                    rdf:value 50 ],
-                [ rdfs:label "imperial";
-                    rdf:value 60 ];
-            lv2:symbol "mains" ];
+lv2:port
+[
+  a lv2:AudioPort,
+    lv2:InputPort;
+    lv2:index 0;
+    lv2:name "in";
+    lv2:symbol "in"
+],
+[
+  a lv2:AudioPort,
+    lv2:OutputPort;
+    lv2:index 1;
+    lv2:name "out";
+    lv2:symbol "out"
+],
+[
+  a lv2:ControlPort,
+    lv2:InputPort;
+    units:unit units:db;
+    lv2:default -45;
+    lv2:index 2;
+    lv2:maximum 0;
+    lv2:minimum -60;
+    lv2:name "Open";
+    lv2:symbol "open"
+],
+[
+  a lv2:ControlPort,
+    lv2:InputPort;
+    units:unit units:ms;
+    lv2:default 0.750;
+    lv2:index 3;
+    lv2:maximum 3;
+    lv2:minimum 0;
+    lv2:name "Attack";
+    lv2:symbol "attack"
+],
+[
+  a lv2:ControlPort,
+    lv2:InputPort;
+    units:unit units:db;
+    lv2:default -67.50;
+    lv2:index 4;
+    lv2:maximum 0;
+    lv2:minimum -90;
+    lv2:name "Close";
+    lv2:symbol "close"
+],
+[
+  a lv2:ControlPort,
+    lv2:InputPort;
+    units:unit units:hz;
+    lv2:default 50;
+    lv2:index 5;
+    lv2:maximum 100;
+    lv2:minimum 0;
+    lv2:name "Mains";
+    lv2:scalePoint [ rdfs:label "off";
+            rdf:value 0 ],
+        [ rdfs:label "global";
+            rdf:value 50 ],
+        [ rdfs:label "imperial";
+            rdf:value 60 ];
+    lv2:symbol "mains" ];
 
-    doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
-            foaf:mbox <mailto:tim@quitte.de>;
-            foaf:name "Tim Goetze" ];
-    doap:license <http://usefulinc.com/doap/licenses/gpl>;
-    doap:maintainer [ foaf:homepage <http://moddevices.com>;
-            foaf:mbox <mailto:devel@moddevices.com>;
-            foaf:name "MOD Team" ];
-    doap:name "C* Noisegate - Attenuate noise resident in silence" .
+doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
+    foaf:mbox <mailto:tim@quitte.de>;
+    foaf:name "Tim Goetze" ];
+doap:license <http://usefulinc.com/doap/licenses/gpl>;
+doap:maintainer [ foaf:homepage <http://moddevices.com>;
+    foaf:mbox <mailto:devel@moddevices.com>;
+    foaf:name "MOD Team" ];
+doap:name "C* Noisegate - Attenuate noise resident in silence" .
 
