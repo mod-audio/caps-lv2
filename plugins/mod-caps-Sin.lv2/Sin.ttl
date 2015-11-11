@@ -20,36 +20,46 @@ The old friend, indispensable for testing and tuning.
 source: http://quitte.de/dsp/caps.html#Sin
 """;
 
-lv2:port [ a lv2:ControlPort,
-        lv2:InputPort;
-    units:unit units:hz;
-    lv2:default 100.0;
+lv2:port
+[
+    a lv2:ControlPort, lv2:InputPort;
     lv2:index 0;
+    lv2:default 100.0;
     lv2:maximum 20000;
     lv2:minimum 0.00010;
     lv2:name "f";
-    lv2:portProperty pprops:logarithmic,
-        epp:logarithmic;
-    lv2:symbol "f" ],
-[ a lv2:ControlPort,
-        lv2:InputPort;
-    lv2:default 0.50;
+    lv2:symbol "f";
+    lv2:portProperty epp:logarithmic;
+    units:unit units:hz;
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
     lv2:index 1;
+    lv2:default 0.5;
     lv2:maximum 1;
-    lv2:minimum 0.0000010;
-    lv2:name "volume";
-    lv2:symbol "volume" ],
-[ a lv2:AudioPort,
-        lv2:OutputPort;
+    lv2:minimum 0.000001;
+    lv2:name "Volume";
+    lv2:symbol "volume";
+],
+[
+    a lv2:AudioPort, lv2:OutputPort;
     lv2:index 2;
     lv2:name "out";
-    lv2:symbol "out" ];
-doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
-        foaf:mbox <mailto:tim@quitte.de>;
-        foaf:name "Tim Goetze" ];
-doap:license <http://usefulinc.com/doap/licenses/gpl>;
-doap:maintainer [ foaf:homepage <http://moddevices.com>;
-        foaf:mbox <mailto:devel@moddevices.com>;
-        foaf:name "MOD Team" ];
-doap:name "C* Sin - Sine wave generator" .
+    lv2:symbol "out";
+];
 
+doap:license <http://usefulinc.com/doap/licenses/gpl>;
+
+doap:developer [
+    foaf:homepage <http://quitte.de/dsp/caps.html>;
+    foaf:mbox <mailto:tim@quitte.de>;
+    foaf:name "Tim Goetze";
+];
+
+doap:maintainer [
+    foaf:homepage <http://moddevices.com>;
+    foaf:mbox <mailto:devel@moddevices.com>;
+    foaf:name "MOD Team";
+];
+
+doap:name "C* Sin - Sine wave generator".

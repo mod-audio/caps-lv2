@@ -29,79 +29,99 @@ The output signal varies with the sample rate.
 source: http://quitte.de/dsp/caps.html#Fractals
 """;
 
-lv2:port [ a lv2:ControlPort,
-            lv2:InputPort;
-    lv2:default 0.250;
+lv2:port
+[
+    a lv2:ControlPort, lv2:InputPort;
     lv2:index 0;
+    lv2:default 0.250;
     lv2:maximum 1;
     lv2:minimum 0;
     lv2:name "Rate";
-    lv2:symbol "rate" ],
-[ a lv2:ControlPort,
-        lv2:InputPort;
-    lv2:default 0;
+    lv2:symbol "rate";
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
     lv2:index 1;
+    lv2:default 0;
     lv2:maximum 1;
     lv2:minimum 0;
     lv2:name "Mode";
-    lv2:portProperty lv2:enumeration,
-        lv2:integer;
-    lv2:scalePoint [ rdfs:label "lorenz";
-            rdf:value 0 ],
-        [ rdfs:label "roessler";
-            rdf:value 1 ];
-    lv2:symbol "mode" ],
-[ a lv2:ControlPort,
-        lv2:InputPort;
-    lv2:default 1.0;
+    lv2:symbol "mode";
+    lv2:portProperty lv2:enumeration, lv2:integer;
+    lv2:scalePoint
+    [
+        rdfs:label "lorenz";
+        rdf:value 0;
+    ],
+    [
+        rdfs:label "roessler";
+        rdf:value 1;
+    ];
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
     lv2:index 2;
+    lv2:default 1.0;
     lv2:maximum 1;
     lv2:minimum 0;
-    lv2:name "x";
-    lv2:symbol "x" ],
-[ a lv2:ControlPort,
-        lv2:InputPort;
-    lv2:default 0.0;
+    lv2:name "X";
+    lv2:symbol "x";
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
     lv2:index 3;
-    lv2:maximum 1;
-    lv2:minimum 0;
-    lv2:name "y";
-    lv2:symbol "y" ],
-[ a lv2:ControlPort,
-        lv2:InputPort;
     lv2:default 0.0;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
+    lv2:name "Y";
+    lv2:symbol "y";
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
     lv2:index 4;
-    lv2:maximum 1;
-    lv2:minimum 0;
-    lv2:name "z";
-    lv2:symbol "z" ],
-[ a lv2:ControlPort,
-        lv2:InputPort;
-    lv2:default 0.50;
+    lv2:default 0.0;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
+    lv2:name "Z";
+    lv2:symbol "z";
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
     lv2:index 5;
-    lv2:maximum 1;
-    lv2:minimum 0;
+    lv2:default 0.5;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
     lv2:name "hp";
-    lv2:symbol "hp" ],
-[ a lv2:ControlPort,
-        lv2:InputPort;
-    lv2:default 0.50;
+    lv2:symbol "hp";
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
     lv2:index 6;
+    lv2:default 0.50;
     lv2:maximum 1;
-    lv2:minimum 0.0000010;
-    lv2:name "volume";
-    lv2:symbol "volume" ],
-[ a lv2:AudioPort,
-        lv2:OutputPort;
+    lv2:minimum 0.000001;
+    lv2:name "Volume";
+    lv2:symbol "volume";
+],
+[
+    a lv2:AudioPort, lv2:OutputPort;
     lv2:index 7;
     lv2:name "out";
-    lv2:symbol "out" ];
-doap:developer [ foaf:homepage <http://quitte.de/dsp/caps.html>;
-        foaf:mbox <mailto:tim@quitte.de>;
-        foaf:name "Tim Goetze" ];
-doap:license <http://usefulinc.com/doap/licenses/gpl>;
-doap:maintainer [ foaf:homepage <http://moddevices.com>;
-        foaf:mbox <mailto:devel@moddevices.com>;
-        foaf:name "MOD Team" ];
-doap:name "C* Fractal - Audio stream from deterministic chaos" .
+    lv2:symbol "out";
+];
 
+doap:license <http://usefulinc.com/doap/licenses/gpl>;
+
+doap:developer [
+    foaf:homepage <http://quitte.de/dsp/caps.html>;
+    foaf:mbox <mailto:tim@quitte.de>;
+    foaf:name "Tim Goetze";
+];
+
+doap:maintainer [
+    foaf:homepage <http://moddevices.com>;
+    foaf:mbox <mailto:devel@moddevices.com>;
+    foaf:name "MOD Team";
+];
+
+doap:name "C* Fractal - Audio stream from deterministic chaos".
