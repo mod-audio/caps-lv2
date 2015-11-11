@@ -55,7 +55,7 @@ lv2:port
         rdf:value 0;
     ],
     [
-        rdfs:label "saturating";
+        rdfs:label "saturating 2x";
         rdf:value 1;
     ],
     [
@@ -66,26 +66,26 @@ lv2:port
 [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 2;
-    lv2:default 0;
-    lv2:maximum 1;
-    lv2:minimum 0;
+    lv2:default 0.5;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
     lv2:name "Threshold";
     lv2:symbol "threshold" ],
 [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 3;
-    lv2:default 0.250;
-    lv2:maximum 1;
-    lv2:minimum 0;
+    lv2:default 0.25;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
     lv2:name "Strength";
     lv2:symbol "strength";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 4;
-    lv2:default 0.10;
-    lv2:maximum 1;
-    lv2:minimum 0;
+    lv2:default 0.75;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
     lv2:name "Attack";
     lv2:symbol "attack";
 ],
@@ -93,43 +93,53 @@ lv2:port
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 5;
     lv2:default 0.50;
-    lv2:maximum 1;
-    lv2:minimum 0;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
     lv2:name "Release";
     lv2:symbol "release";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 6;
-    lv2:default 5;
-    lv2:maximum 24;
-    lv2:minimum -12;
+    lv2:default 3.0;
+    lv2:maximum 18.0;
+    lv2:minimum -12.0;
     lv2:name "Gain";
     lv2:symbol "gain";
     units:unit units:db;
 ],
 [
-    a lv2:AudioPort, lv2:InputPort;
+    a lv2:ControlPort, lv2:OutputPort;
     lv2:index 7;
-    lv2:name "in left";
-    lv2:symbol "in_l";
+    lv2:default 0.0;
+    lv2:maximum 0.0;
+    lv2:minimum -144.0;
+    lv2:name "State";
+    lv2:symbol "state";
+    units:unit units:db;
 ],
 [
     a lv2:AudioPort, lv2:InputPort;
     lv2:index 8;
-    lv2:name "in right";
+    lv2:name "In Left";
+    lv2:symbol "in_l";
+],
+[
+    a lv2:AudioPort, lv2:InputPort;
+    lv2:index 9;
+    lv2:name "In Right";
     lv2:symbol "in_r";
 ],
 [
     a lv2:AudioPort, lv2:OutputPort;
-    lv2:index 9;
-    lv2:name "out left";
+    lv2:index 10;
+    lv2:name "Out Left";
     lv2:symbol "out_l";
 ],
 [
     a lv2:AudioPort, lv2:OutputPort;
-    lv2:index 10;
-    lv2:name "out right";
+    lv2:index 11;
+    lv2:name "Out Right";
     lv2:symbol "out_r";
 ];
 
