@@ -10,8 +10,8 @@
 <http://moddevices.com/plugins/caps/CabinetIII>
 a lv2:SimulatorPlugin, lv2:Plugin;
 lv2:optionalFeature lv2:hardRtCapable;
+lv2:microVersion 24;
 lv2:minorVersion 9;
-lv2:microVersion 16;
 mod:brand "CAPS";
 mod:label "CabinetIII";
 

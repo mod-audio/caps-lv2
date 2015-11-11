@@ -33,8 +33,8 @@ lv2:port
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:default 0.0;
     lv2:index 2;
+    lv2:default 0.0;
     lv2:maximum 24;
     lv2:minimum -48;
     lv2:name "31 Hz";
@@ -42,8 +42,8 @@ lv2:port
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:default 0.0;
     lv2:index 3;
+    lv2:default 0.0;
     lv2:maximum 24;
     lv2:minimum -48;
     lv2:name "63 Hz";
@@ -51,8 +51,8 @@ lv2:port
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:default 0.0;
     lv2:index 4;
+    lv2:default 0.0;
     lv2:maximum 24;
     lv2:minimum -48;
     lv2:name "125 Hz";
@@ -69,8 +69,8 @@ lv2:port
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:default 0.0;
     lv2:index 6;
+    lv2:default 0.0;
     lv2:maximum 24;
     lv2:minimum -48;
     lv2:name "500 Hz";
@@ -78,8 +78,8 @@ lv2:port
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:default 0.0;
     lv2:index 7;
+    lv2:default 0.0;
     lv2:maximum 24;
     lv2:minimum -48;
     lv2:name "1 kHz";
@@ -87,8 +87,8 @@ lv2:port
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:default 0.0;
     lv2:index 8;
+    lv2:default 0.0;
     lv2:maximum 24;
     lv2:minimum -48;
     lv2:name "2 kHz";
@@ -114,8 +114,8 @@ lv2:port
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:default 0.0;
     lv2:index 11;
+    lv2:default 0.0;
     lv2:maximum 24;
     lv2:minimum -48;
     lv2:name "16 kHz";
