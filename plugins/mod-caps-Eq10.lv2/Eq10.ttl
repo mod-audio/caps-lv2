@@ -22,105 +22,105 @@ source: http://quitte.de/dsp/caps.html#Eq10
 
 lv2:port
 [
-    a lv2:AudioPort, lv2:InputPort;
-    lv2:index 0;
-    lv2:name "in";
-    lv2:symbol "in";
-],
-[
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 1;
+    lv2:index 0;
     lv2:default 0.0;
-    lv2:maximum 24;
-    lv2:minimum -48;
+    lv2:maximum 24.0;
+    lv2:minimum -48.0;
     lv2:name "31 Hz";
     lv2:symbol "band31hz";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 2;
+    lv2:index 1;
     lv2:default 0.0;
-    lv2:maximum 24;
-    lv2:minimum -48;
+    lv2:maximum 24.0;
+    lv2:minimum -48.0;
     lv2:name "63 Hz";
     lv2:symbol "band63hz";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 3;
+    lv2:index 2;
     lv2:default 0.0;
-    lv2:maximum 24;
-    lv2:minimum -48;
+    lv2:maximum 24.0;
+    lv2:minimum -48.0;
     lv2:name "125 Hz";
     lv2:symbol "band125hz";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 4;
+    lv2:index 3;
     lv2:default 0.0;
-    lv2:maximum 24;
-    lv2:minimum -48;
+    lv2:maximum 24.0;
+    lv2:minimum -48.0;
     lv2:name "250 Hz";
     lv2:symbol "band250hz";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 5;
+    lv2:index 4;
     lv2:default 0.0;
-    lv2:maximum 24;
-    lv2:minimum -48;
+    lv2:maximum 24.0;
+    lv2:minimum -48.0;
     lv2:name "500 Hz";
     lv2:symbol "band500hz";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 6;
+    lv2:index 5;
     lv2:default 0.0;
-    lv2:maximum 24;
-    lv2:minimum -48;
+    lv2:maximum 24.0;
+    lv2:minimum -48.0;
     lv2:name "1 kHz";
     lv2:symbol "band1khz";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 7;
+    lv2:index 6;
     lv2:default 0.0;
-    lv2:maximum 24;
-    lv2:minimum -48;
+    lv2:maximum 24.0;
+    lv2:minimum -48.0;
     lv2:name "2 kHz";
     lv2:symbol "band2khz";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 8;
+    lv2:index 7;
     lv2:default 0.0;
-    lv2:maximum 24;
-    lv2:minimum -48;
+    lv2:maximum 24.0;
+    lv2:minimum -48.0;
     lv2:name "4 kHz";
     lv2:symbol "band4khz";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 9;
+    lv2:index 8;
     lv2:default 0.0;
-    lv2:maximum 24;
-    lv2:minimum -48;
+    lv2:maximum 24.0;
+    lv2:minimum -48.0;
     lv2:name "8 kHz";
     lv2:symbol "band8khz";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 10;
+    lv2:index 9;
     lv2:default 0.0;
-    lv2:maximum 24;
-    lv2:minimum -48;
+    lv2:maximum 24.0;
+    lv2:minimum -48.0;
     lv2:name "16 kHz";
     lv2:symbol "band16khz";
 ],
 [
+    a lv2:AudioPort, lv2:InputPort;
+    lv2:index 10;
+    lv2:name "In";
+    lv2:symbol "in";
+],
+[
     a lv2:AudioPort, lv2:OutputPort;
     lv2:index 11;
-    lv2:name "out";
+    lv2:name "Out";
     lv2:symbol "out";
 ];
 
