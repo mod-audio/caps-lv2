@@ -28,7 +28,7 @@
             lv2:name "Q" ;
         ] , [
             lv2:index 3 ;
-            lv2:symbol "gain" ;
-            lv2:name "Level" ;
+            lv2:symbol "depth" ;
+            lv2:name "Depth" ;
         ] ;
     ] .

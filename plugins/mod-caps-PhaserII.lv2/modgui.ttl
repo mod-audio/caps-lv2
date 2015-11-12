@@ -11,28 +11,24 @@
         modgui:brand "CAPS" ;
         modgui:label "Phaser II" ;
         modgui:model "boxy" ;
-        modgui:panel "5-knobs" ;
+        modgui:panel "4-knobs" ;
         modgui:color "purple" ;
         modgui:knob "black" ;
         modgui:port [
             lv2:index 0 ;
             lv2:symbol "depth" ;
-            lv2:name "depth" ;
+            lv2:name "Depth" ;
         ] , [
             lv2:index 1 ;
             lv2:symbol "rate" ;
-            lv2:name "rate" ;
+            lv2:name "Rate" ;
         ] , [
             lv2:index 2 ;
             lv2:symbol "resonance" ;
-            lv2:name "reson" ;
+            lv2:name "Reso" ;
         ] , [
             lv2:index 3 ;
-            lv2:symbol "lfo" ;
-            lv2:name "LFO" ;
-        ] , [
-            lv2:index 4 ;
             lv2:symbol "spread" ;
-            lv2:name "spread" ;
+            lv2:name "Spread" ;
         ] ;
     ] .

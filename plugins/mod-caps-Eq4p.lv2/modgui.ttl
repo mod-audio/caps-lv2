@@ -1,10 +1,1 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
-
-
-<http://moddevices.com/plugins/caps/Eq4p>
-    modgui:gui [ modgui:iconTemplate <modgui/Eq4p.html>;
-            modgui:resourcesDirectory <modgui>;
-            modgui:stylesheet <modgui/_common.css>;
-            modgui:screenshot <modgui/Eq4p.png>;
-            modgui:templateData <modgui/Eq4p.json>;
-            modgui:thumbnail <modgui/Eq4p-thumb.png> ].
