@@ -9,8 +9,8 @@ STRIP ?= strip
 ifdef DEBUG
 OPTS = -g -DDEBUG
 else
-OPTS = -O2 -Wall -fPIC -DPIC
-# OPTS = -O3 -ffast-math -funroll-loops -Wall -fPIC -DPIC
+# OPTS = -O2 -Wall -fPIC -DPIC
+OPTS = -O3 -ffast-math -funroll-loops -Wall -fPIC -DPIC
 LDFLAGS += -Wl,--strip-all
 endif
 
