@@ -66,6 +66,7 @@ uninstall:
 	-rm -rf $(DESTDIR)$(PREFIX)/lib/lv2/mod-caps-*.lv2/
 
 clean:
-	rm -f *.o *.s
+	rm -f *.o dsp/*.o
+	rm -f plugins/*.lv2/*.o
 	rm -f plugins/*.lv2/*.so
 	rm -f plugins/*.lv2/.depend
