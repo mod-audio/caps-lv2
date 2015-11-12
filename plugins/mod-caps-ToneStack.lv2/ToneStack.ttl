@@ -27,12 +27,6 @@ source: http://quitte.de/dsp/caps.html#ToneStack
 
 lv2:port
 [
-    a lv2:AudioPort, lv2:InputPort;
-    lv2:index 0;
-    lv2:name "in";
-    lv2:symbol "in"
-],
-[
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 1;
     lv2:default 0;
@@ -87,8 +81,8 @@ lv2:port
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 2;
     lv2:default 0.5;
-    lv2:maximum 1;
-    lv2:minimum 0;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
     lv2:name "Bass";
     lv2:symbol "bass"
 ],
@@ -96,8 +90,8 @@ lv2:port
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 3;
     lv2:default 0.5;
-    lv2:maximum 1;
-    lv2:minimum 0;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
     lv2:name "Mid";
     lv2:symbol "mid"
 ],
@@ -105,15 +99,21 @@ lv2:port
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 4;
     lv2:default 0.5;
-    lv2:maximum 1;
-    lv2:minimum 0;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
     lv2:name "Treble";
     lv2:symbol "treble"
 ],
 [
+    a lv2:AudioPort, lv2:InputPort;
+    lv2:index 0;
+    lv2:name "In";
+    lv2:symbol "in"
+],
+[
     a lv2:AudioPort, lv2:OutputPort;
     lv2:index 5;
-    lv2:name "out";
+    lv2:name "Out";
     lv2:symbol "out";
 ];
 

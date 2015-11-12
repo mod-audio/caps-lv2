@@ -26,23 +26,11 @@ source: http://quitte.de/dsp/caps.html#Noisegate
 
 lv2:port
 [
-    a lv2:AudioPort, lv2:InputPort;
-    lv2:index 0;
-    lv2:name "in";
-    lv2:symbol "in";
-],
-[
-    a lv2:AudioPort, lv2:OutputPort;
-    lv2:index 1;
-    lv2:name "out";
-    lv2:symbol "out";
-],
-[
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 2;
-    lv2:default -45;
-    lv2:maximum 0;
-    lv2:minimum -60;
+    lv2:default -45.0;
+    lv2:maximum 0.0;
+    lv2:minimum -60.0;
     lv2:name "Open";
     lv2:symbol "open";
     units:unit units:db;
@@ -70,25 +58,37 @@ lv2:port
 [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 5;
-    lv2:default 50;
-    lv2:maximum 100;
-    lv2:minimum 0;
+    lv2:default 50.0;
+    lv2:maximum 100.0;
+    lv2:minimum 0.0;
     lv2:name "Mains";
     lv2:symbol "mains";
     lv2:scalePoint
     [
         rdfs:label "off";
-        rdf:value 0;
+        rdf:value 0.0;
     ],
     [
         rdfs:label "global";
-        rdf:value 50;
+        rdf:value 50.0;
     ],
     [
         rdfs:label "imperial";
-        rdf:value 60;
+        rdf:value 60.0;
     ];
     units:unit units:hz;
+],
+[
+    a lv2:AudioPort, lv2:InputPort;
+    lv2:index 0;
+    lv2:name "In";
+    lv2:symbol "in";
+],
+[
+    a lv2:AudioPort, lv2:OutputPort;
+    lv2:index 1;
+    lv2:name "Out";
+    lv2:symbol "out";
 ];
 
 doap:license <http://usefulinc.com/doap/licenses/gpl>;
