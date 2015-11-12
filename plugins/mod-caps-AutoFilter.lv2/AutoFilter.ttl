@@ -1,5 +1,5 @@
 @prefix doap:  <http://usefulinc.com/ns/doap#>.
-@prefix epp:   <http://lv2plug.in/ns/ext/port-props/#>.
+@prefix epp:   <http://lv2plug.in/ns/ext/port-props#>.
 @prefix foaf:  <http://xmlns.com/foaf/0.1/>.
 @prefix lv2:   <http://lv2plug.in/ns/lv2core#>.
 @prefix mod:   <http://moddevices.com/ns/mod#>.
@@ -11,7 +11,7 @@
 a lv2:FilterPlugin, lv2:Plugin;
 lv2:microVersion 24;
 lv2:minorVersion 9;
-lv2:optionalFeature lv2:hardRtCapable;
+lv2:optionalFeature lv2:hardRTCapable;
 mod:brand "CAPS";
 mod:label "AutoFilter";
 

@@ -1,6 +1,6 @@
 VERSION = 0.9.24
 
-PREFIX = /usr
+PREFIX = /usr/local
 DESTDIR =
 
 CXX ?= g++
@@ -22,10 +22,10 @@ OBJECTS = $(SOURCES:.cc=.o)
 
 PLUG   = ChorusI
 BUNDLE = mod-caps-$(PLUG).lv2
-ifndef LV2_PATH
-DEST = $(PREFIX)/lib/lv2/$(BUNDLE)
+ifndef LV2_DEST
+LV2DEST = $(PREFIX)/lib/lv2/$(BUNDLE)
 else
-DEST = $(LV2_PATH)/$(BUNDLE)
+LV2DEST = $(LV2_DEST)/$(BUNDLE)
 endif
 
 # targets following -------------------------------------------------------------
@@ -43,7 +43,7 @@ $(PLUG).so: $(OBJECTS)
 
 install: all
 	install -d $(DESTDIR)$(LV2DEST)
-	install -m 644 manifest.ttl $(PLUG).so $(PLUG).ttl $(DESTDIR)$(LV2DEST)
+	install -m 644 *.ttl *.so $(DESTDIR)$(LV2DEST)
 	cp -r modgui $(DESTDIR)$(LV2DEST)
 
 uninstall:

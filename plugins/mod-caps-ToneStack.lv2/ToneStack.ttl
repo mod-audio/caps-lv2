@@ -9,7 +9,7 @@
 a lv2:SimulatorPlugin, lv2:Plugin;
 lv2:microVersion 24;
 lv2:minorVersion 9;
-lv2:optionalFeature lv2:hardRtCapable;
+lv2:optionalFeature lv2:hardRTCapable;
 mod:brand "CAPS";
 mod:label "ToneStack";
 
@@ -28,9 +28,9 @@ source: http://quitte.de/dsp/caps.html#ToneStack
 lv2:port
 [
     a lv2:ControlPort, lv2:InputPort;
-    lv2:index 1;
+    lv2:index 0;
     lv2:default 0;
-    lv2:maximum 9;
+    lv2:maximum 8;
     lv2:minimum 0;
     lv2:name "Model";
     lv2:symbol "model";
@@ -41,7 +41,7 @@ lv2:port
         rdf:value 0;
     ],
     [
-        rdfs:label "Twin";
+        rdfs:label "Stanford";
         rdf:value 1;
     ],
     [
@@ -57,7 +57,7 @@ lv2:port
         rdf:value 4;
     ],
     [
-        rdfs:label "Stanford";
+        rdfs:label "Twin";
         rdf:value 5;
     ],
     [
@@ -71,11 +71,16 @@ lv2:port
     [
         rdfs:label "Porky";
         rdf:value 8;
-    ],
-    [
-        rdfs:label "5F6-A LT";
-        rdf:value 9;
     ];
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 1;
+    lv2:default 0.5;
+    lv2:maximum 1.0;
+    lv2:minimum 0.0;
+    lv2:name "Bass";
+    lv2:symbol "bass";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
@@ -83,8 +88,8 @@ lv2:port
     lv2:default 0.5;
     lv2:maximum 1.0;
     lv2:minimum 0.0;
-    lv2:name "Bass";
-    lv2:symbol "bass"
+    lv2:name "Mid";
+    lv2:symbol "mid";
 ],
 [
     a lv2:ControlPort, lv2:InputPort;
@@ -92,17 +97,14 @@ lv2:port
     lv2:default 0.5;
     lv2:maximum 1.0;
     lv2:minimum 0.0;
-    lv2:name "Mid";
-    lv2:symbol "mid"
+    lv2:name "Treble";
+    lv2:symbol "treble";
 ],
 [
-    a lv2:ControlPort, lv2:InputPort;
+    a lv2:AudioPort, lv2:InputPort;
     lv2:index 4;
-    lv2:default 0.5;
-    lv2:maximum 1.0;
-    lv2:minimum 0.0;
-    lv2:name "Treble";
-    lv2:symbol "treble"
+    lv2:name "In";
+    lv2:symbol "in";
 ],
 [
     a lv2:AudioPort, lv2:InputPort;
