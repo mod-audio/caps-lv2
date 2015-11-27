@@ -2,6 +2,8 @@ language:
     - c
 compiler:
     - gcc
+notifications:
+      irc: "chat.freenode.net#moddevices"
 before_script:
     - bash .create_lv2_env.sh
     - git clone https://github.com/moddevices/lv2bm
