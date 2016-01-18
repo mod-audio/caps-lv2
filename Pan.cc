@@ -35,8 +35,12 @@
 void
 Wider::init()
 {
-	pan = FLT_MAX; /* invalid setting to make sure gain is updated */
+	pan = 0.0;
 	width = 1.0;
+
+	double phi = 1.0*M_PI*.25;
+	gain_l = cos(phi);
+	gain_r = sin(phi);
 }
 
 void
