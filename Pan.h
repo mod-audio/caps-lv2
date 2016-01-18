@@ -1,11 +1,11 @@
 /*
 	Pan.h
-	
+
 	Copyright 2004-11 Tim Goetze <tim@quitte.de>
-	
+
 	http://quitte.de/dsp/
 
-	Panorama with width synthesis, 
+	Panorama with width synthesis,
 	stereo image width reduction
 
 */
@@ -37,7 +37,7 @@ class Wider
 {
 	public:
 		sample_t pan;
-
+		sample_t width;
 		sample_t gain_l, gain_r;
 
 		DSP::IIR2<sample_t> ap[3];

@@ -1,8 +1,8 @@
 /*
 	Pan.cc
-	
+
 	Copyright 2002-11 Tim Goetze <tim@quitte.de>
-	
+
 	http://quitte.de/dsp/
 
 	Stereo image synthesis (inspired by the Orban 245F unit)
@@ -40,7 +40,7 @@ Wider::init()
 
 void
 Wider::activate()
-{ 
+{
 	set_pan (getport(1));
 	float fc[3] = { 150, 900, 5000 };
 	for (int i = 0; i < 3; ++i)
@@ -51,8 +51,10 @@ inline void
 Wider::set_pan (sample_t p)
 {
 	if (pan == p) return;
-
+	sample_t opan;
+	opan = pan;
 	pan = p;
+	pan = (opan+pan)*0.5;
 	double phi = (pan + 1)*M_PI*.25;
 	gain_l = cos(phi);
 	gain_r = sin(phi);
@@ -63,8 +65,9 @@ Wider::cycle (uint frames)
 {
 	sample_t p = getport(0);
 	if (p != pan) set_pan (p);
-
-	sample_t width = getport(1); 
+	sample_t owidth = width;
+	width = getport(1);
+	width = (owidth+width)*0.5;
 
 	/* need to limit width as pan increases in order to prevent
 	 * excessive phase cancellation */
@@ -97,11 +100,11 @@ Wider::cycle (uint frames)
 PortInfo
 Wider::port_info [] =
 {
-	{ "pan", INPUT | CONTROL, {DEFAULT_0, -1, 1} }, 
-	{ "width", INPUT | CONTROL, {DEFAULT_1, 0, 1} }, 
+	{ "pan", INPUT | CONTROL, {DEFAULT_0, -1, 1} },
+	{ "width", INPUT | CONTROL, {DEFAULT_1, 0, 1} },
 
-	{ "in", INPUT | AUDIO }, 
-	{	"out.l", OUTPUT | AUDIO	}, 
+	{ "in", INPUT | AUDIO },
+	{	"out.l", OUTPUT | AUDIO	},
 	{ "out.r", OUTPUT | AUDIO }
 };
 
@@ -137,7 +140,7 @@ Narrower::cycle (uint frames)
 		{
 			sample_t xl = sl[i];
 			sample_t xr = sr[i];
-			
+
 			sample_t m = xl + xr, s = xl - xr;
 
 			m += strength * s;
@@ -150,7 +153,7 @@ Narrower::cycle (uint frames)
 			dr[i] = xr;
 		}
 	}
-	else 
+	else
 	{
 		sample_t dry = 1 - strength, wet = strength;
 
@@ -158,12 +161,12 @@ Narrower::cycle (uint frames)
 		{
 			sample_t xl = sl[i];
 			sample_t xr = sr[i];
-			
+
 			sample_t m = wet * (xl + xr) * .5;
-			
+
 			xl *= dry;
 			xr *= dry;
-			
+
 			xl += m;
 			xr += m;
 
@@ -178,13 +181,13 @@ Narrower::cycle (uint frames)
 PortInfo
 Narrower::port_info [] =
 {
-	{	"mode", INPUT | CONTROL, {INTEGER | DEFAULT_0, 0, 1}, 
-		"{0:'crossfeed mixing',1:'mid/side processing',}" }, 
-	{ "strength", INPUT | CONTROL | GROUP, {DEFAULT_LOW, 0, 1} }, 
+	{	"mode", INPUT | CONTROL, {INTEGER | DEFAULT_0, 0, 1},
+		"{0:'crossfeed mixing',1:'mid/side processing',}" },
+	{ "strength", INPUT | CONTROL | GROUP, {DEFAULT_LOW, 0, 1} },
 
-	{ "in.l", INPUT | AUDIO }, 
-	{ "in.r", INPUT | AUDIO }, 
-	{ "out.l", OUTPUT | AUDIO }, 
+	{ "in.l", INPUT | AUDIO },
+	{ "in.r", INPUT | AUDIO },
+	{ "out.l", OUTPUT | AUDIO },
 	{	"out.r", OUTPUT | AUDIO	}
 };
 
@@ -200,4 +203,3 @@ Descriptor<Narrower>::setup()
 	/* fill port info and vtable */
 	autogen();
 }
-
