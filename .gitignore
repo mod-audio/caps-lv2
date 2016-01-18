@@ -22,3 +22,5 @@
 .depend
 .tmp
 depend
+defines.make
+lv2.h

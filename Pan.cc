@@ -36,6 +36,7 @@ void
 Wider::init()
 {
 	pan = FLT_MAX; /* invalid setting to make sure gain is updated */
+	width = 1.0;
 }
 
 void
@@ -51,10 +52,7 @@ inline void
 Wider::set_pan (sample_t p)
 {
 	if (pan == p) return;
-	sample_t opan;
-	opan = pan;
-	pan = p;
-	pan = (opan+pan)*0.5;
+	pan = (pan+p)*0.5;
 	double phi = (pan + 1)*M_PI*.25;
 	gain_l = cos(phi);
 	gain_r = sin(phi);
@@ -65,13 +63,11 @@ Wider::cycle (uint frames)
 {
 	sample_t p = getport(0);
 	if (p != pan) set_pan (p);
-	sample_t owidth = width;
-	width = getport(1);
-	width = (owidth+width)*0.5;
+	width = (width+getport(1))*0.5;
 
 	/* need to limit width as pan increases in order to prevent
 	 * excessive phase cancellation */
-	width *= 1 - fabs (p);
+	width *= 1 - fabs (pan);
 	width *= width;
 
 	sample_t * src = ports[2];
