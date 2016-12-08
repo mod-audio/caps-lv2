@@ -69,7 +69,7 @@ AutoFilter::activate()
 void
 AutoFilter::cycle (uint frames)
 {
-	div_t qr = div (frames, blocksize);
+	div_t qr = div ((int)frames, (int)blocksize);
 	int blocks = qr.quot;
 	if (qr.rem) ++blocks;
 	double over_blocks = 1./blocks;
