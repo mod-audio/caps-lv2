@@ -1,7 +1,7 @@
 #!/bin/bash
 
-wget http://mirrors.kernel.org/ubuntu/pool/universe/l/lv2/lv2-dev_1.10.0~dfsg1-1_amd64.deb
-sudo dpkg -i lv2-dev_1.10.0~dfsg1-1_amd64.deb
+wget http://mirrors.kernel.org/ubuntu/pool/universe/l/lv2/lv2-dev_1.14.0~dfsg1-1_amd64.deb
+sudo dpkg -i lv2-dev_1.14.0~dfsg1-1_amd64.deb
 
 wget http://mirrors.kernel.org/ubuntu/pool/universe/l/lv2core/lv2core_6.0+dfsg0-3_all.deb
 sudo dpkg -i lv2core_6.0+dfsg0-3_all.deb
