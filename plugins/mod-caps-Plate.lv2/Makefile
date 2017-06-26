@@ -10,12 +10,12 @@ ifdef DEBUG
 OPTS = -g -DDEBUG
 else
 # OPTS = -O2 -Wall -fPIC -DPIC
-OPTS = -O3 -ffast-math -funroll-loops -Wall -fPIC -DPIC
+OPTS = -O3 -ffast-math -funroll-loops -Wall -fPIC -DPIC -fdata-sections -ffunction-sections
 LDFLAGS += -Wl,--strip-all
 endif
 
-CXXFLAGS += $(OPTS) -I../..
-LDFLAGS += -shared -Wl,--no-undefined
+CXXFLAGS += $(OPTS) -I../.. -fvisibility=hidden -fvisibility-inlines-hidden
+LDFLAGS += -shared -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--no-undefined
 
 SOURCES = ../../Reverb.cc ../../dsp/polynomials.cc interface.cc
 OBJECTS = $(SOURCES:.cc=.o)
