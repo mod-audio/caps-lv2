@@ -67,7 +67,7 @@ ladspa_descriptor (unsigned long i) { return i < N ? descriptors[i] : 0; }
 
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor *
-lv2_descriptor(uint32_t i) { return i < N ? lv2_descriptors[i] : 0; }
+lv2_descriptor(uint32_t i) { return i < N ? static_cast<LV2_Descriptor*>(lv2_descriptors[i]) : 0; }
 
 __attribute__ ((constructor)) 
 void caps_so_init()

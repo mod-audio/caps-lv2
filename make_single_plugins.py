@@ -62,7 +62,7 @@ const LV2_Descriptor *
 lv2_descriptor(uint32_t i)
 {
     static const Descriptor<__EFFECT__> lv2_descriptor(CAPS_URI "__EFFECT__");
-    return i == 0 ? &lv2_descriptor : 0;
+    return i == 0 ? static_cast<const LV2_Descriptor*>(&lv2_descriptor) : 0;
 }
 """
 
