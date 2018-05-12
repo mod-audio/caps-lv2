@@ -47,11 +47,9 @@
 	#define fistp(f,i) \
 		__asm__ ("fistpl %0" : "=m" (i) : "t" (f) : "st")
 #else /* ! __i386__ */
-	#define fstcw(i)
-	#define fldcw(i)
+	#include <cstdint>
 
-	#define fistp(f,i) \
-			i = (int) f
+	inline void fistp(float f, int32_t& i) { i = static_cast<int32_t>(f); }
 #endif
 
 namespace DSP {
@@ -67,12 +65,13 @@ fast_trunc (float f)
 class FPTruncateMode
 {
 	public:
-		int cw0, cw1; /* fp control word */
+#ifdef __i386__
+		int cw0; /* fp control word */
 
 		FPTruncateMode()
 			{
 				fstcw (cw0);
-				cw1 = cw0 | 0xC00;
+				const int cw1 = cw0 | 0xC00;
 				fldcw (cw1);
 			}
 
@@ -80,6 +79,11 @@ class FPTruncateMode
 			{
 				fldcw (cw0);
 			}
+#else
+	// Avoid warnings about unused variables
+	FPTruncateMode() { (void)0; }
+	~FPTruncateMode() { (void)0; }
+#endif
 };
 
 } /* namespace DSP */
