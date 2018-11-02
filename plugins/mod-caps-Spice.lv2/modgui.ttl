@@ -11,7 +11,7 @@
         modgui:brand "CAPS" ;
         modgui:label "Spice" ;
         modgui:model "boxy" ;
-        modgui:panel "5-knobs" ;
+        modgui:panel "7-knobs" ;
         modgui:color "red" ;
         modgui:knob "black" ;
         modgui:port [
@@ -28,11 +28,19 @@
             lv2:name "lo.gain" ;
         ] , [
             lv2:index 3 ;
+            lv2:symbol "lovol" ;
+            lv2:name "lo.vol" ;
+        ] , [
+            lv2:index 4 ;
             lv2:symbol "hif" ;
             lv2:name "hi.freq" ;
         ] , [
-            lv2:index 4 ;
+            lv2:index 5 ;
             lv2:symbol "higain" ;
             lv2:name "hi.gain" ;
+        ] , [
+            lv2:index 6 ;
+            lv2:symbol "hivol" ;
+            lv2:name "hi.vol" ;
         ] ;
     ] .
