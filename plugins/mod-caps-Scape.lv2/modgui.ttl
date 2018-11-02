@@ -11,7 +11,7 @@
         modgui:brand "CAPS" ;
         modgui:label "Scape" ;
         modgui:model "boxy" ;
-        modgui:panel "4-knobs" ;
+        modgui:panel "5-knobs" ;
         modgui:color "zinc" ;
         modgui:knob "black" ;
         modgui:port [
@@ -20,15 +20,19 @@
             lv2:name "Time" ;
         ] , [
             lv2:index 1 ;
-            lv2:symbol "divider" ;
-            lv2:name "Division" ;
+            lv2:symbol "div" ;
+            lv2:name "Div" ;
         ] , [
             lv2:index 2 ;
             lv2:symbol "feedback" ;
             lv2:name "Feedback" ;
         ] , [
             lv2:index 3 ;
+            lv2:symbol "q" ;
+            lv2:name "Q" ;
+        ] , [
+            lv2:index 4 ;
             lv2:symbol "blend" ;
-            lv2:name "Mix" ;
+            lv2:name "Blend" ;
         ] ;
     ] .
