@@ -35,8 +35,9 @@ class LP1
 {
 	public:
 		T a0, b1, y1;
+		inline T process(T x) { return y1 = a0*x + b1*y1; }
 
-		LP1 (double d = 1.)
+		LP1(double d = 1.)
 			{
 				set (d);
 				y1 = 0.;
@@ -45,23 +46,21 @@ class LP1
 		sample_t last() {return y1;}
 		inline void reset() { y1 = 0.; }
 		
-		inline void decay (T d)
+		inline void decay(T d)
 			{
 				a0 *= d;
 				b1 = 1. - a0;
 			}
 
-		inline void set_f (T fc) 
+		inline void set_f(T fc) 
 			{ 
-				set (1 - exp(-2*M_PI*fc)); 
+				set(1 - exp(-2*M_PI*fc)); 
 			}
-		inline void set (T d)
+		inline void set(T d)
 			{
 				a0 = d;
 				b1 = 1 - d;
 			}
-
-		inline T process (T x) { return y1 = a0*x + b1*y1; }
 };
 
 template <class T>
@@ -69,19 +68,19 @@ class HP1
 {
 	public:
 		T a0, a1, b1, x1, y1;
-
-		HP1 (T d = 1.)
+		T process (T x)
 			{
-				set (d);
-				reset();
+				y1 = a0*x + a1*x1 + b1*y1;
+				x1 = x;
+				return y1;
 			}
+
+		HP1 (T d = 1.) { set (d); reset(); }
+		void reset() { x1 = y1 = 0; }
 
 		sample_t last() {return y1;}
 
-		void set_f (T f)
-			{
-				set (exp (-2*M_PI*f));
-			}
+		void set_f (T f) { set(exp(-2*M_PI*f)); }
 
 		inline void set (T d)
 			{
@@ -90,23 +89,26 @@ class HP1
 				b1 = d;
 			}
 
-		inline T process (T x)
+		void identity() { a0=1; a1=b1=0; }
+};
+
+template <class T>
+class HP1b
+{
+	public:
+		T a,x1,y;
+		T process (T x)
 			{
-				y1 = a0*x + a1*x1 + b1*y1;
+				y = a*(y + x - x1);
 				x1 = x;
-				return y1;
+				return y;
 			}
 
-		void identity()
-			{
-				a0=1;
-				a1=b1=0;
-			}
+		HP1b (T d = 1.) { set (d); reset(); }
+		void reset() { x1 = y = 0; }
 
-		void reset()
-			{
-				x1 = y1 = 0;
-			}
+		void set_f (T f) { set(exp(-2*M_PI*f)); }
+		inline void set (T d) { a = d; }
 };
 
 } /* namespace DSP */

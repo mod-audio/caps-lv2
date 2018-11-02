@@ -39,25 +39,19 @@ class White
 		uint32 b;
 
 		White()
-			{
-				b = 0x1fff7777;
-			}
+			{ b = 0x1fff7777; }
 
 		void init (float f)
-			{
-				b = (uint32) (f * (float) 0x1fff7777);
-			}
+			{ b = (uint32) (f * (float) 0x1fff7777); }
 		
 		sample_t abs()
-			{
-				return fabs (get());
-			}
+			{ return fabs (get()); }
 
 		/* 32-bit version */
 		sample_t get()
 			{
 				#define BIT(y) ((b << (31 - y)) & 0x80000000)
-				b = ((BIT (28) ^ BIT (27) ^ BIT (1) ^ BIT (0))) | (b >> 1);
+				b = ((BIT(28) ^ BIT(27) ^ BIT(1) ^ BIT(0))) | (b >> 1);
 				return (4.6566128730773926e-10 * (sample_t) b) - 1;
 				#undef BIT
 			}
@@ -67,7 +61,7 @@ class White
 		sample_t get_31()
 			{
 				#define BIT(y) ((b << (30 - y)) & 0x40000000)
-				b = ((BIT (3) ^ BIT (0))) | (b >> 1);
+				b = ((BIT(3) ^ BIT(0))) | (b >> 1);
 				return (9.3132257461547852e-10 * (sample_t) b) - 1;
 				#undef BIT
 			}

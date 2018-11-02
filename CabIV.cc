@@ -1,7 +1,7 @@
 /*
 	CabIV.cc
 	
-	Copyright 2002-14 Tim Goetze <tim@quitte.de>
+	Copyright 2002-18 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -196,12 +196,7 @@ template <> void
 Descriptor<CabinetIV>::setup()
 {
 	Label = "CabinetIV";
-
 	Name = CAPS "CabinetIV - Idealised loudspeaker cabinet";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2012";
-
-	/* fill port info and vtable */
 	autogen();
 }
 

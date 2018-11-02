@@ -310,7 +310,7 @@
 			</ladspa:InputControlPort>
 		</ladspa:hasPort> 
 		<ladspa:hasPort>
-			<ladspa:InputControlPort rdf:about="&ladspa;1789.14" 
+			<ladspa:InputControlPort rdf:about="&ladspa;1789.16" 
 					ladspa:hasLabel="cab">
 				<ladspa:hasScale><ladspa:Scale> 
 						<ladspa:hasPoint><ladspa:Point 
@@ -694,19 +694,19 @@
 			rdf:about='http://quitte.de/dsp/caps.html#Scape'> 
 		<ladspa:hasPort>
 			<ladspa:InputControlPort rdf:about="&ladspa;2588.1" 
-					ladspa:hasLabel="divider">
+					ladspa:hasLabel="div">
 				<ladspa:hasScale><ladspa:Scale> 
 						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="2" 
-								ladspa:hasLabel="eighths" />
+								ladspa:hasLabel="♪♪" />
 						</ladspa:hasPoint> 
 						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="3" 
-								ladspa:hasLabel="triplets" />
+								ladspa:hasLabel="♪♪♪" />
 						</ladspa:hasPoint> 
 						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="4" 
-								ladspa:hasLabel="sixteenths" />
+								ladspa:hasLabel="♬♬" />
 						</ladspa:hasPoint> 
 					</ladspa:Scale></ladspa:hasScale>
 			</ladspa:InputControlPort>
@@ -984,6 +984,29 @@
 						<ladspa:hasPoint><ladspa:Point 
 								rdf:value="3" 
 								ladspa:hasLabel="dirac" />
+						</ladspa:hasPoint> 
+					</ladspa:Scale></ladspa:hasScale>
+			</ladspa:InputControlPort>
+		</ladspa:hasPort> 
+		<ladspa:hasPort>
+			<ladspa:InputControlPort rdf:about="&ladspa;1769.2" 
+					ladspa:hasLabel="div">
+				<ladspa:hasScale><ladspa:Scale> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="1" 
+								ladspa:hasLabel="♩" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="2" 
+								ladspa:hasLabel="♪♪" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="3" 
+								ladspa:hasLabel="♪♪♪" />
+						</ladspa:hasPoint> 
+						<ladspa:hasPoint><ladspa:Point 
+								rdf:value="4" 
+								ladspa:hasLabel="♬♬" />
 						</ladspa:hasPoint> 
 					</ladspa:Scale></ladspa:hasScale>
 			</ladspa:InputControlPort>

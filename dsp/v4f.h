@@ -1,7 +1,7 @@
 /*
 	v4f.h
 	
-	Copyright 2011-13 Tim Goetze <tim@quitte.de>
+	Copyright 2011-14 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -35,7 +35,7 @@
 #endif
 
 /* caution, gcc apparently doesnt always honour the alignment: segfault */
-typedef float v4f_t __attribute__ ((vector_size (16), aligned(16))); 
+typedef float v4f_t __attribute__ ((vector_size(16), aligned(16))); 
 
 inline v4f_t v4f (float x) 
 	{ v4f_t v = {x,x,x,x}; return v; }
@@ -51,6 +51,10 @@ inline v4f_t v4f (float *x)
 #ifdef __SSE__
 #define v4f_shuffle(x,s3,s2,s1,s0) \
 	_mm_shuffle_ps(x,x,((s0)<<6|(s1)<<4|(s2)<<2|s3))
+#define v4f_shuffle2(x,y,s3,s2,s1,s0) \
+	_mm_shuffle_ps(x,y,((s0)<<6|(s1)<<4|(s2)<<2|s3))
+#define v4f_max(x,y) _mm_max_ps(x,y)
+#define v4f_min(x,y) _mm_min_ps(x,y)
 #else
 inline v4f_t v4f_shuffle(v4f_t x, int s3, int s2, int s1, int s0) 
 {
@@ -85,6 +89,7 @@ v4f_t v4f_map (v4f_t x)
 #define v4f_half ((v4f_t) {.5, .5, .5, .5})
 #define v4f_1 ((v4f_t) {1, 1, 1, 1})
 #define v4f_2 ((v4f_t) {2, 2, 2, 2})
+#define v4f_halfpi ((v4f_t) {.5*M_PI, .5*M_PI, .5*M_PI, .5*M_PI})
 #define v4f_pi ((v4f_t) {M_PI, M_PI, M_PI, M_PI})
 #define v4f_2pi ((v4f_t) {2*M_PI, 2*M_PI, 2*M_PI, 2*M_PI})
 

@@ -1,7 +1,7 @@
 /*
 	Pan.cc
 
-	Copyright 2002-11 Tim Goetze <tim@quitte.de>
+	Copyright 2002-15 Tim Goetze <tim@quitte.de>
 
 	http://quitte.de/dsp/
 
@@ -88,8 +88,8 @@ Wider::cycle (uint frames)
 
 		s *= width;
 
-		sample_t l = m - s;
-		sample_t r = m + s;
+		sample_t l = m + s;
+		sample_t r = m - s;
 		dl[i] = gain_l*l;
 		dr[i] = gain_r*r;
 	}
@@ -112,12 +112,7 @@ template <> void
 Descriptor<Wider>::setup()
 {
 	Label = "Wider";
-
 	Name = CAPS "Wider - Stereo image synthesis";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2011-13";
-
-	/* fill port info and vtable */
 	autogen();
 }
 
@@ -195,11 +190,6 @@ template <> void
 Descriptor<Narrower>::setup()
 {
 	Label = "Narrower";
-
 	Name = CAPS "Narrower - Stereo image width reduction";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2011-12";
-
-	/* fill port info and vtable */
 	autogen();
 }

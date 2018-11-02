@@ -117,12 +117,7 @@ template <> void
 Descriptor<ChorusI>::setup()
 {
 	Label = "ChorusI";
-
 	Name = CAPS "ChorusI - Mono chorus/flanger";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "GPL, 2004-13";
-
-	/* fill port info and vtable */
 	autogen();
 }
 

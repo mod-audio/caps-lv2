@@ -53,7 +53,7 @@ DSP::ToneStack::presets[] = {
 	{250 k, 250 k, 4.8 k, 100 k, 250 pF, 100 nF, 47 nF}, /* 64 Princeton AA1164 */
 	{250 k, 1 M, 25 k, 47 k, 600 pF, 20 nF, 20 nF}, /* Mesa Dual Rect. 'Orange' */
 	/* Vox -- R3 is fixed (circuit differs anyway) */
-	{1 M, 1 M, 20 k, 100 k, 50 pF, 22 nF, 22 nF}, /* 59/86 Vox AC-30 */
+	{1 M, 1 M, 10 k, 100 k, 50 pF, 22 nF, 22 nF}, /* Vox "top boost" */
 	
 	{220 k, 1 M, 22 k, 33 k, 470 pF, 22 nF, 22 nF}, /* 59/81 JCM-800 Lead 100 2203 */
 	{250 k, 250 k, 10 k, 100 k, 120 pF, 100 nF, 47 nF}, /* 69 Twin Reverb AA270 */
@@ -121,13 +121,9 @@ template <> void
 Descriptor<ToneStack>::setup()
 {
 	Label = "ToneStack";
-
 	Name = CAPS "ToneStack - Classic amplifier tone stack emulation";
-	Maker = "David T. Yeh <dtyeh@ccrma.stanford.edu>";
-	Copyright = "2006-12";
-
-	/* fill port info and vtable */
 	autogen();
+	Maker = "David T. Yeh <dtyeh@ccrma.stanford.edu>";
 }
 
 

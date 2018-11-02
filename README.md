@@ -1,4 +1,4 @@
-caps-lv2 0.9.24
+caps-lv2 0.9.26
 ===============
 
 LV2 port for the [CAPS Audio Plugin Suite](http://quitte.de/dsp/caps.html)

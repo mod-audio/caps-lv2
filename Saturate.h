@@ -1,7 +1,7 @@
 /*
 	Saturate.h
 	
-	Copyright 2004-13 Tim Goetze <tim@quitte.de>
+	Copyright 2004-16 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -90,6 +90,8 @@ class Spice
 	public:
 		Splitter split[2];
 		DSP::IIR2<sample_t> shape[2];
+		struct {float lo, hi;} vol;
+
 		DSP::ChebPoly<5> cheby; 
 
 		uint remain;
@@ -112,6 +114,8 @@ class SpiceX2
 			Splitter split[2];
 			DSP::IIR2<sample_t> shape[2];
 		} chan[2];
+		struct {float lo, hi;} vol;
+
 		DSP::ChebPoly<5> cheby; 
 
 		uint remain;

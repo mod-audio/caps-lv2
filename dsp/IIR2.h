@@ -1,7 +1,7 @@
 /*
 	dsp/IIR2.h
 	
-	Copyright 2003-14 Tim Goetze <tim@quitte.de>
+	Copyright 2003-16 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -71,7 +71,11 @@ class IIR2
 				double is = gain(f);
 				if (!is) /* I'm afraid I can't do that, Dave */
 					return;
-				g /= is;
+				scale(g/is);
+			}
+
+		void scale(double g)
+			{
 				a[0] *= g;
 				a[1] *= g;
 				a[2] *= g;

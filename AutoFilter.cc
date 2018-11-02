@@ -1,7 +1,7 @@
 /*
 	AutoFilter.cc
 	
-	Copyright 2002-12 Tim Goetze <tim@quitte.de>
+	Copyright 2002-18 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -86,9 +86,8 @@ AutoFilter::cycle (uint frames)
 	float range = getport(4);
 	float env = getport(5);
 
-	lorenz.set_rate (2.268e-05*fs * .6*sq (getport(6)));
+	lorenz.set_rate (2.268e-05*fs*.3*sq(getport(6)));
 	float x = getport(7), z = 1-x;
-
 
 	sample_t * s = ports[8];
 	sample_t * d = ports[9];
@@ -122,14 +121,14 @@ AutoFilter::cycle (uint frames)
 		/* filter it */
 		if (svf == 1)
 		{
-			svf1.set_f_Q (fmod, Q);
+			svf1.set_f_Q(fmod, Q);
 			double g = 1.8;
 			for (uint i = 0; i < n; ++i)
 				d[i] = svf1.process<DSP::Polynomial::tanh>(s[i]+normal,g);
 		}
 		else if (svf == 2)
 		{
-			svf2.set_f_Q (fmod, Q);
+			svf2.set_f_Q(fmod, Q);
 			double g = .84*(1-Q) + .21;
 			for (uint i = 0; i < n; ++i)
 				d[i] = svf2.process<DSP::Polynomial::tanh>(s[i]+normal,g);
@@ -154,13 +153,13 @@ AutoFilter::port_info [] =
 	{ "filter", CTRL_IN | GROUP, {DEFAULT_1 | INTEGER, 0, 1}, 
 		"{0:'breathy',1:'fat'}", }, 
 	/* 2 */
-	{ "f (Hz)", CTRL_IN | GROUP, {LOG | DEFAULT_HIGH, 20, 3400} }, 
+	{ "f (Hz)", CTRL_IN | GROUP, {LOG | DEFAULT_HIGH, 20, 3800} }, 
 	{ "Q", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
 	/* 4 */
 	{ "depth", CTRL_IN | GROUP, {DEFAULT_1, 0, 1} }, 
 	{ "lfo/env", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
 	{ "rate", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} }, 
-	{ "x/z", CTRL_IN, {DEFAULT_1, 0, 1} }, 
+	{ "shape", CTRL_IN, {DEFAULT_1, 0, 1} }, 
 
 	/* 8 */
 	{ "in", AUDIO_IN}, 
@@ -171,12 +170,7 @@ template <> void
 Descriptor<AutoFilter>::setup()
 {
 	Label = "AutoFilter";
-
 	Name = CAPS "AutoFilter - Self-modulating resonant filter";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2004-14";
-
-	/* fill port info and vtable */
 	autogen();
 }
 
