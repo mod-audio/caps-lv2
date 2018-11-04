@@ -28,8 +28,8 @@
             lv2:name "lo.gain" ;
         ] , [
             lv2:index 3 ;
-            lv2:symbol "lovol" ;
-            lv2:name "lo.vol" ;
+            lv2:symbol "lovolume" ;
+            lv2:name "Lo.Vol" ;
         ] , [
             lv2:index 4 ;
             lv2:symbol "hif" ;
@@ -40,7 +40,7 @@
             lv2:name "hi.gain" ;
         ] , [
             lv2:index 6 ;
-            lv2:symbol "hivol" ;
-            lv2:name "hi.vol" ;
+            lv2:symbol "hivolume" ;
+            lv2:name "Hi.Vol" ;
         ] ;
     ] .

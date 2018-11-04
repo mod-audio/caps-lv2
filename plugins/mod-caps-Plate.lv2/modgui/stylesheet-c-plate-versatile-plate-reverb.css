@@ -37,6 +37,14 @@
     width:421px;
 }
 
+/* PORTS
+================================================ */
+
+.mod-pedal-boxy{{{cns}}}.mod-boxy50 .mod-pedal-input,
+.mod-pedal-boxy{{{cns}}}.mod-boxy50 .mod-pedal-output {
+    top: 66px;
+}
+
 /* = PLUGIN'S AUTHOR
 ================================================ */
 .mod-pedal-boxy{{{cns}}} .mod-plugin-brand {
@@ -68,6 +76,10 @@
 
 .mod-pedal-boxy{{{cns}}}.mod-boxy50 .mod-plugin-brand {
   top:16px;
+}
+
+.mod-pedal-boxy{{{cns}}}.mod-one-footswitch-presets .mod-plugin-brand {
+  top:12px;
 }
 
 
@@ -123,6 +135,10 @@
   top:105px;
 }
 
+.mod-pedal-boxy{{{cns}}}.mod-one-footswitch-presets .mod-light {
+  top:120px;
+}
+
 
 /* = FOOTSWITCH
 ================================================ */
@@ -155,6 +171,10 @@
     top:140px;
 }
 
+.mod-pedal-boxy{{{cns}}}.mod-one-footswitch-presets .mod-footswitch {
+    top:170px;
+}
+
 
 /* = KNOBS
 ================================================ */
@@ -166,6 +186,15 @@
 }
 .mod-pedal-boxy{{{cns}}} .top {
     margin-top:0px !important;
+}
+
+.mod-pedal-boxy{{{cns}}}.mod-one-footswitch-presets .mod-control-group {
+    margin:10px !important;
+    top:75px;
+}
+
+.mod-pedal-boxy{{{cns}}}.mod-one-footswitch-presets .mod-control-group > select {
+    width:100%;
 }
 
 .mod-pedal-boxy{{{cns}}} .mod-control-group .mod-knob {
@@ -344,7 +373,6 @@
     display:block;
     font-size:11px;
     font-weight:bold;
-    height:7px;
     line-height:1;
     margin-bottom:3px;
     overflow:hidden;

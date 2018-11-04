@@ -11,7 +11,7 @@
         modgui:brand "CAPS" ;
         modgui:label "Click" ;
         modgui:model "boxy" ;
-        modgui:panel "1-select-4-knobs" ;
+        modgui:panel "1-select-3-knobs" ;
         modgui:color "wood1" ;
         modgui:knob "black" ;
         modgui:port [
@@ -21,18 +21,14 @@
         ] , [
             lv2:index 1 ;
             lv2:symbol "bpm" ;
-            lv2:name "rate" ;
+            lv2:name "BPM" ;
         ] , [
             lv2:index 2 ;
-            lv2:symbol "div" ;
-            lv2:name "Div" ;
+            lv2:symbol "tone" ;
+            lv2:name "Tone" ;
         ] , [
             lv2:index 3 ;
             lv2:symbol "vol" ;
-            lv2:name "level" ;
-        ] , [
-            lv2:index 4 ;
-            lv2:symbol "tone" ;
-            lv2:name "Tone" ;
+            lv2:name "Volume" ;
         ] ;
     ] .

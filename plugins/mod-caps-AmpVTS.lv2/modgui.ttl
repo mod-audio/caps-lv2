@@ -20,39 +20,39 @@
             lv2:name "Tonestack" ;
         ] , [
             lv2:index 1 ;
-            lv2:symbol "low_cut" ;
-            lv2:name "Low cut" ;
-        ] , [
-            lv2:index 2 ;
-            lv2:symbol "bass" ;
-            lv2:name "Bass" ;
-        ] , [
-            lv2:index 3 ;
-            lv2:symbol "mid" ;
-            lv2:name "Mid" ;
-        ] , [
-            lv2:index 4 ;
-            lv2:symbol "treble" ;
-            lv2:name "Treble" ;
-        ] , [
-            lv2:index 5 ;
             lv2:symbol "gain" ;
             lv2:name "Gain" ;
         ] , [
-            lv2:index 6 ;
+            lv2:index 2 ;
             lv2:symbol "bright" ;
             lv2:name "Bright" ;
         ] , [
+            lv2:index 3 ;
+            lv2:symbol "power" ;
+            lv2:name "Power" ;
+        ] , [
+            lv2:index 4 ;
+            lv2:symbol "tonestack" ;
+            lv2:name "Tonestack" ;
+        ] , [
+            lv2:index 5 ;
+            lv2:symbol "bass" ;
+            lv2:name "Bass" ;
+        ] , [
+            lv2:index 6 ;
+            lv2:symbol "mid" ;
+            lv2:name "Mid" ;
+        ] , [
             lv2:index 7 ;
+            lv2:symbol "treble" ;
+            lv2:name "Treble" ;
+        ] , [
+            lv2:index 8 ;
             lv2:symbol "attack" ;
             lv2:name "Attack" ;
         ] , [
-            lv2:index 8 ;
+            lv2:index 9 ;
             lv2:symbol "squash" ;
             lv2:name "Squash" ;
-        ] , [
-            lv2:index 9 ;
-            lv2:symbol "power" ;
-            lv2:name "Power" ;
         ] ;
     ] .
