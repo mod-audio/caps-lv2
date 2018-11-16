@@ -1,4 +1,4 @@
-VERSION = 0.9.24
+VERSION = 0.9.26
 
 PREFIX = /usr/local
 DESTDIR =
@@ -7,7 +7,7 @@ CXX ?= g++
 STRIP ?= strip
 
 ifdef DEBUG
-OPTS = -g -DDEBUG
+OPTS = -fPIC -DPIC -g -DDEBUG
 else
 # OPTS = -O2 -Wall -fPIC -DPIC
 OPTS = -O3 -ffast-math -funroll-loops -Wall -fPIC -DPIC -fdata-sections -ffunction-sections
