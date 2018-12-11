@@ -1,7 +1,7 @@
 /*
 	CabIII.cc
 	
-	Copyright 2002-14 Tim Goetze <tim@quitte.de>
+	Copyright 2002-18 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -115,12 +115,7 @@ template <> void
 Descriptor<CabinetIII>::setup()
 {
 	Label = "CabinetIII";
-
 	Name = CAPS "CabinetIII - Simplistic loudspeaker cabinet emulation";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2002-14";
-
-	/* fill port info and vtable */
 	autogen();
 }
 

@@ -1,7 +1,7 @@
 /*
 	dsp/v4f_FIR.h
 	
-	Copyright 2003-12 Tim Goetze <tim@quitte.de>
+	Copyright 2003-14 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -164,6 +164,77 @@ class FIRv4
 				memset (data() + N/4, 0, 4*N * sizeof (float));
 			}
 };
+
+#if 0
+template <int N>
+struct FIRv4b
+{
+	enum {M=(N*4)-1};
+	v4f_t x4[N];
+	v4f_t c4[4][N];
+	int z;
+
+	FIRv4b()
+		{
+			z = 0;
+			reset();
+		}
+
+	void halfband()
+		{
+			float *c0 = (float*) c4[0];
+			for(int i=0; i<2*N; ++i)
+			{
+				double x = i-2*N+.5;
+				double w = 1;
+				c0[i] = c0[M-i] = w*w*sin(3*x*M_PI)/(x*M_PI);
+			}
+			DSP::kaiser<DSP::apply_window> (c0, 4*N, 6.4);
+			double s = 0; 
+			for(int i=0; i<4*N; ++i) 
+				s += c0[i];
+			s = 1./s; /* normalise */
+			for(int i=0; i<4*N; ++i)
+				c0[i] = 0 ? i : s*c0[i];
+			setkernel(c0);
+			reset();
+		}
+
+	void setkernel(float *k)
+		{
+			float *c0 = (float*) c4[0];
+			for(int i=0; i<4*N; ++i)
+				c0[i] = k[i];
+			for(int j=1; j<4; ++j)
+			{
+				float *c = (float*) c4[j];
+				for (int i=0; i<4*N; ++i)
+					c[i] = c0[(j+i)&M];
+			}
+		}
+
+	void reset() {for(int i=0; i<N; ++i) x4[i]=v4f_0;}
+	
+	float hb_put(float a)
+		{
+			float *x = (float*) x4;
+			x[(-z)&M] = a;
+			return x[(2*N-z)&M];
+		}
+	float hb_get()
+		{
+			v4f_t y = v4f_0;
+			v4f_t *c = c4[z&3];
+			int j0 = z>>2;
+			for(int j=0; j<N; ++j)
+				y += c[(j+j0)&(N-1)]*x4[j];
+			y += v4f_shuffle(y,2,3,0,0);
+			y += v4f_shuffle(y,1,0,0,0);
+			z = (z+1)&M;
+			return v4fa(y)[0];
+		}
+} __attribute__ ((packed, aligned(16)));
+#endif
 
 } /* namespace DSP */
 

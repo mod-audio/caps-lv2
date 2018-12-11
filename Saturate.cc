@@ -1,7 +1,7 @@
 /*
 	Saturate.cc
 	
-	Copyright 2003-13 Tim Goetze <tim@quitte.de>
+	Copyright 2003-16 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -37,7 +37,7 @@
 /* a few clipping functions in addition to those provided in
  * dsp/polynomials.cc */
 inline sample_t
-_noclip (sample_t a)
+_noclip(sample_t a)
 {
 	return a;
 }
@@ -45,15 +45,15 @@ _noclip (sample_t a)
 #if 0
 /* branchless clamping, works but is slower than the branching version */
 inline int 
-getsign (float x, int shift = 31)
+getsign(float x, int shift = 31)
 {
 	union { float f; uint32 i; } u;
 	u.f = x;
-	return (u.i & 0x80000000) >> shift;
+	return(u.i & 0x80000000) >> shift;
 }
 
 inline sample_t
-_hardclip (sample_t a)
+_hardclip(sample_t a)
 {
 	/* set bit 1 if a < -.9 and bit 2 if a > .9 */
 	int i = getsign(a+.9,31) | getsign(.9-a,30); 
@@ -62,10 +62,10 @@ _hardclip (sample_t a)
 }
 #else
 inline sample_t
-_hardclip (sample_t a)
+_hardclip(sample_t a)
 {
-	if (a < -.9) return -.9;
-	if (a > +.9) return +.9;
+	if(a < -.9) return -.9;
+	if(a > +.9) return +.9;
 	return a;
 }
 #endif
@@ -93,7 +93,7 @@ float _power_clip_7 (float x)
 void
 Saturate::init()
 {
-	hp.set_f (40*over_fs);
+	hp.set_f(40*over_fs);
 	gain.linear = 1;
 }
 
@@ -108,7 +108,7 @@ Saturate::activate()
 /* templated for waveshaping function */
 template <clip_func_t C>
 void
-Saturate::subcycle (uint frames)
+Saturate::subcycle(uint frames)
 {
 	sample_t * s = ports[3];
 	sample_t * d = ports[4];
@@ -122,14 +122,14 @@ Saturate::subcycle (uint frames)
 
 	/* we have tried a chebyshev-poly added first harmonic instead of the
 	 * DC bias and it wasn't as useful. */
-	for (uint i = 0; i < frames; ++i)
+	for(uint i = 0; i < frames; ++i)
 	{
 		sample_t x = s[i] + bias;
 		x *= gain.linear;
-		x = over.downsample (C (over.upsample (x)));
+		x = over.downsample(C(over.upsample(x)));
 
-		for (int o=1; o < over.Ratio; ++o)
-			over.downstore (C (over.uppad (o)));
+		for(int o=1; o < over.Ratio; ++o)
+			over.downstore(C(over.uppad(o)));
 
 		d[i] = ig*hp.process(x);
 
@@ -148,12 +148,12 @@ static float preamp[] =
 {0.998, 1.195, 1.142, 0.998, -1.092, -1.092, -0.446, -0.165, -0.696, 1.250, 1.195, 1};
 
 void
-Saturate::cycle (uint frames)
+Saturate::cycle(uint frames)
 {
 	int mode = (int) getport(0);
 	double g = getport(1);
 
-	if (!mode || mode == 11)
+	if(!mode || mode == 11)
 		g = 0;
 
 	g = preamp[mode] * db2lin(g);
@@ -162,27 +162,27 @@ Saturate::cycle (uint frames)
 	bias = .5*getport(2);
 	bias = bias*bias;
 
-	if (mode == 1) 
+	if(mode == 1) 
 		subcycle<DSP::Polynomial::atan> (frames);
-	else if (mode == 2) 
+	else if(mode == 2) 
 		subcycle<DSP::Polynomial::atan15> (frames);
-	else if (mode == 3) 
+	else if(mode == 3) 
 		subcycle<_hardclip> (frames);
-	else if (mode == 4) 
+	else if(mode == 4) 
 		subcycle<DSP::Polynomial::one5> (frames);
-	else if (mode == 5) 
+	else if(mode == 5) 
 		subcycle<DSP::Polynomial::one53> (frames);
-	else if (mode == 6) 
+	else if(mode == 6) 
 		subcycle<DSP::Polynomial::clip3> (frames);
-	else if (mode == 7) 
+	else if(mode == 7) 
 		subcycle<DSP::Polynomial::clip9> (frames);
-	else if (mode == 8) 
+	else if(mode == 8) 
 		subcycle<DSP::Polynomial::sin1> (frames);
-	else if (mode == 9) 
+	else if(mode == 9) 
 		subcycle<DSP::Polynomial::power_clip_7> (frames);
-	else if (mode == 10) 
+	else if(mode == 10) 
 		subcycle<DSP::Polynomial::tanh> (frames);
-	else if (mode == 11) 
+	else if(mode == 11) 
 		subcycle<fabsf> (frames);
 	else 
 		subcycle<_noclip> (frames);
@@ -205,12 +205,7 @@ template <> void
 Descriptor<Saturate>::setup()
 {
 	Label = "Saturate";
-
 	Name = CAPS "Saturate - Various static nonlinearities, 8x oversampled";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2003-12";
-
-	/* fill port info and vtable */
 	autogen();
 }
 
@@ -222,7 +217,7 @@ void
 Spice::init()
 {
 	float amps[] = {0,0,1,.3,.01};
-	cheby.calculate (amps);
+	cheby.calculate(amps);
 }
 
 void
@@ -230,53 +225,57 @@ Spice::activate()
 {
 	remain = 0;
 
-	for (int i=0; i < 2; ++i)
+	for(int i=0; i < 2; ++i)
 	{
 		split[i].reset();
 		shape[i].reset();
 	}
-	compress.init(fs);
+	compress.init(fs,32);
 	compress.set_threshold(0);
 	compress.set_attack(0);
 	compress.set_release(0);
 }
 
 void
-Spice::cycle (uint frames)
+Spice::cycle(uint frames)
 {
-	struct { float f, squash, gain; } 
-			lo = {getport(0)*over_fs, getport(1), getport(2)},
-			hi = {getport(3)*over_fs, 0, getport(4)};
+	struct { float f, squash, gain, vol; } 
+			lo = {getport(0)*over_fs, getport(1), getport(2), getport(3)},
+			hi = {getport(4)*over_fs, 0, getport(5), getport(6)};
 
-	if (split[0].f != lo.f)
+	if(split[0].f != lo.f || lo.vol != vol.lo)
 	{
+		vol.lo = lo.vol;
 		split[0].set_f(lo.f);
-		DSP::RBJ::BP (2*lo.f,.7,shape[0]);
+		DSP::RBJ::BP(2*lo.f,.7,shape[0]);
+		shape[0].scale(db2lin(vol.lo));
 	}
-	if (split[1].f != hi.f)
+	if(split[1].f != hi.f || hi.vol != vol.hi)
 	{
+		vol.hi = hi.vol;
 		split[1].set_f(hi.f);
-		DSP::RBJ::HP (2*hi.f,.7,shape[1]);
+		DSP::RBJ::HP(2*hi.f,.7,shape[1]);
+		shape[1].scale(db2lin(vol.hi));
 	}
 
-	lo.gain = pow (24,lo.gain) - 1;
-	hi.gain = pow (8,hi.gain) - 1;
+	lo.gain = pow(8,lo.gain) - 1;
+	hi.gain = pow(3,hi.gain) - 1;
 
 	sample_t dc = cheby.process(0);
 
-	sample_t * s = ports[5];
-	sample_t * d = ports[6];
+	sample_t * s = ports[7];
+	sample_t * d = ports[8];
 
-	while (frames)
+	while(frames)
 	{
-		if (remain == 0)
+		if(remain == 0)
 		{
 			remain = compress.blocksize;
-			compress.start_block (lo.squash); 
+			compress.start_block(lo.squash); 
 		}
 
-		uint n = min (frames, remain);
-		for (uint i = 0; i < n; ++i)
+		uint n = min(frames, remain);
+		for(uint i = 0; i < n; ++i)
 		{
 			sample_t x,a,b,c;
 
@@ -289,7 +288,7 @@ Spice::cycle (uint frames)
 			x *= lo.gain;
 			x = cheby.process(x)-dc;
 			x = shape[0].process(x);
-			compress.store (x);
+			compress.store(x);
 			c = x;
 
 			/* hi */
@@ -299,7 +298,7 @@ Spice::cycle (uint frames)
 			x = b;
 			x = cheby.process(x)-dc;
 			x *= hi.gain;
-			x = shape[1].process (x);
+			x = shape[1].process(x);
 			x = x+a+b+c;
 
 			d[i] = x;
@@ -315,11 +314,13 @@ Spice::cycle (uint frames)
 PortInfo
 Spice::port_info [] = 
 {
-	{	"lo.f (Hz)",   CTRL_IN,	{LOG | DEFAULT_MID, 50, 400}}, 
+	{	"lo.f (Hz)",   CTRL_IN,	{LOG | DEFAULT_LOW, 50, 800}}, 
 	{	"lo.compress", CTRL_IN,	{DEFAULT_MID, 0, 1}}, 
 	{	"lo.gain",     CTRL_IN,	{DEFAULT_LOW, 0, 1}}, 
-	{	"hi.f (Hz)",   CTRL_IN | GROUP,	{LOG | DEFAULT_MID, 400, 5000}}, 
+	{	"lo.vol (dB)",	     CTRL_IN,	{DEFAULT_0, -60, 60}}, 
+	{	"hi.f (Hz)",   CTRL_IN | GROUP,	{LOG | DEFAULT_LOW, 400, 5000}}, 
 	{	"hi.gain",     CTRL_IN,	{DEFAULT_LOW, 0, 1}}, 
+	{	"hi.vol (dB)",	     CTRL_IN,	{DEFAULT_0, -60, 60}}, 
 
 	{ "in", INPUT | AUDIO }, 
 	{ "out", OUTPUT | AUDIO }, 
@@ -329,12 +330,7 @@ template <> void
 Descriptor<Spice>::setup()
 {
 	Label = "Spice";
-
 	Name = CAPS "Spice - Not an exciter";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2012-13";
-
-	/* fill port info and vtable */
 	autogen();
 }
 
@@ -344,7 +340,7 @@ void
 SpiceX2::init()
 {
 	float amp[] = {0,0,1,.3,.01};
-	cheby.calculate (amp);
+	cheby.calculate(amp);
 }
 
 void
@@ -352,65 +348,69 @@ SpiceX2::activate()
 {
 	remain = 0;
 
-	for (int c=0; c < 2; ++c)
-		for (int i=0; i < 2; ++i)
+	for(int c=0; c < 2; ++c)
+		for(int i=0; i < 2; ++i)
 		{
 			chan[c].split[i].reset();
 			chan[c].shape[i].reset();
 		}
-	compress.init(fs);
+	compress.init(fs,64);
 	compress.set_threshold(0);
 	compress.set_attack(0);
 	compress.set_release(0);
 }
 
 void
-SpiceX2::cycle (uint frames)
+SpiceX2::cycle(uint frames)
 {
-	struct { float f, squash, gain; } 
-			lo = {getport(0)*over_fs, getport(1), getport(2)},
-			hi = {getport(3)*over_fs, 0, getport(4)};
+	struct { float f, squash, gain, vol; } 
+			lo = {getport(0)*over_fs, getport(1), getport(2), getport(3)},
+			hi = {getport(4)*over_fs, 0, getport(5), getport(6)};
 
-	if (chan[0].split[0].f != lo.f)
+	if(chan[0].split[0].f != lo.f || lo.vol != vol.lo)
 	{
-		for (int c=0; c<2; ++c)
+		vol.lo = lo.vol;
+		for(int c=0; c<2; ++c)
 		{
 			chan[c].split[0].set_f(lo.f);
-			DSP::RBJ::BP (2*lo.f,.7,chan[c].shape[0]);
+			DSP::RBJ::BP(2*lo.f,.7,chan[c].shape[0]);
+			chan[c].shape[0].scale(db2lin(vol.lo));
 		}
 	}
-	if (chan[0].split[1].f != hi.f)
+	if(chan[0].split[1].f != hi.f || hi.vol != vol.hi)
 	{
-		for (int c=0; c<2; ++c)
+		vol.hi = hi.vol;
+		for(int c=0; c<2; ++c)
 		{
 			chan[c].split[1].set_f(hi.f);
-			DSP::RBJ::BP (2*hi.f,.7,chan[c].shape[1]);
+			DSP::RBJ::BP(2*hi.f,.7,chan[c].shape[1]);
+			chan[c].shape[1].scale(db2lin(vol.hi));
 		}
 	}
 
-	lo.gain = pow (24,lo.gain) - 1;
-	hi.gain = pow (8,hi.gain) - 1;
+	lo.gain = pow(8,lo.gain) - 1;
+	hi.gain = pow(3,hi.gain) - 1;
 
 	sample_t dc = cheby.process(0);
 
-	sample_t * s[2] = {ports[5],ports[6]};
-	sample_t * d[2] = {ports[7],ports[8]};
+	sample_t * s[2] = {ports[7],ports[8]};
+	sample_t * d[2] = {ports[9],ports[10]};
 
-	while (frames)
+	while(frames)
 	{
-		if (remain == 0)
+		if(remain == 0)
 		{
 			remain = compress.blocksize;
-			compress.start_block (lo.squash); 
+			compress.start_block(lo.squash); 
 		}
 
-		uint n = min (frames, remain);
-		for (uint i = 0; i < n; ++i)
+		uint n = min(frames, remain);
+		for(uint i = 0; i < n; ++i)
 		{
 			sample_t x,a,b,bass[2];
 
 			float comp = compress.get();
-			for (int c=0; c<2; ++c)
+			for(int c=0; c<2; ++c)
 			{
 				/* lo */
 				x = s[c][i];
@@ -430,15 +430,15 @@ SpiceX2::cycle (uint frames)
 				x = b;
 				x *= hi.gain;
 				x = DSP::Polynomial::atan(x);
-				x = chan[c].shape[1].process (x);
+				x = chan[c].shape[1].process(x);
 				x = x+a+b+bass[c];
 
 				d[c][i] = x;
 			}
-			compress.store (bass[0],bass[1]);
+			compress.store(bass[0],bass[1]);
 		}
 
-		for (int c=0; c<2; ++c)
+		for(int c=0; c<2; ++c)
 			s[c]+=n, d[c]+=n;
 		remain-=n, frames-=n;
 	}
@@ -452,8 +452,10 @@ SpiceX2::port_info [] =
 	{	"lo.f (Hz)",   CTRL_IN,	{LOG | DEFAULT_LOW, 50, 800}}, 
 	{	"lo.compress", CTRL_IN,	{DEFAULT_MID, 0, 1}}, 
 	{	"lo.gain",     CTRL_IN,	{DEFAULT_LOW, 0, 1}}, 
+	{	"lo.vol (dB)",	     CTRL_IN,	{DEFAULT_0, -60, 60}}, 
 	{	"hi.f (Hz)",   CTRL_IN | GROUP,	{LOG | DEFAULT_LOW, 400, 5000}}, 
 	{	"hi.gain",     CTRL_IN,	{DEFAULT_LOW, 0, 1}}, 
+	{	"hi.vol (dB)",	     CTRL_IN,	{DEFAULT_0, -60, 60}}, 
 
 	{ "in:l", INPUT | AUDIO }, 
 	{ "in:r", INPUT | AUDIO }, 
@@ -465,12 +467,7 @@ template <> void
 Descriptor<SpiceX2>::setup()
 {
 	Label = "SpiceX2";
-
 	Name = CAPS "SpiceX2 - Not an exciter either";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2012-2013";
-
-	/* fill port info and vtable */
 	autogen();
 }
 

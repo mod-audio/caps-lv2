@@ -1,7 +1,7 @@
 /*
 	Noisegate.cc
 	
-	Copyright 2011-13 Tim Goetze <tim@quitte.de>
+	Copyright 2011-16 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -34,9 +34,9 @@
 void
 Noisegate::init()
 {
-	N = 3*882*fs/44100; /* 60 ms RMS accumulation when open */
+	N = 3*960*fs/48000; /* 60 ms RMS accumulation when open */
 	over_N = 1./N;
-	hysteresis.threshold = (uint) (.130*fs); /* opening for at least 130 ms */
+	hysteresis.threshold = (uint) (.180*fs); /* opening for at least 180 ms */
 	gain.quiet = db2lin (-60);
 	gain.lp.set_f (120*over_fs);
 }
@@ -154,7 +154,7 @@ Noisegate::cycle (uint frames)
 PortInfo
 Noisegate::port_info [] = 
 {
-	{ "open (dB)", CTRL_IN, {DEFAULT_LOW, -60, 0} }, 
+	{ "open (dB)", CTRL_IN, {DEFAULT_LOW, -55, 0} }, 
 	{ "attack (ms)", CTRL_IN, {DEFAULT_0, 0, 5} }, 
 	{ "close (dB)", CTRL_IN, {DEFAULT_LOW, -80, 0} }, 
 
@@ -170,12 +170,7 @@ template <> void
 Descriptor<Noisegate>::setup()
 {
 	Label = "Noisegate";
-
 	Name = CAPS "Noisegate - Attenuating hum and noise";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2011-13";
-
-	/* fill port info and vtable */
 	autogen();
 }
 
