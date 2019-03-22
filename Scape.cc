@@ -63,7 +63,6 @@ Scape::activate()
 		svf[i].reset(),
 		svf[i].set_out (1), /* band pass */
 		hipass[i].set_f (250*over_fs);
-	svf[3].set_out (0); /* low pass */
 
 	delay.reset();
 	period = 0;
@@ -72,9 +71,9 @@ Scape::activate()
 inline double
 pick_f (float range, float tune)
 {
-	static double over_12 = 1./12;
+	static float over_12 = 1./12;
 	int n = 48 + (int) (4*12*range*frandom());
-	return tune * pow (2, (n - 69) * over_12);
+	return tune*pow(2,(n-69)*over_12);
 }
 
 
@@ -82,20 +81,21 @@ void
 Scape::cycle (uint frames)
 {
 	/* delay times */
-	double t1 = fs * 60. / getport(0);
+	double t1 = 60*fs/getport(0);
 	int div = (int) getport(1);
-	double t2 = t1 * dividers[div];
+	double t2 = t1*dividers[div];
 
-	fb = .94*getport(2);
 
-	double dry = getport(3);
-	dry = dry * dry;
-	double blend = getport(4);
-	float tune = getport(5);
+	float q = .99*getport(2);
+	float blend = pow(getport(3),.2);
+	float dry = sqrt(1-blend*blend);
+	fb = .94*getport(4);
 
-	sample_t * s = ports[6];
-	sample_t * dl = ports[7];
-	sample_t * dr = ports[8];
+	float tune = 440;
+
+	sample_t * s = ports[5];
+	sample_t * dl = ports[6];
+	sample_t * dr = ports[7];
 
 	DSP::FPTruncateMode truncate;
 
@@ -104,16 +104,16 @@ Scape::cycle (uint frames)
 		/* retune filters */
 		if (period <= 1)
 		{
-			period = t2 * .5;
+			period = .5*t2;
 			float f;
 
 			f = frandom2();
-			svf[0].set_f_Q (pick_f(.3,tune)*over_fs, .3);
-			svf[3].set_f_Q (pick_f(.5,tune)*over_fs, .6); /* LP */
+			svf[0].set_f_Q (pick_f(.3,tune)*over_fs, q);
+			svf[3].set_f_Q (pick_f(.5,tune)*over_fs, q); /* LP */
 			
 			f = frandom2();
-			svf[1].set_f_Q (pick_f(.8,tune)*over_fs, .9*f);
-			svf[2].set_f_Q (pick_f(.9,tune)*over_fs, .5*f);
+			svf[1].set_f_Q (pick_f(.8,tune)*over_fs, f*q);
+			svf[2].set_f_Q (pick_f(.9,tune)*over_fs, .5*f*q);
 		}
 		
 		uint n = min((uint) period, frames);
@@ -125,18 +125,18 @@ Scape::cycle (uint frames)
 			sample_t x2 = delay.get_linear (t2);
 
 			delay.put (x + fb*x1);
-			x = dry*x + .2*svf[0].process (x) + .6*svf[3].process(x);
+			x = dry*x + .1*svf[0].process (x) + .2*svf[3].process(x);
 
-			x1 = svf[1].process (x1 - normal);
-			x2 = svf[2].process (x2 - normal);
+			x1 = svf[1].process(x1 - normal);
+			x2 = svf[2].process(x2 - normal);
 
-			x1 = hipass[1].process (x1);
-			x2 = hipass[2].process (x2);
+			x1 = hipass[1].process(x1);
+			x2 = hipass[2].process(x2);
 
 			sample_t x1l, x1r, x2l, x2r;
-			x1l = fabs (lfo[0].lp.process(lfo[0].lorenz.get()));
+			x1l = .7*fabs(lfo[0].get());
 			x1r = 1 - x1l;
-			x2r = fabs (lfo[1].lp.process(lfo[1].lorenz.get()));
+			x2r = .7*fabs(lfo[1].get());
 			x2l = 1 - x2r;
 
 			dl[i] = x + blend*(x1*x1l + x2*x2l);
@@ -156,13 +156,13 @@ Scape::cycle (uint frames)
 PortInfo
 Scape::port_info [] =
 {
-	{ "bpm", CTRL_IN, {DEFAULT_MID, 30, 164} }, 
-	{	"divider", CTRL_IN, {INTEGER | DEFAULT_MID, 2, 4}, 
-		"{2:'eighths',3:'triplets',4:'sixteenths'}" }, 
-	{ "feedback", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} }, 
-	{ "dry", CTRL_IN | GROUP, {DEFAULT_MID, 0, 1} }, 
-	{ "blend", CTRL_IN, {DEFAULT_1, 0, 1} }, 
-	{ "tune (Hz)", CTRL_IN | GROUP, {DEFAULT_440, 415, 467} }, 
+	{ "bpm", CTRL_IN, {DEFAULT_MID, 30, 182} }, 
+	{	"div", CTRL_IN, {INTEGER | DEFAULT_MIN, 2, 4}, 
+		"{2:'♪♪',3:'♪♪♪',4:'♬♬'}" }, 
+
+	{ "Q", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} }, 
+	{ "blend", CTRL_IN, {DEFAULT_MID, 0, 1} }, 
+	{ "feedback", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
 
 	{ "in", AUDIO_IN }, 
 	{ "out.l", AUDIO_OUT }, 
@@ -173,12 +173,77 @@ template <> void
 Descriptor<Scape>::setup()
 {
 	Label = "Scape";
-
 	Name = CAPS "Scape - Stereo delay with chromatic resonances";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2004-12";
+	autogen();
+}
 
-	/* fill port info and vtable */
+/* //////////////////////////////////////////////////////////////////////// */
+
+void 
+DDDelay::init()
+{
+	float l = 2*fs; /* one beat at 30 bpm */
+	for(int i=0; i<4; ++i)
+	{
+		step[i].delay.init((int) (l + .5)); 
+		step[i].lp.set(.001);
+	}
+}
+
+void
+DDDelay::activate()
+{
+	for(int i=0; i<4; ++i)
+	{
+		step[i].delay.reset();
+		step[i].lp.reset();
+	}
+}
+
+void
+DDDelay::cycle (uint frames)
+{
+	/* delay times */
+	int div = (int) getport(1);
+	int t = -1 + (int) (60*fs/getport(0));
+
+	sample_t * s = ports[2];
+	sample_t * d = ports[3];
+
+	sample_t g[4] = {.4,.7,.8,.7};
+	for(uint i=0; i<frames; ++i)
+	{
+		sample_t x=s[i], y=x;
+
+		for(int j=0; j<div; ++j)
+		{
+			step[j].delay.put(y);
+			y = step[j].delay[t];
+			x += g[j]*y;
+		}
+
+		d[i] = x;
+	}
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+
+PortInfo
+DDDelay::port_info [] =
+{
+	{ "bpm", CTRL_IN, {DEFAULT_MID, 30, 182} }, 
+	{	"div", CTRL_IN, {INTEGER | DEFAULT_HIGH, 2, 4}, 
+		"{2:'♪♪',3:'♪♪♪',4:'♬♬'}" }, 
+
+	{ "in", AUDIO_IN }, 
+	{ "out", AUDIO_OUT }, 
+};
+
+template <> void
+Descriptor<DDDelay>::setup()
+{
+	Label = "DDDelay";
+	Name = CAPS "DDDelay - Delay with fixed repetition count";
 	autogen();
 }
 

@@ -7,7 +7,7 @@
 
 <http://moddevices.com/plugins/caps/ToneStack>
 a lv2:SimulatorPlugin, lv2:Plugin;
-lv2:microVersion 24;
+lv2:microVersion 26;
 lv2:minorVersion 9;
 lv2:optionalFeature lv2:hardRTCapable;
 mod:brand "CAPS";

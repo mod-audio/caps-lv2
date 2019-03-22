@@ -1,1 +1,34 @@
 @prefix modgui: <http://moddevices.com/ns/modgui#> .
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
+
+<http://moddevices.com/plugins/caps/Eq4p>
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-c-eq4p-4-band-parametric-equaliser.html> ;
+        modgui:stylesheet <modgui/stylesheet-c-eq4p-4-band-parametric-equaliser.css> ;
+        modgui:screenshot <modgui/screenshot-c-eq4p-4-band-parametric-equaliser.png> ;
+        modgui:thumbnail <modgui/thumbnail-c-eq4p-4-band-parametric-equaliser.png> ;
+        modgui:brand "CAPS" ;
+        modgui:label "Eq4p" ;
+        modgui:model "boxy" ;
+        modgui:panel "1-select-3-knobs" ;
+        modgui:color "yellow" ;
+        modgui:knob "black" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "a_mode" ;
+            lv2:name "A: Mode" ;
+        ] , [
+            lv2:index 1 ;
+            lv2:symbol "a_freq" ;
+            lv2:name "Freq." ;
+        ] , [
+            lv2:index 2 ;
+            lv2:symbol "a_q" ;
+            lv2:name "B.width" ;
+        ] , [
+            lv2:index 3 ;
+            lv2:symbol "a_gain" ;
+            lv2:name "Gain" ;
+        ] ;
+    ] .

@@ -1,3 +1,25 @@
+0.9.26
+	* documentation updates
+	* DDDelay removed, needs more work
+
+0.9.25
+	* potential gcc overoptimisation resulting in NaN in Kaiser window setup eliminated
+		(fix contributed by Jean Pierre Cimalando)
+	* updated to reflect changes to the div() and pow10f() functions in libc 
+	* tonestack coefficient update reverted to original Yeh implementation
+	* Compress default measurement mode switched to RMS, attack range doubled 
+	* Compress power and gain filter cutoff lowered to lessen intermodulation distortion
+	* Plate defaults changed
+	* volume control added to Spice hi and lo circuits, max gain reduced on both
+	* Wider output channels swapped
+	* AutoFilter rate lowered
+	* Scape parameters cleaned up and remapped, tune control removed
+	* Noisegate hysteresis increased to 180 ms
+	* dc-30 tonestack R3 20k -> 10k
+	* Eq10 Q changed to render optimally flat response at all zero band gain settings
+	* div port added to Click
+	* new plugin DDDelay 
+
 0.9.24
 	* documentation updates including switch to 48k for all spectra
 	* "twin" and "stanford" tonestack models swap places

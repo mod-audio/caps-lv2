@@ -1,7 +1,7 @@
 /*
 	Compress.cc
 	
-	Copyright 2011-14 Tim Goetze <tim@quitte.de>
+	Copyright 2011-18 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 	
@@ -32,17 +32,17 @@ template <int Channels>
 void
 CompressStub<Channels>::activate()
 {
-	compress.peak.init (fs);
-	compress.rms.init (fs);
+	compress.peak.init(fs,4);
+	compress.rms.init(fs,4);
 	remain = 0;
 }
 
 template <int Channels>
 void
-CompressStub<Channels>::cycle (uint frames)
+CompressStub<Channels>::cycle(uint frames)
 {
 	int c = getport(0);
-	if (c == 0) subcycle<DSP::CompressPeak> (frames, compress.peak);
+	if(c == 0) subcycle<DSP::CompressPeak> (frames, compress.peak);
 	else subcycle<DSP::CompressRMS> (frames, compress.rms);
 }
 
@@ -52,17 +52,17 @@ struct NoSat { sample_t process(sample_t x) { return x; } };
 template <int Channels>
 template <class Comp>
 void
-CompressStub<Channels>::subcycle (uint frames, Comp & comp)
+CompressStub<Channels>::subcycle(uint frames, Comp & comp)
 {
 	static NoSat none;
 
 	int s = getport(1);
-	if (s == 1) subsubcycle<Comp,CompSat2> 
+	if(s == 1) subsubcycle<Comp,CompSat2> 
 			(frames, comp, saturate[0].two, saturate[1].two);
-	else if (s == 2) subsubcycle<Comp,CompSat4> 
+	else if(s == 2) subsubcycle<Comp,CompSat4> 
 			(frames, comp, saturate[0].four, saturate[1].four);
 	#if 0
-	else if (s == 3) subsubcycle<Comp,CompSat8> 
+	else if(s == 3) subsubcycle<Comp,CompSat8> 
 			(frames, comp, saturate[0].eight, saturate[1].eight);
 	#endif
 	else subsubcycle<Comp, NoSat> 
@@ -72,13 +72,13 @@ CompressStub<Channels>::subcycle (uint frames, Comp & comp)
 template <int Channels>
 template <class Comp, class Sat>
 void
-CompressStub<Channels>::subsubcycle (uint frames, Comp & comp, Sat & satl, Sat & satr)
+CompressStub<Channels>::subsubcycle(uint frames, Comp & comp, Sat & satl, Sat & satr)
 {
-	comp.set_threshold (pow(getport(2), 1.6));
+	comp.set_threshold(pow(getport(2), 1.6));
 	sample_t strength = pow(getport(3), 1.4); /* more resolution in lower range */
-	comp.set_attack (getport(4));
-	comp.set_release (getport(5));
-	sample_t gain_out = db2lin (getport (6));
+	comp.set_attack(getport(4));
+	comp.set_release(getport(5));
+	sample_t gain_out = db2lin(getport(6));
 
 	sample_t * sl = ports[Stereo ?  8 : 8]; /* ;) */
 	sample_t * sr = ports[Stereo ?  9 : 8];
@@ -88,22 +88,22 @@ CompressStub<Channels>::subsubcycle (uint frames, Comp & comp, Sat & satl, Sat &
 
 	sample_t state = 1;
 
-	while (frames)
+	while(frames)
 	{
-		if (remain == 0)
+		if(remain == 0)
 		{
 			remain = comp.blocksize;
 			comp.start_block(strength);
 			state = min(state,comp.gain.state);
 		}
 
-		uint n = min (frames, remain);
+		uint n = min(frames, remain);
 		
-		for (uint i=0; i<n; ++i)
+		for(uint i=0; i<n; ++i)
 		{
 			sample_t xl = sl[i], xr = sr[i];
 
-			if (Stereo)
+			if(Stereo)
 				comp.store(xl, xr);
 			else
 				comp.store(xl);
@@ -111,11 +111,11 @@ CompressStub<Channels>::subsubcycle (uint frames, Comp & comp, Sat & satl, Sat &
 			sample_t gain = gain_out*comp.get();
 
 			xl = satl.process(xl*gain);
-			if (Stereo)
+			if(Stereo)
 				xr = satr.process(xr*gain);
 
 			dl[i] = xl;
-			if (Stereo)
+			if(Stereo)
 				dr[i] = xr;
 		}
 
@@ -134,7 +134,7 @@ CompressStub<Channels>::subsubcycle (uint frames, Comp & comp, Sat & satl, Sat &
 PortInfo
 Compress::port_info [] =
 {
-	{ "measure", CTRL_IN, {INTEGER | DEFAULT_0, 0, 1}, "{0:'peak',1:'rms'}" }, 
+	{ "measure", CTRL_IN, {INTEGER | DEFAULT_1, 0, 1}, "{0:'peak',1:'rms'}" }, 
 	{ "mode", CTRL_IN | GROUP, {INTEGER | DEFAULT_1, 0, 2},
 		"{0:'no limiting',1:'saturating 2x',2:'saturating 4x',3:'saturating 4x128'}" }, 
 	/* 2 */
@@ -143,7 +143,7 @@ Compress::port_info [] =
 	{ "attack", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} }, 
 	{ "release", CTRL_IN, {DEFAULT_MID, 0, 1} }, 
 	/* 6 */
-	{ "gain (dB)", CTRL_IN | GROUP, {DEFAULT_MID, -12, 18} }, 
+	{ "gain (dB)", CTRL_IN | GROUP, {DEFAULT_MID, -12, 36} }, 
 	{ "state (dB)", CONTROL|OUTPUT| GROUP, {DEFAULT_0,-144,0} }, 
 
 	{ "in", INPUT | AUDIO, {BOUNDED, -1, 1} }, 
@@ -154,12 +154,7 @@ template <> void
 Descriptor<Compress>::setup()
 {
 	Label = "Compress";
-
 	Name = CAPS "Compress - Compressor and saturating limiter";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2011-14";
-
-	/* fill port info and vtable */
 	autogen();
 }
 
@@ -168,7 +163,7 @@ Descriptor<Compress>::setup()
 PortInfo
 CompressX2::port_info [] =
 {
-	{ "measure", CTRL_IN, {INTEGER | DEFAULT_0, 0, 1},
+	{ "measure", CTRL_IN, {INTEGER | DEFAULT_1, 0, 1},
 		"{0:'peak',1:'rms'}" }, 
 	{ "mode", CTRL_IN | GROUP, {INTEGER | DEFAULT_1, 0, 2},
 		"{0:'linear',1:'saturating 2x',2:'saturating 4x',3:'saturating 4x128'}" }, 
@@ -176,7 +171,7 @@ CompressX2::port_info [] =
 	{ "strength", CTRL_IN, {DEFAULT_LOW, 0, 1} }, 
 	{ "attack", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} }, 
 	{ "release", CTRL_IN, {DEFAULT_MID, 0, 1} }, 
-	{ "gain (dB)", CTRL_IN | GROUP, {DEFAULT_MID, -12, 18} }, 
+	{ "gain (dB)", CTRL_IN | GROUP, {DEFAULT_MID, -12, 36} }, 
 	{ "state (dB)", CONTROL|OUTPUT| GROUP, {DEFAULT_0,-144,0} }, 
 	{ "in.l", INPUT | AUDIO },
 	{ "in.r", INPUT | AUDIO },
@@ -188,12 +183,7 @@ template <> void
 Descriptor<CompressX2>::setup()
 {
 	Label = "CompressX2";
-
 	Name = CAPS "CompressX2 - Stereo compressor and saturating limiter";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2011-14";
-
-	/* fill port info and vtable */
 	autogen();
 }
 

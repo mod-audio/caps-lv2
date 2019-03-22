@@ -1,7 +1,7 @@
 /*
 	Amp.cc
 	
-	Copyright 2003-14 Tim Goetze <tim@quitte.de>
+	Copyright 2003-18 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -48,7 +48,7 @@ AmpVTS::activate()
 	lp.reset();
 
 	remain = 0;
-	compress.init (fs);
+	compress.init(fs,16);
 	compress.set_threshold(0);
 	compress.set_release(.0);
 
@@ -188,18 +188,18 @@ AmpVTS::port_info [] =
 	{ "power", CTRL_IN, {DEFAULT_MID, 0, 1} },
 	
 	/* 4 */
-	{	"tonestack", CTRL_IN | GROUP, {DEFAULT_1 | INTEGER, 0, 8}, DSP::ToneStack::presetdict},
+	{	"tonestack", CTRL_IN | GROUP, {DEFAULT_0 | INTEGER, 0, 8}, DSP::ToneStack::presetdict},
 
 	{ "bass", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} }, 
-	{ "mid", CTRL_IN, {DEFAULT_1, 0, 1} }, 
-	{ "treble", CTRL_IN, {DEFAULT_HIGH, 0, 1} }, 
+	{ "mid", CTRL_IN, {DEFAULT_HIGH, 0, 1} }, 
+	{ "treble", CTRL_IN, {DEFAULT_1, 0, 1} }, 
 
 	/* 8 */
-	{ "attack", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} },
-	{ "squash", CTRL_IN, {DEFAULT_LOW, 0, 1} },
+	{ "attack", CTRL_IN | GROUP, {DEFAULT_LOW, 0, 1} },
+	{ "squash", CTRL_IN, {DEFAULT_HIGH, 0, 1} },
 
 	/* 10 */
-	{ "lowcut", CTRL_IN | GROUP, {DEFAULT_MID, 0, 1} },
+	{ "lowcut", CTRL_IN | GROUP, {DEFAULT_HIGH, 0, 1} },
 
 	{ "in", INPUT | AUDIO }, 
 	{	"out", OUTPUT | AUDIO }, 
@@ -209,12 +209,9 @@ template <> void
 Descriptor<AmpVTS>::setup()
 {
 	Label = "AmpVTS";
-
 	Name = CAPS "AmpVTS - Idealised guitar amplification";
-	Maker = "Tim Goetze <tim@quitte.de>, David Yeh <dtyeh@ccrma.stanford.edu>";
-	Copyright = "2002-14";
-
-	/* fill port info and vtable */
 	autogen();
+
+	Maker = "Tim Goetze <tim@quitte.de>, David Yeh <dtyeh@ccrma.stanford.edu>";
 }
 

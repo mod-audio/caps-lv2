@@ -8,3 +8,4 @@
     lv2:binary <Eq4p.so> ;
     rdfs:seeAlso <Eq4p.ttl> ,
                  <modgui.ttl> .
+<http://moddevices.com/plugins/caps/Eq4p> rdfs:seeAlso <modgui.ttl> .

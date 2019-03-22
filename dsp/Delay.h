@@ -1,12 +1,11 @@
 /*
 	dsp/Delay.h
 	
-	Copyright 2003-13 Tim Goetze <tim@quitte.de>
+	Copyright 2003-17 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
 	delay lines with fractional (linear or cubic interpolation) lookup 
-	and an allpass interpolating tap (which needs more work).
 
 	delay line storage is aligned to powers of two for simplified wrapping
 	checks (no conditional or modulo, binary 'and' suffices instead).
@@ -48,23 +47,23 @@ class Delay
 
 		~Delay() { free (data); }
 
-		void init (uint n)
+		void init(uint n)
 			{
-				size = next_power_of_2 (n);
-				assert (size <= (1 << 20));
-				data = (sample_t *) calloc (sizeof (sample_t), size);
+				size = next_power_of_2(n);
+				assert(size <= (1 << 20));
+				data = (sample_t *) calloc(sizeof (sample_t), size);
 				--size; /* used as mask for confining access */
 				write = n;
 			}
 
 		void reset()
 			{
-				memset (data, 0, (size + 1) * sizeof (sample_t));
+				memset(data, 0, (size + 1) * sizeof (sample_t));
 			}
 
 		sample_t & operator [] (int i) { return data [(write - i) & size]; }
 
-		inline void put (sample_t x)
+		inline void put(sample_t x)
 			{
 				data [write] = x;
 				write = (write + 1) & size;

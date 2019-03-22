@@ -8,7 +8,7 @@
 
 <http://moddevices.com/plugins/caps/CompressX2>
 a lv2:CompressorPlugin, lv2:Plugin;
-lv2:microVersion 24;
+lv2:microVersion 26;
 lv2:minorVersion 9;
 lv2:optionalFeature lv2:hardRTCapable;
 mod:brand "CAPS";
@@ -24,7 +24,7 @@ lv2:port
 [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 0;
-    lv2:default 1;
+    lv2:default 0;
     lv2:maximum 1;
     lv2:minimum 0;
     lv2:name "Measure";
@@ -101,8 +101,8 @@ lv2:port
 [
     a lv2:ControlPort, lv2:InputPort;
     lv2:index 6;
-    lv2:default 3.0;
-    lv2:maximum 18.0;
+    lv2:default 12.0;
+    lv2:maximum 36.0;
     lv2:minimum -12.0;
     lv2:name "Gain";
     lv2:symbol "gain";

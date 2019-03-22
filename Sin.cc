@@ -86,12 +86,7 @@ template <> void
 Descriptor<Sin>::setup()
 {
 	Label = "Sin";
-
 	Name = CAPS "Sin - Sine wave generator";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2004-13";
-
-	/* fill port info and vtable */
 	autogen();
 }
 

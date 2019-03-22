@@ -51,7 +51,7 @@ class AmpVTS
 		DSP::Oversampler<8,64> over8;
 
 		DSP::IIR2<sample_t> lp, biaslp;
-		DSP::HP1<sample_t> hp1, dc1, dc2; /* dc blockers */
+		DSP::HP1b<sample_t> hp1, dc1, dc2; /* dc blockers */
 
 		int model;
 		DSP::ToneStack tonestack;

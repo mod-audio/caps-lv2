@@ -47,13 +47,13 @@ class Compress
 			DSP::LP1<sample_t> lp;
 		} gain;
 
-		void init (float fs)
+		void init(float fs, int blockscale)
 			{
-				if (fs > 120000) blocksize = 4; 
-				else if (fs > 60000) blocksize = 2; 
+				if(fs > 120000) blocksize = 4; 
+				else if(fs > 60000) blocksize = 2; 
 				else blocksize = 1;
 
-				blocksize *= 4;
+				blocksize *= blockscale;
 				over_block = 1./blocksize;
 
 				set_threshold(0);
@@ -65,28 +65,28 @@ class Compress
 				gain.state = 1;
 				gain.step = 0;
 
-				gain.lp.set (.4);
+				gain.lp.set(.1);
 				/* prevent immediate drop from 0 sample in filter history */
 				gain.lp.y1 = gain.current; 
 			}
 
-		void set_threshold (float t) { threshold = pow2 (t); }
-		void set_directgain (float d) { gain.direct = 4*d; }
+		void set_threshold(float t) { threshold = pow2 (t); }
+		void set_directgain(float d) { gain.direct = 4*d; }
 
-		void set_attack (float a) 
+		void set_attack(float a) 
 			{ 
-				attack = pow2 (2*a);
+				attack = pow2(4*a);
 				attack = (.001 + attack)*over_block;
 			}
-		void set_release (float r) 
+		void set_release(float r) 
 			{ 
 				release = pow2 (2*r);
 				release = (.001 + release)*over_block;
 			}
 
-		void start_block (sample_t powa, float strength)
+		void start_block(sample_t powa, float strength)
 			{
-				if (powa < threshold)
+				if(powa < threshold)
 					gain.target = gain.direct;
 				else
 				{
@@ -95,10 +95,10 @@ class Compress
 					gain.target = pow(4, (1 - strength) + strength*t);
 				}
 
-				if (gain.target < gain.current) 
-					gain.step = -min (attack, (gain.current - gain.target)*over_block);
-				else if (gain.target > gain.current) 
-					gain.step = min (release, (gain.target - gain.current)*over_block);
+				if(gain.target < gain.current) 
+					gain.step = -min(attack, (gain.current - gain.target)*over_block);
+				else if(gain.target > gain.current) 
+					gain.step = min(release, (gain.target - gain.current)*over_block);
 				else
 					gain.step = 0;
 			}
@@ -121,33 +121,33 @@ class CompressRMS
 			sample_t current;
 		} power;
 
-		void init (float fs)
+		void init(float fs, int blockscale)
 			{
-				Compress::init (fs);
+				Compress::init(fs, blockscale);
 
 				power.current = 0;
-				power.lp.set (.96);
+				power.lp.set(.9);
 				power.rms.reset();
 			}
 
-		inline void start_block (float strength)
+		inline void start_block(float strength)
 			{
 				power.current = power.rms.get();
 				/* add a small constant to prevent denormals in recursion tail */
 				sample_t powa = power.current = 
-						power.lp.process (power.current + 1e-24);
+						power.lp.process(power.current + 1e-24);
 
-				Compress::start_block (powa, strength);
+				Compress::start_block(powa, strength);
 			}
 
-		void store (sample_t x)
+		void store(sample_t x)
 			{
-				power.rms.store (x*x);
+				power.rms.store(x*x);
 			}
 
-		void store (sample_t xl, sample_t xr)
+		void store(sample_t xl, sample_t xr)
 			{
-				power.rms.store (.5*(xl*xl + xr*xr));
+				power.rms.store(.5*(xl*xl + xr*xr));
 			}
 };
 
@@ -160,37 +160,37 @@ class CompressPeak
 			sample_t current;
 		} peak;
 
-		void init (float fs)
+		void init(float fs, int blockscale)
 			{
-				Compress::init (fs);
+				Compress::init(fs, blockscale);
 
 				peak.current = 0;
-				peak.lp.set (.1);
+				peak.lp.set(.1);
 			}
 
-		inline void start_block (float strength)
+		inline void start_block(float strength)
 			{
 				/* add a small constant to prevent denormals in recursion tail */
 				peak.current = peak.current * .9 + 1e-24;
-				sample_t p = peak.lp.process (peak.current);
+				sample_t p = peak.lp.process(peak.current);
 
-				Compress::start_block (p, strength);
+				Compress::start_block(p, strength);
 			}
 
-		void store (sample_t x)
+		void store(sample_t x)
 			{
-				x = fabs (x);
-				if (x > peak.current)
+				x = fabs(x);
+				if(x > peak.current)
 					peak.current = x;
 			}
 
-		void store (sample_t xl, sample_t xr)
+		void store(sample_t xl, sample_t xr)
 			{
-				xl = fabs (xl);
-				xr = fabs (xr);
-				if (xl > peak.current)
+				xl = fabs(xl);
+				xr = fabs(xr);
+				if(xl > peak.current)
 					peak.current = xl;
-				if (xr > peak.current)
+				if(xr > peak.current)
 					peak.current = xr;
 			}
 };

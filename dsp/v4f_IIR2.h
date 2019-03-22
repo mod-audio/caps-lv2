@@ -33,7 +33,9 @@
 namespace DSP {
 
 #ifdef __APPLE__
-inline float exp10f(float f) {return pow(10,f);}
+
+inline float exp10f(float f) {return __exp10f(f);}
+
 #endif
 
 class RBJv4
@@ -737,7 +739,7 @@ class MREqv4
 				c[3] = y;
 				return v4fa(x)[3];
 			}
-}; /* class IIR2v4 */
+}; 
 
 } /* namespace DSP */
 

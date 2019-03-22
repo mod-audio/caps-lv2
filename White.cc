@@ -71,12 +71,7 @@ template <> void
 Descriptor<White>::setup()
 {
 	Label = "White";
-
 	Name = CAPS "White - Noise generator";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2004-13";
-
-	/* fill port info and vtable */
 	autogen();
 }
 

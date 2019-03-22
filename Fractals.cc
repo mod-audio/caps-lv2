@@ -118,12 +118,7 @@ template <> void
 Descriptor<Fractal>::setup()
 {
 	Label = "Fractal";
-
 	Name = CAPS "Fractal - Audio stream from deterministic chaos";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2004-13";
-
-	/* fill port info and vtable */
 	autogen();
 }
 

@@ -100,6 +100,9 @@ class Descriptor
 		 * function: */
 		void autogen() 
 			{
+				Maker = "Tim Goetze <tim@quitte.de>";
+				Copyright = "GPLv3";
+
 				Properties = HARD_RT;
 				PortCount = (sizeof (T::port_info) / sizeof (PortInfo));
 

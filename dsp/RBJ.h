@@ -85,9 +85,9 @@ class LP
 		template <class T>
 		void ab (T * ca, T * cb)
 			{
-				b[0] = (1 - cos) * .5;
+				b[0] = (1 - cos)*.5;
 				b[1] = (1 - cos);
-				b[2] = (1 - cos) * .5;
+				b[2] = (1 - cos)*.5;
 				
 				a[0] = 1 + alpha;
 				a[1] = -2 * cos;

@@ -109,12 +109,7 @@ template <> void
 Descriptor<PhaserII>::setup()
 {
 	Label = "PhaserII";
-
 	Name = CAPS "PhaserII - Mono phaser";
-	Maker = "Tim Goetze <tim@quitte.de>";
-	Copyright = "2002-13";
-
-	/* fill port info and vtable */
 	autogen();
 }
 

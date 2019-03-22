@@ -21,14 +21,14 @@
         ] , [
             lv2:index 1 ;
             lv2:symbol "bpm" ;
-            lv2:name "rate" ;
+            lv2:name "BPM" ;
         ] , [
             lv2:index 2 ;
-            lv2:symbol "damping" ;
-            lv2:name "damping" ;
+            lv2:symbol "tone" ;
+            lv2:name "Tone" ;
         ] , [
             lv2:index 3 ;
-            lv2:symbol "volume" ;
-            lv2:name "level" ;
+            lv2:symbol "vol" ;
+            lv2:name "Volume" ;
         ] ;
     ] .

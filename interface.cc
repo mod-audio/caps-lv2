@@ -55,7 +55,7 @@
 
 #include "Descriptor.h"
 
-#define N 35 
+#define N 36 
 
 static DescriptorStub * descriptors [N+1];
 static DescriptorStub * lv2_descriptors [N+1];
@@ -103,6 +103,9 @@ void caps_so_init()
 
 	*d++ = new Descriptor<AutoFilter>(2593);
 	*d++ = new Descriptor<Scape>(2588);
+	#if 0
+	*d++ = new Descriptor<DDDelay>(2610);
+	#endif
 
 	*d++ = new Descriptor<Eq10>(1773);
 	*d++ = new Descriptor<Eq10X2>(2594);

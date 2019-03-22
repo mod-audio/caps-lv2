@@ -1,7 +1,7 @@
 /*
 	Compress.h
 	
-	Copyright 2013 Tim Goetze <tim@quitte.de>
+	Copyright 2013-18 Tim Goetze <tim@quitte.de>
 	
 	http://quitte.de/dsp/
 
@@ -42,42 +42,46 @@ class CompSaturate
 		/* antialias filters */
 		DSP::FIRUpsampler<FIRSize, Over> up;
 		DSP::FIRn<FIRSize> down;
+		/* take off some edge */
+		DSP::LP1<sample_t> lp;
 
 	public:
-		void init (double fs)
+		void init(double fs)
 			{
-				/* going a bit lower than nominal with fc */
-				double f = .7 * M_PI/Over;
+				/* going a bit lower than half fs with fc */
+				double f = .7*M_PI/Over;
 				
-				DSP::sinc (f, up.c, FIRSize);
+				DSP::sinc(f, up.c, FIRSize);
 				DSP::kaiser<DSP::apply_window> (up.c, FIRSize, 6.4);
+				lp.set_f(5000/fs);
 
 				/* copy upsampler filter kernel for downsampler, make sum */
 				double s = 0;
-				for (uint i = 0; i < FIRSize; ++i)
+				for(uint i = 0; i < FIRSize; ++i)
 					down.c[i] = up.c[i],
 					s += up.c[i];
 				
 				s = 1/s;
 
 				/* scale kernels for unity gain */
-				for (uint i=0; i<FIRSize; ++i)
+				for(uint i=0; i<FIRSize; ++i)
 					down.c[i] *= s;
 
 				s *= Over;
-				for (uint i=0; i<FIRSize; ++i)
+				for(uint i=0; i<FIRSize; ++i)
 					up.c[i] *= s;
 			}
 
 
-		sample_t process (sample_t x)
+		sample_t process(sample_t x)
 			{
-				x = up.upsample (x);
+				x = up.upsample(x);
 				x = DSP::Polynomial::tanh(x);
-				x = down.process (x);
+				x = down.process(x);
+				x = lp.process(x);
 
-				for (int o = 1; o < Over; ++o)
-					down.store (DSP::Polynomial::atan1 (up.pad (o)));
+				for(int o = 1; o < Over; ++o)
+					down.store(DSP::Polynomial::tanh(up.pad(o)));
 
 				return x;
 			}
@@ -105,18 +109,18 @@ class CompressStub
 			CompSat4 four; 
 		} saturate [Channels];
 
-		void cycle (uint frames);
+		void cycle(uint frames);
 		template <class Comp>
-				void subcycle (uint frames, Comp & comp);
+				void subcycle(uint frames, Comp & comp);
 		template <class Comp, class Sat>
-				void subsubcycle (uint frames, Comp & comp, Sat & satl, Sat & satr);
+				void subsubcycle(uint frames, Comp & comp, Sat & satl, Sat & satr);
 
 	public:
 		static PortInfo port_info [];
 
 		void init() 
 			{
-				for (int i=0; i < Channels; ++i)
+				for(int i=0; i < Channels; ++i)
 				{
 					saturate[i].two.init(fs); 
 					saturate[i].four.init(fs); 

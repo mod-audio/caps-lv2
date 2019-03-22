@@ -137,33 +137,24 @@ class ToneStack
 				acoef.a1 = a1d + m*a1m + b*a1l;
 				acoef.a2 = m*a2m + b*m*a2lm + m*m*a2m2 + b*a2l + a2d;
 				acoef.a3 = b*m*a3lm + m*m*a3m2 + m*a3m + b*a3l + a3d;
-
-				double c2 = c*c, c3 = c2*c;
-				
-				acoef.a1 *= c, acoef.a2 *= c2, acoef.a3 *= c3;
-
-				dcoef_a[0] = -1 - acoef.a1 - acoef.a2 - acoef.a3; // sets scale
-				dcoef_a[1] = -3 - acoef.a1 + acoef.a2 + 3*acoef.a3;
-				dcoef_a[2] = -3 + acoef.a1 + acoef.a2 - 3*acoef.a3;
-				dcoef_a[3] = -1 + acoef.a1 - acoef.a2 + acoef.a3;
+				dcoef_a[0] = -1 - acoef.a1*c - acoef.a2*c*c - acoef.a3*c*c*c; // sets scale
+				dcoef_a[1] = -3 - acoef.a1*c + acoef.a2*c*c + 3*acoef.a3*c*c*c;
+				dcoef_a[2] = -3 + acoef.a1*c + acoef.a2*c*c - 3*acoef.a3*c*c*c;
+				dcoef_a[3] = -1 + acoef.a1*c - acoef.a2*c*c + acoef.a3*c*c*c;
 
 				acoef.b1 = t*b1t + m*b1m + b*b1l + b1d;
 				acoef.b2 = t*b2t + m*m*b2m2 + m*b2m + b*b2l + b*m*b2lm + b2d;
 				acoef.b3 = b*m*b3lm + m*m*b3m2 + m*b3m + t*b3t + t*m*b3tm + t*b*b3tl;
-				
-				acoef.b1 *= c, acoef.b2 *= c2, acoef.b3 *= c3;
+				dcoef_b[0] = - acoef.b1*c - acoef.b2*c*c - acoef.b3*c*c*c;
+				dcoef_b[1] = - acoef.b1*c + acoef.b2*c*c + 3*acoef.b3*c*c*c;
+				dcoef_b[2] = acoef.b1*c + acoef.b2*c*c - 3*acoef.b3*c*c*c;
+				dcoef_b[3] = acoef.b1*c - acoef.b2*c*c + acoef.b3*c*c*c;
 
-				dcoef_b[0] = - acoef.b1 - acoef.b2 - acoef.b3;
-				dcoef_b[1] = - acoef.b1 + acoef.b2 + 3*acoef.b3;
-				dcoef_b[2] = acoef.b1 + acoef.b2 - 3*acoef.b3;
-				dcoef_b[3] = acoef.b1 - acoef.b2 + acoef.b3;
-
-				double a0i = 1. / dcoef_a[0];
 				for (int i=1; i<=3; ++i)
-					filter.a[i] = dcoef_a[i] * a0i;
+					filter.a[i] = dcoef_a[i] / dcoef_a[0];
 				
 				for (int i=0; i<=3; ++i)
-					filter.b[i] = dcoef_b[i] * a0i;
+					filter.b[i] = dcoef_b[i] / dcoef_a[0];
 			} 
 
 		/* actually do the DFII filtering, one sample at a time */
