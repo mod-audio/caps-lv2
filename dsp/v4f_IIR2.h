@@ -32,7 +32,7 @@
 
 namespace DSP {
 
-#ifdef __APPLE__
+#if defined(__APPLE__) || defined(__FreeBSD__)
 
 inline float exp10f(float f) {return __exp10f(f);}
 
