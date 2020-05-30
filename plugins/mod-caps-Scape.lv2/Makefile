@@ -17,7 +17,12 @@ endif
 endif
 
 CXXFLAGS += $(OPTS) -I../.. -fvisibility=hidden -fvisibility-inlines-hidden
-LDFLAGS += -shared -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--no-undefined
+LDFLAGS += -fdata-sections -ffunction-sections
+ifdef MACOS
+LDFLAGS += -dynamiclib -Wl,-dead_strip -Wl,-dead_strip_dylibs
+else
+LDFLAGS += -shared -Wl,--gc-sections -Wl,--no-undefined
+endif
 
 SOURCES = ../../Scape.cc ../../dsp/polynomials.cc interface.cc
 OBJECTS = $(SOURCES:.cc=.o)
