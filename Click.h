@@ -36,67 +36,67 @@ template <int Waves>
 class ClickStub
 : public Plugin
 {
-    public:
-        sample_t bpm;
-        int prev_bpm;
+	public:
+		sample_t bpm;
 
-        struct {
-            int16 * data;
-            uint N; /* number of samples in wave */
-        } wave[Waves];
+		struct {
+			int16 * data;
+			uint N; /* number of samples in wave */
+		} wave[Waves];
 
-        DSP::LP1<sample_t> lp;
+		DSP::LP1<sample_t> lp;
 
-        uint period; /* frames remaining in period */
-        uint played; /* frames played from sample */
+		uint period; /* frames remaining in period */
+		uint played; /* frames played from sample */
+		float prev_bpm;
 
-        void cycle (uint frames);
+		void cycle (uint frames);
 
-        ClickStub()
-        {
-            for (int i=0; i < Waves; ++i)
-                wave[i].data = 0;
-        }
-        ~ClickStub()
-        {
-            for (int i=0; i < Waves; ++i)
-                if (wave[i].data) delete [] wave[i].data;
-        }
+		ClickStub()
+		{
+			for (int i=0; i < Waves; ++i)
+				wave[i].data = 0;
+		}
+		~ClickStub()
+		{
+			for (int i=0; i < Waves; ++i)
+				if (wave[i].data) delete [] wave[i].data;
+		}
 
-    public:
-        void initwave (int i, int16 * wave, uint N);
+	public:
+		void initwave (int i, int16 * wave, uint N);
 
-        void activate()
-        {
-            played = 0;
-            period = 0;
-            prev_bpm = 0;
-            bpm = -1;
-        }
+		void activate()
+		{
+			played = 0;
+			period = 0;
+			prev_bpm = 4.0;
+			bpm = -1;
+		}
 };
 
 class Click
 : public ClickStub<4>
 {
-    public:
-        void initsimple();
-        void initparfilt();
-        void initsine();
-        void initdirac();
+	public:
+		void initsimple();
+		void initparfilt();
+		void initsine();
+		void initdirac();
 
-        void init()
-        { initsimple(); initparfilt(); initsine(); initdirac(); }
+		void init()
+		{ initsimple(); initparfilt(); initsine(); initdirac(); }
 
-        static PortInfo port_info [];
+		static PortInfo port_info [];
 };
 
 class CEO
 : public ClickStub<1>
 {
-    public:
-        void init();
+	public:
+		void init();
 
-        static PortInfo port_info [];
+		static PortInfo port_info [];
 };
 
 #endif /* CLICK_H */

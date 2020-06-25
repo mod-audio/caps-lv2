@@ -65,10 +65,10 @@ ClickStub<Waves>::cycle(uint frames)
             played = 0;
         }
 
-        if (bpm != prev_bpm)
+        if ((float)bpm != prev_bpm)
         {
             period = (int)(fs * 60 / (div*bpm));
-            prev_bpm = bpm;
+            prev_bpm = (float)bpm;
         }
 
         uint n = min(frames, period);
