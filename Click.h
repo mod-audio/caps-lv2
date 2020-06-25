@@ -38,6 +38,7 @@ class ClickStub
 {
 	public:
 		sample_t bpm;
+        sample_t prev_bpm;
 
 		struct {
 			int16 * data;
@@ -70,6 +71,7 @@ class ClickStub
 				played = 0;
 				period = 0;
 				bpm = -1;
+                prev_bpm = -1;
 			}
 };
 
