@@ -48,6 +48,7 @@ class ClickStub
 
 		uint period; /* frames remaining in period */
 		uint played; /* frames played from sample */
+		uint prev_bpm;
 
 		void cycle (uint frames);
 
@@ -69,7 +70,7 @@ class ClickStub
 			{ 
 				played = 0;
 				period = 0;
-				bpm = -1;
+				bpm = 4;
 			}
 };
 
