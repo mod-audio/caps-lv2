@@ -70,8 +70,8 @@ class ClickStub
 			{ 
 				played = 0;
 				period = 0;
-				bpm = -1;
-                prev_bpm = -1;
+				bpm = 4;
+                prev_bpm = 4;
 			}
 };
 
