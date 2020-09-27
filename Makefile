@@ -1,6 +1,9 @@
 
-PREFIX = /usr
+PREFIX ?= /usr/local
+LV2DIR ?= $(PREFIX)/lib/lv2
 DESTDIR =
+
+CXXFLAGS += `pkg-config --cflags lv2`
 
 all: build
 
@@ -63,7 +66,7 @@ install: all
 	$(MAKE) install -C plugins/mod-caps-Wider.lv2
 
 uninstall:
-	-rm -rf $(DESTDIR)$(PREFIX)/lib/lv2/mod-caps-*.lv2/
+	-rm -rf $(DESTDIR)$(LV2DIR)/mod-caps-*.lv2/
 
 clean:
 	rm -f *.o dsp/*.o
