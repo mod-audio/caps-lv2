@@ -1,6 +1,7 @@
 VERSION = 0.9.26
 
 PREFIX ?= /usr/local
+LV2DIR ?= $(PREFIX)/lib/lv2
 DESTDIR =
 
 CXX ?= g++
@@ -30,7 +31,7 @@ OBJECTS = $(SOURCES:.cc=.o)
 PLUG   = Scape
 BUNDLE = mod-caps-$(PLUG).lv2
 ifndef LV2_DEST
-LV2DEST = $(PREFIX)/lib/lv2/$(BUNDLE)
+LV2DEST = $(LV2DIR)/$(BUNDLE)
 else
 LV2DEST = $(LV2_DEST)/$(BUNDLE)
 endif
