@@ -1,6 +1,6 @@
 VERSION = 0.9.26
 
-PREFIX = /usr/local
+PREFIX ?= /usr/local
 DESTDIR =
 
 CXX ?= g++

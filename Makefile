@@ -1,6 +1,8 @@
 
-PREFIX = /usr
+PREFIX ?= /usr/local
 DESTDIR =
+
+CXXFLAGS += `pkg-config --cflags lv2`
 
 all: build
 
