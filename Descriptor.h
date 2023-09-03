@@ -72,7 +72,7 @@ class DescriptorStub
 				URI = 0;
 			}
 
-		~DescriptorStub()
+		virtual ~DescriptorStub()
 			{
 				if (PortCount)
 				{
